@@ -1,0 +1,78 @@
+import { load_util } from '../utils/load';
+import { AudioCtrl } from './audio';
+import { BackgroundMonitor } from './backgroundMonitor';
+import { NodeCtrl } from './component/node';
+import { RESMAP } from './data/resmap';
+import { AjaxCtrl } from './network/ajax';
+import { PrimusCtrl } from './network/primus';
+import { RouterCtrl } from './network/router';
+
+interface AppLink {
+    /** Primus控制器 */
+    primus_ctrl: PrimusCtrl;
+    /** ajax控制器 */
+    ajax_ctrl: AjaxCtrl;
+    /** 路由控制器 */
+    router_ctrl: RouterCtrl;
+    /** 声音控制器 */
+    audio_ctrl: AudioCtrl;
+    /** 后台检测控制器 */
+    background_monitor_ctrl: BackgroundMonitor;
+}
+export const cmd = {
+    resize: 'resize',
+    play_audio: 'play_audio',
+};
+
+export class AppCtrl extends NodeCtrl {
+    protected link = {} as AppLink;
+    protected is_top = true;
+    constructor() {
+        super(Laya.stage);
+    }
+    public init() {
+        this.initLink();
+        this.initEvent();
+    }
+    protected initLink() {
+        // // socket
+        // const config = {
+        //     token: GM.token,
+        //     user_id: GM.user_id,
+        //     public_key: GM.public_key,
+        //     server_url: GM.websocket_url,
+        // };
+        // const primus_ctrl = new PrimusCtrl(config);
+        // this.addChild(primus_ctrl);
+        // primus_ctrl.init();
+        // this.link.primus_ctrl = primus_ctrl;
+
+        // const ajax_ctrl = new AjaxCtrl();
+        // this.addChild(ajax_ctrl);
+        // ajax_ctrl.init();
+        // this.link.ajax_ctrl = ajax_ctrl;
+
+        // const audio_ctrl = new AudioCtrl();
+        // this.addChild(audio_ctrl);
+        // audio_ctrl.init();
+        // this.link.audio_ctrl = audio_ctrl;
+
+        // // background_monitor
+        // const background_monitor = new BackgroundMonitor(
+        //     CONFIG.background_logout_time * 1000,
+        // );
+        // background_monitor.bindEnterBackground(() => {
+        //     primus_ctrl.disConnect();
+        // });
+        // this.link.background_monitor_ctrl = background_monitor;
+
+        // // router
+        // const router_ctrl = new RouterCtrl();
+        // this.addChild(router_ctrl);
+        // router_ctrl.init();
+        // this.link.router_ctrl = router_ctrl;
+
+        load_util.setResmap(RESMAP);
+    }
+    protected initEvent() {}
+}

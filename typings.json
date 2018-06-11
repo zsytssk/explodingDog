@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "primus": "github:primus/primus/primus.d.ts#184d4a6"
+  }
+}

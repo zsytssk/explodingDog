@@ -1,0 +1,338 @@
+## 2018-06-11 11:07:31
+
+-   load 的模块不应该依赖 Res, 但是
+    -   load 却需要 res 的格式
+    *   res 格式在 load 里面确定
+
+*   @ques 切换其他场景
+    -   将其他场景的 resolve 取消如何处理
+
+-   load loadui + loadfunc
+
+*   initView 到底要在什么时候初始化 这牵扯到所有的和节点绑定的 ctrl..
+    -   loadRes
+
+-   emitToPrimus 这个做成 promise 好不好
+    -   不太好 因为这不是一对一的
+
+*   adjacent-overload-signatures
+
+-   onModel 这个绑定在 baseCtrl 合不合适 有什么作用
+
+*   所有类型全部用首字幕缩写
+
+-   所有 NodeCtrl 界面有没有初始化
+
+    -   inited_view;
+
+-   router 发生改变 关闭所有弹出层应该放在 app 中
+    -   弹出层跟着 页面走, 就不需要这个处理了
+
+```ts
+let router = this.link.router;
+/** 页面变化所有弹出层全部关闭  */
+this.bindOtherEvent(router, CMD.router_change, () => {
+    if (this.status == 'showing' || this.status == 'shown') {
+        this.hide();
+    }
+});
+```
+
+-   NodeCtrl 的作用
+    -   view_class new..
+        -   addChildView 添加到父类的 view 中
+        *   show hide
+    *   设置 view 的 zOrder
+    *   destroy
+    *   render
+    *   ---
+    *   实际的使用的处理..
+
+*   prettier format jsdoc
+
+*   管理器
+
+```ts
+/** 添加资源 */
+    protected loadRes(callback: Function) {
+        let app_ctrl = queryClosest(<NodeCtrl>this, 'name:app') as AppCtrl;
+        let load_ctrl = app_ctrl.link.load_ctrl;
+        load_ctrl.load(this, callback);
+    }
+    /** 获得节点对应资源的状态 */
+    get resource_status() {
+        let name = this.name;
+        let result = null;
+        for (let i = 0; i < RESMAP.length; i++) {
+            if (RESMAP[i].name == name) {
+                return RESMAP[i].resource_status as t_resource_status;
+            }
+        }
+        return result;
+    }
+    /** 设置节点对应资源的状态 */
+    set resource_status(status: t_resource_status) {
+        let name = this.name;
+        let result = null;
+        for (let i = 0; i < RESMAP.length; i++) {
+            if (RESMAP[i].name == name) {
+                RESMAP[i].resource_status = status;
+            }
+        }
+    }
+```
+
+-   setBackgroudMonitorStatus 放在本身的 CTRL 中
+
+*   @ques hall 如何去处理...
+
+*   @todo 页面的基本框架 +问题总结
+
+    -   @ques 路由切换
+    -   @ques 弹出层逻辑
+    -   @ques nodeCtrl
+    -   @ques load 逻辑
+
+*   @note broadcast report 找其他的 ctrl 可以缓存
+
+-   @note 所有的事件按照模块划分 分在不同的模块中...
+    -   弹出层也一样 提供哪些时间才可以用哪些时间
+
+## 2018-06-11 11:02:57
+
+-   这框架一个个整理太麻烦了
+    -   如果能直接有一个初始模板就好了...
+    -   自己的框架 github
+
+## 2018-06-08 09:22:42
+
+-   debugType2 改名
+
+*   @ques prettier 如何 格式化注释
+
+-   对所有的 broadcast, report... 进行缓存
+    -   避免每次查找性能问题。。。
+
+*   @ques 如何测试..
+    -   在浏览器中直接运行
+    -   describe assert beforeAll beforeEach after...
+    -   可以执行某个文件夹的所有测试 可以执行全部测试
+    -   直接在 console 中输出结果...
+    -   异步函数...
+    -   api 简单明了
+    -   coverage
+    -   浏览器中直接展示 ui...
+
+-   弹出层的接口..
+
+-   @ques 能不能尽量降低代码中的相互依赖
+    -   这样测试只需要一个个的测试就可以了
+    *   ...
+    *   常见的几种情形如何降低
+        -   监听其他 class 抛出的事件
+        -   调用其他 class 的函数..
+        *   ...
+
+## 2018-05-31 09:55:58
+
+-   这个 promise 能不能使用...
+
+*   @ques promise 开发不用生产要 es5 这个如何处理...
+
+-   @ques 能不能将 js 中 libs 放在 src 中每次自动编译复制文件过去...
+    -   我怎么知道哪些 js 文件没有被 import
+    -   所有 libs 中的文件都是需要外部引用的
+    -   fileloader...
+    *   先不用处理...
+
+*   @note git remote 放在哪里 怎么处理
+    -   ...
+
+-   @ques 直接使用 ts 项目怎么样?
+
+    -   需要再次编译才能使用 ui
+        -   能不能用 webpack 自动去编译 ui...
+    -   需要使用 laya 自己的 tsconfig, 可能对放在其中的 js 存在问题
+
+        -   这并不算是问题
+
+        *   webpack copy 文件
+
+-   zutil
+-   错误处理
+-   路由
+-   load
+    -   资源加载
+-   弹出层
+
+*   @捕鱼...
+
+-   @qeus window 下面变量如何处理
+
+-   @ques
+
+    -   JSEncrypt Primus type 在哪里 copy
+    -   ..
+
+-   @todo 设置 userId..
+
+    -   放在 test 中..
+
+-   @note 技能 action...
+
+*   参考麻将项目有哪些优化的地方
+    -   http
+    -   axios
+    -   ..
+    -
+    *   测试代码
+    *   ...
+
+-   @麻将 | @炸弹狗 | ...
+
+-   多个对象很乱 @张俊清 如何处理这问题
+
+-   @ques 如何 参与进来 章旸 姜云毅
+    -   如表达自己的看法
+    -   如何提高相互的了解
+
+*   切换场景不改变 url
+
+-   @todo 面向对象的基本要求...
+
+-   @todo tslint 未使用变量
+
+-   @todo test
+
+-   @note 能不能拿白鹭做一个 demo 看看...
+
+## 2018-05-25 10:02:51
+
+card
+{
+card: 'steal',
+status: 'start' | 'chooseTarget' | 'waitTarget' | 'end'
+target: 'userId'
+}
+
+-   捕鱼中堕胎 class 传过来传过去十分的麻烦
+
+-   全面 promise
+
+*   所有资源的配置...
+
+    -   原来放在 sprite 中的再通过 js 组织代码
+    -   有没有更好的方法
+
+*   郑铭 创建鱼的动画...
+
+*   父类调用子类的方法, 在子类中不知道在哪调用的
+    -   a --> init() --> initView()
+    -   b --> initView()
+*   父类抽象方法
+
+*   继承常出现的问题 以及解决办法
+
+*   @todo 使用异步函数
+
+*   @ques 继承 相互调用看的真的很混乱...
+
+## 2018-05-24 11:19:23
+
+-   card skill action..
+
+-   ctrl 参考 react
+
+    -   生命周期
+
+-   前端技术评审 萌哥 铭哥...
+
+-   原有 ctrl 的问题
+    -   父类调用子类的方法 如何处理
+    -   继承交叉
+
+## 2018-05-22 17:06:19
+
+-   技术评审
+    -   专门讨论 重要的部分
+    *   技术评审 前端要不要 去说说...
+    -   ...
+
+*   @ques 技术 评审 萌哥要不参加
+
+*   @ques 章旸有没有兴趣参加
+
+*   @ques 牌的技能
+
+    -   status: start | findTarget | waitTargetRes | end
+    -   target: userId | seatId
+    -   每一张牌的技能不一样 status 也不一样
+
+*   @note 偷牌技能
+
+    -   start | findTarget | waitTargetRes | end
+
+*   @ques 禁用牌
+
+    -   start | | findTarget | waitTargetRes | selectCard | end
+
+    -   技能 target 对象的属性变化...
+
+*   @ques 偷看牌 \*
+
+    -   start | actived | end
+
+-   @ques 所有的牌 每一个可能导致技能的变化...
+
+-   @note
+
+*   想法 实现思路 具体做法
+    -   一个达到的目标
+    -   如何去实现
+    -   实际中的做法
+
+-   所有工作内容...
+    -   ...
+    -   新手引导...
+    -   技能的逻辑
+
+## 2018-05-19 10:04:22
+
+-   @每一个对象使用他自己的配置...
+
+-   团队合作 增加工作效率
+
+-   ctrl 参考 react
+    能不能参考 react render 来做我的 ctrl 异步可以应用 load 逻辑，同时可以把子节点做成异步，我每次进入页面都需要，同步创建一大堆类 这样 就是一个非常大的堆栈 会导致明显的卡顿，如果能做成异步，那就不会这样 这样有一个问题 我没有办法在子元素创建的时候知道他的子元素
+
+    -   ***
+    -   这是不是把事情 搞复杂了
+    -   ***
+    -   将 ui 的渲染从 ctrl 初始化中独立出来, 放在 start 上面
+    -   顶级元素 init 然后到每一个子集元素 init, 所有的子集元素全部 init 成功之后, 顶级元素开始 onLoad... 结束之后
+    -   再 start... 引入生命周期, 但是像 react 类似的 api
+
+-   尽量减少调用堆栈
+
+-   ctrl 生命周期
+
+-   列举所有可能的相互引用类型...
+    -   相互调用的类型有哪些...
+
+## 2018-05-15 14:44:54
+
+-   @ques 数字键盘能不能用系统自带的[不能]
+
+    -   自适应无法处理
+
+-   @ques 引线燃烧动画, 长度变化
+
+*   @ques html5 能不能调用手机振动
+
+-   能不能做成 pwa
+
+*   如何添加测试代码
+    -   要测试什么??
+
+-   鸟类卡牌游戏
+    -   ...

@@ -1,0 +1,10 @@
+typings/
+release/
+script/releaseFile/config.json
+node_modules/
+laya/.laya
+laya/src/*
+!laya/src/libs
+laya/bin/*
+!laya/bin/libs
+!laya/bin/*.html

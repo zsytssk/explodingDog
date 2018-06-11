@@ -1,0 +1,27 @@
+{
+  "cmd": "roundStart",
+  "res": {
+    "waitingTime": 3,
+    "basePoint": 10000,
+    "roundTime": 60,
+    "userList": [
+      {
+        "userId": "2038959089",
+        "avatar": "28",
+        "nickName": "la*n",
+        "score": 0,
+        "point": 0,
+        "isRobot": "0"
+      },
+      {
+        "userId": "40812578",
+        "avatar": "1",
+        "nickName": "孤独患者.",
+        "score": 0,
+        "point": 0,
+        "isRobot": "1"
+      }
+    ]
+  },
+  "timestamp": 1527500238901
+}
