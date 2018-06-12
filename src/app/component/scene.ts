@@ -8,7 +8,7 @@ import { DisplayStyle, NodeCtrl } from './node';
 export class SceneCtrl extends NodeCtrl {
     public view: Laya.Sprite;
     public display_style: DisplayStyle = 'on_box';
-    protected is_inited: boolean = false;
+    protected is_initialized: boolean = false;
     constructor(view_class) {
         super(view_class);
     }
@@ -20,20 +20,26 @@ export class SceneCtrl extends NodeCtrl {
     protected enter() {
         return new Promise((resolve, reject) => {
             load_util.load(this.name).then(() => {
-                /** 如果此时ctrl已经不在ctrl树中, ctrl已经leave了 这时候不用初始化了 */
+                /** 如果此时 ctrl 已经不在ctrl树中, ctrl 已经 leave 了 这时候不用初始化了 */
                 if (!this.in_ctrl_tree) {
                     return;
                 }
-                if (!this.is_inited) {
+                if (!this.is_initialized) {
                     this.initView();
                     this.resize();
-                    this.is_inited = true;
+                    this.is_initialized = true;
                 }
                 this.show();
             });
         });
     }
-    protected leave(callback?) {}
+    protected leave() {
+        return new Promise((resolve, reject) => {
+            this.hide();
+            this.destroy();
+            resolve();
+        });
+    }
     protected initLink() {}
     protected initEvent() {
         this.on(app_cmd.resize, () => {

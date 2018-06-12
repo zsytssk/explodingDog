@@ -1,7 +1,9 @@
 import { load_util } from '../utils/load';
+import { AppRouterConfig } from './app.routerConfig';
 import { AudioCtrl } from './audio';
 import { BackgroundMonitor } from './backgroundMonitor';
 import { NodeCtrl } from './component/node';
+import { RouterOutsetCtrl } from './component/routerOutset';
 import { RESMAP } from './data/resmap';
 import { AjaxCtrl } from './network/ajax';
 import { PrimusCtrl } from './network/primus';
@@ -22,17 +24,25 @@ interface AppLink {
 export const cmd = {
     resize: 'resize',
     play_audio: 'play_audio',
+    initialized: 'initialized',
 };
 
 export class AppCtrl extends NodeCtrl {
+    public readonly name = 'app';
     protected link = {} as AppLink;
     protected is_top = true;
+    private router_config: AppRouterConfig;
     constructor() {
         super(Laya.stage);
     }
     public init() {
         this.initLink();
         this.initEvent();
+
+        /** 初始化完成之后发送initialized事件 */
+        this.createTimeout(() => {
+            this.emit(cmd.initialized);
+        }, 0);
     }
     protected initLink() {
         // // socket
@@ -66,12 +76,18 @@ export class AppCtrl extends NodeCtrl {
         // });
         // this.link.background_monitor_ctrl = background_monitor;
 
-        // // router
-        // const router_ctrl = new RouterCtrl();
-        // this.addChild(router_ctrl);
-        // router_ctrl.init();
-        // this.link.router_ctrl = router_ctrl;
+        // router_outset
+        const router_outset_ctrl = new RouterOutsetCtrl();
+        this.addChild(router_outset_ctrl);
+        router_outset_ctrl.init();
 
+        // router
+        const router_ctrl = new RouterCtrl();
+        this.addChild(router_ctrl);
+        router_ctrl.init();
+        this.link.router_ctrl = router_ctrl;
+
+        this.router_config = new AppRouterConfig(router_ctrl, '/');
         load_util.setResmap(RESMAP);
     }
     protected initEvent() {}

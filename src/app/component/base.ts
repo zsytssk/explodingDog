@@ -32,7 +32,7 @@ type t_hook_node_fun_item = {
 type t_hook_node_funs = t_hook_node_fun_item[];
 
 /**  ctrl 的基本类, 所有的事件处理类  */
-export abstract class BaseCtrl extends BaseEvent {
+export class BaseCtrl extends BaseEvent {
     public readonly name: string = 'base_ctrl';
     /** primus 需要频繁传递, 如果每次都去寻找primus很消耗性能, 需要绑定这这里 */
     private local_link = {} as t_base_ctrl_local_link;

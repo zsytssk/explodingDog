@@ -11,7 +11,7 @@ if (detectModel('showStat')) {
 }
 (window as CusWindow).load_util = load_util;
 
-const hall = new HallCtrl();
-app.addChild(hall);
-hall.init();
-hall.enter();
+// const hall = new HallCtrl();
+// app.addChild(hall);
+// hall.init();
+// hall.enter();

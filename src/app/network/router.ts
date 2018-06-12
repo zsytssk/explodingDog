@@ -1,87 +1,95 @@
-import { CMD } from '../../data/cmd';
-import { delArrSameItem, splitPath } from '../../utils/other';
+import { delArrSameItem, splitPath } from '../../utils/tool';
 import {
     Director_Change_Info,
     set_path_info,
-    zsyDirector,
+    ZsyDirector,
 } from '../../utils/zsy.director';
 import {
     getChildrenByType,
+    getElementsByType,
     log,
     logErr,
     queryClosest,
 } from '../../utils/zutil';
-import { AppCtrl } from '../app';
+import { AppCtrl, cmd as app_cmd } from '../app';
 import { BaseCtrl } from '../component/base';
 import { RouterOutsetCtrl } from '../component/routerOutset';
 
-/**router切换传给CMD.router_enter的数据结构 */
-export type t_router_enter_data = {
+export const cmd = {
+    /** router 初始化 */
+    init: 'router::init',
+    /** router change */
+    change: 'router::change',
+    /** 路由离开页面 */
+    leave: 'router::leave',
+    /** 路由进入页面 */
+    enter: 'router::enter',
+};
+
+/** router切换传给CMD.router_enter的数据结构  */
+export type RouterEnterData = {
     router_path: string;
     is_completed: boolean;
 };
-/**变化 */
-type t_router_enter_change = {
+/** 变化  */
+export type RouterChangeData = {
     cur_page: string;
     next_page: boolean;
 };
-/**初始化 */
-export type t_router_enter_init = {
-    enter_page: string;
+/** 初始化  */
+export type RouterInitData = {
+    page: string;
 };
 
-export type RouterConfig = {
-    path: string;
+export type RouterConfig = Array<{
+    children?: RouterConfig;
     ctrl?: typeof BaseCtrl;
     outset?: string;
+    path: string;
     redirectTo?: string;
-    children?: RouterConfig;
-}[];
+}>;
 
-interface i_routerctrl_link {
+interface Link {
     app: AppCtrl;
 }
-/**路由控制器*/
+/** 路由控制器 */
 export class RouterCtrl extends BaseCtrl {
-    protected link: i_routerctrl_link = {} as i_routerctrl_link;
-    /**director用来设置url, 同时监听url发生变化触发事件*/
-    public director: zsyDirector;
+    protected link = {} as Link;
+    /** director用来设置url, 同时监听url发生变化触发事件 */
+    public director: ZsyDirector;
     public is_entered = false;
     public name = 'router';
     private config_node: RouterConfigNode;
-    /**路由控制器*/
+    /** 路由控制器 */
     constructor() {
         super();
     }
-    init() {
+    public init() {
         this.initLink();
         this.initDirector();
         this.initEvent();
     }
     private initLink() {
-        this.link.app = queryClosest(<BaseCtrl>this, 'name:app') as AppCtrl;
+        this.link.app = queryClosest(this as BaseCtrl, 'name:app') as AppCtrl;
     }
-    /**初始化router*/
+    /** 初始化router */
     private initDirector() {
-        let options = {
-            // mode: detectModel('autoTest') ? 'hash' : 'history'
-            // mode: 'hash'
-            mode: 'history',
+        const options = {
+            mode: 'memory',
         };
-        this.director = new zsyDirector(options);
+        this.director = new ZsyDirector(options);
         this.director.onChangeBefore(this.onRouterChange.bind(this));
     }
     private initEvent() {
         // app 初始化之后初始化
-        this.on(CMD.app_inited, () => {
+        this.on(app_cmd.initialized, () => {
             this.director.listen();
         });
     }
-    /**添加顶级config */
+    /** 添加顶级config  */
     public forRoot(config: RouterConfig) {
-        let app = this.link.app;
-        let path = '/';
-        let root_config_node = new RouterConfigNode({
+        const app = this.link.app;
+        const root_config_node = new RouterConfigNode({
             path: '/',
         });
         this.config_node = root_config_node;
@@ -92,11 +100,11 @@ export class RouterCtrl extends BaseCtrl {
             destroy: root_config_node.destroy,
         };
     }
-    /**添加次级config */
+    /** 添加次级config  */
     public forChild(config, path) {
-        let root_config_node = this.config_node;
+        const root_config_node = this.config_node;
 
-        let path_config_node = root_config_node.findChildNodeByPath(
+        const path_config_node = root_config_node.findChildNodeByPath(
             splitPath(path),
         );
         path_config_node.createChildByConfig(config);
@@ -106,13 +114,13 @@ export class RouterCtrl extends BaseCtrl {
         };
     }
     private onRouterChange(change_info: Director_Change_Info) {
-        /**主路径的修改 */
-        if (change_info.type == 'path') {
+        /** 主路径的修改  */
+        if (change_info.type === 'path') {
             this.handlePathChange(change_info.ori_val, change_info.end_val);
             return;
         }
-        /**其他路径的修改 */
-        if (change_info.type == 'outset') {
+        /** 其他路径的修改  */
+        if (change_info.type === 'outset') {
             this.handleOutsetChange(
                 change_info.key,
                 change_info.ori_val,
@@ -120,8 +128,8 @@ export class RouterCtrl extends BaseCtrl {
             );
             return;
         }
-        /**参数的修改 */
-        if (change_info.type == 'param') {
+        /** 参数的修改  */
+        if (change_info.type === 'param') {
             return;
         }
     }
@@ -130,18 +138,18 @@ export class RouterCtrl extends BaseCtrl {
      * @param prev_path 上一个路径地址
      * @param next_path 下一个(将要的变化)路径地址
      */
-    private handlePathChange(prev_path, next_path) {
-        this.trigger(CMD.router_change, {
-            prev_path: prev_path,
-            next_path: next_path,
+    private async handlePathChange(prev_path, next_path) {
+        this.trigger(cmd.change, {
+            next_path,
+            prev_path,
         });
 
-        let change_tree_arr = this.getChangeCtrlTree(prev_path, next_path);
+        const change_tree_arr = this.getChangeCtrlTree(prev_path, next_path);
         if (!change_tree_arr) {
             return;
         }
-        let prev_ctrl_tree = change_tree_arr[0];
-        let next_ctrl_tree = change_tree_arr[1];
+        const prev_ctrl_tree = change_tree_arr[0];
+        const next_ctrl_tree = change_tree_arr[1];
 
         if (!next_ctrl_tree) {
             this.navigate('default', true);
@@ -149,98 +157,88 @@ export class RouterCtrl extends BaseCtrl {
 
         if (prev_ctrl_tree && prev_ctrl_tree.length) {
             this.is_entered = false;
-            this.leaveNodePath(prev_ctrl_tree);
+            await this.leaveNodePath(prev_ctrl_tree);
         }
         if (next_ctrl_tree && next_ctrl_tree.length) {
-            this.enterNodePath(next_ctrl_tree);
+            await this.enterNodePath(next_ctrl_tree);
         }
     }
-    private enterNodePath(config_node_arr: RouterConfigNode[]) {
-        if (!config_node_arr.length) {
-            return;
-        }
+    /** router 一个个的进入...  */
+    private async enterNodePath(config_node_arr: RouterConfigNode[]) {
+        for (let i = 0; i < config_node_arr.length; i++) {
+            const config_node = config_node_arr[i];
+            if (!(config_node instanceof RouterConfigNode)) {
+                logErr(`config node not exist`);
+                return;
+            }
 
-        let cur_config_node = config_node_arr.shift();
-        if (!(cur_config_node instanceof RouterConfigNode)) {
-            logErr(`config node not exist`);
-            return;
-        }
+            const redirect_node = config_node.redirect_node;
+            if (redirect_node) {
+                const redirect_path = redirect_node.abs_path;
+                this.navigate(redirect_path, true);
+                return;
+            }
 
-        let redirect_node = cur_config_node.redirect_node;
-        if (redirect_node) {
-            let redirect_path = redirect_node.abs_path;
-            this.navigate(redirect_path, true);
-            return;
-        }
+            const wrap_ctrl = config_node.parent.instance_ctrl;
+            if (!wrap_ctrl) {
+                logErr(`wrap_ctrl don't exist`);
+            }
+            const ctrl_create = config_node.ctrl;
+            let ctrl = getElementsByType(wrap_ctrl, ctrl_create)[0] as any;
+            if (!ctrl) {
+                const router_outset = getChildrenByType(
+                    wrap_ctrl,
+                    RouterOutsetCtrl,
+                )[0] as RouterOutsetCtrl;
+                ctrl = new ctrl_create() as any;
+                router_outset.addChild(ctrl);
+            }
 
-        let wrap_ctrl = cur_config_node.parent.instance_ctrl;
-        if (!wrap_ctrl) {
-            logErr(`wrap_ctrl don't exist`);
-        }
-        let ctrl_create = cur_config_node.ctrl;
-        let ctrl = getElementsByType(wrap_ctrl, ctrl_create)[0] as any;
-        if (!ctrl) {
-            let router_outset = getChildrenByType(
-                wrap_ctrl,
-                RouterOutsetCtrl,
-            )[0] as RouterOutsetCtrl;
-            ctrl = new ctrl_create() as any;
-            router_outset.addChild(ctrl);
-        }
+            config_node.instance_ctrl = ctrl;
 
-        cur_config_node.instance_ctrl = ctrl;
-
-        let enter_fn = ctrl.enter;
-        if (!enter_fn) {
-            logErr(`${ctrl.name} has no enter function`);
-            return;
-        }
-
-        enter_fn.bind(ctrl)(() => {
-            if (!config_node_arr.length) {
+            if (!ctrl.enter) {
+                logErr(`${ctrl.name} has no enter function`);
+                return;
+            }
+            await ctrl.enter();
+            if (i >= config_node_arr.length - 1) {
                 this.is_entered = true;
             }
 
-            this.enterNodePath(config_node_arr);
-            this.trigger(CMD.router_enter, {
-                router_path: cur_config_node.abs_path,
+            this.trigger(cmd.enter, {
+                router_path: config_node.abs_path,
                 is_completed: config_node_arr.length ? false : true,
             });
-        });
+        }
     }
-    /**离开 */
-    private leaveNodePath(config_node_arr: RouterConfigNode[]) {
+    /** 离开  */
+    private async leaveNodePath(config_node_arr: RouterConfigNode[]) {
         if (!config_node_arr.length) {
             return;
         }
+        for (const config_node of config_node_arr.reverse()) {
+            if (!(config_node instanceof RouterConfigNode)) {
+                logErr(`config node not exist`);
+                return;
+            }
 
-        let cur_config_node = config_node_arr.pop();
-        if (!(cur_config_node instanceof RouterConfigNode)) {
-            logErr(`config node not exist`);
-            return;
-        }
+            const ctrl = config_node.instance_ctrl as any;
+            if (!ctrl) {
+                log(`has no instance ctrl`);
+                continue;
+            }
+            if (!ctrl.leave) {
+                log(`${ctrl.name} has no leave function`);
+                continue;
+            }
+            config_node.instance_ctrl = null;
+            await ctrl.leave();
 
-        let ctrl = cur_config_node.instance_ctrl as any;
-        if (!ctrl) {
-            this.leaveNodePath(config_node_arr);
-            log(`has no instance ctrl`);
-            return;
-        }
-        let level_fn = ctrl.leave;
-        if (!level_fn) {
-            this.leaveNodePath(config_node_arr);
-            log(`${ctrl.name} has no leave function`);
-            return;
-        }
-        cur_config_node.instance_ctrl = null;
-        level_fn.bind(ctrl)(() => {
-            this.trigger(CMD.router_leave, {
-                router_path: cur_config_node.abs_path,
+            this.trigger(cmd.leave, {
+                router_path: config_node.abs_path,
                 is_completed: config_node_arr.length ? false : true,
             });
-
-            this.leaveNodePath(config_node_arr);
-        });
+        }
     }
     /**通过地址的变化得出变化的ctrl
      * @param prev_path 以前的地址
@@ -253,23 +251,23 @@ export class RouterCtrl extends BaseCtrl {
         config_node?: RouterConfigNode,
     ): RouterConfigNode[][] {
         config_node = config_node || this.config_node;
-        let prev_path_map = prev_path ? splitPath(prev_path) : [''];
-        let next_path_map = next_path ? splitPath(next_path) : [''];
+        const prev_path_map = prev_path ? splitPath(prev_path) : [''];
+        const next_path_map = next_path ? splitPath(next_path) : [''];
         next_path = next_path || '';
 
-        /**如果有redirect_to直接跳转 */
-        let next_config_node = config_node.findChildNodeByPath(next_path_map);
-        let prev_config_node = config_node.findChildNodeByPath(prev_path_map);
-        let before_node_tree = prev_config_node
+        /** 如果有redirect_to直接跳转  */
+        const next_config_node = config_node.findChildNodeByPath(next_path_map);
+        const prev_config_node = config_node.findChildNodeByPath(prev_path_map);
+        const before_node_tree = prev_config_node
             ? prev_config_node.getAbsNode()
             : [];
 
-        /**如果不存在 next_config_node 说明地址没有相应的ctrl*/
+        /** 如果不存在 next_config_node 说明地址没有相应的ctrl */
         if (!next_config_node) {
             return [before_node_tree];
         }
 
-        let next_node_tree = next_config_node.getAbsNode();
+        const next_node_tree = next_config_node.getAbsNode();
 
         return delArrSameItem(before_node_tree, next_node_tree);
     }
@@ -280,12 +278,12 @@ export class RouterCtrl extends BaseCtrl {
      * @param next_path 下一个(将要的变化)路径地址
      */
     private handleOutsetChange(outset_type, prev_path, next_path) {
-        let outset_config_node = this.getOutsetNode(outset_type);
+        const outset_config_node = this.getOutsetNode(outset_type);
         if (!outset_config_node) {
             logErr(`outset:${outset_type} don't exit`);
         }
 
-        let change_tree_arr = this.getChangeCtrlTree(
+        const change_tree_arr = this.getChangeCtrlTree(
             prev_path,
             next_path,
             outset_config_node,
@@ -293,8 +291,8 @@ export class RouterCtrl extends BaseCtrl {
         if (!change_tree_arr) {
             return;
         }
-        let prev_ctrl_tree = change_tree_arr[0];
-        let next_ctrl_tree = change_tree_arr[1];
+        const prev_ctrl_tree = change_tree_arr[0];
+        const next_ctrl_tree = change_tree_arr[1];
 
         if (prev_ctrl_tree && prev_ctrl_tree.length) {
             this.is_entered = false;
@@ -309,7 +307,7 @@ export class RouterCtrl extends BaseCtrl {
      * @param outset_type outset 的名称
      */
     private getOutsetNode(outset_type) {
-        let root_config_node = this.config_node;
+        const root_config_node = this.config_node;
         return root_config_node.findChildNodeByPath([`[${outset_type}]`]);
     }
     /**
@@ -318,8 +316,8 @@ export class RouterCtrl extends BaseCtrl {
      * @param replace_state 是否覆盖前一个历史
      */
     public navigate(path: string | set_path_info, replace_state?: boolean) {
-        /**只有字符串, 路径修改 */
-        if (typeof path == 'string') {
+        /** 只有字符串, 路径修改  */
+        if (typeof path === 'string') {
             this.director.navigate(
                 {
                     type: 'path',
@@ -340,18 +338,19 @@ type CreateRouterConfig = {
     path?: string;
     outset?: string;
 };
-/**路由配置node节点
- * 整个router的配置都是一个个的RouterConfigNode节点, 这样我可以随时添加删除
+
+/** 路由配置node节点
+ * 整个 router 的配置都是一个个的 RouterConfigNode 节点, 这样我可以随时添加删除
  * 一个配置做成这个样子是应该很浪费的, 我目前没有想到更好的方法去组织
  */
 class RouterConfigNode {
-    ctrl: typeof BaseCtrl;
-    instance_ctrl: BaseCtrl;
-    path: string;
-    childs = [] as RouterConfigNode[];
-    parent: RouterConfigNode;
-    outset: string;
-    redirect_to: string;
+    public ctrl: typeof BaseCtrl;
+    public instance_ctrl: BaseCtrl;
+    private path: string;
+    private children = [] as RouterConfigNode[];
+    public parent: RouterConfigNode;
+    private outset: string;
+    private redirect_to: string;
     constructor(config: CreateRouterConfig) {
         this.ctrl = config.ctrl;
         this.path = config.path;
@@ -376,7 +375,7 @@ class RouterConfigNode {
         }
         return this.parent.getAbsNode().concat([this]);
     }
-    /**找到当前 */
+    /** 找到当前  */
     public get redirect_node(): RouterConfigNode {
         if (!this.redirect_to) {
             return;
@@ -384,10 +383,10 @@ class RouterConfigNode {
         if (!this.parent) {
             return;
         }
-        let path_arr = splitPath(this.redirect_to);
+        const path_arr = splitPath(this.redirect_to);
         let wrap_node = this.parent;
         while (true) {
-            if (path_arr[0] == '..') {
+            if (path_arr[0] === '..') {
                 path_arr.shift();
                 if (wrap_node.parent) {
                     logErr(`${wrap_node.abs_path} has not parent!`);
@@ -400,44 +399,43 @@ class RouterConfigNode {
         }
         return wrap_node.findChildNodeByPath(path_arr);
     }
-    /** 添加childNode */
+    /**  添加childNode  */
     public addChild(childNode: RouterConfigNode) {
-        let childs_list = this.childs;
-        childs_list.push(childNode);
+        const children = this.children;
+        children.push(childNode);
         childNode.parent = this;
     }
-    /** 删除childNode */
+    /**  删除childNode  */
     public removeChild(childNode: RouterConfigNode) {
-        let child_index = this.childs.indexOf(childNode);
-        if (child_index == -1) {
+        const child_index = this.children.indexOf(childNode);
+        if (child_index === -1) {
             return;
         }
-        this.childs.splice(child_index, 1);
+        this.children.splice(child_index, 1);
     }
     public removeChildren() {
-        for (let len = this.childs.length, i = len - 1; i >= 0; i--) {
-            this.childs[i].destroy();
+        for (let len = this.children.length, i = len - 1; i >= 0; i--) {
+            this.children[i].destroy();
         }
-        this.childs = [];
+        this.children = [];
     }
     public findChildNodeByPath(path_map: string[]): RouterConfigNode {
-        if (path_map.length == 0) {
+        if (path_map.length === 0) {
             return this;
         }
 
-        let cur_path = path_map.shift();
-        let children = this.childs;
-        for (let i = 0; i < children.length; i++) {
-            if (children[i].path == cur_path) {
-                return children[i].findChildNodeByPath(path_map);
+        const cur_path = path_map.shift();
+        const children = this.children;
+        for (const child of children) {
+            if (child.path === cur_path) {
+                return child.findChildNodeByPath(path_map);
             }
         }
         return null;
     }
     public createChildByConfig(config: RouterConfig) {
-        for (let i = 0; i < config.length; i++) {
-            let config_item = config[i];
-            let config_node = new RouterConfigNode({
+        for (const config_item of config) {
+            const config_node = new RouterConfigNode({
                 path: config_item.path,
                 redirect_to: config_item.redirectTo,
                 ctrl: config_item.ctrl,
