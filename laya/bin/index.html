@@ -20,17 +20,17 @@
 		var GM = {};
 		var isVip = false;
 		var CDN_VERSION = '201704281549';
-		var user_id = '2038441339';
+		var user_id = '4001';
 		var token =
-			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIyMDM4NDQxMzM5IiwiZXhwIjoxNTExOTM2OTc1fQ.g-Krs5sN36Ta53XVNV-SyhdMUgX9Ouomx8w71wwVvY0";
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQwMDEsImV4cCI6MTUyODc4NDc1NTQ2MDAwMH0.Vc1LkeXbPWAI1FgpvqN2S5vKogYSogSIC1rRLJC87M8";
 		var gameId = '39682';
 		var newUser = true;
 		var guide_step = -1;
-		var websocketurl = 'https://nodejs-dev.games.1768.com:7010/';
+		var websocketurl = 'http://tst-explodingdog-stg41.1768.com';
 		var publicKey =
 			`MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvMCkMUkh7AJqwUAecmgHZwQbiR4u7ZdOhuzoxZEhAZUjrBarfHvttwfKLFM1r2uXvuu2rrYKjpa1iUV2A4rLeHlPnT07IeelAFiUKbjOaqS1K1ByTjIFCz466B8bMRYIOA6Za5j4OcVaQvpgXWZicshHssLFCeYnj2f5XAYQFiS9It6lJ0gGJWT2YSD6WxMAV1JRCpLJE0rtV5egAqAp9UImsZDjE2mVHXCTjlQKsdi+8jRJatZFLwDqOU0RGlgmwcjdg6u511xWWaQX1G3IhSMRAjrY4FDxxYRKBGrkNBPAp34NodGWL1iEHD+GdR3wRvbIAnLNU0XDf2bEenMPzwIDAQAB`
 	</script>
-	<script src="https://nodejs-dev.games.1768.com:7010/primus/primus.js"></script>
+	<script src="http://tst-explodingdog-stg41.1768.com/primus/primus.js"></script>
 </head>
 
 <body>
@@ -56,6 +56,7 @@
 	<script type="text/javascript" src="libs/laya.ui.js"></script>
 	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里，js的顺序可以手动修改，修改后保留修改的顺序，新增加的js会默认依次追加到标签里-->
 	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
+	<script type="text/javascript" src="../src/libs/crypto-js.js"></script>
 	<script type="text/javascript" src="../src//ui/layaUI.max.all.js"></script>
 	<!--jsfile--startTag-->
 	<script src="http://localhost:8080/app.js"></script>

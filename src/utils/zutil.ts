@@ -479,7 +479,7 @@ export function createLog(log_type?) {
     if (!log_fun) {
         log_fun = console.log;
     }
-    return log.bind(window.console);
+    return log_fun.bind(window.console);
 }
 // 分析字符串
 export function getQueryString(query) {
@@ -743,6 +743,30 @@ export function addPressEvent(sprite) {
             sprite.event('shortPress', time);
         }
     });
+}
+
+export function extendUtil(sub_class, super_class, name_space) {
+    for (const p in super_class) {
+        if (!super_class.hasOwnProperty(p)) {
+            continue;
+        }
+        sub_class[p] = super_class[p];
+    }
+    if (typeof sub_class === 'function' && typeof super_class === 'function') {
+        function __() {
+            this.constructor = sub_class;
+        }
+        sub_class.prototype =
+            super_class === null
+                ? Object.create(super_class)
+                : ((__.prototype = super_class.prototype), new __());
+    }
+
+    if (name_space) {
+        const arr_space = name_space.split('.');
+        nameMap(arr_space, null, sub_class);
+    }
+    return sub_class;
 }
 
 /**  log信息  */

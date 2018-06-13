@@ -1,57 +1,91 @@
 ## 2018-06-11 11:07:31
 
--   @ques router 能不能跳过中间直接到达自己的目的地
+-   @ques 如何用 render 来传递 view 渲染
+
+*   父类的 ctrl 的 view 有子类不是属于 ctrl 如何处理
+    -   强制将所有的 view 节点都用 ctrl 包裹...
+    -   这样是不是太恶心了
+
+-   @todo 无 ui ctrl 传递子类的 view 给自己的父类..
+
+*   crypto-js webpack 报错
+    -   Module build failed: Error: Debug Failure. False expression.
+    *   不知道是 webpack ts | crypto 哪一个的 bug
+
+-   @todo 超级射手 bug
+
+*   sendCacheDataToServer 这个怎么处理
+
+    -   ... 在服务器还没有连接的时候发送的命令
+
+*   @ques primus 中一大堆项目的代码能不能抽离出来
+    -   他应该是一个独立于项目的模块..
+
+-   @ques primus heartBeat 如何处理..
+
+*   @ques router 能不能跳过中间直接到达自己的目的地
     -   '' -> default -> hall
 
-*   @ques zsy.director 如何做成 storage 的样式
+-   @ques zsy.director 如何做成 storage 的样式
 
-*   @ques 能不能将 director 做成(name:\path\to\your\page)
+-   @ques 能不能将 director 做成(name:\path\to\your\page)
+
     -   那么这个地址就属于类型为 name 的下面
+
     *   默认的为 default 地址...
 
--   @ques RouterOutsetCtrl 能不能做成 不需要 ui 添加
+-   @ques 什么样的函数放在 zutil 中 什么放在 tool 中..
+    -   zutil 关于找节点 转化 dom..
+
+*   @ques RouterOutsetCtrl 能不能做成 不需要 ui 添加
+
     -   同时 router 的配置也放在这里
 
-*   @参考 react 的接口...
-
--   @ques router config 能不能做成最简单的形式
+*   @ques router config 能不能做成最简单的形式
     -   能不能不增加 load...
 
-*   @qeus RouterConfigNode 哪些接口可以做成 private
+-   @qeus RouterConfigNode 哪些接口可以做成 private
 
--   @ques 自定义 loading 的样式如何处理
+-   @参考 react 的接口...
+    -   @ques 能不能把我的 ctrl 不仅支持 ctrl 而且支持 function...
+    *   最终能像 react-jsx 一样的组织自己的 ui..
+    *   我感觉自己的 ctrl 太复杂了,
+
+*   @ques 自定义 loading 的样式如何处理
     -   最好能像 react 的 loadable 一样
+    *   有一个 ctrl 包裹器 hallLoad, 控制他自己的子类 hall
+    *   如 hall 资源没有加载, 就加载 load, 加载完成之后再把自己的子类换成 hall...
 
-*   @ques 要不要将 app 中的 component 移出来
+-   @ques 要不要将 app 中的 component 移出来
 
--   拿来就可以用的 webpack ts ...
+*   拿来就可以用的 webpack ts ...
 
-*   load 的模块不应该依赖 Res, 但是
+-   @ques load 的模块不应该依赖 Res, 但是
     -   load 却需要 res 的格式
     *   res 格式在 load 里面确定
 
--   @ques 切换其他场景
+*   @ques 切换其他场景
     -   将其他场景的 resolve 取消如何处理
 
-*   load loadui + loadfunc
+-   load loadui + loadfunc
 
--   initView 到底要在什么时候初始化 这牵扯到所有的和节点绑定的 ctrl..
+*   initView 到底要在什么时候初始化 这牵扯到所有的和节点绑定的 ctrl..
     -   loadRes
 
-*   emitToPrimus 这个做成 promise 好不好
+-   emitToPrimus 这个做成 promise 好不好
     -   不太好 因为这不是一对一的
 
--   adjacent-overload-signatures
+*   adjacent-overload-signatures
 
-*   onModel 这个绑定在 baseCtrl 合不合适 有什么作用
+-   onModel 这个绑定在 baseCtrl 合不合适 有什么作用
 
--   所有类型全部用首字幕缩写
+*   所有类型全部用首字幕缩写
 
-*   所有 NodeCtrl 界面有没有初始化
+-   所有 NodeCtrl 界面有没有初始化
 
     -   inited_view;
 
-*   router 发生改变 关闭所有弹出层应该放在 app 中
+-   router 发生改变 关闭所有弹出层应该放在 app 中
     -   弹出层跟着 页面走, 就不需要这个处理了
 
 ```ts

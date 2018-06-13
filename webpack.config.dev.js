@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
-    entry: ['./src/main.ts', './src/test.ts'],
+    entry: ['./src/test.ts', './src/main.ts'],
     output: {
         filename: 'app.js',
         path: path.join(__dirname, 'laya/src'),

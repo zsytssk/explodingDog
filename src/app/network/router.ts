@@ -55,7 +55,7 @@ interface Link {
 /** 路由控制器 */
 export class RouterCtrl extends BaseCtrl {
     protected link = {} as Link;
-    /** director用来设置url, 同时监听url发生变化触发事件 */
+    /** director 用来设置 url, 同时监听url发生变化触发事件 */
     public director: ZsyDirector;
     public is_entered = false;
     public name = 'router';

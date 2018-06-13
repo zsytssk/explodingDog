@@ -17,3 +17,14 @@ interface CusWindow extends Window {
 }
 
 declare const ui;
+
+declare class Primus {
+    static connect;
+    constructor(url, t_any_obj);
+    write;
+    end;
+    on;
+    emit;
+}
+
+declare const CryptoJS: any;

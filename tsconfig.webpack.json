@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        // "target": "es6",
         "sourceMap": true,
-        "module": "esnext",
+        // "module": "esnext",
         "allowJs": true,
         "skipLibCheck": true,
-        "skipDefaultLibCheck": true,
-        "moduleResolution": "node"
+        "skipDefaultLibCheck": true
+        // "moduleResolution": "node"
     },
     "include": ["./laya/libs", "./src", "./typings"]
 }

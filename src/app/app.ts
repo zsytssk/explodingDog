@@ -4,6 +4,7 @@ import { AudioCtrl } from './audio';
 import { BackgroundMonitor } from './backgroundMonitor';
 import { NodeCtrl } from './component/node';
 import { RouterOutsetCtrl } from './component/routerOutset';
+import { CONFIG } from './data/config';
 import { RESMAP } from './data/resmap';
 import { AjaxCtrl } from './network/ajax';
 import { PrimusCtrl } from './network/primus';
@@ -45,17 +46,17 @@ export class AppCtrl extends NodeCtrl {
         }, 0);
     }
     protected initLink() {
-        // // socket
-        // const config = {
-        //     token: GM.token,
-        //     user_id: GM.user_id,
-        //     public_key: GM.public_key,
-        //     server_url: GM.websocket_url,
-        // };
-        // const primus_ctrl = new PrimusCtrl(config);
-        // this.addChild(primus_ctrl);
-        // primus_ctrl.init();
-        // this.link.primus_ctrl = primus_ctrl;
+        // socket
+        const config = {
+            token: CONFIG.token,
+            user_id: CONFIG.user_id,
+            public_key: CONFIG.public_key,
+            server_url: CONFIG.websocket_url,
+        };
+        const primus_ctrl = new PrimusCtrl(config);
+        this.addChild(primus_ctrl);
+        primus_ctrl.init();
+        this.link.primus_ctrl = primus_ctrl;
 
         // const ajax_ctrl = new AjaxCtrl();
         // this.addChild(ajax_ctrl);
