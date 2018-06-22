@@ -20,17 +20,18 @@
 		var GM = {};
 		var isVip = false;
 		var CDN_VERSION = '201704281549';
-		var user_id = '4001';
-		var token =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQwMDEsImV4cCI6MTUyODc4NDc1NTQ2MDAwMH0.Vc1LkeXbPWAI1FgpvqN2S5vKogYSogSIC1rRLJC87M8";
+		var user_id = '4002';
+		var token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0MDAyIiwiZXhwIjoxNTI5NjU3ODA1OTQyMDAwfQ._Mh9Rz1H6-GtyWkfL92UmadOt8xihd3uxuUU9VuhHPE';
 		var gameId = '39682';
 		var newUser = true;
 		var guide_step = -1;
-		var websocketurl = 'http://tst-explodingdog-stg41.1768.com';
+		var websocketurl = 'https://tst-explodingdog-stg41.1768.com';
 		var publicKey =
 			`MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvMCkMUkh7AJqwUAecmgHZwQbiR4u7ZdOhuzoxZEhAZUjrBarfHvttwfKLFM1r2uXvuu2rrYKjpa1iUV2A4rLeHlPnT07IeelAFiUKbjOaqS1K1ByTjIFCz466B8bMRYIOA6Za5j4OcVaQvpgXWZicshHssLFCeYnj2f5XAYQFiS9It6lJ0gGJWT2YSD6WxMAV1JRCpLJE0rtV5egAqAp9UImsZDjE2mVHXCTjlQKsdi+8jRJatZFLwDqOU0RGlgmwcjdg6u511xWWaQX1G3IhSMRAjrY4FDxxYRKBGrkNBPAp34NodGWL1iEHD+GdR3wRvbIAnLNU0XDf2bEenMPzwIDAQAB`
 	</script>
 	<script src="http://tst-explodingdog-stg41.1768.com/primus/primus.js"></script>
+	<script src="https://nodejs-test.games.1768.com:8351/socket.io/socket.io.js"></script>
+	<script src="http://yx114-wap.stg3.1768.com/files/js/base64.js"></script>
 </head>
 
 <body>
@@ -58,7 +59,7 @@
 	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
 	<script type="text/javascript" src="../src/libs/crypto-js.js"></script>
 	<script type="text/javascript" src="../src//ui/layaUI.max.all.js"></script>
-
+	<script src="../src/libs/jsencrypt.js"></script>
 	<script src="../sail/core/sail.core.js"></script>
 	<script src="../sail/core/sail.utils.js"></script>
 	<script src="../sail/core/sail.dialog.js"></script>

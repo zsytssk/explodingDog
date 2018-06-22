@@ -28,13 +28,27 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":11,"x":32,"width":161,"var":"valueLabel","valign":"middle","text":"0/0","height":34,"fontSize":26,"font":"SimHei","color":"#ffffff","align":"center"},
+            "props":{"y":11,"x":32,"width":161,"visible":false,"var":"valueLabel","valign":"middle","text":"0/0","height":34,"fontSize":26,"font":"SimHei","color":"#ffffff","align":"center"},
             "nodeParent":1,
             "label":"Label(valueLabel)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":4,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"HTMLDivElement",
+            "props":{"y":14,"x":24,"width":181,"var":"richText","innerHTML":"richtext","height":31},
+            "nodeParent":1,
+            "label":"HTMLDivElement(richText)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
             "child":[
                 ]
         },
