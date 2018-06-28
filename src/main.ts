@@ -1,26 +1,28 @@
-import { AppCtrl } from './app/app';
-import { CONFIG } from './app/data/config';
+import './sail/lib/primus';
+import './sail/core/sail.core.js';
+import './sail/core/sail.utils.js';
+import './sail/core/sail.dialog.js';
+import './sail/core/sail.scene.js';
+import './sail/core/sail.director.js';
+import './sail/core/sail.viewer.js';
+import './sail/core/sail.io.js';
+import './sail/core/sail.entrace.js';
+import './sail/tools/keyboard';
+import './sail/tools/notify';
+import './effect/scaleBtn';
 
-function main() {
-    initStage();
-    const app = new AppCtrl();
-    app.init();
-    (window as CusWindow).app = app;
-}
-main();
+import { IO_CONFIG, GAME_CONFIG } from './data/config';
+import { Hall } from './scene/hall/scene';
 
-function initStage() {
-    // Laya.init(1334, 750); //初始化引擎
-    Laya.init(1334, 750, Laya.WebGL); // 初始化引擎
-    Laya.stage.frameRate = Laya.Stage.FRAME_FAST;
-    Laya.SoundManager.autoReleaseSound = false;
+Sail.onStart = function() {
+    if (Sail.DEBUG) {
+        Laya.Stat.show();
+    }
+    Laya.SoundManager.setMusicVolume(0.4);
+    Laya.SoundManager.autoStopMusic = true;
+    Sail.keyboard = new Tools.KeyBoardNumber();
 
-    Laya.URL.basePath = CONFIG.cdn_url; // Laya 寻找图片的基本路劲
-    Laya.URL.version = CONFIG.cdn_version; // 资源的版本
-    Laya.stage.alignH = Laya.Stage.ALIGN_CENTER; // 横向居中
-    Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE; // 竖向居中
-    Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL; // 显示方式横屏
-
-    /** 屏幕适配方式 */
-    Laya.stage.scaleMode = CONFIG.scale_mode;
-}
+    Sail.io.init(IO_CONFIG);
+    Sail.director.runScene(new Hall());
+};
+Sail.run(GAME_CONFIG);
