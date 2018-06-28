@@ -1,4 +1,4 @@
-const test_user_info = {
+export const TEST_TOKEN = {
     dev: {
         '2038441339':
             // tslint:disable-next-line:max-line-length

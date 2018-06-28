@@ -11,3 +11,8 @@ type ResMap = {
     res_relatives?: any[];
     order?: number;
 }[];
+
+type t_point = {
+    x: number;
+    y: number;
+};

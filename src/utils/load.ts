@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import * as isArray from 'lodash/isArray';
 import { callFunc } from './tool';
 import { log, logErr } from './zutil';
 

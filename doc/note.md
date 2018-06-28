@@ -1,5 +1,7 @@
 ## 2018-06-11 11:07:31
 
+* @ques aniFactory 可以做成 扔函数进来
+
 -   @ques 如何用 render 来传递 view 渲染
 
 *   父类的 ctrl 的 view 有子类不是属于 ctrl 如何处理
