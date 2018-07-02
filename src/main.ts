@@ -13,6 +13,7 @@ import './effect/scaleBtn';
 
 import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
+import { GameWrap } from './scene/game/sceneWrap';
 
 Sail.onStart = function() {
     if (Sail.DEBUG) {
@@ -28,7 +29,7 @@ Sail.onStart = function() {
         publicKey: CONFIG.publick_key,
         token: CONFIG.token,
     });
-    Sail.director.runScene(new Hall());
+    Sail.director.runScene(new GameWrap());
 };
 
 Sail.run({
@@ -38,5 +39,5 @@ Sail.run({
     SCALE_MODE: Laya.Stage.SCALE_FIXED_WIDTH, //自动横屏时选择:Laya.Stage.SCALE_FIXED_WIDTH  自动竖屏时选择:Laya.Stage.SCALE_FIXED_HEIGHT
     BASE_PATH: CONFIG.cdn_url,
     DIALOGTYPE: 'multiple', //弹窗模式 single:弹出弹窗时自动关闭其他弹窗, multiple : 允许弹出多层弹窗，可使用"closeOther:true"在弹出时关闭其他弹窗
-    VERSION: '02180620',
+    VERSION: CONFIG.cdn_version,
 });

@@ -1,13 +1,13 @@
 import { CMD } from '../../data/cmd';
-import { ASSETS } from '../../data/assets';
+import { RES } from '../../data/res';
 
 import { GameCtrl } from './main';
 
-export class Hall extends Sail.Scene {
+export class GameWrap extends Sail.Scene {
     constructor() {
         super();
         Laya.loader.load(
-            ASSETS.GAME,
+            RES.GAME.concat(RES.COMPONENT),
             new Laya.Handler(this, () => {
                 this.init();
             }),

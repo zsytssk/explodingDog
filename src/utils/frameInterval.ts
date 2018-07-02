@@ -1,36 +1,22 @@
-import { isFunc } from './tool';
-
 /**
  * 像interval一样的重复执行函数, 只是全部通过 requestanimationframe 来实现的
  */
 export class FrameInterval {
     /**控制是否清除*/
-    protected stop_interval: boolean;
-    protected interval_id: number;
-    constructor() {}
+    stop_interval = false;
     /**开始执行循环函数
-     * fun 每次执行的执行的韩式 @param time 传入的间隔
+     * fun 每次执行的执行的韩式
+     * @param time 传入的间隔
      * @param space_time 间隔的时间间隔
-     * @param fps  time = elapsed / (1000 / fps),
-     * 如果interval_time = 1000/30 fps = 60
-     * 那么我这个只在一秒执行30次, 更新60个位移
      */
-    public start(
-        fun: (time: number) => void,
-        interval_time: number,
-        fps?: number,
-    ) {
+    start(fun, interval_time) {
         let then = Date.now();
-        fps = fps || 1000 / interval_time;
         this.stop_interval = false;
 
-        let interval = () => {
+        const interval = () => {
             if (this.stop_interval) {
                 return;
             }
-
-            Laya.timer.once(interval_time, this, interval);
-            // this.interval_id = requestAnimationFrame(interval);
 
             let now = Date.now();
             let elapsed = now - then;
@@ -39,18 +25,17 @@ export class FrameInterval {
                 return;
             }
 
-            let time = Math.floor((elapsed * fps) / 1000);
-            then = now - (elapsed - (time * 1000) / fps);
-            if (isFunc(fun)) {
+            let time = Math.floor(elapsed / interval_time);
+            then = now - (elapsed - time * interval_time);
+            if (typeof fun == 'function') {
                 fun(time);
             }
         };
 
-        interval();
+        Laya.timer.loop(interval_time, this, interval);
     }
     stop() {
         this.stop_interval = true;
-        // cancelAnimationFrame(this.interval_id);
         Laya.timer.clearAll(this);
     }
 }

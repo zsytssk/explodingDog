@@ -1,5 +1,22 @@
 ## 2018-06-29 10:25:00
 
+* @qeus loadUtil需要依赖ResMap..
+    * 这两者应该相互独立的
+    * load要踢除特定的资源格式...
+    * 减少依赖
+
+-   @ques 小马哥 Laya.URL.version 如何设置的
+
+*   @ques 下面的代码是做什么的
+
+```js
+    Laya.SoundManager.setMusicVolume(0.4);
+    Laya.SoundManager.autoStopMusic = true;
+```
+
+*   @ques 如何区分是不是有很多的区别
+    -   game_type 你
+
 -   @ques box 返回 怎么显示原来的 box
 
 *   @todo
@@ -8,6 +25,12 @@
 
 -   @todo
     -   选择卡组界面 chooseCardGroup
+
+*   @todo 加入房间
+    -   @ques 房间那么多的状态如何去组织
+        -   @init --> start --> ... 状态变化
+
+-   出牌区 需要一张底图
 
 ## 2018-06-11 11:07:31
 
@@ -113,7 +136,7 @@ this.bindOtherEvent(router, CMD.router_change, () => {
         this.hide();
     }
 });
-```
+````
 
 -   NodeCtrl 的作用
     -   view_class new..
