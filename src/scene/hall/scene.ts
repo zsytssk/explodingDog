@@ -20,6 +20,7 @@ export class Hall extends Sail.Scene {
         this.ACTIONS = {
             [CMD.GET_USER_INFO]: this.setUserInfo,
             [CMD.GET_USER_AMOUNT]: this.setUserAmount,
+            [CMD.JOIN_ROOM]: this.joinRoom
         };
         Sail.io.register(this.ACTIONS, this);
         let bgImg = new Laya.Image('images/bg/bg.jpg');
@@ -48,5 +49,9 @@ export class Hall extends Sail.Scene {
 
     setUserAmount(data) {
         this.topbar.updateView(data);
+    }
+
+    joinRoom(data) {
+        // Sail.director.runScene(new Hall());
     }
 }

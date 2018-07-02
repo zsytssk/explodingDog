@@ -69,9 +69,9 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"top":5,"skin":"images/cards/text_choose.png","left":150},
+            "props":{"var":"title","top":5,"skin":"images/cards/text_choose.png","left":150},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(title)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
