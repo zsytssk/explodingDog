@@ -1,5 +1,6 @@
 import { CMD } from '../../data/cmd';
 import { RES } from '../../data/res';
+import { GameWrap } from '../game/sceneWrap';
 
 import { TopBar } from './topbar';
 import './valuebar';
@@ -34,13 +35,13 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
-    initEvent() {}
+    initEvent() { }
 
     onExit() {
         // Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) {}
+    onResize(width, height) { }
 
     setUserInfo(data) {
         this.content.updateView(data);
@@ -51,6 +52,7 @@ export class Hall extends Sail.Scene {
     }
 
     joinRoom(data) {
-        // Sail.director.runScene(new Hall());
+        Sail.director.closeAll();
+        Sail.director.runScene(new GameWrap());
     }
 }

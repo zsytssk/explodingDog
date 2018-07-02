@@ -15,7 +15,7 @@ import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
 import { GameWrap } from './scene/game/sceneWrap';
 
-Sail.onStart = function() {
+Sail.onStart = function () {
     if (Sail.DEBUG) {
         Laya.Stat.show();
     }
@@ -29,7 +29,7 @@ Sail.onStart = function() {
         publicKey: CONFIG.publick_key,
         token: CONFIG.token,
     });
-    Sail.director.runScene(new GameWrap());
+    Sail.director.runScene(new Hall());
 };
 
 Sail.run({
