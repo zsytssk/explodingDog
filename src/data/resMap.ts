@@ -15,4 +15,18 @@ export let RESMAP: ResMap = [
         res_relatives: [],
         resource_status: 'unload',
     },
+    {
+        name: 'loading',
+        res: RES.LOADING,
+        res_dependencies: [],
+        res_relatives: [],
+        resource_status: 'unload',
+    },
+    {
+        name: 'hall',
+        res: RES.HALL,
+        res_dependencies: [RES.COMPONENT],
+        res_relatives: [],
+        resource_status: 'unload',
+    },
 ];

@@ -14,8 +14,12 @@ import './effect/scaleBtn';
 import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
 import { GameWrap } from './scene/game/sceneWrap';
+import { RESMAP } from './data/resMap';
+import { load_util } from './utils/load';
+import { loadAssets } from './scene/loaing/main';
 
 Sail.onStart = function () {
+    load_util.setResmap(RESMAP);
     if (Sail.DEBUG) {
         Laya.Stat.show();
     }
@@ -29,7 +33,9 @@ Sail.onStart = function () {
         publicKey: CONFIG.publick_key,
         token: CONFIG.token,
     });
-    Sail.director.runScene(new Hall());
+    loadAssets('hall').then(() => {
+        Sail.director.runScene(new Hall());
+    });
 };
 
 Sail.run({

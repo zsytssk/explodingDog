@@ -1,6 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { RES } from '../../data/res';
 import { GameWrap } from '../game/sceneWrap';
+import { loadAssets } from '../loaing/main'
 
 import { TopBar } from './topbar';
 import './valuebar';
@@ -53,6 +54,8 @@ export class Hall extends Sail.Scene {
 
     joinRoom(data) {
         Sail.director.closeAll();
-        Sail.director.runScene(new GameWrap());
+        loadAssets('normal').then(() => {
+            Sail.director.runScene(new GameWrap());
+        });
     }
 }
