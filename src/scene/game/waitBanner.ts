@@ -5,6 +5,8 @@ interface Link {
     countdown_view: Laya.Sprite;
     count_down_text: Laya.Text;
 }
+
+/** 快速匹配进入游戏 匹配 + 马上要开始倒计时 */
 export class WaitBannerCtrl extends BaseCtrl {
     protected link = {} as Link;
     constructor(match_view, countdown_view) {

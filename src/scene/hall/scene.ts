@@ -1,5 +1,6 @@
 import { CMD } from '../../data/cmd';
 import { RES } from '../../data/res';
+import { GameWrap } from '../game/sceneWrap';
 
 import { TopBar } from './topbar';
 import './valuebar';
@@ -20,6 +21,7 @@ export class Hall extends Sail.Scene {
         this.ACTIONS = {
             [CMD.GET_USER_INFO]: this.setUserInfo,
             [CMD.GET_USER_AMOUNT]: this.setUserAmount,
+            [CMD.JOIN_ROOM]: this.joinRoom
         };
         Sail.io.register(this.ACTIONS, this);
         let bgImg = new Laya.Image('images/bg/bg.jpg');
@@ -33,13 +35,13 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
-    initEvent() {}
+    initEvent() { }
 
     onExit() {
         // Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) {}
+    onResize(width, height) { }
 
     setUserInfo(data) {
         this.content.updateView(data);
@@ -47,5 +49,10 @@ export class Hall extends Sail.Scene {
 
     setUserAmount(data) {
         this.topbar.updateView(data);
+    }
+
+    joinRoom(data) {
+        Sail.director.closeAll();
+        Sail.director.runScene(new GameWrap());
     }
 }

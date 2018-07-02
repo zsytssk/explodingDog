@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":5,
-    "selecteID":7,
+    "selectedBox":2,
+    "selecteID":4,
     "props":{"width":411,"sceneColor":"#000000","height":602},
     "nodeParent":-1,
     "label":"View",
@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":478,"x":67,"var":"chooseBtn","skin":"images/cards/btn_choose.png"},
+                    "props":{"y":522,"x":198,"var":"chooseBtn","skin":"images/cards/btn_choose.png","pivotY":44,"pivotX":131,"appendProps":"laya/pages/scaleImg.prop"},
                     "nodeParent":2,
                     "label":"Image(chooseBtn)",
                     "isDirectory":false,
@@ -81,9 +81,9 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":8,"x":40,"width":201,"var":"staminaLabl","text":"(         - 10 ) ","height":54,"fontSize":35,"color":"#ffffff"},
+                            "props":{"y":8,"x":40,"width":201,"var":"staminaLabel","text":"(         - 10 ) ","height":54,"fontSize":35,"color":"#ffffff"},
                             "nodeParent":5,
-                            "label":"Label(staminaLabl)",
+                            "label":"Label(staminaLabel)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,

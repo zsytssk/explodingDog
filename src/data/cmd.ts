@@ -8,4 +8,7 @@ export const CMD = {
     GET_USER_AMOUNT: 'getUserAmount',
     /** 用户信息 */
     GET_USER_INFO: 'getUserInfo',
+    /** 加入房间  */
+    JOIN_ROOM: 'joinRoom',
+    OUT_ROOM: 'outRoom',
 };

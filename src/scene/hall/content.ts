@@ -1,3 +1,5 @@
+import { PopupCards } from '../popup/popupCards';
+
 export class HallContent extends ui.hall.hallcontentUI {
     constructor() {
         super();
@@ -9,7 +11,11 @@ export class HallContent extends ui.hall.hallcontentUI {
     }
     initEvent() {
         this.btnPlay.on(Laya.Event.CLICK, this, () => {
-            console.log(111111);
+            let popupCards = new PopupCards();
+            popupCards.setType('play');
+            popupCards.popupEffect = null;
+            popupCards.closeEffect = null;
+            Sail.director.popScene(popupCards);
         });
     }
     updateView(data) {

@@ -1,3 +1,16 @@
+/**
+ * 获取节点所有一级子节点
+ * @param sprite 
+ */
+export function getChildren(sprite) {
+    let arr = [];
+    for (let i = 0; i < sprite.numChildren; i++) {
+        const child = sprite.getChildAt(i);
+        arr.push(child);
+    }
+    return arr;
+}
+
 /*
     从前往后寻找 和从后往前寻找有什么区别？
     queryElements 我先写一个从前往后寻找的
@@ -449,7 +462,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const empty_fn = () => { };
 
     if (!type) {
         return empty_fn;
@@ -465,7 +478,7 @@ export function createLogAll() {
 // log
 export function createLog(log_type?) {
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const empty_fn = () => { };
 
     const type = log_type || debugFE();
 

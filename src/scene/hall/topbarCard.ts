@@ -12,4 +12,8 @@ export class TopBar extends ui.hall.topbarCardUI {
         this.stamina.setValue([stamina, upperLimit]);
         this.diamond.setValue([bone]);
     }
+
+    setTitle(text) {
+        this.title.skin = `images/cards/text_${text}.png`;
+    }
 }
