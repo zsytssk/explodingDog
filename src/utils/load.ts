@@ -2,13 +2,22 @@ import * as isArray from 'lodash/isArray';
 import { callFunc } from './tool';
 import { log, logErr } from './zutil';
 
+export type ResStatus = 'loaded' | 'unload' | 'loading';
+export type ResMap = {
+    name: string;
+    res: any[];
+    res_dependencies?: any[]; // 依赖资源
+    resource_status: ResStatus;
+    res_relatives?: string[];
+    order?: number;
+}[];
 /** 加载队列 */
-type load_item = {
+type LoadItem = {
     res?: any[];
     /** 所属的ctrl名称 */
     res_name?: string;
     type: 'dependency' | 'relative';
-    status?: t_resource_status;
+    status?: ResStatus;
     resolve?: FuncVoid;
     reject?: FuncVoid;
     loading_fun?: FunLoading;
@@ -20,11 +29,11 @@ type FunLoading = (process: number) => void;
 /** loading的状态 空闲 正在加载 */
 type t_load_status = 'stop' | 'loading';
 class LoadUtil {
-    private load_queue: load_item[] = [];
+    private load_queue: LoadItem[] = [];
     private status: t_load_status = 'stop';
     private loader = Laya.loader;
     /** 正在加载的资源 */
-    private loading_item: load_item;
+    private loading_item: LoadItem;
     private res_map: ResMap;
     /** 设置资源列表 */
     public setResmap(res_map: ResMap) {
@@ -261,7 +270,7 @@ class LoadUtil {
         let res: any[];
         let order: number;
         let name: string;
-        let status: t_resource_status;
+        let status: ResStatus;
         let res_dependencies: any[];
         let res_relatives: any[];
 
@@ -270,7 +279,7 @@ class LoadUtil {
                 res = item.res;
                 name = item.name;
                 order = item.order;
-                status = item.resource_status as t_resource_status;
+                status = item.resource_status as ResStatus;
                 res_relatives = item.res_relatives;
                 res_dependencies = item.res_dependencies;
             }
@@ -287,7 +296,7 @@ class LoadUtil {
             status,
         };
     }
-    private addResToQueue(res_info: load_item) {
+    private addResToQueue(res_info: LoadItem) {
         const load_queue = this.load_queue;
 
         /** 如果正在加载的元素的优先级小于等于 要加载元素优先级, 停止正在加载的队列 */
@@ -311,7 +320,7 @@ class LoadUtil {
     /**
      * 设置resMap中资源的状态
      */
-    private setResStatus(res_name: string, status: t_resource_status) {
+    private setResStatus(res_name: string, status: ResStatus) {
         for (const item of this.res_map) {
             if (item.name === name) {
                 item.resource_status = status;

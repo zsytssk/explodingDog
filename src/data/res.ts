@@ -1,4 +1,4 @@
-export const ASSETS = {
+export const RES = {
     PRELOAD: [],
     COMPONENT: [
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
