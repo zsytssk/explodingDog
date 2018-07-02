@@ -144,17 +144,16 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":65,"x":330,"pivotY":65,"pivotX":330,"appendProps":"laya/pages/scaleBox.prop"},
+                    "props":{"y":65,"x":330,"var":"btnPlay","pivotY":65,"pivotX":330,"appendProps":"laya/pages/scaleBox.prop"},
                     "nodeParent":5,
-                    "label":"Box",
-                    "isOpen":true,
+                    "label":"Box(btnPlay)",
+                    "isOpen":false,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":6,
                     "child":[
                         {
-                            "x":45,
                             "type":"Image",
                             "props":{"skin":"images/hall/btn_bg.png"},
                             "nodeParent":6,
@@ -168,7 +167,6 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "props":{"y":27,"x":-25,"skin":"images/hall/icon_play.png"},
                             "nodeParent":6,
@@ -181,7 +179,6 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "props":{"y":34,"x":498,"skin":"images/hall/icon_go.png"},
                             "nodeParent":6,
@@ -194,7 +191,6 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "props":{"y":25,"x":159,"skin":"images/hall/text_play.png"},
                             "nodeParent":6,

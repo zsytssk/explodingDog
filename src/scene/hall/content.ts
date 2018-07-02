@@ -7,7 +7,11 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.expBar.bar.y = 2;
         this.initEvent();
     }
-    initEvent() {}
+    initEvent() {
+        this.btnPlay.on(Laya.Event.CLICK, this, () => {
+            console.log(111111);
+        });
+    }
     updateView(data) {
         this.userName.changeText(data.nickname);
         this.level.changeText(`Lv：${data.level}`);
