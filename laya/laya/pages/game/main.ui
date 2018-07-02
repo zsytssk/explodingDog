@@ -128,7 +128,7 @@
                             "props":{"x":35,"bottom":35},
                             "nodeParent":12,
                             "label":"UIView",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
@@ -352,7 +352,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/banner_match.ui",
+            "source":"game/bannerMatch.ui",
             "props":{"y":302,"x":400},
             "nodeParent":1,
             "label":"UIView",
@@ -366,7 +366,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/banner_countdown.ui",
+            "source":"game/bannerCountdown.ui",
             "props":{"y":580,"x":520,"bottom":30},
             "nodeParent":1,
             "label":"UIView",

@@ -1,6 +1,6 @@
 export const ASSETS = {
     PRELOAD: [],
-    GAME: [
+    COMPONENT: [
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
     ],

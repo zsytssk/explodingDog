@@ -9,6 +9,9 @@
 -   @todo
     -   选择卡组界面 chooseCardGroup
 
+
+* @todo 加入房间
+
 ## 2018-06-11 11:07:31
 
 -   sourcetree portable
