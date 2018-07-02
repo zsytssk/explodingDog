@@ -1,36 +1,56 @@
 ## 2018-06-29 10:25:00
 
-* @qeus loadUtil需要依赖ResMap..
-    * 这两者应该相互独立的
-    * load要踢除特定的资源格式...
-    * 减少依赖
+-   @ques model ctrl 这所有的一切都应该放在一个文件夹下面
+    -   属于一个命名空间内...
+    -   不 import 就不使用...
+    -   独立的功能...
 
--   @ques 小马哥 Laya.URL.version 如何设置的
+*   @ques 游戏的命令在 game_replay 之前收到如何处理
+    -   ...
+    -   能不能再 gameReplay 中再去注册其他的绑定
+    *   这因该是最好的方法..
 
-*   @ques 下面的代码是做什么的
+-   @ques 如何将游戏的逻辑清晰的表示出来
+
+    -   interface 然后实现 interface
+
+-   @ques 更新用户数目
+
+-   sail.io 只支持一个绑定 这个和我原来的 primus 如何处理
+
+    -   我原来的 primus 是如何可以注册多个事件的
+
+-   @ques loadUtil 需要依赖 ResMap..
+    -   这两者应该相互独立的
+    -   load 要踢除特定的资源格式...
+    -   减少依赖
+
+*   @ques 小马哥 Laya.URL.version 如何设置的
+
+-   @ques 下面的代码是做什么的
 
 ```js
-    Laya.SoundManager.setMusicVolume(0.4);
-    Laya.SoundManager.autoStopMusic = true;
+Laya.SoundManager.setMusicVolume(0.4);
+Laya.SoundManager.autoStopMusic = true;
 ```
 
-*   @ques 如何区分是不是有很多的区别
+-   @ques 如何区分是不是有很多的区别
     -   game_type 你
 
--   @ques box 返回 怎么显示原来的 box
+*   @ques box 返回 怎么显示原来的 box
 
-*   @todo
+-   @todo
     -   loading []
     -
 
--   @todo
+*   @todo
     -   选择卡组界面 chooseCardGroup
 
-*   @todo 加入房间
+-   @todo 加入房间
     -   @ques 房间那么多的状态如何去组织
         -   @init --> start --> ... 状态变化
 
--   出牌区 需要一张底图
+*   出牌区 需要一张底图
 
 ## 2018-06-11 11:07:31
 
@@ -136,7 +156,7 @@ this.bindOtherEvent(router, CMD.router_change, () => {
         this.hide();
     }
 });
-````
+```
 
 -   NodeCtrl 的作用
     -   view_class new..
