@@ -24,6 +24,9 @@ export class HallContent extends ui.hall.hallcontentUI {
             popupCards.closeEffect = null;
             Sail.director.popScene(popupCards);
         });
+        this.btnJoin.on(Laya.Event.CLICK, this, () => {
+            console.log(22222)
+        })
 
     }
     updateView(data) {
