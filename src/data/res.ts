@@ -15,4 +15,9 @@ export const RES = {
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
     ],
+    LOADING: [
+        { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },
+        { url: 'animation/loading.png', type: Laya.Loader.IMAGE },
+        { url: 'animation/loading.sk', type: Laya.Loader.BUFFER },
+    ]
 };

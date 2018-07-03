@@ -1,6 +1,6 @@
 import { CONFIG } from '../data/config';
-import { GameWrap } from '../scene/game/sceneWrap';
 import { load_util } from '../mcTmpl/utils/load';
+import { GameWrap } from '../scene/game/sceneWrap';
 import { TEST_TOKEN } from './testToken';
 
 interface CusWindow extends Window {
