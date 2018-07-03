@@ -1,6 +1,9 @@
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 import { WaitBannerCtrl } from './waitBanner';
+import { PlayerCtrl } from './player/player';
+import { CurPlayerCtrl } from './player/curPlayer';
+import { WaitBannerCtrl } from './waitBanner';
 
 /** 游戏状态: 等待 开始 结束 */
 type GameStatus = 'wait' | 'start' | 'end';

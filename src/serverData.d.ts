@@ -16,7 +16,7 @@ type UserData = {
     roomId: string;
     seatId: string;
     /** 手牌可数 */
-    shouLen: number;
+    shouLen?: number;
 };
 
 type UpdateUser = {
