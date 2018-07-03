@@ -1,4 +1,4 @@
-import { BaseCtrl } from '../../ctrl/component/base';
+import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 
 interface Link {
     match_view: Laya.Sprite;

@@ -1,5 +1,5 @@
 import { CMD } from '../../data/cmd';
-import { zutil } from '../../utils/zutil';
+import { zutil } from '../../mcTmpl/utils/zutil';
 import { Notify } from '../../utils/notify';
 import { NodeCtrl } from '../component/node';
 
@@ -8,7 +8,7 @@ interface i_fishnotice_link {
     notify: Notify;
 }
 
-let tpl = `
+const tpl = `
     {{if list}}
         {{each list}}
         <span color='{{if $value.color}}{{$value.color}}{{else}}#ffffff{{/if}}'>{{$value.content}}</span>
@@ -18,7 +18,7 @@ let tpl = `
     {{/if}}
 `;
 
-/**跑马灯的控制器*/
+/** 跑马灯的控制器 */
 export class MarqueeCtrl extends NodeCtrl {
     name = 'marquee';
     link: i_fishnotice_link;
@@ -28,12 +28,12 @@ export class MarqueeCtrl extends NodeCtrl {
     }
     init() {
         this.initLink();
-        this.onPrimusRecieve(CMD.noticeInTable, (data) => {
+        this.onPrimusRecieve(CMD.noticeInTable, data => {
             this.addNotice(data);
         });
 
         //跑马灯
-        this.onPrimusRecieve(CMD.noticeMain, (data) => {
+        this.onPrimusRecieve(CMD.noticeMain, data => {
             if (!data) {
                 return;
             }
@@ -41,21 +41,24 @@ export class MarqueeCtrl extends NodeCtrl {
         });
 
         /**poseidon信息展示 */
-        this.on(CMD.noticeInTable, (data) => {
+        this.on(CMD.noticeInTable, data => {
             this.addNotice(data);
         });
     }
     initLink() {
         let view = this.view;
-        let notify_box = zutil.getElementsByName(view, "notify_box")[0] as Laya.Label;
+        let notify_box = zutil.getElementsByName(
+            view,
+            'notify_box',
+        )[0] as Laya.Label;
         let notify = new Notify({
             width: 641,
             fontSize: 20,
             margin: 0,
             tpl: tpl,
             complete: () => {
-                this.hide()
-            }
+                this.hide();
+            },
         });
 
         notify.centerY = 0;

@@ -14,4 +14,6 @@ export const CMD = {
     OUT_ROOM: 'outRoom',
     /**创建房间 */
     CREATE_ROOM: 'createRoom',
+    /** 更新用户个数  */
+    UPDATE_USER: 'updateUser',
 };

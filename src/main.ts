@@ -1,24 +1,23 @@
-import './sail/lib/primus';
+import { CONFIG } from './data/config';
+import { RESMAP } from './data/resMap';
+import { load_util } from './mcTmpl/utils/load';
 import './sail/core/sail.core.js';
-import './sail/core/sail.utils.js';
-import './sail/core/sail.dialog.js';
-import './sail/core/sail.scene.js';
-import './sail/core/sail.director.js';
 import './sail/core/sail.viewer.js';
+import './sail/core/sail.utils.js';
 import './sail/core/sail.io.js';
+import './sail/core/sail.dialog.js';
+import './sail/core/sail.director.js';
 import './sail/core/sail.entrace.js';
+import './sail/core/sail.scene.js';
+import './sail/lib/primus';
 import './sail/tools/keyboard';
 import './sail/tools/notify';
-import './effect/scaleBtn';
-
-import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
-import { GameWrap } from './scene/game/sceneWrap';
-import { RESMAP } from './data/resMap';
-import { load_util } from './utils/load';
 import { loadAssets } from './scene/loaing/main';
 
-Sail.onStart = function () {
+import './effect/scaleBtn';
+
+Sail.onStart = () => {
     load_util.setResmap(RESMAP);
     if (Sail.DEBUG) {
         Laya.Stat.show();
@@ -28,10 +27,10 @@ Sail.onStart = function () {
     Sail.keyboard = new Tools.KeyBoardNumber();
 
     Sail.io.init({
-        type: 'primus',
-        URL: CONFIG.websocket_url,
         publicKey: CONFIG.publick_key,
         token: CONFIG.token,
+        type: 'primus',
+        URL: CONFIG.websocket_url,
     });
     loadAssets('hall').then(() => {
         Sail.director.runScene(new Hall());
@@ -39,11 +38,11 @@ Sail.onStart = function () {
 };
 
 Sail.run({
-    WIDTH: 1334,
-    HEIGHT: 750,
-    SCREEN_MODE: Laya.Stage.SCREEN_HORIZONTAL, //可选自动横屏:Laya.Stage.SCREEN_HORIZONTAL 或者 自动竖屏:Laya.Stage.SCREEN_VERTICAL
-    SCALE_MODE: Laya.Stage.SCALE_FIXED_WIDTH, //自动横屏时选择:Laya.Stage.SCALE_FIXED_WIDTH  自动竖屏时选择:Laya.Stage.SCALE_FIXED_HEIGHT
     BASE_PATH: CONFIG.cdn_url,
-    DIALOGTYPE: 'multiple', //弹窗模式 single:弹出弹窗时自动关闭其他弹窗, multiple : 允许弹出多层弹窗，可使用"closeOther:true"在弹出时关闭其他弹窗
+    DIALOGTYPE: 'multiple', // 弹窗模式 single:弹出弹窗时自动关闭其他弹窗, multiple : 允许弹出多层弹窗，可使用"closeOther:true"在弹出时关闭其他弹窗
+    HEIGHT: 750,
+    SCALE_MODE: Laya.Stage.SCALE_FIXED_WIDTH, // 自动横屏时选择:Laya.Stage.SCALE_FIXED_WIDTH  自动竖屏时选择:Laya.Stage.SCALE_FIXED_HEIGHT
+    SCREEN_MODE: Laya.Stage.SCREEN_HORIZONTAL, // 可选自动横屏:Laya.Stage.SCREEN_HORIZONTAL 或者 自动竖屏:Laya.Stage.SCREEN_VERTICAL
     VERSION: CONFIG.cdn_version,
+    WIDTH: 1334,
 });

@@ -1,4 +1,4 @@
-import { load_util } from '../../utils/load';
+import { load_util } from '../../mcTmpl/utils/load';
 
 export function loadAssets(name) {
     return load_util.load('loading').then(() => {
@@ -11,18 +11,20 @@ function load(name) {
     const startTime = Date.parse(new Date());
     let loadingUI = new LoadingUI();
     Laya.stage.addChild(loadingUI);
-    return load_util.load(name, (progress) => {
-        loadingUI.updateProgrss(Math.floor(progress * 100))
-    }).then(() => {
-        const finishTime = Date.parse(new Date());
-        if (finishTime - startTime < delay) {
-            setTimeout(() => {
+    return load_util
+        .load(name, progress => {
+            loadingUI.updateProgrss(Math.floor(progress * 100));
+        })
+        .then(() => {
+            const finishTime = Date.parse(new Date());
+            if (finishTime - startTime < delay) {
+                setTimeout(() => {
+                    loadingUI.destroy();
+                }, delay);
+            } else {
                 loadingUI.destroy();
-            }, delay);
-        } else {
-            loadingUI.destroy();
-        }
-    });
+            }
+        });
 }
 
 class LoadingUI extends ui.loading.mainUI {
@@ -30,9 +32,7 @@ class LoadingUI extends ui.loading.mainUI {
         super();
         this.init();
     }
-    init() {
-
-    }
+    init() {}
     updateProgrss(progress) {
         this.rateLabel.changeText(progress + '%');
     }

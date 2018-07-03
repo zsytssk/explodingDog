@@ -1,13 +1,13 @@
 import { maxBy } from 'lodash';
 
-import { animate } from '../../utils/animate';
+import { animate } from '../../mcTmpl/utils/animate';
 import {
     getElementsByName,
     isClosest,
     log,
     queryClosest,
     querySiblings,
-} from '../../utils/zutil';
+} from '../../mcTmpl/utils/zutil';
 import { AppCtrl, cmd as AppCmd } from '../app';
 import { BaseCtrl } from '../component/base';
 import { FullScreenBgCtrl } from '../component/bg';
