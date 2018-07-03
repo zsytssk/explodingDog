@@ -1,7 +1,10 @@
 {
-    "cmd": "updateUser",
+    "cmd": "gameStart",
     "code": 200,
     "res": {
+        "bombProb": 12,
+        "remainCard": 20,
+        "shou": [3301, 3302, 3303],
         "userList": [
             {
                 "userId": "4002",

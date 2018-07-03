@@ -1,30 +1,32 @@
 ## 2018-06-29 10:25:00
 
-* @ques typescript item of array
+-   @todo ts laya 项目
 
--   @note 同一个数据 model 和 ctrl 分离两个人来做
+-   @ques typescript item of array
+
+*   @note 同一个数据 model 和 ctrl 分离两个人来做
     -   偷牌
 
-*   @ques gameReplay
+-   @ques gameReplay
 
--   @qeus 牌的信息是什么样子的
+*   @qeus 牌的信息是什么样子的
 
--   @ques console.log 要不要用 sail 的
+*   @ques console.log 要不要用 sail 的
 
-*   @ques 怎么判断用户是不是房主 @zengxiaoping
+-   @ques 怎么判断用户是不是房主 @zengxiaoping
 
-*   @ques model;> add_player 再去创建 ctrl
+-   @ques model;> add_player 再去创建 ctrl
     -   可以吗 ?
     -   是不是更好...
 
--   @ques 章旸分工
+*   @ques 章旸分工
     -   房间里面的逻辑是我管的, 按照我的规则
     *   不要动的我的 model..
     *   有意见尽管提...
 
-*   @note 查找未使用的资源
+-   @note 查找未使用的资源
 
--   @todo
+*   @todo
 
     -   快速匹配
         -   玩家加入
@@ -36,36 +38,36 @@
     *   ---
     *   @ques 服务器的 api 有没有这个数据
 
-*   mcTmpl [框架名称]
+-   mcTmpl [框架名称]
 
--   @ques model ctrl 这所有的一切都应该放在一个文件夹下面
+*   @ques model ctrl 这所有的一切都应该放在一个文件夹下面
     -   属于一个命名空间内...
     -   不 import 就不使用...
     -   独立的功能...
 
-*   @ques 游戏的命令在 game_replay 之前收到如何处理
+-   @ques 游戏的命令在 game_replay 之前收到如何处理
     -   ...
     -   能不能再 gameReplay 中再去注册其他的绑定
     *   这因该是最好的方法..
 
--   @ques 如何将游戏的逻辑清晰的表示出来
+*   @ques 如何将游戏的逻辑清晰的表示出来
 
     -   interface 然后实现 interface
 
--   @ques 更新用户数目
+*   @ques 更新用户数目
 
--   sail.io 只支持一个绑定 这个和我原来的 primus 如何处理
+*   sail.io 只支持一个绑定 这个和我原来的 primus 如何处理
 
     -   我原来的 primus 是如何可以注册多个事件的
 
--   @ques loadUtil 需要依赖 ResMap..
+*   @ques loadUtil 需要依赖 ResMap..
     -   这两者应该相互独立的
     -   load 要踢除特定的资源格式...
     -   减少依赖
 
-*   @ques 小马哥 Laya.URL.version 如何设置的
+-   @ques 小马哥 Laya.URL.version 如何设置的
 
--   @ques 下面的代码是做什么的
+*   @ques 下面的代码是做什么的
 
 ```js
 Laya.SoundManager.setMusicVolume(0.4);

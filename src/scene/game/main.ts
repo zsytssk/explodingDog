@@ -35,6 +35,9 @@ export class GameCtrl extends BaseCtrl {
     constructor(view: Laya.Node) {
         super();
         this.link.view = view;
+
+        /** @test */
+        (window as any).game_ctrl = this;
     }
     public init() {
         this.initLink();
@@ -83,6 +86,7 @@ export class GameCtrl extends BaseCtrl {
         this.actions = {
             [CMD.GAME_REPLAY]: this.gameReplay,
             [CMD.UPDATE_USER]: this.updateUser,
+            [CMD.GAME_START]: this.gameStart,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -97,6 +101,7 @@ export class GameCtrl extends BaseCtrl {
     /** 游戏复盘逻辑 */
     private gameReplay(data: GameReplayData) {
         this.cur_seat_id = Number(data.curUserInfo.seatId);
+        /** @test  */
         const type_no = data.roomInfo.isUserCreate || 0;
         const status_no = data.roomInfo.roomStatus;
         this.model.setGameType(game_type_list[type_no] as GameType);
@@ -106,6 +111,10 @@ export class GameCtrl extends BaseCtrl {
     /** 更新用户的个数 */
     private updateUser(data: UpdateUser) {
         this.model.updatePlayers(data.userList);
+    }
+    /** 游戏开始 */
+    private gameStart(data: GameStartData) {
+        this.model.setGameStatus(game_status_list[2] as GameStatus);
     }
     /** 添加用户 */
     private addPlayer = (player: PlayerModel) => {

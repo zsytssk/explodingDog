@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":1,
+    "selecteID":4,
     "props":{"width":217,"sceneColor":"#000000","height":217},
     "nodeParent":-1,
     "label":"View",
@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":108,"x":108,"width":171,"var":"tip","skin":"images/game/docker_rate.png","height":142,"anchorY":1,"anchorX":0.5},
+            "props":{"y":102,"x":108,"width":171,"var":"tip","skin":"images/game/docker_rate.png","height":142,"anchorY":1,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(tip)",
             "isOpen":true,
@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":6,"x":19,"skin":"images/game/docker_rate_txt.png"},
+                    "props":{"y":10,"x":19,"skin":"images/game/docker_rate_txt.png"},
                     "nodeParent":4,
                     "label":"Image",
                     "isDirectory":false,
@@ -51,7 +51,7 @@
                     "child":[
                         ]
                 }],
-            "$HIDDEN":true
+            "$HIDDEN":false
         },
         {
             "x":15,

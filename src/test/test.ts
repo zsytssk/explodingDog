@@ -2,7 +2,7 @@ import { CONFIG } from '../data/config';
 import { load_util } from '../mcTmpl/utils/load';
 import { GameWrap } from '../scene/game/sceneWrap';
 import { TEST_TOKEN } from './testToken';
-
+import * as game from './game';
 interface CusWindow extends Window {
     load_util: typeof load_util;
     CONFIG: typeof CONFIG;
@@ -11,6 +11,7 @@ interface CusWindow extends Window {
 if (Sail.DEBUG) {
     (window as CusWindow).load_util = load_util;
     (window as CusWindow).CONFIG = CONFIG;
+    (window as any).test = game;
     Laya.Stat.show(0, 0);
 
     const user_id = Sail.Utils.getUrlParam('user_id');
