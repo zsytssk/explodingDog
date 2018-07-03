@@ -1,9 +1,9 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":4,
-    "selecteID":5,
-    "props":{"width":217,"sceneColor":"#000000","height":217},
+    "selectedBox":1,
+    "selecteID":4,
+    "props":{"width":217,"visible":false,"sceneColor":"#000000","height":217},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,22 +15,23 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":199,"x":95,"skin":"images/game/docker_wire.png"},
+            "props":{"y":199,"x":95,"visible":false,"var":"wire","skin":"images/game/docker_wire.png"},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(wire)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":7,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":108,"x":108,"width":171,"skin":"images/game/docker_rate.png","height":142,"anchorY":1,"anchorX":0.5},
+            "props":{"y":108,"x":108,"width":171,"var":"tip","skin":"images/game/docker_rate.png","height":142,"anchorY":1,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(tip)",
             "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
@@ -49,12 +50,13 @@
                     "compId":5,
                     "child":[
                         ]
-                }]
+                }],
+            "$HIDDEN":true
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":-3,"x":-87,"skin":"images/game/docker_bg.png"},
+            "props":{"y":0,"x":-103,"skin":"images/game/docker_bg.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -80,9 +82,9 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":108,"x":108,"width":93,"skin":"images/game/docker_arrow.png","rotation":0,"pivotY":18,"pivotX":75,"height":37},
+            "props":{"y":108,"x":108,"width":93,"var":"arrow","skin":"images/game/docker_arrow.png","rotation":0,"pivotY":18,"pivotX":75,"height":37},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(arrow)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

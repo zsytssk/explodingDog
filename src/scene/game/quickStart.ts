@@ -7,7 +7,7 @@ interface Link {
 }
 
 /** 快速匹配进入游戏 匹配 + 马上要开始倒计时 */
-export class WaitBannerCtrl extends BaseCtrl {
+export class QuickStartCtrl extends BaseCtrl {
     protected link = {} as Link;
     constructor(match_view, countdown_view) {
         super();
@@ -28,11 +28,14 @@ export class WaitBannerCtrl extends BaseCtrl {
         match_view.visible = false;
         countdown_view.visible = false;
     }
-    public show(count_down: number) {
-        const { match_view, countdown_view, count_down_text } = this.link;
+    public show() {
+        const { match_view, countdown_view } = this.link;
         match_view.visible = true;
         countdown_view.visible = true;
-
+    }
+    /** 设置倒计时 */
+    public setCountDown(count_down: number) {
+        const { count_down_text } = this.link;
         count_down_text.text = count_down + '';
     }
 }
