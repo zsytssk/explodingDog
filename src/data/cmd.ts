@@ -10,5 +10,8 @@ export const CMD = {
     GET_USER_INFO: 'getUserInfo',
     /** 加入房间  */
     JOIN_ROOM: 'joinRoom',
+    /**离开房间 */
     OUT_ROOM: 'outRoom',
+    /**创建房间 */
+    CREATE_ROOM: 'createRoom',
 };

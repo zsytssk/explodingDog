@@ -22,7 +22,8 @@ export class Hall extends Sail.Scene {
         this.ACTIONS = {
             [CMD.GET_USER_INFO]: this.setUserInfo,
             [CMD.GET_USER_AMOUNT]: this.setUserAmount,
-            [CMD.JOIN_ROOM]: this.joinRoom
+            [CMD.JOIN_ROOM]: this.joinRoom,
+            [CMD.CREATE_ROOM]: this.createRoom,
         };
         Sail.io.register(this.ACTIONS, this);
         let bgImg = new Laya.Image('images/bg/bg.jpg');
@@ -39,7 +40,7 @@ export class Hall extends Sail.Scene {
     initEvent() { }
 
     onExit() {
-        // Sail.io.unregister(this.ACTIONS);
+        Sail.io.unregister(this.ACTIONS);
     }
 
     onResize(width, height) { }
@@ -58,4 +59,13 @@ export class Hall extends Sail.Scene {
             Sail.director.runScene(new GameWrap());
         });
     }
+
+    createRoom(data) {
+        if (data.code == 200) {
+            loadAssets('normal').then(() => {
+                Sail.director.runScene(new GameWrap());
+            });
+        }
+    }
+
 }

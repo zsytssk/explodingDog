@@ -17,6 +17,14 @@ export class HallContent extends ui.hall.hallcontentUI {
             popupCards.closeEffect = null;
             Sail.director.popScene(popupCards);
         });
+        this.btnCreate.on(Laya.Event.CLICK, this, () => {
+            let popupCards = new PopupCards();
+            popupCards.setType('create');
+            popupCards.popupEffect = null;
+            popupCards.closeEffect = null;
+            Sail.director.popScene(popupCards);
+        });
+
     }
     updateView(data) {
         this.userName.changeText(data.nickname);
