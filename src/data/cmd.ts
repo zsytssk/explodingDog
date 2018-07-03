@@ -4,6 +4,8 @@ export const CMD = {
     CARD_TYPE_LIST: 'cardTypeList',
     /** 游戏复盘 */
     GAME_REPLAY: 'gameReplay',
+    /** 游戏开始 */
+    GAME_START: 'gameStart',
     /**  体力和骨头  */
     GET_USER_AMOUNT: 'getUserAmount',
     /** 用户信息 */
@@ -17,5 +19,5 @@ export const CMD = {
     /** 更新用户个数  */
     UPDATE_USER: 'updateUser',
     /**房主修改卡组 */
-    CHANGE_CARD_TYPE: 'changeCardType'
+    CHANGE_CARD_TYPE: 'changeCardType',
 };

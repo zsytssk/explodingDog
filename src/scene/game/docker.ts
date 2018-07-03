@@ -39,6 +39,5 @@ export class DockerCtrl extends BaseCtrl {
         const { wire, tip, arrow } = this.link;
         wire.visible = false;
         tip.visible = false;
-        arrow.visible = false;
     }
 }

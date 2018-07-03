@@ -81,12 +81,13 @@
         "roomInfo": {
             "cardType": "1",
             "roomId": "15305893888266262",
-            "roomStatus": "3",
+            "roomStatus": "0",
             "userCount": "2",
             "createUser": "",
             "createTime": "1530589388827",
             "activeTime": "1530589388827",
             "danGrading": "13",
+            "isUserCreate": 1,
             "roundId": "15305893888266262931312"
         },
         "roundInfo": {
