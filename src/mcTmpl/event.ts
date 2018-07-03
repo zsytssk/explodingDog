@@ -25,6 +25,9 @@ type t_hook_funs = {
     [x: string]: t_hook_fun_item[];
 };
 
+export const event = {
+    destroy: 'destroy',
+};
 /** 事件基础类 */
 export abstract class BaseEvent {
     /** id:> 每一个对象在创建时都会创建一个唯一id */

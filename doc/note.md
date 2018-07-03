@@ -1,5 +1,28 @@
 ## 2018-06-29 10:25:00
-* @note 查找未使用的资源
+
+* @ques typescript item of array
+
+-   @note 同一个数据 model 和 ctrl 分离两个人来做
+    -   偷牌
+
+*   @ques gameReplay
+
+-   @qeus 牌的信息是什么样子的
+
+-   @ques console.log 要不要用 sail 的
+
+*   @ques 怎么判断用户是不是房主 @zengxiaoping
+
+*   @ques model;> add_player 再去创建 ctrl
+    -   可以吗 ?
+    -   是不是更好...
+
+-   @ques 章旸分工
+    -   房间里面的逻辑是我管的, 按照我的规则
+    *   不要动的我的 model..
+    *   有意见尽管提...
+
+*   @note 查找未使用的资源
 
 -   @todo
 

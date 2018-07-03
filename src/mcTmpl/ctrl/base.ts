@@ -32,6 +32,7 @@ export class BaseCtrl extends BaseEvent {
     protected link: t_any_obj = {};
     /**  是否是最顶级的ctrl  */
     protected is_top: boolean = false;
+    protected model: BaseEvent;
     public res_name: string;
     /** 添加view:any的作用是让处理将 GameNormalCtrl 赋值给 typeof BaseCtrl出错的问题 */
     constructor(view?: any) {
@@ -316,6 +317,15 @@ export class BaseCtrl extends BaseEvent {
     /**  获得ctrl子元素的个数  */
     public get numChildren(): number {
         return this.children.length;
+    }
+    /** 在model上面绑定事件处理函数 */
+    protected onModel(event_name: string, callback?: FuncListener) {
+        const model = this.model;
+        if (!model) {
+            return;
+        }
+
+        this.bindOtherEvent(model, event_name, callback);
     }
     /** 取消所有需要延迟执行的函数 */
     protected clearAllTimeout() {

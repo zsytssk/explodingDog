@@ -1,11 +1,11 @@
-import { BaseCtrl } from '../../../mcTmpl/ctrl/base';
+import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 
 export interface Link {
-    view: Laya.Node;
+    view: Laya.Sprite;
 }
 
 /**  */
-export class PlayerCtrl extends BaseCtrl {
+export class DiscardZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
     constructor(view) {
         super();
@@ -17,5 +17,7 @@ export class PlayerCtrl extends BaseCtrl {
     }
     protected initLink() {}
     protected initEvent() {}
-    public loadModel() {}
+    public hide() {
+        this.link.view.visible = false;
+    }
 }
