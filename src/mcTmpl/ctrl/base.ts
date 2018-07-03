@@ -1,26 +1,13 @@
-import { isFunc } from '../../utils/tool';
+import { BaseEvent } from '../event';
 import {
-    detectModel,
     getCtrlTreePath,
-    getElementsByName,
     log,
-    logAll,
     logErr,
     queryCheck,
-    queryClosest,
     queryElements,
     queryTop,
-} from '../../utils/zutil';
-import { AppCtrl } from '../app';
-import { AjaxCtrl } from '../network/ajax';
-import { PrimusCtrl } from '../network/primus';
-import { BaseEvent } from './event';
+} from '../utils/zutil';
 
-type t_base_ctrl_local_link = {
-    app: AppCtrl;
-    primus_ctrl: PrimusCtrl;
-    ajax_ctrl: AjaxCtrl;
-};
 type t_hook_node_fun_item = {
     /** 绑定的node */
     Node: Laya.Node;
@@ -34,8 +21,6 @@ type t_hook_node_funs = t_hook_node_fun_item[];
 /**  ctrl 的基本类, 所有的事件处理类  */
 export class BaseCtrl extends BaseEvent {
     public readonly name: string = 'base_ctrl';
-    /** primus 需要频繁传递, 如果每次都去寻找primus很消耗性能, 需要绑定这这里 */
-    private local_link = {} as t_base_ctrl_local_link;
     private hook_node_funs = [] as t_hook_node_funs;
     protected children = [] as BaseCtrl[];
     protected parent: BaseCtrl = null;
@@ -240,123 +225,6 @@ export class BaseCtrl extends BaseEvent {
 
         this.trigger(event_name, data);
     }
-    /**
-     * 发送信息到primus
-     * @param event_name 事件名称
-     * @param data 传过去的数据
-     * @param callback primus 返回函数的处理
-     */
-    protected emitToPrimus(
-        event_name: string,
-        data?: t_any_obj,
-        callback?: FuncListener,
-    ) {
-        // 如果ctrl不再目录树中, 无需做处理
-        if (!this.in_ctrl_tree) {
-            logErr(`${this.name} not in ctrl tree`);
-            return;
-        }
-        if (!this.local_link.app) {
-            this.local_link.app = queryClosest(this, 'name:app') as AppCtrl;
-        }
-        const app = this.local_link.app;
-        if (!app) {
-            logAll(`can't find app!`);
-            return;
-        }
-        if (!this.local_link.primus_ctrl) {
-            this.local_link.primus_ctrl = getElementsByName(
-                app,
-                'primus',
-            )[0] as PrimusCtrl;
-        }
-        const primus_ctrl = this.local_link.primus_ctrl;
-        if (!primus_ctrl) {
-            logAll(`can't find primus_ctrl!`);
-            return;
-        }
-
-        if (isFunc(callback)) {
-            this.bindOtherEvent(primus_ctrl, event_name, callback, true);
-        }
-
-        primus_ctrl.emitToServer(event_name, data);
-    }
-    /**
-     * 发送信息到ajax
-     * @param event_name 事件名称
-     * @param data 传过去的数据
-     * @param callback ajax 返回函数的处理
-     * @param data_type ajax 数据类型 app.logOut不是json类型
-     */
-    protected emitToAjax(
-        event_name: string,
-        data?: t_any_obj,
-        callback?: FuncListener,
-        data_type?,
-    ) {
-        // 如果ctrl不再目录树中, 无需做处理
-        if (!this.in_ctrl_tree) {
-            logErr(`${this.name} not in ctrl tree`);
-            return;
-        }
-        if (!this.local_link.app) {
-            this.local_link.app = queryClosest(this, 'name:app') as AppCtrl;
-        }
-        const app = this.local_link.app;
-        if (!app) {
-            logAll(`can't find app!`);
-            return;
-        }
-        if (!this.local_link.ajax_ctrl) {
-            this.local_link.ajax_ctrl = getElementsByName(
-                app,
-                'ajax',
-            )[0] as AjaxCtrl;
-        }
-        const ajax_ctrl = this.local_link.ajax_ctrl;
-        if (!ajax_ctrl) {
-            return;
-        }
-
-        if (isFunc(callback)) {
-            this.bindOtherEvent(ajax_ctrl, event_name, callback, true);
-        }
-        ajax_ctrl.request(event_name, data, data_type);
-
-        if (detectModel('autoTest')) {
-            this.broadcast(event_name, 'app::test', data);
-        }
-    }
-    /**
-     * 在primus_ctrl注册接收事件的处理函数
-     * @param event_name 接收事件
-     * @param callback 返回函数的处理
-     * @param once 是否执行一次
-     */
-    protected onPrimusRecieve(
-        event_name: string,
-        callback?: (data: t_any_obj) => void,
-        once?: boolean,
-    ) {
-        if (!this.in_ctrl_tree) {
-            return;
-        }
-
-        if (!isFunc(callback)) {
-            log(`no callback for ${event_name}`);
-            return;
-        }
-        const app = queryClosest(this, 'name:app') as AppCtrl;
-        if (!app) {
-            return;
-        }
-        const primus_ctrl = getElementsByName(app, 'primus')[0] as PrimusCtrl;
-        if (!primus_ctrl) {
-            return;
-        }
-        this.bindOtherEvent(primus_ctrl, event_name, callback, once);
-    }
     /**  添加childCtrl  */
     public addChild(childCtrl: BaseCtrl) {
         const child_list = this.children;
@@ -539,6 +407,5 @@ export class BaseCtrl extends BaseEvent {
             this.parent = null;
         }
         this.link = null;
-        this.local_link = null;
     }
 }

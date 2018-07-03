@@ -1,5 +1,5 @@
-import { callFunc } from '../../utils/tool';
-import { createRandomString, log, logAll } from '../../utils/zutil';
+import { callFunc } from '../utils/tool';
+import { createRandomString, log, logAll } from './utils/zutil';
 
 type i_hook_other_event = {
     /** 绑定对象id, 用于在清除的时候进行对比 */

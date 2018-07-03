@@ -1,16 +1,16 @@
 import * as isArray from 'lodash/isArray';
-import { callFunc } from './tool';
 import { log, logErr } from './zutil';
 
 export type ResStatus = 'loaded' | 'unload' | 'loading';
-export type ResMap = {
+export type ResMap = Array<{
     name: string;
     res: any[];
     res_dependencies?: any[]; // 依赖资源
     resource_status: ResStatus;
     res_relatives?: string[];
     order?: number;
-}[];
+}>;
+
 /** 加载队列 */
 type LoadItem = {
     res?: any[];
@@ -89,8 +89,9 @@ class LoadUtil {
                 return;
             }
             this.loading_item = null;
-
-            callFunc(resolve);
+            if (typeof resolve === 'function') {
+                resolve();
+            }
             this.loadingQueue();
         };
 

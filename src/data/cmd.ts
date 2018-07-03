@@ -11,4 +11,6 @@ export const CMD = {
     /** 加入房间  */
     JOIN_ROOM: 'joinRoom',
     OUT_ROOM: 'outRoom',
+    /** 更新用户个数  */
+    UPDATE_USER: 'updateUser',
 };

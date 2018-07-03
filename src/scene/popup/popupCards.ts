@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { CardPack } from './component/cardPack';
 import { TopBar } from '../hall/topbarCard';
-import { getChildren } from '../../utils/zutil';
+import { getChildren } from '../../mcTmpl/utils/zutil';
 
 const position2 = [190, 730];//两个牌组时的定位
 const position3 = [20, 460, 900];//三个牌组时的定位

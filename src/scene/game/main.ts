@@ -1,6 +1,5 @@
-import { BaseCtrl } from '../../ctrl/component/base';
 import { CMD } from '../../data/cmd';
-
+import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 import { WaitBannerCtrl } from './waitBanner';
 
 /** 游戏状态: 等待 开始 结束 */
@@ -41,11 +40,15 @@ export class GameCtrl extends BaseCtrl {
     protected initEvnet() {
         this.actions = {
             [CMD.GAME_REPLAY]: this.gameReplay,
+            [CMD.UPDATE_USER]: this.updateUser,
         };
         Sail.io.register(this.actions, this);
+        Sail.io.emit(CMD.GAME_REPLAY);
     }
     /** 游戏复盘逻辑 */
     private gameReplay = data => {};
+    /** 更新用户的个数 */
+    private updateUser = data => {};
     public destroy() {
         Sail.io.unRegister(this.actions);
     }

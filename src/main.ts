@@ -13,9 +13,8 @@ import './effect/scaleBtn';
 
 import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
-import { GameWrap } from './scene/game/sceneWrap';
 
-Sail.onStart = function () {
+Sail.onStart = function() {
     if (Sail.DEBUG) {
         Laya.Stat.show();
     }
