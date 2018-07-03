@@ -32,6 +32,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
                     Sail.io.emit(CMD.CHANGE_CARD_TYPE, {
                         cardType: cardType
                     });
+                    Sail.director.closeByName('popupCards');
                     break;
                 default:
                     break;
@@ -46,7 +47,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
     setType(type) {
         this.type = type;
         if (type == 'choose') {
-            this.staminaLabel.visible = false;
+            this.staminaBox.visible = false;
         }
     }
 }

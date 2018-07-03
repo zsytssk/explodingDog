@@ -12,6 +12,7 @@ export class PopupCards extends ui.popup.popupCardsUI {
         this.init();
     }
     init() {
+        this.name = 'popupCards';
         this.topbar = new TopBar();
         this.topbar.top = 20;
         this.addChild(this.topbar);

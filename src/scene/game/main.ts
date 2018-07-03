@@ -52,7 +52,6 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(quick_start_ctrl);
         quick_start_ctrl.init();
         this.link.quick_start_ctrl = quick_start_ctrl;
-
         const host_zone_ctrl = new HostZoneCtrl(view.host_zone);
         this.addChild(host_zone_ctrl);
         host_zone_ctrl.init();

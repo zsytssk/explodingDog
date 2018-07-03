@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":224,"x":51,"var":"chooseCardBtn","stateNum":"1","skin":"images/game/btn_choose_card_type.png","appendProps":"laya/pages/scaleBtn.prop"},
+            "props":{"y":258,"x":158,"width":211,"var":"chooseCardBtn","stateNum":"1","skin":"images/game/btn_choose_card_type.png","pivotY":34,"pivotX":107,"height":70,"appendProps":"laya/pages/scaleBtn.prop"},
             "nodeParent":1,
             "label":"Button(chooseCardBtn)",
             "isDirectory":false,
