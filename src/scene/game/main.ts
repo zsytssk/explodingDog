@@ -95,18 +95,18 @@ export class GameCtrl extends BaseCtrl {
         });
     }
     /** 游戏复盘逻辑 */
-    private gameReplay = (data: GameReplayData) => {
+    private gameReplay(data: GameReplayData) {
         this.cur_seat_id = Number(data.curUserInfo.seatId);
-        const type_no = Number(data.roomInfo.isUserCreate);
-        const status_no = Number(data.roomInfo.roomStatus);
+        const type_no = data.roomInfo.isUserCreate || 0;
+        const status_no = data.roomInfo.roomStatus;
         this.model.setGameType(game_type_list[type_no] as GameType);
         this.model.setGameStatus(game_status_list[status_no] as GameStatus);
         this.updateUser(data);
-    };
+    }
     /** 更新用户的个数 */
-    private updateUser = (data: UpdateUser) => {
+    private updateUser(data: UpdateUser) {
         this.model.updatePlayers(data.userList);
-    };
+    }
     /** 添加用户 */
     private addPlayer = (player: PlayerModel) => {
         const local_id = this.serverIdToLocal(player.seat_id);
@@ -137,10 +137,9 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
-        const index = game_status_list.indexOf(status);
         const { game_zone } = this.link;
         const type = this.model.type;
-        if (index < 1) {
+        if (status === 'init') {
             game_zone.visible = false;
             this.link.docker_ctrl.reset();
             if (type === 'host') {

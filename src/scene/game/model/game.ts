@@ -8,9 +8,16 @@ export const event = {
 
 /** 游戏状态: 等待 开始 结束 */
 export type GameStatus = 'init' | 'starting' | 'playing';
-export const game_status_list = ['init', 'starting', 'playing'];
+export const game_status_list = {
+    0: 'init',
+    2: 'starting',
+    3: 'playing',
+};
 /** 游戏类型: 快速匹配 房主创建 */
-export const game_type_list = ['init', 'starting', 'playing'];
+export const game_type_list = {
+    0: 'quick_match',
+    1: 'host',
+};
 export type GameType = 'quick_match' | 'host';
 
 export class GameModel extends BaseEvent {
@@ -53,6 +60,7 @@ export class GameModel extends BaseEvent {
             return;
         }
         this.status = status;
+        this.trigger(event.status_change, { status });
     }
     public getPlayerById(id: string) {
         const player_list = this.player_list;
