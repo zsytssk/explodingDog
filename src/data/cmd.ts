@@ -16,4 +16,6 @@ export const CMD = {
     CREATE_ROOM: 'createRoom',
     /** 更新用户个数  */
     UPDATE_USER: 'updateUser',
+    /**房主修改卡组 */
+    CHANGE_CARD_TYPE: 'changeCardType'
 };

@@ -24,9 +24,14 @@ export class CardPack extends ui.popup.component.cardPackUI {
                     });
                     break;
                 case 'create':
-                    Sail.io.emit(CMD.CREATE_ROOM);
+                    Sail.io.emit(CMD.CREATE_ROOM, {
+                        cardType: cardType
+                    });
                     break;
                 case 'choose':
+                    Sail.io.emit(CMD.CHANGE_CARD_TYPE, {
+                        cardType: cardType
+                    });
                     break;
                 default:
                     break;
@@ -40,5 +45,8 @@ export class CardPack extends ui.popup.component.cardPackUI {
      */
     setType(type) {
         this.type = type;
+        if (type == 'choose') {
+            this.staminaLabel.visible = false;
+        }
     }
 }

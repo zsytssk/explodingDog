@@ -54,7 +54,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":493,"x":572,"width":165,"var":"rateLabel","text":"0%","height":76,"fontSize":32,"font":"Arial","color":"#fbe9c4","align":"center"},
+            "props":{"y":557,"x":597,"width":165,"var":"rateLabel","text":"0%","height":76,"fontSize":32,"font":"Arial","color":"#fbe9c4","align":"center"},
             "nodeParent":1,
             "label":"Label(rateLabel)",
             "isDirectory":false,
@@ -67,13 +67,26 @@
         {
             "x":15,
             "type":"SkeletonPlayer",
-            "props":{"y":569,"x":655,"var":"loadingAni","url":"animation/loading.sk"},
+            "props":{"y":633,"x":680,"var":"loadingAni","url":"animation/loading.sk"},
             "nodeParent":1,
             "label":"SkeletonPlayer(loadingAni)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":6,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":119,"skin":"images/loading/dog.png","centerX":0},
+            "nodeParent":1,
+            "label":"Image",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
             "child":[
                 ]
         }],
