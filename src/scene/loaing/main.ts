@@ -13,7 +13,7 @@ function load(name) {
     Laya.stage.addChild(loadingUI);
     return load_util
         .load(name, progress => {
-            loadingUI.updateProgrss(Math.floor(progress * 100));
+            loadingUI.updateProgrss(progress);
         })
         .then(() => {
             const finishTime = Date.parse(new Date());
@@ -37,8 +37,12 @@ class LoadingUI extends ui.loading.mainUI {
             var isbn = new laya.components.Isbn();
             this.addChild(isbn);
         }
+        this.progressDog.scrollRect = new Laya.Rectangle(0, 0, 303, 407);
     }
     updateProgrss(progress) {
-        this.rateLabel.changeText(progress + '%');
+        this.rateLabel.changeText(Math.floor(progress * 100) + '%');
+        // .anchorY = 1 - progress;
+        Laya.Tween.clearAll(this);
+        Laya.Tween.to(this.progressDog, { anchorY: 1 - progress }, 300);
     }
 }
