@@ -8,8 +8,11 @@ export const RES = {
         { url: 'images/bg/bg.jpg', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/hall.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall.png', type: Laya.Loader.IMAGE },
+        { url: 'res/atlas/images/hall/rank.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/cards.atlas', type: Laya.Loader.ATLAS },
+        { url: 'font/hall_user_info.fnt', type: Laya.Loader.FONT },
+        { url: 'font/hall_user_info.png', type: Laya.Loader.IMAGE },
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
@@ -19,5 +22,6 @@ export const RES = {
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },
         { url: 'animation/loading.png', type: Laya.Loader.IMAGE },
         { url: 'animation/loading.sk', type: Laya.Loader.BUFFER },
+
     ]
 };
