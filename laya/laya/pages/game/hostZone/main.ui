@@ -16,7 +16,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/host_zone/cardType.ui",
+            "source":"game/hostZone/cardType.ui",
             "props":{"y":0,"x":0,"var":"cardType"},
             "nodeParent":1,
             "label":"UIView(cardType)",
@@ -30,7 +30,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/host_zone/start.ui",
+            "source":"game/hostZone/start.ui",
             "props":{"y":4,"x":303,"var":"start"},
             "nodeParent":1,
             "label":"UIView(start)",
@@ -44,7 +44,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/host_zone/billboard.ui",
+            "source":"game/hostZone/billboard.ui",
             "props":{"y":-15,"x":619,"var":"billboard"},
             "nodeParent":1,
             "label":"UIView(billboard)",
