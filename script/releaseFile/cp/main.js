@@ -3,6 +3,9 @@ const cpFile = require('./cpFile');
 const cpDir = require('./cpDir');
 
 module.exports = (src_path, dist_path) => {
+    if (!fs.existsSync(src_path)) {
+        return;
+    }
     let stat = fs.lstatSync(src_path);
     let file_num = 1;
     if (stat.isFile()) {
@@ -17,4 +20,4 @@ module.exports = (src_path, dist_path) => {
     console.log(log);
 
     return file_num;
-}
+};

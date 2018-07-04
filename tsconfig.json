@@ -11,5 +11,5 @@
         "target": "es6",
         "watch": true
     },
-    "include": ["src", "typings", "laya/libs"]
+    "include": ["src", "typings", "laya/libs", "laya/src"]
 }
