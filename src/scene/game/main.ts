@@ -197,22 +197,27 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
-        const { game_zone } = this.link;
+        const {
+            game_zone,
+            quick_start_ctrl,
+            host_zone_ctrl,
+            docker_ctrl,
+        } = this.link;
         const type = this.model.type;
         if (status === 'init') {
             game_zone.visible = false;
-            this.link.docker_ctrl.reset();
+            docker_ctrl.reset();
             if (type === 'host') {
-                this.link.host_zone_ctrl.show();
+                host_zone_ctrl.show();
             } else {
-                this.link.quick_start_ctrl.show();
+                quick_start_ctrl.show();
             }
         } else {
-            this.link.docker_ctrl.start();
+            docker_ctrl.start();
             if (type === 'host') {
-                this.link.host_zone_ctrl.hide();
+                host_zone_ctrl.hide();
             } else {
-                this.link.quick_start_ctrl.hide();
+                quick_start_ctrl.hide();
             }
             game_zone.visible = true;
         }

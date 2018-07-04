@@ -29,10 +29,12 @@ export class QuickStartCtrl extends BaseCtrl {
     }
     protected initEvent() {}
     public hide() {
+        const { count_down } = this;
         const { match_view, countdown_view, light } = this.link;
         match_view.visible = false;
         countdown_view.visible = false;
         stopAni(light);
+        count_down.clear();
     }
     public show() {
         const { match_view, countdown_view, light } = this.link;
@@ -44,15 +46,16 @@ export class QuickStartCtrl extends BaseCtrl {
             { alpha: 0, scaleX: 1, scaleY: 1 },
             1000,
         );
+        this.countDown(100);
     }
 
     /** 设置倒计时 */
-    public setCountDown(count_num: number) {
+    public countDown(count_num: number) {
         const { count_down_text } = this.link;
         const { count_down } = this;
         count_down.start(count_num);
         count_down.onCount((data: CountInfo) => {
-            count_down_text.text = data.show_delta + '';
+            count_down_text.text = data.show_time + '';
         });
     }
 }
