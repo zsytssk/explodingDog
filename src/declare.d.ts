@@ -16,7 +16,7 @@ interface CusWindow extends Window {
     userId: string;
 }
 
-declare const ui;
+// declare const ui;
 
 declare class Primus {
     static connect;

@@ -3,12 +3,15 @@ let fs = require('fs');
 
 function createPath(path) {
     if (fs.existsSync(path)) {
-        return true
+        return true;
     }
     let path_arr = path.split('\\');
     for (let i = 0; i < path_arr.length; i++) {
         let cur_dir = path_arr.slice(0, i + 1).join('\\');
-
+        let index = cur_dir.indexOf(global.dist_git);
+        if (index == -1) {
+            continue;
+        }
         if (!fs.existsSync(cur_dir)) {
             fs.mkdirSync(cur_dir, 0755);
         }
