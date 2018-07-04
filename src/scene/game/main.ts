@@ -44,7 +44,7 @@ export class GameCtrl extends BaseCtrl {
         this.initEvnet();
     }
     protected initLink() {
-        const view = this.link.view as any;
+        const view = this.link.view as ui.game.mainUI;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
             view.banner_countdown,

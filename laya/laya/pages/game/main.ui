@@ -170,7 +170,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/host_zone/main.ui",
+            "source":"game/hostZone/main.ui",
             "props":{"y":222,"x":390,"visible":false,"var":"host_zone"},
             "nodeParent":1,
             "label":"UIView(host_zone)",
