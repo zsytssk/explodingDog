@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":5,
+    "selectedBox":4,
+    "selecteID":6,
     "props":{"width":534,"sceneColor":"#ffffff","height":146},
     "nodeParent":-1,
     "label":"View",
@@ -41,9 +41,10 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":66,"x":142,"skin":"images/game/txt_matching_dot.png"},
+            "props":{"y":66,"x":142,"var":"txt","skin":"images/game/txt_matching_dot.png"},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(txt)",
+            "isOpen":true,
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

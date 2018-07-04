@@ -6,6 +6,7 @@ interface Link {
     match_view: ui.game.bannerMatchUI;
     countdown_view: ui.game.bannerCountdownUI;
     count_down_text: Laya.Text;
+    scroll_rect: Laya.Rectangle;
     light: Laya.Sprite;
 }
 
@@ -26,26 +27,45 @@ export class QuickStartCtrl extends BaseCtrl {
         const { match_view, countdown_view } = this.link;
         this.link.count_down_text = countdown_view.text;
         this.link.light = match_view.light;
+        const match_txt = match_view.txt;
+        const scrollRect = new Laya.Rectangle(0, 0, 255, 66);
+        match_txt.scrollRect = scrollRect;
+        window.scrollRect = scrollRect;
+        this.link.scroll_rect = scrollRect;
     }
     protected initEvent() {}
     public hide() {
         const { count_down } = this;
-        const { match_view, countdown_view, light } = this.link;
+        const { match_view, countdown_view, light, scroll_rect } = this.link;
         match_view.visible = false;
         countdown_view.visible = false;
         stopAni(light);
+        stopAni(scroll_rect);
         count_down.clear();
     }
     public show() {
-        const { match_view, countdown_view, light } = this.link;
+        const { match_view, countdown_view, light, scroll_rect } = this.link;
         match_view.visible = true;
         countdown_view.visible = true;
-        tweenLoop(
-            light,
-            { alpha: 1, scaleX: 1.2, scaleY: 1.2 },
-            { alpha: 0, scaleX: 1, scaleY: 1 },
-            1000,
-        );
+        tweenLoop({
+            props_arr: [
+                { alpha: 1, scaleX: 1.2, scaleY: 1.2 },
+                { alpha: 0, scaleX: 1, scaleY: 1 },
+            ],
+            sprite: light,
+            time: 1000,
+        });
+        tweenLoop({
+            is_jump: true,
+            props_arr: [
+                { width: 210 },
+                { width: 225 },
+                { width: 240 },
+                { width: 255 },
+            ],
+            sprite: scroll_rect,
+            time: 500,
+        });
         this.countDown(100);
     }
 

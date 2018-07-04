@@ -481,110 +481,83 @@ export function tween(
     start_property: AnyObj,
     end_property: AnyObj,
     time?: number,
-    callback?: Function,
     time_fn?: string,
 ) {
-    const laya_Tween = new Laya.Tween();
-    const Ease = Laya.Ease;
+    return new Promise((resolve, reject) => {
+        const laya_Tween = new Laya.Tween();
+        const Ease = Laya.Ease;
 
-    time = isNaN(Number(time)) ? 700 : time;
+        time = isNaN(Number(time)) ? 700 : time;
 
-    time_fn = time_fn ? Ease[time_fn] : Ease.cubicInOut;
-    if (sprite.tween) {
-        sprite.tween.complete();
-        sprite.tween.clear();
-    }
-    setStyle(start_property);
-    sprite.tween = laya_Tween.to(
-        sprite,
-        end_property,
-        time,
-        time_fn,
-        Laya.Handler.create(sprite, () => {
-            if (callback && typeof callback === 'function') {
-                callback();
-            }
-        }),
-    );
-
-    function setStyle(props) {
-        for (const key in props) {
-            if (!props.hasOwnProperty(key)) {
-                continue;
-            }
-            sprite[key] = props[key];
+        time_fn = time_fn ? Ease[time_fn] : Ease.cubicInOut;
+        if (sprite.tween) {
+            sprite.tween.complete();
+            sprite.tween.clear();
         }
+        setStyle(sprite, start_property);
+        sprite.tween = laya_Tween.to(
+            sprite,
+            end_property,
+            time,
+            time_fn,
+            Laya.Handler.create(sprite, () => {
+                resolve();
+            }),
+        );
+    });
+}
+function setStyle(sprite, props) {
+    for (const key in props) {
+        if (!props.hasOwnProperty(key)) {
+            continue;
+        }
+        sprite[key] = props[key];
     }
 }
-export function tweenLoop(
-    sprite,
-    start_props,
-    end_pros,
-    time?: number,
-    time_name?: string,
-) {
-    function run() {
-        if (
-            (sprite as Laya.Sprite).destroyed ||
-            (sprite.tween && sprite.tween.is_stop)
-        ) {
-            return;
+function jump(sprite, props, time_num) {
+    return new Promise((resovle, reject) => {
+        setTimeout(() => {
+            setStyle(sprite, props);
+            resovle();
+        }, time_num);
+    });
+}
+export async function tweenLoop(data: {
+    sprite;
+    props_arr: any[];
+    time?: number;
+    time_name?: string;
+    is_jump?: boolean;
+}) {
+    const { sprite, props_arr, time, time_name, is_jump } = data;
+    const len = props_arr.length;
+    let i = 0;
+    while (true) {
+        if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
+            break;
         }
-        tween(
-            sprite,
-            start_props,
-            end_pros,
-            time / 2,
-            () => {
-                tween(sprite, end_pros, start_props, time / 2, () => {
-                    run();
-                });
-            },
-            time_name,
-        );
+        if (is_jump) {
+            await jump(sprite, props_arr[i], time);
+        } else {
+            let next = i + 1;
+            if (next >= len) {
+                next = 0;
+            }
+            await tween(sprite, props_arr[i], props_arr[next], time, time_name);
+        }
+        i++;
+        if (i >= len) {
+            i = 0;
+        }
     }
-    run();
 }
 
 export function stopAni(sprite) {
     if (sprite.tween) {
         sprite.tween.complete();
         sprite.tween.clear();
-        sprite.tween.is_stop = true;
     }
-}
-export function upDown(sprite, time, space) {
-    var Tween = new Laya.Tween();
-    var Ease = Laya.Ease;
-
-    var time_fn = time_fn ? Ease[time_fn] : Ease['circleOut'];
-
-    var _y = sprite.y;
-    slideUp();
-
-    function slideUp() {
-        sprite.tween = Tween.to(
-            sprite,
-            {
-                y: _y + space,
-            },
-            time || 200,
-            time_fn,
-            Laya.Handler.create(sprite, function() {
-                sprite.tween = Tween.to(
-                    sprite,
-                    {
-                        y: _y,
-                    },
-                    time || 200,
-                    time_fn,
-                    Laya.Handler.create(sprite, function() {
-                        slideUp();
-                    }),
-                );
-            }),
-        );
-    }
+    sprite.is_stop = true;
 }
 export function rotate(
     sprite,
@@ -593,20 +566,20 @@ export function rotate(
     callback?: Function,
     time_name?: string,
 ) {
-    var Tween = new Laya.Tween();
-    var Ease = Laya.Ease;
+    const laya_tween = new Laya.Tween();
+    const Ease = Laya.Ease;
 
-    var time_fn = time_fn ? Ease[time_fn] : null;
+    const time_fn = time_fn ? Ease[time_fn] : null;
 
-    sprite.tween = Tween.to(
+    sprite.tween = laya_tween.to(
         sprite,
         {
             rotation: angle,
         },
         time || 500,
         time_fn,
-        Laya.Handler.create(sprite, function() {
-            if (callback && typeof callback == 'function') {
+        Laya.Handler.create(sprite, () => {
+            if (callback && typeof callback === 'function') {
                 callback();
             }
         }),
