@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":522,"x":198,"var":"chooseBtn","skin":"images/cards/btn_choose.png","pivotY":44,"pivotX":131,"appendProps":"laya/pages/scaleImg.prop"},
+                    "props":{"y":522,"x":198,"var":"chooseBtn","skin":"images/cards/btn_choose.png","pivotY":44,"pivotX":131,"appendProps":"laya/pages/effect/scaleImg.prop"},
                     "nodeParent":2,
                     "label":"Image(chooseBtn)",
                     "isDirectory":false,
