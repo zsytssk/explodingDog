@@ -61,11 +61,11 @@ export class Hall extends Sail.Scene {
     }
 
     createRoom(data) {
-        if (data.code == 200) {
-            loadAssets('normal').then(() => {
-                Sail.director.runScene(new GameWrap());
-            });
-        }
+        Sail.director.closeAll();
+        loadAssets('normal').then(() => {
+            Sail.director.runScene(new GameWrap());
+        });
+
     }
 
 }
