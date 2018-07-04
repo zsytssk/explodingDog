@@ -232,6 +232,7 @@ export abstract class BaseEvent {
         this.interval_list = [];
     }
     public destroy() {
+        this.trigger(event.destroy);
         this.clearAllTimeout();
         this.offAllOtherEvent();
         this.offAll();

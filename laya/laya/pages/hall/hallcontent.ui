@@ -170,7 +170,7 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":65,"x":330,"var":"btnPlay","pivotY":65,"pivotX":330,"appendProps":"laya/pages/scaleBox.prop"},
+                    "props":{"y":65,"x":330,"var":"btnPlay","pivotY":65,"pivotX":330,"appendProps":"laya/pages/effect/scaleBox.prop"},
                     "nodeParent":5,
                     "label":"Box(btnPlay)",
                     "isOpen":false,
@@ -232,7 +232,7 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":221,"x":452,"var":"btnCreate","pivotY":65,"pivotX":330,"appendProps":"laya/pages/scaleBox.prop"},
+                    "props":{"y":221,"x":452,"var":"btnCreate","pivotY":65,"pivotX":330,"appendProps":"laya/pages/effect/scaleBox.prop"},
                     "nodeParent":5,
                     "label":"Box(btnCreate)",
                     "isOpen":false,
@@ -294,7 +294,7 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":377,"x":381,"var":"btnJoin","pivotY":65,"pivotX":330,"appendProps":"laya/pages/scaleBox.prop"},
+                    "props":{"y":377,"x":381,"var":"btnJoin","pivotY":65,"pivotX":330,"appendProps":"laya/pages/effect/scaleBox.prop"},
                     "nodeParent":5,
                     "label":"Box(btnJoin)",
                     "isOpen":false,

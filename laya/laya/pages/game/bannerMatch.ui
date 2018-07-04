@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":5,
     "props":{"width":534,"sceneColor":"#ffffff","height":146},
     "nodeParent":-1,
     "label":"View",
@@ -48,6 +48,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":4,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":27,"x":182,"var":"light","skin":"images/game/green_light.png","anchorY":0.5,"anchorX":0.5},
+            "nodeParent":1,
+            "label":"Image(light)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":5,
             "child":[
                 ]
         }],

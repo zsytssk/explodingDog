@@ -478,39 +478,79 @@ export function move(
 }
 export function tween(
     sprite,
-    start_property: t_any_obj,
-    end_property: t_any_obj,
+    start_property: AnyObj,
+    end_property: AnyObj,
     time?: number,
     callback?: Function,
-    time_name?: string,
+    time_fn?: string,
 ) {
-    var Tween = new Laya.Tween();
-    var Ease = Laya.Ease;
+    const laya_Tween = new Laya.Tween();
+    const Ease = Laya.Ease;
 
     time = isNaN(Number(time)) ? 700 : time;
 
-    var time_fn = time_fn ? Ease[time_fn] : Ease['cubicInOut'];
+    time_fn = time_fn ? Ease[time_fn] : Ease.cubicInOut;
     if (sprite.tween) {
         sprite.tween.complete();
         sprite.tween.clear();
     }
-    setStyle(sprite, start_property);
-    sprite.tween = Tween.to(
+    setStyle(start_property);
+    sprite.tween = laya_Tween.to(
         sprite,
         end_property,
         time,
         time_fn,
-        Laya.Handler.create(sprite, function() {
-            if (callback && typeof callback == 'function') {
+        Laya.Handler.create(sprite, () => {
+            if (callback && typeof callback === 'function') {
                 callback();
             }
         }),
     );
 
-    function setStyle(sprite, properties) {
-        for (let key in properties) {
-            sprite[key] = properties[key];
+    function setStyle(props) {
+        for (const key in props) {
+            if (!props.hasOwnProperty(key)) {
+                continue;
+            }
+            sprite[key] = props[key];
         }
+    }
+}
+export function tweenLoop(
+    sprite,
+    start_props,
+    end_pros,
+    time?: number,
+    time_name?: string,
+) {
+    function run() {
+        if (
+            (sprite as Laya.Sprite).destroyed ||
+            (sprite.tween && sprite.tween.is_stop)
+        ) {
+            return;
+        }
+        tween(
+            sprite,
+            start_props,
+            end_pros,
+            time / 2,
+            () => {
+                tween(sprite, end_pros, start_props, time / 2, () => {
+                    run();
+                });
+            },
+            time_name,
+        );
+    }
+    run();
+}
+
+export function stopAni(sprite) {
+    if (sprite.tween) {
+        sprite.tween.complete();
+        sprite.tween.clear();
+        sprite.tween.is_stop = true;
     }
 }
 export function upDown(sprite, time, space) {
