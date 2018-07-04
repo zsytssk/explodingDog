@@ -31,3 +31,11 @@ export function delArrSameItem<T>(arr1: T[], arr2: T[]): T[][] {
     arr2.splice(0, same_num);
     return [arr1, arr2];
 }
+
+export function checkLogin() {
+    if (GM && GM.userLogged) {
+        return true;
+    }
+    location.href = GM.userLoginUrl;
+    return false;
+}

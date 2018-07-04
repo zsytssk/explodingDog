@@ -1,4 +1,5 @@
 import { PopupCards } from '../popup/popupCards';
+import { checkLogin } from '../../utils/tool';
 
 export class HallContent extends ui.hall.hallcontentUI {
     constructor() {
@@ -11,6 +12,9 @@ export class HallContent extends ui.hall.hallcontentUI {
     }
     initEvent() {
         this.btnPlay.on(Laya.Event.CLICK, this, () => {
+            if (!checkLogin()) {
+                return;
+            }
             let popupCards = new PopupCards();
             popupCards.setType('play');
             popupCards.popupEffect = null;
@@ -18,6 +22,9 @@ export class HallContent extends ui.hall.hallcontentUI {
             Sail.director.popScene(popupCards);
         });
         this.btnCreate.on(Laya.Event.CLICK, this, () => {
+            if (!checkLogin()) {
+                return;
+            }
             let popupCards = new PopupCards();
             popupCards.setType('create');
             popupCards.popupEffect = null;
@@ -25,6 +32,9 @@ export class HallContent extends ui.hall.hallcontentUI {
             Sail.director.popScene(popupCards);
         });
         this.btnJoin.on(Laya.Event.CLICK, this, () => {
+            if (!checkLogin()) {
+                return;
+            }
             console.log(22222)
         })
 

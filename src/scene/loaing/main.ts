@@ -32,7 +32,12 @@ class LoadingUI extends ui.loading.mainUI {
         super();
         this.init();
     }
-    init() {}
+    init() {
+        if (GM.gamePublishInfo && window.laya && laya.components && laya.components.Isbn) {
+            var isbn = new laya.components.Isbn();
+            this.addChild(isbn);
+        }
+    }
     updateProgrss(progress) {
         this.rateLabel.changeText(progress + '%');
     }

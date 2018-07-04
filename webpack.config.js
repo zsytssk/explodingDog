@@ -37,7 +37,6 @@ const dev_config = {
 
 const prod_config = {
     entry: prod_file_list,
-    entry: ['es6-promise', './src/main.ts'],
 };
 
 const prod_ts_compile_option = {
