@@ -25,7 +25,7 @@ export let RESMAP: ResMap = [
     {
         name: 'hall',
         res: RES.HALL,
-        res_dependencies: [RES.COMPONENT],
+        res_dependencies: [RES.COMPONENT, RES.POP],
         res_relatives: [],
         resource_status: 'unload',
     },

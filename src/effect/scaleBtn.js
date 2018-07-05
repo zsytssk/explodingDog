@@ -1,22 +1,21 @@
 function createClass(SuperClass) {
     return class extends SuperClass {
-        constructor(){
+        constructor() {
             super();
             this.init();
-            console.log(`test`);
         }
-        init(){
-            this.on(Laya.Event.MOUSE_DOWN,this,()=>{
+        init() {
+            this.on(Laya.Event.MOUSE_DOWN, this, () => {
                 this.scale(0.9, 0.9);
             });
-             this.on(Laya.Event.MOUSE_OUT,this,()=>{
+            this.on(Laya.Event.MOUSE_OUT, this, () => {
                 this.scale(1, 1);
             });
-            this.on(Laya.Event.MOUSE_UP,this,()=>{
+            this.on(Laya.Event.MOUSE_UP, this, () => {
                 this.scale(1, 1);
             });
         }
-    }    
+    }
 }
 
 Sail.class(createClass(Laya.Box), "Component.ScaleBox");
