@@ -1,6 +1,22 @@
 ## 2018-06-29 10:25:00
-* @todo animate to promise
+
+-   @todo 显示房间号
+    -   显示卡组修改
+
+*   @todo animate to promise
+
 -   @qeus tweenLine 能设置属性成为一个数组吗
+
+*   mac window 共享
+
+*   @ques wasm -- js 两者沟通的代价...
+
+    -   过去再回来只需要> 1.3ms, 太快了.., 0.ms
+
+    *   直接 return 很慢..., 再那边再调用这个方比较快
+    *   传递数组过去...
+    *   我觉得所有的方法都应该返回一个 promise...
+    *   可能越复杂的对象就越慢...
 
 *   @ques 当前用户在为加入房间中要显示的特殊处理
     -   这添加一大堆乱的代码

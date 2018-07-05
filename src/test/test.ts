@@ -1,4 +1,5 @@
 import { CONFIG } from '../data/config';
+import * as animate from '../mcTmpl/utils/animate';
 import { load_util } from '../mcTmpl/utils/load';
 import { GameWrap } from '../scene/game/sceneWrap';
 import * as game from './game';
@@ -11,13 +12,10 @@ interface CusWindow extends Window {
 if (Sail.DEBUG) {
     const test = {};
 
-    // tslint:disable-next-line:forin
-    for (const key in game) {
-        test[key] = game[key];
-    }
+    assign(test, [game, animate]);
     (window as CusWindow).load_util = load_util;
     (window as CusWindow).CONFIG = CONFIG;
-    (window as any).test = game;
+    (window as any).test = test;
     Laya.Stat.show(0, 0);
 
     const user_id = Sail.Utils.getUrlParam('user_id');
@@ -28,4 +26,14 @@ if (Sail.DEBUG) {
     if (test_scene === 'game') {
         Sail.director.runScene(new GameWrap());
     }
+}
+
+function assign(obj_ori, objs_end) {
+    for (const obj_end of objs_end) {
+        Object.assign(obj_ori, obj_end);
+    }
+    // tslint:disable-next-line:forin
+    // for (const key in obj_end) {
+    //     obj_ori[key] = obj_end[key];
+    // }
 }
