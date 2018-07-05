@@ -1,25 +1,23 @@
 import { CMD } from '../../data/cmd';
-import { Hall } from '../hall/scene';
-import { event as base_event } from '../../mcTmpl/event';
 import { BaseCtrl } from '../../mcTmpl/ctrl/base';
+import { event as base_event } from '../../mcTmpl/event';
 import { getChildren, log } from '../../mcTmpl/utils/zutil';
+import { Hall } from '../hall/scene';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
-import { TurnArrowCtrl } from './turnArrow';
 import {
-    event,
-    GameModel,
-    GameStatus,
-    GameType,
-    game_status_map,
-    game_type_map,
     card_type_map,
     CardType,
+    event,
+    game_status_map,
+    GameModel,
+    GameStatus,
 } from './model/game';
 import { PlayerModel } from './model/player';
 import { QuickStartCtrl } from './quickStart';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
+import { TurnArrowCtrl } from './turnArrow';
 
 interface Link {
     view: Laya.Node;
@@ -34,9 +32,9 @@ interface Link {
     host_zone_ctrl: HostZoneCtrl;
     turn_arrow_ctrl: TurnArrowCtrl;
 }
-
 export class GameCtrl extends BaseCtrl {
     protected link = {} as Link;
+    protected is_ready = false;
     private actions = {} as SailIoAction;
     protected model = new GameModel();
     public cur_seat_id: number;
@@ -137,6 +135,7 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏复盘逻辑 */
     private gameReplay(data: GameReplayData) {
+        this.is_ready = true;
         this.cur_user_id = data.curUserInfo.userId;
         this.cur_seat_id = Number(data.curUserInfo.seatId);
         /** @test  */
@@ -149,6 +148,9 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 更新用户的个数 */
     private updateUser(data: UpdateUser) {
+        if (!this.is_ready) {
+            return;
+        }
         const user_list = data.userList;
         /** 如果当前用户还没有seatId 需要设置seatId
          * 出现在进入房间 但是还在匹配 没有进入游戏 所以没有userId
@@ -215,10 +217,10 @@ export class GameCtrl extends BaseCtrl {
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
         const {
-            game_zone,
-            quick_start_ctrl,
-            host_zone_ctrl,
             docker_ctrl,
+            game_zone,
+            host_zone_ctrl,
+            quick_start_ctrl,
         } = this.link;
         const type = this.model.game_type;
         if (status === 'init') {
