@@ -1,5 +1,6 @@
 import { PopupCards } from '../popup/popupCards';
 import { checkLogin } from '../../utils/tool';
+import { PopupJoinRoom } from '../popup/popupJoinRoom';
 
 export class HallContent extends ui.hall.hallcontentUI {
     constructor() {
@@ -35,7 +36,7 @@ export class HallContent extends ui.hall.hallcontentUI {
             if (!checkLogin()) {
                 return;
             }
-            console.log(22222)
+            Sail.director.popScene(new PopupJoinRoom());
         })
 
     }

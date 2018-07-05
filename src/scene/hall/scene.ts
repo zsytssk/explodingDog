@@ -53,18 +53,26 @@ export class Hall extends Sail.Scene {
         this.topbar.updateView(data);
     }
 
-    joinRoom(data) {
+    joinRoom(data, code, msg) {
         Sail.director.closeAll();
-        loadAssets('normal').then(() => {
-            Sail.director.runScene(new GameWrap());
-        });
+        if (code == 200) {
+            loadAssets('normal').then(() => {
+                Sail.director.runScene(new GameWrap());
+            });
+        } else {
+            alert(msg);
+        }
     }
 
-    createRoom(data) {
+    createRoom(data, code, msg) {
         Sail.director.closeAll();
-        loadAssets('normal').then(() => {
-            Sail.director.runScene(new GameWrap());
-        });
+        if (code == 200) {
+            loadAssets('normal').then(() => {
+                Sail.director.runScene(new GameWrap());
+            });
+        } else {
+            alert(msg);
+        }
 
     }
 
