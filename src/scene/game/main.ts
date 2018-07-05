@@ -32,6 +32,8 @@ interface Link {
     host_zone_ctrl: HostZoneCtrl;
     turn_arrow_ctrl: TurnArrowCtrl;
 }
+
+const max_user_count: number = 5;
 export class GameCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected is_ready = false;
@@ -190,8 +192,7 @@ export class GameCtrl extends BaseCtrl {
         }
         let local_id = server_id - cur_seat_id;
         if (local_id < 0) {
-            const num = this.model.getPlayerNum();
-            local_id += num;
+            local_id += max_user_count;
         }
         return local_id;
     }
@@ -203,10 +204,9 @@ export class GameCtrl extends BaseCtrl {
         if (!cur_seat_id) {
             return -1;
         }
-        const num = this.model.getPlayerNum();
         let server_id = local_id + cur_seat_id;
-        if (server_id > num) {
-            server_id -= num;
+        if (server_id > max_user_count) {
+            server_id -= max_user_count;
         }
         return server_id;
     }
