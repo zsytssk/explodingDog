@@ -8,15 +8,15 @@ export function loadAssets(name) {
 
 function load(name) {
     const delay = 2000;
-    const startTime = Date.parse(new Date());
-    let loadingUI = new LoadingUI();
+    const startTime = Date.now();
+    const loadingUI = new LoadingUI();
     Laya.stage.addChild(loadingUI);
     return load_util
         .load(name, progress => {
             loadingUI.updateProgrss(progress);
         })
         .then(() => {
-            const finishTime = Date.parse(new Date());
+            const finishTime = Date.now();
             if (finishTime - startTime < delay) {
                 setTimeout(() => {
                     loadingUI.destroy();
@@ -33,7 +33,12 @@ class LoadingUI extends ui.loading.mainUI {
         this.init();
     }
     init() {
-        if (GM.gamePublishInfo && window.laya && laya.components && laya.components.Isbn) {
+        if (
+            GM.gamePublishInfo &&
+            window.laya &&
+            laya.components &&
+            laya.components.Isbn
+        ) {
             var isbn = new laya.components.Isbn();
             this.addChild(isbn);
         }

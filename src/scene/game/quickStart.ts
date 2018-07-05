@@ -30,7 +30,6 @@ export class QuickStartCtrl extends BaseCtrl {
         const match_txt = match_view.txt;
         const scrollRect = new Laya.Rectangle(0, 0, 255, 66);
         match_txt.scrollRect = scrollRect;
-        window.scrollRect = scrollRect;
         this.link.scroll_rect = scrollRect;
     }
     protected initEvent() {}

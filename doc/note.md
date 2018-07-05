@@ -1,4 +1,7 @@
 ## 2018-06-29 10:25:00
+* scale_in scale_out slide_left_out
+    * rotate 有时候没有作用
+    * 怎么有时候有作用 有时候没有作用
 
 -   @todo 显示房间号
     -   显示卡组修改

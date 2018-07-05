@@ -1,6 +1,3 @@
-import { CONFIG } from './data/config';
-import { RESMAP } from './data/resMap';
-import { load_util } from './mcTmpl/utils/load';
 import './sail/core/sail.core.js';
 import './sail/core/sail.viewer.js';
 import './sail/core/sail.utils.js';
@@ -9,6 +6,10 @@ import './sail/core/sail.dialog.js';
 import './sail/core/sail.director.js';
 import './sail/core/sail.entrace.js';
 import './sail/core/sail.scene.js';
+
+import { CONFIG } from './data/config';
+import { RESMAP } from './data/resMap';
+import { load_util } from './mcTmpl/utils/load';
 import './sail/lib/primus';
 import './sail/tools/keyboard';
 import './sail/tools/notify';

@@ -1,9 +1,9 @@
 /**
  * 获取节点所有一级子节点
- * @param sprite 
+ * @param sprite
  */
 export function getChildren(sprite) {
-    let arr = [];
+    const arr = [];
     for (let i = 0; i < sprite.numChildren; i++) {
         const child = sprite.getChildAt(i);
         arr.push(child);
@@ -16,7 +16,6 @@ export function getChildren(sprite) {
     queryElements 我先写一个从前往后寻找的
 */
 export function getChildrenByName(root_dom, name) {
-    const self = this;
     const arr = [];
     if (root_dom.getChildByName && root_dom.getChildByName(name)) {
         for (let i = 0; i < root_dom.numChildren; i++) {
@@ -29,7 +28,6 @@ export function getChildrenByName(root_dom, name) {
     return arr;
 }
 export function getElementsByName(root_dom, name) {
-    const self = this;
     let arr = [];
     if (root_dom.getChildByName && root_dom.getChildByName(name)) {
         for (let i = 0; i < root_dom.numChildren; i++) {
@@ -45,7 +43,6 @@ export function getElementsByName(root_dom, name) {
     return arr;
 }
 export function getChildrenByType(root_dom, type) {
-    const self = this;
     let typeParent;
     const arr = [];
     if (typeof type === 'string') {
@@ -66,7 +63,6 @@ export function getChildrenByType(root_dom, type) {
 }
 // Button Image Label ... laya.ui 中的组件
 export function getElementsByType(root_dom, type) {
-    const self = this;
     let typeParent;
     let arr = [];
     if (typeof type === 'string') {
@@ -88,7 +84,6 @@ export function getElementsByType(root_dom, type) {
     return arr;
 }
 export function mapType(typeStr) {
-    const self = this;
     const type_arr = typeStr.split('.');
     let result;
     for (let i = 0; i < type_arr.length; i++) {
@@ -111,7 +106,6 @@ export function mapType(typeStr) {
 }
 // 通过属性来寻找子类 propertyName:value
 export function getElementsByProperty(root_dom, propStr) {
-    const self = this;
     let arr = [];
     const propArr = propStr.split(':');
     if (!propArr.length) {
@@ -136,7 +130,6 @@ export function getElementsByProperty(root_dom, propStr) {
 }
 // 获取所有下级node
 export function getAllElements(root_dom) {
-    const self = this;
     let arr = [];
     for (let i = 0; i < root_dom.numChildren; i++) {
         const child = root_dom.getChildAt(i);
@@ -147,7 +140,6 @@ export function getAllElements(root_dom) {
 }
 // 获取所有下级node
 export function getAllChildren(root_dom) {
-    const self = this;
     const arr = [];
     for (let i = 0; i < root_dom.numChildren; i++) {
         arr.push(root_dom.getChildAt(i));
@@ -156,7 +148,6 @@ export function getAllChildren(root_dom) {
 }
 // 通过 (name:nameStr type:typeStr).. 形式查询
 export function queryElements(root_dom, queryString) {
-    const self = this;
     const arr = [];
     const queryArr = queryString.split(' ');
     if (!queryArr) {
@@ -172,7 +163,6 @@ export function queryElements(root_dom, queryString) {
     return arr;
 }
 export function querySiblings(dom_origin) {
-    const self = this;
     const arr = [];
     const dom_parent = dom_origin.parent;
     for (let i = 0; i < dom_parent.numChildren; i++) {
@@ -186,7 +176,6 @@ export function querySiblings(dom_origin) {
 }
 /**  寻找最近符合条件的父类  */
 export function queryClosest(dom_item, queryString) {
-    const self = this;
     if (isChecked(dom_item, queryString)) {
         return dom_item;
     }
@@ -198,7 +187,6 @@ export function queryClosest(dom_item, queryString) {
 }
 /**  寻找最顶级的父类  */
 export function queryTop(dom_item) {
-    const self = this;
     const parent = dom_item.parent;
     if (!parent) {
         return dom_item;
@@ -237,8 +225,7 @@ export function wrapElementByClass(dom_origin, ClassName) {
 }
 // dom_list中符合condition_str的元素 提取出来放在一个数组中
 export function filterElements(dom_list, filter_str) {
-    const arr = [];
-    return dom_list.filter((dom_item, index) => {
+    return dom_list.filter(dom_item => {
         return isChecked(dom_item, filter_str);
     });
 }
@@ -267,14 +254,12 @@ export function queryControllersFromDom(root_dom, queryString) {
     return arr;
 }
 export function getControllerFromDom(dom) {
-    const self = this;
     if (dom.controller) {
         return dom.controller;
     }
     return null;
 }
 export function queryCheck(root_dom, item_dom, queryArr) {
-    const self = this;
     const lastQueryStr = queryArr[queryArr.length - 1];
 
     if (!isChecked(item_dom, lastQueryStr)) {
@@ -287,7 +272,6 @@ export function queryCheck(root_dom, item_dom, queryArr) {
 export function closestCheck(root_dom, item_dom, queryArr) {
     const self = this;
     const lastQueryStr = queryArr[queryArr.length - 1];
-    const funcSelf = closestCheck.bind(self);
     const parent_dom = item_dom._parent || item_dom.parent;
     if (isChecked(item_dom, lastQueryStr)) {
         queryArr = queryArr.slice(0, -1);
@@ -302,7 +286,6 @@ export function closestCheck(root_dom, item_dom, queryArr) {
     return closestCheck(root_dom, parent_dom, queryArr);
 }
 export function isChecked(check_item, condition_str) {
-    const self = this;
     if (condition_str.indexOf('|') === -1) {
         return _typeIsChecked(check_item, condition_str);
     }
@@ -317,8 +300,6 @@ export function isChecked(check_item, condition_str) {
 }
 // 判断item是否符合条件 name:nameStr
 export function _typeIsChecked(check_item, type_str) {
-    const self = this;
-
     const queryArr = type_str.split(':');
     const queryType = queryArr[0];
     const queryStr = queryArr[1];
@@ -339,14 +320,12 @@ export function _typeIsChecked(check_item, type_str) {
     }
 }
 export function convertXMLToNode(xmlText) {
-    const self = this;
     let node;
     const jsonObj = xml_str2json(xmlText);
     node = convertJSONToNode(jsonObj);
     return node;
 }
 export function convertJSONToNode(jsonObj) {
-    const self = this;
     const type = jsonObj.type;
     let node;
     if (laya.ui[type]) {
@@ -382,7 +361,6 @@ export function convertJSONToNode(jsonObj) {
     return node;
 }
 export function xml2json(node) {
-    const self = this;
     const result = {} as {
         type: any;
         children: any;
@@ -420,7 +398,6 @@ export function getNodeLocalName(node) {
     return nodeLocalName;
 }
 export function xml_str2json(xmlDocStr) {
-    const self = this;
     const xmlDoc = parseXmlString(xmlDocStr);
     if (xmlDoc !== null) {
         return xml2json(xmlDoc);
@@ -429,14 +406,13 @@ export function xml_str2json(xmlDocStr) {
     }
 }
 export function parseXmlString(xmlDocStr) {
-    const self = this;
     if (xmlDocStr === undefined) {
         return null;
     }
     // tslint:disable-next-line:one-variable-per-declaration
     let xmlDoc, parser;
-    if ((window as CusWindow).DOMParser) {
-        parser = new (window as CusWindow).DOMParser();
+    if ((window as any).DOMParser) {
+        parser = new (window as any).DOMParser();
     }
     try {
         xmlDoc = parser.parseFromString(xmlDocStr, 'text/xml').firstChild;
@@ -462,7 +438,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => { };
+    const empty_fn = () => {};
 
     if (!type) {
         return empty_fn;
@@ -478,7 +454,7 @@ export function createLogAll() {
 // log
 export function createLog(log_type?) {
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => { };
+    const empty_fn = () => {};
 
     const type = log_type || debugFE();
 
@@ -515,7 +491,6 @@ export function getQueryString(query) {
 const state_temp = {};
 // 检测页面的状态
 export function detectModel(type) {
-    const self = this;
     let result;
     if (type in state_temp) {
         return state_temp[type];
@@ -533,8 +508,11 @@ export function detectModel(type) {
     return result;
 }
 export function debugFE() {
-    const self = this;
-    return detectModel('debugType') || detectModel('debugFE');
+    return (
+        detectModel('debugType') ||
+        detectModel('debug_status') ||
+        detectModel('debugFE')
+    );
 }
 export function compareObj(x, y) {
     if (x === y) {
@@ -565,7 +543,6 @@ export function compareObj(x, y) {
     return true;
 }
 export function extend(sub_class, super_class, name_sapce) {
-    const self = this;
     for (const p in super_class) {
         if (!super_class.hasOwnProperty(p)) {
             continue;
@@ -589,7 +566,6 @@ export function extend(sub_class, super_class, name_sapce) {
     return sub_class;
 }
 export function nameMap(arr_space, obj, end_obj) {
-    const self = this;
     if (!obj) {
         obj = window;
     }
@@ -719,7 +695,7 @@ export function addPressEvent(sprite) {
         });
     });
     /**  取消 */
-    sprite.on(Laya.Event.MOUSE_MOVE, sprite, event => {
+    sprite.on(Laya.Event.MOUSE_MOVE, sprite, () => {
         if (!sprite.cus_event) {
             return;
         }
