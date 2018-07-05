@@ -17,10 +17,11 @@ import { Hall } from './scene/hall/scene';
 import { loadAssets } from './scene/loaing/main';
 
 import './effect/scaleBtn';
+import { detectModel } from './mcTmpl/utils/zutil';
 
 Sail.onStart = () => {
     load_util.setResmap(RESMAP);
-    if (Sail.DEBUG) {
+    if (detectModel('showStat')) {
         Laya.Stat.show();
     }
     Laya.SoundManager.setMusicVolume(0.4);

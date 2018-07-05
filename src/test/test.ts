@@ -1,6 +1,6 @@
 import { CONFIG } from '../data/config';
 import * as animate from '../mcTmpl/utils/animate';
-import { debugFE, detectModel } from '../mcTmpl/utils/zutil';
+import * as zutil from '../mcTmpl/utils/zutil';
 import { load_util } from '../mcTmpl/utils/load';
 import * as game from './game';
 import { default as token } from './token.json';
@@ -9,18 +9,16 @@ interface CusWindow extends Window {
     CONFIG: typeof CONFIG;
 }
 
-if (debugFE()) {
+if (zutil.debugFE()) {
     const test = {};
-    assign(test, [game, animate]);
+    assign(test, [game, animate, zutil]);
     (window as CusWindow).load_util = load_util;
     (window as CusWindow).CONFIG = CONFIG;
     (window as any).test = test;
 
-    const user_id = detectModel('user_id');
+    const user_id = zutil.detectModel('user_id');
     CONFIG.user_id = user_id;
     CONFIG.token = token[user_id];
-
-    const test_scene = detectModel('scene');
 }
 
 function assign(obj_ori, objs_end) {
