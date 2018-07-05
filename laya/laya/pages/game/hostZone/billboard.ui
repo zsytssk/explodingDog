@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":9,
+    "selectedBox":8,
+    "selecteID":10,
     "props":{"width":287,"sceneColor":"#000000","height":360},
     "nodeParent":-1,
     "label":"View",
@@ -44,19 +44,32 @@
             "props":{"y":175,"x":38,"skin":"images/game/host_input_box.png"},
             "nodeParent":1,
             "label":"Image",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":8,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":12,"x":7,"width":200,"var":"room_id","valign":"middle","overflow":"hidden","height":54,"fontSize":48,"color":"#000000","bold":true,"align":"center"},
+                    "nodeParent":8,
+                    "label":"Text(room_id)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":10,
+                    "child":[
+                        ]
+                }]
         },
         {
             "x":15,
             "type":"Button",
-            "props":{"y":263,"x":56,"stateNum":"1","skin":"images/game/btn_share.png"},
+            "props":{"y":298,"x":146,"var":"share_btn","stateNum":"1","skin":"images/game/btn_share.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Button",
+            "label":"Button(share_btn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

@@ -57,3 +57,7 @@ type GameStartData = {
     /** 剩余排数 */
     remainCard: 20;
 };
+type ChangeCardType = {
+    userId: string;
+    newCardType: number;
+};

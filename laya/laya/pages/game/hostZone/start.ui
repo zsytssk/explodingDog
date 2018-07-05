@@ -28,9 +28,9 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":217,"x":51,"stateNum":"1","skin":"images/game/btn_start.png"},
+            "props":{"y":252,"x":156,"var":"start_btn","stateNum":"1","skin":"images/game/btn_start.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Button",
+            "label":"Button(start_btn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

@@ -5,13 +5,16 @@ import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 import { getChildren, log } from '../../mcTmpl/utils/zutil';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
+import { TurnArrowCtrl } from './turnArrow';
 import {
     event,
     GameModel,
     GameStatus,
     GameType,
-    game_status_list,
-    game_type_list,
+    game_status_map,
+    game_type_map,
+    card_type_map,
+    CardType,
 } from './model/game';
 import { PlayerModel } from './model/player';
 import { QuickStartCtrl } from './quickStart';
@@ -20,15 +23,16 @@ import { SeatCtrl } from './seat/seat';
 
 interface Link {
     view: Laya.Node;
-    seat_ctrl_list: SeatCtrl[];
-    quick_start_ctrl: QuickStartCtrl;
-    host_zone_ctrl: HostZoneCtrl;
     docker_ctrl: DockerCtrl;
     card_heap: Laya.Sprite;
     game_zone: Laya.Sprite;
     discard_zone_ctrl: QuickStartCtrl;
     btn_back: Laya.Button;
     btn_setting: Laya.Button;
+    seat_ctrl_list: SeatCtrl[];
+    quick_start_ctrl: QuickStartCtrl;
+    host_zone_ctrl: HostZoneCtrl;
+    turn_arrow_ctrl: TurnArrowCtrl;
 }
 
 export class GameCtrl extends BaseCtrl {
@@ -84,6 +88,12 @@ export class GameCtrl extends BaseCtrl {
         docker_ctrl.init();
         this.link.docker_ctrl = docker_ctrl;
 
+        const turn_arrow = view.turn_arrow;
+        const turn_arrow_ctrl = new TurnArrowCtrl(docker);
+        this.addChild(turn_arrow_ctrl);
+        turn_arrow_ctrl.init();
+        this.link.turn_arrow_ctrl = turn_arrow_ctrl;
+
         this.link.game_zone = view.game_zone;
         this.link.btn_back = view.btn_back;
         this.link.btn_setting = view.btn_setting;
@@ -94,6 +104,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.UPDATE_USER]: this.updateUser,
             [CMD.GAME_START]: this.gameStart,
             [CMD.OUT_ROOM]: this.outRoom,
+            [CMD.CHANGE_CARD_TYPE]: this.setCardType,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -114,6 +125,12 @@ export class GameCtrl extends BaseCtrl {
         this.onModel(event.status_change, (data: { status: GameStatus }) => {
             this.setStatus(data.status);
         });
+        this.onModel(
+            event.card_type_change,
+            (data: { card_type: CardType }) => {
+                this.link.host_zone_ctrl.setCardType(data.card_type);
+            },
+        );
         this.onModel(base_event.destroy, (data: { status: GameStatus }) => {
             this.leave();
         });
@@ -123,11 +140,7 @@ export class GameCtrl extends BaseCtrl {
         this.cur_user_id = data.curUserInfo.userId;
         this.cur_seat_id = Number(data.curUserInfo.seatId);
         /** @test  */
-        const type_no = data.roomInfo.isUserCreate || 0;
-        const status_no = data.roomInfo.roomStatus;
-        this.model.setGameType(game_type_list[type_no] as GameType);
-        this.model.setGameStatus(game_status_list[status_no] as GameStatus);
-
+        this.model.setRoomInfo(data.roomInfo);
         /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
         if (!data.userList.length) {
             data.userList.push(data.curUserInfo);
@@ -151,10 +164,10 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏开始 */
     private gameStart(data: GameStartData) {
-        this.model.setGameStatus(game_status_list[2] as GameStatus);
+        this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */
-    private outRoom(data: GameStartData) {
+    private outRoom() {
         this.model.destroy();
     }
     /** 添加用户 */
@@ -195,6 +208,10 @@ export class GameCtrl extends BaseCtrl {
         }
         return server_id;
     }
+    private setCardType(data: ChangeCardType) {
+        const card_type = card_type_map[data.newCardType];
+        this.model.setCardType(card_type);
+    }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
         const {
@@ -203,12 +220,14 @@ export class GameCtrl extends BaseCtrl {
             host_zone_ctrl,
             docker_ctrl,
         } = this.link;
-        const type = this.model.type;
+        const type = this.model.game_type;
         if (status === 'init') {
             game_zone.visible = false;
             docker_ctrl.reset();
             if (type === 'host') {
-                host_zone_ctrl.show();
+                const room_id = this.model.room_id;
+                const card_type = this.model.card_type;
+                host_zone_ctrl.show(room_id);
             } else {
                 quick_start_ctrl.show();
             }

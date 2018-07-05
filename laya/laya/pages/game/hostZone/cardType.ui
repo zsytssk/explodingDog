@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":6,
     "props":{"width":313,"sceneColor":"#000000","height":331},
     "nodeParent":-1,
     "label":"View",
@@ -14,23 +14,62 @@
     "child":[
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":0,"x":0,"skin":"images/game/host_card_type_normal.png"},
+            "type":"ViewStack",
+            "props":{"var":"card_type","selectedIndex":0},
             "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
+            "label":"ViewStack(card_type)",
+            "isOpen":false,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
+            "hasChild":true,
+            "compId":6,
             "child":[
-                ]
+                {
+                    "type":"Image",
+                    "props":{"y":0,"x":0,"skin":"images/game/host_card_type_normal.png","name":"item0"},
+                    "nodeParent":6,
+                    "label":"Image(item0)",
+                    "isOpen":true,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":3,
+                    "child":[
+                        ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":0,"x":0,"skin":"images/game/host_card_type_crazy.png","name":"item1"},
+                    "nodeParent":6,
+                    "label":"Image(item1)",
+                    "isOpen":true,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":7,
+                    "child":[
+                        ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":0,"x":0,"skin":"images/game/host_card_type_dance.png","name":"item2"},
+                    "nodeParent":6,
+                    "label":"Image(item2)",
+                    "isOpen":true,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":8,
+                    "child":[
+                        ]
+                }]
         },
         {
             "x":15,
             "type":"Button",
-            "props":{"y":258,"x":158,"width":211,"var":"chooseCardBtn","stateNum":"1","skin":"images/game/btn_choose_card_type.png","pivotY":34,"pivotX":107,"height":70,"appendProps":"laya/pages/effect/scaleBtn.prop"},
+            "props":{"y":258,"x":158,"width":211,"var":"choose_card_btn","stateNum":"1","skin":"images/game/btn_choose_card_type.png","pivotY":34,"pivotX":107,"height":70,"appendProps":"laya/pages/effect/scaleBtn.prop"},
             "nodeParent":1,
-            "label":"Button(chooseCardBtn)",
+            "label":"Button(choose_card_btn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

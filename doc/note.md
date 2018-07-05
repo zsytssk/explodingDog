@@ -1,7 +1,21 @@
 ## 2018-06-29 10:25:00
-* scale_in scale_out slide_left_out
-    * rotate 有时候没有作用
-    * 怎么有时候有作用 有时候没有作用
+
+-   @ques js getKeyFromValue
+
+-   @ques CardType 我保存时 normal 服务器是 0 1 这些
+    -   这两个相互转化实在麻烦 如何合理
+
+*   @ques room_id 在什么地方设置
+
+    -   只有真正进入游开始有这个属性...
+    -   能不能加一个命令...
+    -   enterRoom... 有 roomInfo
+
+    *   setRoomInfo
+
+*   scale_in scale_out slide_left_out
+    -   rotate 有时候没有作用
+    -   怎么有时候有作用 有时候没有作用
 
 -   @todo 显示房间号
     -   显示卡组修改

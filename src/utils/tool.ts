@@ -39,3 +39,14 @@ export function checkLogin() {
     location.href = GM.userLoginUrl;
     return false;
 }
+/** 通过value 来找到obj的key */
+export function getKeyByValue(obj: AnyObj, val) {
+    for (const key in obj) {
+        if (!obj.hasOwnProperty(key)) {
+            continue;
+        }
+        if (obj[key] === val) {
+            return key;
+        }
+    }
+}
