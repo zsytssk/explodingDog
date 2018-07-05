@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":8,
+    "selecteID":61,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":9,"x":12,"var":"btn_back","stateNum":"1","skin":"images/game/btn_quit.png","appendProps":"laya/pages/effect/scaleBtn.prop"},
+            "props":{"y":34,"x":65,"var":"btn_back","stateNum":"1","skin":"images/game/btn_quit.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btn_back)",
             "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":24,"x":1215,"var":"btn_setting","stateNum":"1","skin":"images/hall/btn_setting.png","right":30,"appendProps":"laya/pages/effect/scaleBtn.prop"},
+            "props":{"y":63,"x":1259,"var":"btn_setting","stateNum":"1","skin":"images/hall/btn_setting.png","right":30,"appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btn_setting)",
             "isDirectory":false,
