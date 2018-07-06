@@ -251,4 +251,22 @@ export class GameCtrl extends BaseCtrl {
         super.destroy();
         Sail.io.unregister(this.actions);
     }
+
+    /**
+     * 刷新用户座位的显示和位置
+     */
+    private updateSeatPos() {
+        const playerNum = this.model.getPlayerNum();
+        if (playerNum == 5) {
+            return;
+        }
+        let orderIndex = 0;
+        this.link.seat_ctrl_list.slice(1).forEach(seatCtrl => {
+            if (seatCtrl.loadedPlayer) {
+                seatCtrl.updatePos(100,100);
+            } else {
+                seatCtrl.hideSeat();
+            }
+        });
+    }
 }
