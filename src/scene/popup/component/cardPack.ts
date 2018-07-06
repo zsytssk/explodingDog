@@ -1,15 +1,17 @@
 import { CMD } from '../../../data/cmd';
 export class CardPack extends ui.popup.component.cardPackUI {
+    /**choose,play,create */
+    private type: string;
     constructor(data) {
         super();
         this.init(data);
     }
 
     init({ isLock, cardType, staminaCost }) {
-        this.bg.skin = `images/cards/icon_card${cardType}.png`;
+        this.bg.skin = `images/component/icon_card${cardType}.png`;
         this.chooseBtn.skin = isLock
-            ? `images/cards/btn_lock.png`
-            : `images/cards/btn_choose.png`;
+            ? `images/component/btn_lock.png`
+            : `images/component/btn_choose.png`;
         this.chooseBtn.mouseEnabled = !isLock;
         this.iconI.visible = isLock;
         this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
