@@ -136,7 +136,7 @@ export class GameCtrl extends BaseCtrl {
         });
     }
     /** 游戏复盘逻辑 */
-    private onServerGameReplay(data: GameReplayData) {
+    public onServerGameReplay(data: GameReplayData) {
         this.is_ready = true;
         this.cur_user_id = data.curUserInfo.userId;
         this.cur_seat_id = Number(data.curUserInfo.seatId);
@@ -149,7 +149,7 @@ export class GameCtrl extends BaseCtrl {
         this.onServerUpdateUser(data);
     }
     /** 更新用户的个数 */
-    private onServerUpdateUser(data: UpdateUser) {
+    public onServerUpdateUser(data: UpdateUser) {
         if (!this.is_ready) {
             return;
         }
@@ -167,7 +167,7 @@ export class GameCtrl extends BaseCtrl {
         this.model.updatePlayers(user_list);
     }
     /** 游戏开始 */
-    private onServerGameStart(data: GameStartData) {
+    public onServerGameStart(data: GameStartData) {
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */

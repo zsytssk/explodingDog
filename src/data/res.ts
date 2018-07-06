@@ -7,11 +7,26 @@ export const RES = {
             url: 'res/atlas/images/component/cards.atlas',
         },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
-        { url: 'res/atlas/images/component/cards.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/component/cards.png', type: Laya.Loader.IMAGE },
-        { url: 'images/component/cards/icon_card1.png', type: Laya.Loader.IMAGE },
-        { url: 'images/component/cards/icon_card2.png', type: Laya.Loader.IMAGE },
-        { url: 'images/component/cards/icon_card3.png', type: Laya.Loader.IMAGE },
+        {
+            url: 'res/atlas/images/component/cards.atlas',
+            type: Laya.Loader.ATLAS,
+        },
+        {
+            url: 'res/atlas/images/component/cards.png',
+            type: Laya.Loader.IMAGE,
+        },
+        {
+            url: 'images/component/cards/icon_card1.png',
+            type: Laya.Loader.IMAGE,
+        },
+        {
+            url: 'images/component/cards/icon_card2.png',
+            type: Laya.Loader.IMAGE,
+        },
+        {
+            url: 'images/component/cards/icon_card3.png',
+            type: Laya.Loader.IMAGE,
+        },
     ],
     HALL: [
         { url: 'images/bg/bg.jpg', type: Laya.Loader.IMAGE },
@@ -27,7 +42,9 @@ export const RES = {
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/game/card.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/game/card.png', type: Laya.Loader.IMAGE },
     ],
     LOADING: [
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },

@@ -62,7 +62,7 @@ export class GameModel extends BaseEvent {
     public setRoomInfo(data: RoomInfoData) {
         const type_no = data.isUserCreate || 0;
         const status_no = data.roomStatus;
-        const card_no = data.cardType;
+        const card_no = Number(data.cardType) - 1;
         this.room_id = data.roomId;
         this.game_type = game_type_map[type_no] as GameType;
         this.setCardType(card_type_map[card_no]);
