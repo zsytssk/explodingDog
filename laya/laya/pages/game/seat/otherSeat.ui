@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/player/player.ui",
+            "source":"game/seat/seat.ui",
             "props":{"y":0,"x":0,"var":"player_box"},
             "nodeParent":1,
             "label":"UIView(player_box)",

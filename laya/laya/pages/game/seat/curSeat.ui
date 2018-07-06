@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/player/player.ui",
+            "source":"game/seat/seat.ui",
             "props":{"y":0,"x":33,"var":"player_box"},
             "nodeParent":1,
             "label":"UIView(player_box)",
@@ -42,7 +42,7 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/player/cardBox.ui",
+            "source":"game/seat/cardBox.ui",
             "props":{"y":30,"x":236,"var":"card_box"},
             "nodeParent":1,
             "label":"UIView(card_box)",
