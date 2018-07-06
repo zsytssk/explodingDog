@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":0,"x":0,"var":"bg","skin":"images/cards/icon_card1.png"},
+                    "props":{"y":0,"x":0,"var":"bg","skin":"images/component/cards/icon_card1.png"},
                     "nodeParent":2,
                     "label":"Image(bg)",
                     "isDirectory":false,
@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":522,"x":198,"var":"chooseBtn","skin":"images/cards/btn_choose.png","pivotY":44,"pivotX":131,"appendProps":"laya/pages/effect/scaleImg.prop"},
+                    "props":{"y":522,"x":198,"var":"chooseBtn","skin":"images/component/cards/btn_choose.png","pivotY":44,"pivotX":131,"appendProps":"laya/pages/effect/scaleImg.prop"},
                     "nodeParent":2,
                     "label":"Image(chooseBtn)",
                     "isDirectory":false,
@@ -67,7 +67,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":4,"x":82,"skin":"images/cards/icon_stamina.png"},
+                            "props":{"y":4,"x":82,"skin":"images/component/cards/icon_stamina.png"},
                             "nodeParent":5,
                             "label":"Image",
                             "isDirectory":false,
@@ -96,7 +96,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":68,"x":323,"var":"iconI","skin":"images/cards/icon_i.png"},
+                    "props":{"y":68,"x":323,"var":"iconI","skin":"images/component/cards/icon_i.png"},
                     "nodeParent":2,
                     "label":"Image(iconI)",
                     "isDirectory":false,

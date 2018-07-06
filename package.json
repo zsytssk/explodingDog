@@ -20,7 +20,6 @@
         "release-all": "node ./script/releaseFile/main.js release_all"
     },
     "devDependencies": {
-        "cryptojslib": "^3.1.2",
         "lodash": "^4.17.10",
         "rxjs": "^6.2.0",
         "ts-loader": "^4.3.1",
@@ -33,7 +32,6 @@
         "art-template": "^4.12.2",
         "es6-promise": "^4.2.4",
         "js-base64": "^2.4.5",
-        "jsencrypt": "^3.0.0-beta.1",
         "tslint": "^5.10.0"
     }
 }

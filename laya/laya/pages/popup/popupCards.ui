@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"skin":"images/bg/bg.jpg"},
+            "props":{"skin":"images/component/bg.jpg"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
