@@ -8,10 +8,10 @@ export class CardPack extends ui.popup.component.cardPackUI {
     }
 
     init({ isLock, cardType, staminaCost }) {
-        this.bg.skin = `images/component/icon_card${cardType}.png`;
+        this.bg.skin = `images/component/cards/icon_card${cardType}.png`;
         this.chooseBtn.skin = isLock
-            ? `images/component/btn_lock.png`
-            : `images/component/btn_choose.png`;
+            ? `images/component/cards/btn_lock.png`
+            : `images/component/cards/btn_choose.png`;
         this.chooseBtn.mouseEnabled = !isLock;
         this.iconI.visible = isLock;
         this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
