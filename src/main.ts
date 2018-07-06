@@ -8,7 +8,6 @@ import './sail/core/sail.entrace.js';
 import './sail/core/sail.scene.js';
 
 import { CONFIG } from './data/config';
-import { RES } from './data/res';
 import { RESMAP } from './data/resMap';
 import { load_util } from './mcTmpl/utils/load';
 import './sail/lib/primus';
@@ -16,7 +15,8 @@ import './sail/tools/keyboard';
 import './sail/tools/notify';
 import { Hall } from './scene/hall/scene';
 import { loadAssets } from './scene/loaing/main';
-
+import { GameWrap } from './scene/game/sceneWrap';
+import { CMD } from './data/cmd';
 import './effect/scaleBtn';
 import { detectModel } from './mcTmpl/utils/zutil';
 
@@ -35,9 +35,19 @@ Sail.onStart = () => {
         type: 'primus',
         URL: CONFIG.websocket_url,
     });
-    loadAssets('hall').then(() => {
-        Sail.director.runScene(new Hall());
+
+    /** 监听用户状态， 是否在游戏中 */
+    Sail.io.register(CMD.GET_USER_INFO, this, (data: UserData) => {
+        let scene_class;
+        if (Number(data.userStatus) === 0) {
+            scene_class = Hall;
+        } else {
+            scene_class = GameWrap;
+        }
+        Sail.director.runScene(new scene_class());
+        Sail.io.unregister(CMD.GET_USER_INFO);
     });
+    Sail.io.emit(CMD.GET_USER_INFO);
 };
 
 Sail.run({

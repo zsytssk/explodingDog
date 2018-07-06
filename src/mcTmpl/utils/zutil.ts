@@ -215,14 +215,6 @@ export function isClosest(dom_item, dom_parent) {
     const parent = dom_item.parent;
     return isClosest(parent, dom_parent);
 }
-// tslint:disable-next-line:variable-name
-export function wrapElementByClass(dom_origin, ClassName) {
-    const dom_parent = dom_origin.parent;
-    const index = getElementIndex(dom_origin);
-    const new_class_dom = new ClassName(dom_origin);
-    dom_parent.addChildAt(new_class_dom, index);
-    return new_class_dom;
-}
 // dom_list中符合condition_str的元素 提取出来放在一个数组中
 export function filterElements(dom_list, filter_str) {
     return dom_list.filter(dom_item => {

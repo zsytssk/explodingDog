@@ -45,7 +45,6 @@ export class QuickStartCtrl extends BaseCtrl {
     public show() {
         const { match_view, countdown_view, light, scroll_rect } = this.link;
         match_view.visible = true;
-        countdown_view.visible = true;
         tweenLoop({
             props_arr: [
                 { alpha: 1, scaleX: 1.2, scaleY: 1.2 },
@@ -65,13 +64,17 @@ export class QuickStartCtrl extends BaseCtrl {
             sprite: scroll_rect,
             time: 500,
         });
-        this.countDown(100);
     }
 
     /** 设置倒计时 */
     public countDown(count_num: number) {
-        const { count_down_text } = this.link;
+        if (!count_num) {
+            return;
+        }
+        const { count_down_text, countdown_view } = this.link;
         const { count_down } = this;
+
+        countdown_view.visible = true;
         count_down.start(count_num);
         count_down.onCount((data: CountInfo) => {
             count_down_text.text = data.show_time + '';

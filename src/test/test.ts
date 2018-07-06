@@ -1,8 +1,17 @@
+import '../sail/core/sail.core.js';
+import '../sail/core/sail.viewer.js';
+import '../sail/core/sail.utils.js';
+import '../sail/core/sail.io.js';
+import '../sail/core/sail.dialog.js';
+import '../sail/core/sail.director.js';
+import '../sail/core/sail.entrace.js';
+import '../sail/core/sail.scene.js';
+
 import { CONFIG } from '../data/config';
 import * as animate from '../mcTmpl/utils/animate';
 import * as zutil from '../mcTmpl/utils/zutil';
-// import { load_util } from '../mcTmpl/utils/load';
 import * as game from './game';
+
 import * as server from './server';
 import { default as token } from './token.json';
 interface CusWindow extends Window {
@@ -13,13 +22,14 @@ interface CusWindow extends Window {
 if (zutil.debugFE()) {
     const test = {};
     assign(test, [game, animate, zutil, server]);
-    // (window as CusWindow).load_util = load_util;
     (window as CusWindow).CONFIG = CONFIG;
     (window as any).test = test;
 
     const user_id = zutil.detectModel('user_id');
-    CONFIG.user_id = user_id;
-    CONFIG.token = token[user_id];
+    if (user_id) {
+        CONFIG.user_id = user_id;
+        CONFIG.token = token[user_id];
+    }
 }
 
 function assign(obj_ori, objs_end) {

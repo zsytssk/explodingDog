@@ -42,7 +42,7 @@ export class HostZoneCtrl extends BaseCtrl {
         });
 
         start_btn.on(Laya.Event.CLICK, this, () => {
-            log('开始游戏');
+            Sail.io.emit(CMD.GAME_START);
         });
     }
     public show(room_id: string) {

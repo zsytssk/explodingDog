@@ -153,6 +153,7 @@ export class GameCtrl extends BaseCtrl {
         if (!this.is_ready) {
             return;
         }
+        const { quick_start_ctrl } = this.link;
         const user_list = data.userList;
         /** 如果当前用户还没有seatId 需要设置seatId
          * 出现在进入房间 但是还在匹配 没有进入游戏 所以没有userId
@@ -165,9 +166,11 @@ export class GameCtrl extends BaseCtrl {
             }
         }
         this.model.updatePlayers(user_list);
+        /** 更新本地倒计时 */
+        quick_start_ctrl.countDown(data.roomInfo.remainTime);
     }
     /** 游戏开始 */
-    public onServerGameStart(data: GameStartData) {
+    public onServerGameStart(data: GameStartData, code: string) {
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */
