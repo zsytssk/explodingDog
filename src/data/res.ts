@@ -2,6 +2,10 @@ export const RES = {
     PRELOAD: [],
     COMPONENT: [
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
+        {
+            type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/cards.atlas',
+        },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/component/cards.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/component/cards.png', type: Laya.Loader.IMAGE },
@@ -20,7 +24,7 @@ export const RES = {
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
+        { url: 'res/atlas/images/game/card.atlas', type: Laya.Loader.ATLAS },
     ],
     LOADING: [
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },

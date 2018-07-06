@@ -100,11 +100,11 @@ export class GameCtrl extends BaseCtrl {
     }
     protected initEvnet() {
         this.actions = {
-            [CMD.GAME_REPLAY]: this.gameReplay,
-            [CMD.UPDATE_USER]: this.updateUser,
-            [CMD.GAME_START]: this.gameStart,
-            [CMD.OUT_ROOM]: this.outRoom,
-            [CMD.CHANGE_CARD_TYPE]: this.setCardType,
+            [CMD.GAME_REPLAY]: this.onServerGameReplay,
+            [CMD.UPDATE_USER]: this.onServerUpdateUser,
+            [CMD.GAME_START]: this.onServerGameStart,
+            [CMD.OUT_ROOM]: this.onServerOutRoom,
+            [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -136,7 +136,7 @@ export class GameCtrl extends BaseCtrl {
         });
     }
     /** 游戏复盘逻辑 */
-    private gameReplay(data: GameReplayData) {
+    private onServerGameReplay(data: GameReplayData) {
         this.is_ready = true;
         this.cur_user_id = data.curUserInfo.userId;
         this.cur_seat_id = Number(data.curUserInfo.seatId);
@@ -146,10 +146,10 @@ export class GameCtrl extends BaseCtrl {
         if (!data.userList.length) {
             data.userList.push(data.curUserInfo);
         }
-        this.updateUser(data);
+        this.onServerUpdateUser(data);
     }
     /** 更新用户的个数 */
-    private updateUser(data: UpdateUser) {
+    private onServerUpdateUser(data: UpdateUser) {
         if (!this.is_ready) {
             return;
         }
@@ -167,11 +167,11 @@ export class GameCtrl extends BaseCtrl {
         this.model.updatePlayers(user_list);
     }
     /** 游戏开始 */
-    private gameStart(data: GameStartData) {
+    private onServerGameStart(data: GameStartData) {
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */
-    private outRoom() {
+    private onServerOutRoom() {
         this.model.destroy();
     }
     /** 添加用户 */
@@ -210,8 +210,8 @@ export class GameCtrl extends BaseCtrl {
         }
         return server_id;
     }
-    private setCardType(data: ChangeCardType) {
-        const card_type = card_type_map[data.newCardType];
+    private onServerChangeCardType(data: ChangeCardType) {
+        const card_type = card_type_map[Number(data.newCardType) - 1];
         this.model.setCardType(card_type);
     }
     /** 根据游戏的状态显示不同的ui */

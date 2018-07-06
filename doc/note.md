@@ -1,12 +1,14 @@
 ## 2018-07-06 10:16:50
 
--   @ques 类型“Observable<{}>”上不存在属性“retry”。
+-   @note 牌的大小 [231x246]
+
+*   @ques 类型“Observable<{}>”上不存在属性“retry”。
     -   axios
 
-*   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
+-   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
     -   我原来
 
--   监听服务器的命令和 model 的命令这两者容易重名如何处理
+*   监听服务器的命令和 model 的命令这两者容易重名如何处理
     -   onModel
     -   onPrimus 这名字也太长了吧
 
@@ -17,7 +19,7 @@
 -   @ques CardType 我保存时 normal 服务器是 0 1 这些
     -   这两个相互转化实在麻烦 如何合理
 
-*   @ques room_id 在什么地方设置
+*   @ques room_id 在什么地方设置 ll
 
     -   只有真正进入游开始有这个属性...
     -   能不能加一个命令...
