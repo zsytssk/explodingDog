@@ -1,3 +1,15 @@
+## 2018-07-06 10:16:50
+
+-   @ques 类型“Observable<{}>”上不存在属性“retry”。
+    -   axios
+
+*   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
+    -   我原来
+
+-   监听服务器的命令和 model 的命令这两者容易重名如何处理
+    -   onModel
+    -   onPrimus 这名字也太长了吧
+
 ## 2018-06-29 10:25:00
 
 -   @ques js getKeyFromValue

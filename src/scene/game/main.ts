@@ -89,7 +89,7 @@ export class GameCtrl extends BaseCtrl {
         this.link.docker_ctrl = docker_ctrl;
 
         const turn_arrow = view.turn_arrow;
-        const turn_arrow_ctrl = new TurnArrowCtrl(docker);
+        const turn_arrow_ctrl = new TurnArrowCtrl(turn_arrow);
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
         this.link.turn_arrow_ctrl = turn_arrow_ctrl;

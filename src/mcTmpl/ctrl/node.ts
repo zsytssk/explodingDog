@@ -1,4 +1,4 @@
-import { isClosest } from '../../mcTmpl/utils/zutil';
+import { isClosest } from '../utils/zutil';
 import { BaseCtrl } from './base';
 import { PopCtrl } from './pop';
 
