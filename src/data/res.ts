@@ -35,7 +35,6 @@ export const RES = {
         { url: 'images/hall/btn_bg.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/user_panel.png', type: Laya.Loader.IMAGE },
         { url: 'font/hall_user_info.fnt', type: Laya.Loader.FONT },
-        { url: 'font/hall_user_info.png', type: Laya.Loader.IMAGE },
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
@@ -54,6 +53,5 @@ export const RES = {
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
-        { url: 'font/join_room.png', type: Laya.Loader.IMAGE },
     ],
 };
