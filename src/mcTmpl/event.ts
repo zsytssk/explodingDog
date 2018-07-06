@@ -58,9 +58,9 @@ export abstract class BaseEvent {
             this.off(event_name, listener);
         };
         const bind_obj = {
-            once: once ? once : false,
             listener,
             off,
+            once: once ? once : false,
         };
         this.hook_funs[event_name].push(bind_obj);
         return {
@@ -140,9 +140,9 @@ export abstract class BaseEvent {
         }
         const bind_info = other.on(event_name, callback, once);
         const bind_obj = {
+            event: event_name,
             off: bind_info.off,
             other_id: other.id,
-            event: event_name,
             other_name: other.name,
         };
         this.hook_other_funs.push(bind_obj);

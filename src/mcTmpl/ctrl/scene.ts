@@ -1,4 +1,4 @@
-import { load_util } from '../../mcTmpl/utils/load';
+import { load_util } from '../utils/load';
 import { cmd as app_cmd } from '../app';
 import { DisplayStyle, NodeCtrl } from './node';
 

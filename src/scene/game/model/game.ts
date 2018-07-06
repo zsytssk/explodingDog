@@ -65,7 +65,7 @@ export class GameModel extends BaseEvent {
         const card_no = data.cardType;
         this.room_id = data.roomId;
         this.game_type = game_type_map[type_no] as GameType;
-        this.card_type = card_type_map[card_no] as CardType;
+        this.setCardType(card_type_map[card_no]);
         this.setGameStatus(game_status_map[status_no] as GameStatus);
     }
     /**  设置游戏状态 */

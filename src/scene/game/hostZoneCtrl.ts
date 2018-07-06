@@ -1,8 +1,9 @@
 import { BaseCtrl } from '../../mcTmpl/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
 import { CMD } from '../../data/cmd';
-import { card_type_map, getKeyByValue, CardType } from './model/game';
+import { card_type_map, CardType } from './model/game';
 import { log } from '../../mcTmpl/utils/zutil';
+import { getKeyByValue } from '../../utils/tool';
 interface Link {
     view: Laya.Sprite;
     card_type: Laya.ViewStack;
@@ -44,7 +45,7 @@ export class HostZoneCtrl extends BaseCtrl {
             log('开始游戏');
         });
     }
-    public show(room_id: string, card_type: number) {
+    public show(room_id: string) {
         const { view, room_id_text } = this.link;
         view.visible = true;
         /** 设置roomId */
@@ -60,6 +61,6 @@ export class HostZoneCtrl extends BaseCtrl {
         if (!type_num) {
             return;
         }
-        card_type.selectedIndex = type_num;
+        card_type.selectedIndex = Number(type_num);
     }
 }

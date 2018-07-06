@@ -18,13 +18,14 @@
             "props":{"var":"card_type","selectedIndex":0},
             "nodeParent":1,
             "label":"ViewStack(card_type)",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":6,
             "child":[
                 {
+                    "x":30,
                     "type":"Image",
                     "props":{"y":0,"x":0,"skin":"images/game/host_card_type_normal.png","name":"item0"},
                     "nodeParent":6,
@@ -38,6 +39,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Image",
                     "props":{"y":0,"x":0,"skin":"images/game/host_card_type_crazy.png","name":"item1"},
                     "nodeParent":6,
@@ -51,6 +53,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Image",
                     "props":{"y":0,"x":0,"skin":"images/game/host_card_type_dance.png","name":"item2"},
                     "nodeParent":6,

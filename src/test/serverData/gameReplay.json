@@ -3,25 +3,63 @@
     "code": 200,
     "res": {
         "curUserInfo": {
-            "userId": "4002",
-            "nickname": "4002",
-            "danGrading": "13",
-            "score": "1399",
-            "level": "1",
-            "exp": "80",
-            "currentExp": "80",
-            "totalPlayCount": "21",
-            "winPlayCount": "5",
+            "userId": "3001",
+            "nickname": "abc",
+            "danGrading": "9",
+            "score": "991",
+            "level": "3",
+            "exp": "1400",
+            "currentExp": "700",
+            "totalPlayCount": "29",
+            "winPlayCount": "10",
             "avatar": "101",
-            "ownAvatars": "101,102,103",
-            "ownCardTypes": "1",
+            "ownAvatars":
+                "101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116",
+            "ownCardTypes": "1,2",
             "isRobot": 0,
             "takeCount": "0",
             "defuseCount": "0",
             "attackCount": "0",
-            "userStatus": "1"
+            "roomId": "393632",
+            "seatId": "1",
+            "sitTime": "1530783850343",
+            "userStatus": "2"
         },
-        "userList": [],
-        "roomInfo": {}
+        "userList": [
+            {
+                "userId": "3001",
+                "nickname": "abc",
+                "danGrading": "9",
+                "score": "991",
+                "level": "3",
+                "exp": "1400",
+                "currentExp": "700",
+                "totalPlayCount": "29",
+                "winPlayCount": "10",
+                "avatar": "101",
+                "ownAvatars":
+                    "101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116",
+                "ownCardTypes": "1,2",
+                "isRobot": 0,
+                "takeCount": "0",
+                "defuseCount": "0",
+                "attackCount": "0",
+                "roomId": "393632",
+                "seatId": "1",
+                "sitTime": "1530783850343",
+                "userStatus": "2"
+            }
+        ],
+        "roomInfo": {
+            "cardType": "2",
+            "roomId": "393632",
+            "roomStatus": "0",
+            "userCount": "1",
+            "createUser": "3001",
+            "createTime": "1530783850",
+            "activeTime": "1530783850",
+            "danGrading": "9",
+            "isUserCreate": 1
+        }
     }
 }

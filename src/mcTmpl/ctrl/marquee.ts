@@ -1,5 +1,5 @@
 import { CMD } from '../../data/cmd';
-import { zutil } from '../../mcTmpl/utils/zutil';
+import { zutil } from '../utils/zutil';
 import { Notify } from '../../utils/notify';
 import { NodeCtrl } from '../component/node';
 
