@@ -12,10 +12,7 @@ export const RES = {
     HALL: [
         { url: 'images/bg/bg.jpg', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/hall.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/hall.png', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/hall/rank.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/cards.atlas', type: Laya.Loader.ATLAS },
         { url: 'images/hall/btn_bg.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/user_panel.png', type: Laya.Loader.IMAGE },
         { url: 'font/hall_user_info.fnt', type: Laya.Loader.FONT },
