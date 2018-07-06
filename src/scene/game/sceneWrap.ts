@@ -2,16 +2,13 @@ import { CMD } from '../../data/cmd';
 import { RES } from '../../data/res';
 
 import { GameCtrl } from './main';
-
+import { loadAssets } from '../loaing/main';
 export class GameWrap extends Sail.Scene {
     constructor() {
         super();
-        Laya.loader.load(
-            RES.GAME.concat(RES.COMPONENT),
-            new Laya.Handler(this, () => {
-                this.init();
-            }),
-        );
+        loadAssets('game').then(() => {
+            this.init();
+        });
     }
 
     public init() {

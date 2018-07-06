@@ -9,13 +9,6 @@ import { ResMap } from '../mcTmpl/utils/load';
 
 export let RESMAP: ResMap = [
     {
-        name: 'normal',
-        res: RES.GAME,
-        res_dependencies: [RES.COMPONENT], // 依赖资源
-        res_relatives: [],
-        resource_status: 'unload',
-    },
-    {
         name: 'loading',
         res: RES.LOADING,
         res_dependencies: [],
@@ -25,6 +18,13 @@ export let RESMAP: ResMap = [
     {
         name: 'hall',
         res: RES.HALL,
+        res_dependencies: [RES.COMPONENT, RES.POP],
+        res_relatives: [],
+        resource_status: 'unload',
+    },
+    {
+        name: 'game',
+        res: RES.GAME,
         res_dependencies: [RES.COMPONENT, RES.POP],
         res_relatives: [],
         resource_status: 'unload',

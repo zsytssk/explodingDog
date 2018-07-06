@@ -8,6 +8,7 @@ import './sail/core/sail.entrace.js';
 import './sail/core/sail.scene.js';
 
 import { CONFIG } from './data/config';
+import { RES } from './data/res';
 import { RESMAP } from './data/resMap';
 import { load_util } from './mcTmpl/utils/load';
 import './sail/lib/primus';

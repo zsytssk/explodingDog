@@ -72,13 +72,7 @@ class LoadUtil {
         const resolve = this.loading_item.resolve;
 
         const loading_item = this.loading_item;
-        // if (loading_item.type != 'relative') {  //debug
-        // zutil.log('load_ctrl::loading_item', loading_item.ctrl_name, loading_item);
-        // }
         const new_resolve = () => {
-            // if (loading_item.type != 'relative') {  //debug
-            // zutil.log('load_ctrl::loaded_item', loading_item.ctrl_name, loading_item);
-            // }
             /**loader.clearUnLoaded 有时并不能停止正在加载的资源
              * 导致多个加载队列同时进行, 会导致我的load过程中黑屏bug
              * 如果当前加载结束的元素和正在加载的元素和不一样,
@@ -102,23 +96,9 @@ class LoadUtil {
         }
 
         /** 加载完成执行函数 */
-        const loaded_callback: Laya.Handler = Laya.Handler.create(
-            this,
-            new_resolve,
-        );
+        const loaded_callback = new_resolve;
 
-        /** 正在加载函数 */
-        let loading_callback: Laya.Handler = null;
-        if (loading_fun) {
-            loading_callback = Laya.Handler.create(
-                this,
-                loading_fun,
-                null,
-                false,
-            );
-        }
-
-        this.loadItem(res, loaded_callback, loading_callback);
+        this.loadItem(res, loaded_callback, loading_fun);
     }
     /**
      * 加载单个item资源
@@ -127,17 +107,21 @@ class LoadUtil {
      */
     private loadItem(
         res: any[],
-        loaded_callback: Laya.Handler,
-        loading_callback: Laya.Handler,
+        loaded_callback: FuncVoid,
+        loading_callback: FunLoading,
     ) {
         /** 空的资源列表 直接执行返回函数  */
         if (!res.length) {
-            loaded_callback.run();
+            loaded_callback();
             return;
         }
         /** 如果是单个资源对象, 直接执行返回函数  */
         if (res[0] && res[0].url) {
-            Laya.loader.load(res, loaded_callback, loading_callback);
+            Laya.loader.load(
+                res,
+                new Laya.Handler(this, loaded_callback),
+                new Laya.Handler(this, loading_callback),
+            );
             return;
         }
         /** 传入的资源不是res[]格式  */
@@ -151,31 +135,24 @@ class LoadUtil {
         let loading_progress_callback = null;
 
         if (loading_callback) {
-            loading_progress_callback = Laya.Handler.create(
-                this,
-                progress => {
-                    loading_callback.runWith(
-                        (loaded_item_num + progress) / len,
-                    );
-                },
-                null,
-                false,
-            );
+            loading_progress_callback = progress => {
+                loading_callback((loaded_item_num + progress) / len);
+            };
         }
 
         for (let i = len - 1; i >= 0; i--) {
             this.loadItem(
                 res[i],
-                Laya.Handler.create(this, () => {
+                () => {
                     loaded_item_num++;
                     if (loading_callback) {
-                        loading_callback.runWith(loaded_item_num / len);
+                        loading_callback(loaded_item_num / len);
                     }
 
                     if (loaded_item_num === len) {
-                        loaded_callback.runWith(loaded_callback.args);
+                        loaded_callback();
                     }
-                }),
+                },
                 loading_progress_callback,
             );
         }

@@ -9,8 +9,13 @@
     -   我原来
 
 *   监听服务器的命令和 model 的命令这两者容易重名如何处理
+
     -   onModel
     -   onPrimus 这名字也太长了吧
+
+*   @ques loadAssets 的 then 为什么在 load_util 的前面
+    -   console 中 怎么还有图片没有显示。。。、
+    *   @ques 马一帆
 
 ## 2018-06-29 10:25:00
 

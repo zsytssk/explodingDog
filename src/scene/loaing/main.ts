@@ -1,9 +1,8 @@
 import { load_util } from '../../mcTmpl/utils/load';
 
-export function loadAssets(name) {
-    return load_util.load('loading').then(() => {
-        load(name);
-    });
+export async function loadAssets(name) {
+    await load_util.load('loading');
+    return await load(name);
 }
 
 function load(name) {
