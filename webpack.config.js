@@ -2,7 +2,7 @@
 const path = require('path');
 
 const common_file_list = ['./src/main.ts'];
-const dev_file_list = ['./src/test.ts'].concat(common_file_list);
+const dev_file_list = ['./src/test/test.ts'].concat(common_file_list);
 const prod_file_list = ['es6-promise'].concat(common_file_list);
 
 let common_config = {
