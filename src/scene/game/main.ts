@@ -170,7 +170,11 @@ export class GameCtrl extends BaseCtrl {
         quick_start_ctrl.countDown(data.roomInfo.remainTime);
     }
     /** 游戏开始 */
-    public onServerGameStart(data: GameStartData, code: string) {
+    public onServerGameStart(data: GameStartData, code: string, msg: string) {
+        if (Number(code) !== 200) {
+            alert(msg);
+            return;
+        }
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */
@@ -266,7 +270,7 @@ export class GameCtrl extends BaseCtrl {
         let orderIndex = 0;
         this.link.seat_ctrl_list.slice(1).forEach(seatCtrl => {
             if (seatCtrl.loadedPlayer) {
-                seatCtrl.updatePos(100,100);
+                seatCtrl.updatePos(100, 100);
             } else {
                 seatCtrl.hideSeat();
             }

@@ -1,19 +1,36 @@
 ## 2018-07-06 10:16:50
 
--   @note 牌的大小 [231x246]
+-   @ques 能不能 mc 能不能使用 gitsubmodule
 
-*   @ques 类型“Observable<{}>”上不存在属性“retry”。
+*   @ques card 的 view 在自己的 ctrl， 还是在父类的 ctrl 中添加
+
+*   ctrl 基本上都有 view， 在销毁的的时候都要处理 有没有必要放在 BaseCtrl 中
+
+-   io 出现错误的时候要不要统一处理。。
+
+*   @note 当前玩家的牌的处理
+
+    -   整理滑动
+    -   选中某张牌
+    -   从牌池抽出一张牌
+    -   选中某张牌给外面玩家。。。
+
+*   @note 牌的大小 [231x246]
+
+-   @ques 类型“Observable<{}>”上不存在属性“retry”。
     -   axios
 
--   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
+*   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
     -   我原来
+    *   基础类 继承 baseCtrl 里面绑定 primus 的方法。。。
+    *   。。。
 
-*   监听服务器的命令和 model 的命令这两者容易重名如何处理
+-   监听服务器的命令和 model 的命令这两者容易重名如何处理
 
     -   onModel
     -   onPrimus 这名字也太长了吧
 
-*   @ques loadAssets 的 then 为什么在 load_util 的前面
+-   @ques loadAssets 的 then 为什么在 load_util 的前面
     -   console 中 怎么还有图片没有显示。。。、
     *   @ques 马一帆
 
@@ -23,6 +40,10 @@
 
 -   @ques CardType 我保存时 normal 服务器是 0 1 这些
     -   这两个相互转化实在麻烦 如何合理
+
+*   @ques roomInfo 的设置
+
+    -   gameModel 的多个属性关联。。。
 
 *   @ques room_id 在什么地方设置 ll
 
