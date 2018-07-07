@@ -1,6 +1,12 @@
 ## 2018-07-06 10:16:50
 
+git subtree add --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+git subtree pull --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
+
 -   @todo 整理 麻将中的代码
+
+*   subtree 如何删除 如何提交到远程。。。
 
 *   @ques 能不能 mc 能不能使用 gitsubmodule
 
