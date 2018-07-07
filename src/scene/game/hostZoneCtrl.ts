@@ -1,8 +1,8 @@
-import { BaseCtrl } from '../../mcTmpl/ctrl/base';
+import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
 import { CMD } from '../../data/cmd';
 import { card_type_map, CardType } from './model/game';
-import { log } from '../../mcTmpl/utils/zutil';
+import { log } from '../../mcTree/utils/zutil';
 import { getKeyByValue } from '../../utils/tool';
 interface Link {
     view: Laya.Sprite;

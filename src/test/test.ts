@@ -7,12 +7,12 @@ import '../sail/core/sail.director.js';
 import '../sail/core/sail.entrace.js';
 import '../sail/core/sail.scene.js';
 
-import { CONFIG } from '../data/config.js';
-import * as animate from '../mcTmpl/utils/animate.js';
-import * as zutil from '../mcTmpl/utils/zutil.js';
-import * as game from './game.js';
+import { CONFIG } from '../data/config';
+import * as animate from '../mcTree/utils/animate';
+import * as zutil from '../mcTree/utils/zutil';
+import * as game from './game';
 
-import * as server from './server.js';
+import * as server from './server';
 import { default as token } from './token.json';
 interface CusWindow extends Window {
     // load_util: typeof load_util;

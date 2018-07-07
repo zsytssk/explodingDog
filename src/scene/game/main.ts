@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
-import { BaseCtrl } from '../../mcTmpl/ctrl/base';
-import { event as base_event } from '../../mcTmpl/event';
-import { getChildren, log } from '../../mcTmpl/utils/zutil';
+import { BaseCtrl } from '../../mcTree/ctrl/base';
+import { event as base_event } from '../../mcTree/event';
+import { getChildren, log } from '../../mcTree/utils/zutil';
 import { Hall } from '../hall/scene';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';

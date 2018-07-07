@@ -1,4 +1,4 @@
-import { BaseCtrl } from '../../../mcTmpl/ctrl/base';
+import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { CardModel } from '../model/card';
 import { CurCardBoxCtrl } from './curCardBox';
 

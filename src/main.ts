@@ -7,18 +7,17 @@ import './sail/core/sail.director.js';
 import './sail/core/sail.entrace.js';
 import './sail/core/sail.scene.js';
 
-import { CONFIG } from './data/config.js';
-import { RESMAP } from './data/resMap.js';
-import { load_util } from './mcTmpl/utils/load.js';
-import './sail/lib/primus.js';
-import './sail/tools/keyboard.js';
-import './sail/tools/notify.js';
-import { Hall } from './scene/hall/scene.js';
-import { loadAssets } from './scene/loaing/main.js';
-import { GameWrap } from './scene/game/sceneWrap.js';
-import { CMD } from './data/cmd.js';
-import './effect/scaleBtn.js';
-import { detectModel } from './mcTmpl/utils/zutil.js';
+import { CONFIG } from './data/config';
+import { RESMAP } from './data/resMap';
+import { load_util } from './mcTree/utils/load';
+import './sail/lib/primus';
+import './sail/tools/keyboard';
+import './sail/tools/notify';
+import { Hall } from './scene/hall/scene';
+import { GameWrap } from './scene/game/sceneWrap';
+import { CMD } from './data/cmd';
+import './effect/scaleBtn';
+import { detectModel } from './mcTree/utils/zutil';
 
 Sail.onStart = () => {
     load_util.setResmap(RESMAP);

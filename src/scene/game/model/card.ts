@@ -1,4 +1,4 @@
-import { BaseEvent } from '../../../mcTmpl/event';
+import { BaseEvent } from '../../../mcTree/event';
 
 export class CardModel extends BaseEvent {
     /** 牌的id */

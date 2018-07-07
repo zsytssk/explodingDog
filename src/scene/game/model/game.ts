@@ -1,4 +1,4 @@
-import { BaseEvent } from '../../../mcTmpl/event';
+import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
 
 export const event = {

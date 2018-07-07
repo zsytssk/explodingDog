@@ -1,7 +1,7 @@
-import { event } from '../../../mcTmpl/event';
-import { BaseCtrl } from '../../../mcTmpl/ctrl/base';
+import { event } from '../../../mcTree/event';
+import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { PlayerModel } from '../model/player';
-import { tween } from "../../../mcTmpl/utils/animate";
+import { tween } from "../../../mcTree/utils/animate";
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;

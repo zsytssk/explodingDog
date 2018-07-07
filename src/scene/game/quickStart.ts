@@ -1,6 +1,6 @@
-import { BaseCtrl } from '../../mcTmpl/ctrl/base';
-import { stopAni, tweenLoop } from '../../mcTmpl/utils/animate';
-import { CountDown, CountInfo } from '../../mcTmpl/utils/countDown';
+import { BaseCtrl } from '../../mcTree/ctrl/base';
+import { stopAni, tweenLoop } from '../../mcTree/utils/animate';
+import { CountDown, CountInfo } from '../../mcTree/utils/countDown';
 
 interface Link {
     match_view: ui.game.bannerMatchUI;

@@ -1,4 +1,4 @@
-import { BaseEvent } from '../../../mcTmpl/event';
+import { BaseEvent } from '../../../mcTree/event';
 import { CardModel } from './card';
 
 export class PlayerModel extends BaseEvent {
