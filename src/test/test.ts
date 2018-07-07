@@ -1,12 +1,4 @@
-import '../sail/core/sail.core.js';
-import '../sail/core/sail.viewer.js';
-import '../sail/core/sail.utils.js';
-import '../sail/core/sail.io.js';
-import '../sail/core/sail.dialog.js';
-import '../sail/core/sail.director.js';
-import '../sail/core/sail.entrace.js';
-import '../sail/core/sail.scene.js';
-
+import '../sailImport';
 import { CONFIG } from '../data/config';
 import * as animate from '../mcTree/utils/animate';
 import * as zutil from '../mcTree/utils/zutil';
