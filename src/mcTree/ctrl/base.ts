@@ -29,7 +29,7 @@ export class BaseCtrl extends BaseEvent {
     // tslint:disable-next-line:variable-name
     protected zOrder: number = 0;
     /** 在父元素中的order, 越大余额靠后, 用来处理场景切换, pop始终在最上面 */
-    protected link: t_any_obj = {};
+    protected link: AnyObj = {};
     /**  是否是最顶级的ctrl  */
     protected is_top: boolean = false;
     protected model: BaseEvent;
@@ -57,7 +57,7 @@ export class BaseCtrl extends BaseEvent {
     public report(
         event_name: string,
         destination?: string | BaseCtrl,
-        data?: t_any_obj,
+        data?: AnyObj,
     ) {
         if (!this.in_ctrl_tree) {
             logErr(`${this.name} not in ctrl tree`);
@@ -118,7 +118,7 @@ export class BaseCtrl extends BaseEvent {
     public broadcast(
         event_name: string,
         destination?: string | BaseCtrl,
-        data?: t_any_obj,
+        data?: AnyObj,
     ) {
         if (!this.in_ctrl_tree) {
             logErr(`${this.name} not in ctrl tree`);
@@ -135,7 +135,7 @@ export class BaseCtrl extends BaseEvent {
     public emit(
         event_name: string,
         destination?: string | BaseCtrl,
-        data?: t_any_obj,
+        data?: AnyObj,
     ) {
         if (!this.in_ctrl_tree) {
             logErr(`${this.name} not in ctrl tree`);
@@ -326,14 +326,6 @@ export class BaseCtrl extends BaseEvent {
         }
 
         this.bindOtherEvent(model, event_name, callback);
-    }
-    /** 取消所有需要延迟执行的函数 */
-    protected clearAllTimeout() {
-        super.clearAllTimeout();
-        for (const item of this.timeline_list) {
-            item.destroy();
-        }
-        this.timeline_list = [];
     }
     /** 统一在节点上绑定事件, destroy时候统一清除 */
     protected onNode(

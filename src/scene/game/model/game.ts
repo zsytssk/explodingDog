@@ -55,6 +55,7 @@ export class GameModel extends BaseEvent {
         const user_id_list = [];
         for (const player_data of players_data) {
             const user_id = player_data.userId;
+            user_id_list.push(user_id);
             /** 用户已经存在不做处理 */
             const player_model = this.getPlayerById(user_id);
             if (player_model) {
@@ -62,7 +63,6 @@ export class GameModel extends BaseEvent {
                 continue;
             }
             this.addPlayer(player_data);
-            user_id_list.push(user_id);
         }
         /** 删除已经存在的user */
         for (const player_model of this.player_list) {

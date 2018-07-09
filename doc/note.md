@@ -1,5 +1,13 @@
 ## 2018-07-06 10:16:50
 
+-   seat --> card_box
+    -   CurCardBoxCtrl createCardBox:CurCardBoxCtrl
+    -   CardBoxCtrl createCardBox
+
+*   PlayerModel --> SeatCtrl -->
+    CurSeatCtrl --> CurCardBox
+    OtherSeatCtrl --> OtherCardBox
+
 -   @ques remain time 放在 model 怎么样
     -   增加我的复杂度 没有必要
 

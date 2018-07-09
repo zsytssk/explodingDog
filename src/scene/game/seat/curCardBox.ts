@@ -1,37 +1,33 @@
-import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { CurCardCtrl } from './curCard';
 import { CardModel } from '../model/card';
 import { CardCtrl } from './card';
+import { CardBoxCtrl } from './cardBox';
 
 export interface Link {
     view: Laya.Sprite;
 }
 
-/**  */
-export class CurCardBoxCtrl extends BaseCtrl {
+export class CurCardBoxCtrl extends CardBoxCtrl {
     public children: CardCtrl[];
     protected link = {} as Link;
     constructor(view) {
-        super();
+        super(view);
         this.link.view = view;
     }
     public init() {
         this.initLink();
         this.initEvent();
     }
-    protected initLink() {}
-    protected initEvent() {}
+    protected createCardBox(card_box: Laya.Sprite) {
+        const card_box_ctrl = new CurCardBoxCtrl(card_box);
+        this.addChild(card_box_ctrl);
+        card_box_ctrl.init();
+        return card_box_ctrl;
+    }
     public addCard(card: CardModel) {
         const card_ctrl = new CurCardCtrl(card);
         this.addChild(card_ctrl);
         card_ctrl.init();
         this.sortCard();
-    }
-    /** 牌的数目变化 重新排列牌发生b */
-    private sortCard() {
-        const card_list = this.children;
-        for (let i = 0; i < card_list.length; i++) {
-            card_list[i].tweenMove(i);
-        }
     }
 }

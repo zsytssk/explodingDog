@@ -1,14 +1,15 @@
 import { PlayerModel } from '../model/player';
 import { Link as BaseLink, SeatCtrl } from './seat';
 import { CurCardBoxCtrl } from './curCardBox';
+import { CardModel } from '../model/card';
 
 export interface Link extends BaseLink {
     btn_chat: Laya.Button;
+    card_box_ctrl: CurCardBoxCtrl;
 }
 
 export class CurSeatCtrl extends SeatCtrl {
     protected link: Link;
-    private card_box: CurCardBoxCtrl;
     public model: PlayerModel;
     constructor(view: Laya.Node) {
         super(view);
@@ -27,5 +28,7 @@ export class CurSeatCtrl extends SeatCtrl {
         const btn_chat = this.link.btn_chat;
         btn_chat.on(Laya.Event.CLICK, this, () => {});
     }
-    public bindModeEvent() {}
+    protected addCard = (card: CardModel) => {
+        this.link.card_box_ctrl.addCard(card);
+    };
 }
