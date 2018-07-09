@@ -44,7 +44,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.userName.changeText(data.nickname);
         this.level.changeText(`Lv:${data.level}`);
         this.totalRound.changeText(`场次:${data.totalPlayCount}`);
-        this.winrate.changeText(`胜率:${data.winRate * 100}%`);
+        this.winrate.changeText(`胜率:${(data.winRate * 100).toFixed(2)}%`);
         this.score.changeText(`积分:${data.score}`);
         this.expBar.value = data.currentExp / data.nextLevelExp;
     }
