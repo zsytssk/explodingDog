@@ -35,9 +35,10 @@ interface Link {
 
 const max_user_count: number = 5;
 const seat_position = {
-    1: [[60, -430]],
-    2: [],
-    5: []
+    1: [[60, 0]],
+    2: [[25, -295], [25, 295]],
+    3: [[35, -320], [15, 0], [35, 320]],
+    4: [[60, -420], [20, -140], [20, 140], [60, 420]]
 }
 export class GameCtrl extends BaseCtrl {
     protected link = {} as Link;

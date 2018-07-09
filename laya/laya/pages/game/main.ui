@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":2,
+    "selectedBox":12,
+    "selecteID":71,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -80,7 +80,7 @@
             "child":[
                 {
                     "type":"Image",
-                    "props":{"y":96,"x":369,"width":30,"skin":"images/game/turn_arrow.png","rotation":-20,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":97,"x":368,"width":30,"skin":"images/game/turn_arrow.png","rotation":-20,"height":30,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":14,
                     "label":"Image",
                     "isDirectory":false,
@@ -92,7 +92,7 @@
                 },
                 {
                     "type":"Image",
-                    "props":{"y":205,"x":97,"width":30,"skin":"images/game/turn_arrow.png","rotation":-30,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":211,"x":85,"width":30,"skin":"images/game/turn_arrow.png","rotation":-30,"height":30,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":14,
                     "label":"Image",
                     "isDirectory":false,
@@ -185,8 +185,56 @@
                     "compId":74,
                     "child":[
                         ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":142,"x":1117,"width":30,"skin":"images/game/turn_arrow.png","rotation":20,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":14,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":75,
+                    "child":[
+                        ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":91,"x":819,"width":30,"skin":"images/game/turn_arrow.png","rotation":20,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":14,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":76,
+                    "child":[
+                        ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":87,"x":506,"width":30,"skin":"images/game/turn_arrow.png","rotation":-20,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":14,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":77,
+                    "child":[
+                        ]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":148,"x":200,"width":30,"skin":"images/game/turn_arrow.png","rotation":-10,"height":30,"anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":14,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":78,
+                    "child":[
+                        ]
                 }],
-            "$HIDDEN":true
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -331,7 +379,7 @@
                     "x":30,
                     "type":"UIView",
                     "source":"game/seat/otherSeat.ui",
-                    "props":{"y":57,"x":157},
+                    "props":{"top":60,"centerX":-420},
                     "nodeParent":12,
                     "label":"UIView",
                     "isDirectory":false,
@@ -345,7 +393,7 @@
                     "x":30,
                     "type":"UIView",
                     "source":"game/seat/otherSeat.ui",
-                    "props":{"y":22,"x":452},
+                    "props":{"top":20,"centerX":-140},
                     "nodeParent":12,
                     "label":"UIView",
                     "isDirectory":false,
@@ -353,13 +401,14 @@
                     "hasChild":false,
                     "compId":33,
                     "child":[
-                        ]
+                        ],
+                    "$HIDDEN":false
                 },
                 {
                     "x":30,
                     "type":"UIView",
                     "source":"game/seat/otherSeat.ui",
-                    "props":{"y":22,"x":741},
+                    "props":{"top":20,"centerX":140},
                     "nodeParent":12,
                     "label":"UIView",
                     "isDirectory":false,
@@ -373,7 +422,7 @@
                     "x":30,
                     "type":"UIView",
                     "source":"game/seat/otherSeat.ui",
-                    "props":{"y":54,"x":1030},
+                    "props":{"top":60,"centerX":420},
                     "nodeParent":12,
                     "label":"UIView",
                     "isDirectory":false,
@@ -381,7 +430,8 @@
                     "hasChild":false,
                     "compId":71,
                     "child":[
-                        ]
+                        ],
+                    "$HIDDEN":false
                 }],
             "$LOCKED":true,
             "$HIDDEN":false
