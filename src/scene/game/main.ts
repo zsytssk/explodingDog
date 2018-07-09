@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
-import { getChildren, log } from '../../mcTree/utils/zutil';
+import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
 import { Hall } from '../hall/scene';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
@@ -158,7 +158,7 @@ export class GameCtrl extends BaseCtrl {
         this.model.updatePlayers(data.userList);
     }
     /** 游戏开始 */
-    public onServerGameStart(data: GameStartData, code: string, msg: string) {
+    public onServerGameStart(data: GameStartData, code?: string, msg?: string) {
         if (Number(code) !== 200) {
             alert(msg);
             return;
@@ -170,18 +170,23 @@ export class GameCtrl extends BaseCtrl {
         this.model.destroy();
     }
     /** 添加用户 */
-    private addPlayer = (player: PlayerModel) => {
+    private addPlayer(player: PlayerModel) {
+        const { seat_ctrl_list } = this.link;
+        let local_id;
         if (player.is_cur_player) {
             this.cur_seat_id = player.seat_id;
-        }
-        let local_id = this.serverIdToLocal(player.seat_id);
-        /** 当前用户在为加入房间中要显示的特殊处理 */
-        if (local_id === -1 && player.user_id === this.cur_user_id) {
             local_id = 0;
+        } else {
+            local_id = this.serverIdToLocal(player.seat_id);
         }
-        const seat_ctrl = this.link.seat_ctrl_list[local_id];
+        /** 当前用户在为加入房间中要显示的特殊处理 */
+        if (local_id === -1) {
+            logErr('player local_id = -1', player);
+            return;
+        }
+        const seat_ctrl = seat_ctrl_list[local_id];
         seat_ctrl.loadPlayer(player);
-    };
+    }
     /** 将服务器id 转换为 */
     public serverIdToLocal(server_id: number) {
         const cur_seat_id = this.cur_seat_id;
@@ -255,16 +260,18 @@ export class GameCtrl extends BaseCtrl {
      */
     private updateSeatPos() {
         const playerNum = this.model.getPlayerNum();
-        console.log(playerNum)
+        console.log(playerNum);
         if (playerNum == 5) {
             return;
         }
-        let orderIndex = 0;
+        const orderIndex = 0;
         this.link.seat_ctrl_list.slice(1).forEach(seatCtrl => {
             if (seatCtrl.loadedPlayer) {
                 switch (playerNum) {
                     case 2:
-                        seatCtrl.updatePos(seat_position[playerNum - 1][orderIndex]);
+                        seatCtrl.updatePos(
+                            seat_position[playerNum - 1][orderIndex],
+                        );
                         break;
                 }
                 // seatCtrl.updatePos(100, 100);

@@ -25,7 +25,14 @@ export class PlayerModel extends BaseEvent {
         this.avatar = player_data.avatar;
         this.seat_id = Number(player_data.seatId);
     }
-    public updateCard() {}
+    public updateCards(cards_info: CardData[]) {
+        if (!cards_info) {
+            return;
+        }
+        for (const card_info of cards_info) {
+            this.addCard(card_info);
+        }
+    }
     /**  */
     private addCard(data: CardData) {
         const card = new CardModel(data);
