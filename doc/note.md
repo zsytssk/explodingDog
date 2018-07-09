@@ -1,76 +1,104 @@
 ## 2018-07-06 10:16:50
 
--   seat --> card_box
+-   @ques 怎么处理有些牌的类型需要显示 count 有些需要这个功能却不显示
+    -   这些数据的格式 都不一样 要不我都显示成一样的
+
+```js
+'3501': {
+    count: '1',
+    type: 'sea_the_guture',
+    name: 'see_the_future',
+    show_count: false
+},
+```
+
+-   @ques 减少一张牌 如何去处理
+
+*   @todo 牌的基本操作
+
+    -   展示牌
+    -   牌的增加 + 减少。。。
+
+    *   拖牌到出牌区域
+    *   抓牌
+
+*   @ques player 初始化的时候 CardModel 已经创建
+    -   在这之后 Seat 才去监听 Player 的事件
+    -   。。
+
+-   @ques billboard 开始后的位置？
+
+*   seat --> card_box
     -   CurCardBoxCtrl createCardBox:CurCardBoxCtrl
     -   CardBoxCtrl createCardBox
 
-*   PlayerModel --> SeatCtrl -->
+-   PlayerModel --> SeatCtrl -->
     CurSeatCtrl --> CurCardBox
     OtherSeatCtrl --> OtherCardBox
 
--   @ques remain time 放在 model 怎么样
+*   @ques remain time 放在 model 怎么样
     -   增加我的复杂度 没有必要
 
-*   event 经常有重名的地方 能不能用 cmd，
+-   event 经常有重名的地方 能不能用 cmd，
 
--   @ques 当前用户的手牌信息处理
+*   @ques 当前用户的手牌信息处理
 
     -   需要知道用户是否是当前用户。。
 
     *   我现在在 gameCtrl 里面记录 cur_seat_index cur_user_id 来处理。。。
     *   怎么判断用户是否是当前用户
 
--   @ques 怎么判断 Model 是否是当前用户
+*   @ques 怎么判断 Model 是否是当前用户
 
     -   在填充数据的时候直接把修改原始数据。。
 
     *   调用外面的函数。。。isCurUser
 
--   @note 当前玩家的牌的处理
+*   @note 当前玩家的牌的处理
 
     -   整理滑动
     -   选中某张牌
     -   从牌池抽出一张牌
     -   选中某张牌给外面玩家。。。
 
-*   @note 交流难点
+-   @note 交流难点
     -   cardBox 测操作。。
 
--   @ques js 有什么办法可以登 录 ssh
+*   @ques js 有什么办法可以登 录 ssh
 
-*   @note
+-   @note
     git subtree add --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
     git subtree pull --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
     git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
 
--   @todo 整理 麻将中的代码
+*   @todo 整理 麻将中的代码
 
-*   subtree 如何删除 如何提交到远程。。。
+-   subtree 如何删除 如何提交到远程。。。
 
-*   @ques 能不能 mc 能不能使用 gitsubmodule
+-   @ques 能不能 mc 能不能使用 gitsubmodule
 
--   @ques card 的 view 在自己的 ctrl， 还是在父类的 ctrl 中添加
+*   @ques card 的 view 在自己的 ctrl， 还是在父类的 ctrl 中添加
 
--   ctrl 基本上都有 view， 在销毁的的时候都要处理 有没有必要放在 BaseCtrl 中
+*   ctrl 基本上都有 view， 在销毁的的时候都要处理 有没有必要放在 BaseCtrl 中
 
-*   io 出现错误的时候要不要统一处理。。
+-   io 出现错误的时候要不要统一处理。。
 
--   @note 牌的大小 [231x246]
+*   @note 牌的大小 [231x246]
 
-*   @ques 类型“Observable<{}>”上不存在属性“retry”。
+-   @ques 类型“Observable<{}>”上不存在属性“retry”。
     -   axios
 
--   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
+*   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
     -   我原来
     *   基础类 继承 baseCtrl 里面绑定 primus 的方法。。。
     *   。。。
 
-*   监听服务器的命令和 model 的命令这两者容易重名如何处理
+-   监听服务器的命令和 model 的命令这两者容易重名如何处理
 
     -   onModel
     -   onPrimus 这名字也太长了吧
 
-*   @ques loadAssets 的 then 为什么在 load_util 的前面
+-   @ques loadAssets 的 then 为什么在 load_util 的前面
     -   console 中 怎么还有图片没有显示。。。、
     *   @ques 马一帆
 

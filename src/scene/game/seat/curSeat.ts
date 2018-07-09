@@ -1,9 +1,10 @@
 import { PlayerModel } from '../model/player';
 import { Link as BaseLink, SeatCtrl } from './seat';
-import { CurCardBoxCtrl } from './curCardBox';
+import { CurCardBoxCtrl, CurCardBoxUI } from './curCardBox';
 import { CardModel } from '../model/card';
 
 export interface Link extends BaseLink {
+    view: ui.game.seat.curSeatUI;
     btn_chat: Laya.Button;
     card_box_ctrl: CurCardBoxCtrl;
 }
@@ -11,7 +12,7 @@ export interface Link extends BaseLink {
 export class CurSeatCtrl extends SeatCtrl {
     protected link: Link;
     public model: PlayerModel;
-    constructor(view: Laya.Node) {
+    constructor(view: ui.game.seat.curSeatUI) {
         super(view);
     }
     public init() {
@@ -27,6 +28,12 @@ export class CurSeatCtrl extends SeatCtrl {
     protected initEvent() {
         const btn_chat = this.link.btn_chat;
         btn_chat.on(Laya.Event.CLICK, this, () => {});
+    }
+    protected createCardBox(card_box: CurCardBoxUI) {
+        const card_box_ctrl = new CurCardBoxCtrl(card_box);
+        this.addChild(card_box_ctrl);
+        card_box_ctrl.init();
+        return card_box_ctrl;
     }
     protected addCard = (card: CardModel) => {
         this.link.card_box_ctrl.addCard(card);
