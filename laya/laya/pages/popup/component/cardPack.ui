@@ -96,9 +96,10 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":68,"x":323,"var":"iconI","skin":"images/component/cards/icon_i.png"},
+                    "props":{"y":54,"x":342,"var":"iconI","skin":"images/component/cards/icon_i.png"},
                     "nodeParent":2,
                     "label":"Image(iconI)",
+                    "isOpen":false,
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
