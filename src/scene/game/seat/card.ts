@@ -1,11 +1,11 @@
-import { BaseCtrl } from '../../mcTree/ctrl/base';
+import { BaseCtrl } from '../../../mcTree/ctrl/base';
 
 export interface Link {
-    view: Laya.Sprite;
+    view: Laya.Node;
 }
 
 /**  */
-export class DiscardZoneCtrl extends BaseCtrl {
+export class CardCtrl extends BaseCtrl {
     protected link = {} as Link;
     constructor(view) {
         super();
@@ -17,7 +17,6 @@ export class DiscardZoneCtrl extends BaseCtrl {
     }
     protected initLink() {}
     protected initEvent() {}
-    public hide() {
-        this.link.view.visible = false;
-    }
+    /** 移动位置 */
+    public tweenMove(index: number) {}
 }

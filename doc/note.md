@@ -1,5 +1,52 @@
 ## 2018-07-06 10:16:50
 
+-   @ques remain time 放在 model 怎么样
+    -   增加我的复杂度 没有必要
+
+*   event 经常有重名的地方 能不能用 cmd，
+
+-   @ques 当前用户的手牌信息处理
+
+    -   需要知道用户是否是当前用户。。
+
+    *   我现在在 gameCtrl 里面记录 cur_seat_index cur_user_id 来处理。。。
+    *   怎么判断用户是否是当前用户
+
+-   @ques 怎么判断 Model 是否是当前用户
+
+    -   在填充数据的时候直接把修改原始数据。。
+
+    *   调用外面的函数。。。isCurUser
+
+-   @note 当前玩家的牌的处理
+
+    -   整理滑动
+    -   选中某张牌
+    -   从牌池抽出一张牌
+    -   选中某张牌给外面玩家。。。
+
+*   @note 交流难点
+    -   cardBox 测操作。。
+
+-   @ques js 有什么办法可以登 录 ssh
+
+*   @note
+    git subtree add --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+    git subtree pull --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+    git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
+
+-   @todo 整理 麻将中的代码
+
+*   subtree 如何删除 如何提交到远程。。。
+
+*   @ques 能不能 mc 能不能使用 gitsubmodule
+
+-   @ques card 的 view 在自己的 ctrl， 还是在父类的 ctrl 中添加
+
+-   ctrl 基本上都有 view， 在销毁的的时候都要处理 有没有必要放在 BaseCtrl 中
+
+*   io 出现错误的时候要不要统一处理。。
+
 -   @note 牌的大小 [231x246]
 
 *   @ques 类型“Observable<{}>”上不存在属性“retry”。
@@ -7,6 +54,8 @@
 
 -   @ques 在每一个命令里面加 is_ready 判断十分的麻烦
     -   我原来
+    *   基础类 继承 baseCtrl 里面绑定 primus 的方法。。。
+    *   。。。
 
 *   监听服务器的命令和 model 的命令这两者容易重名如何处理
 
@@ -23,6 +72,10 @@
 
 -   @ques CardType 我保存时 normal 服务器是 0 1 这些
     -   这两个相互转化实在麻烦 如何合理
+
+*   @ques roomInfo 的设置
+
+    -   gameModel 的多个属性关联。。。
 
 *   @ques room_id 在什么地方设置 ll
 
@@ -104,7 +157,7 @@
     *   ---
     *   @ques 服务器的 api 有没有这个数据
 
-*   mcTmpl [框架名称]
+*   mcTree [框架名称]
 
 -   @ques model ctrl 这所有的一切都应该放在一个文件夹下面
     -   属于一个命名空间内...

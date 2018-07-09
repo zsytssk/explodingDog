@@ -1,7 +1,7 @@
 import { callFunc } from '../utils/tool';
 import { createRandomString, log, logAll } from './utils/zutil';
 
-type i_hook_other_event = {
+type HooOtherEvent = {
     /** 绑定对象id, 用于在清除的时候进行对比 */
     other_id: string;
     /** 绑定对象name, 用于展示 */
@@ -12,8 +12,7 @@ type i_hook_other_event = {
     event: string;
 };
 
-type i_hook_other_events = i_hook_other_event[];
-type t_hook_fun_item = {
+type HookFunItem = {
     /**  监听事件  */
     listener: FuncListener;
     /**  是否执行一次  */
@@ -21,11 +20,11 @@ type t_hook_fun_item = {
     /**  清除事件函数绑定  */
     off: FuncVoid;
 };
-type t_hook_funs = {
-    [x: string]: t_hook_fun_item[];
+type HookFunS = {
+    [x: string]: HookFunItem[];
 };
 
-export const event = {
+export const cmd = {
     destroy: 'destroy',
 };
 /** 事件基础类 */
@@ -34,9 +33,9 @@ export abstract class BaseEvent {
     public id: string;
     /** 是否销毁, 用于在销毁之后 有异步函数进入, 阻止其继续执行 */
     public is_destroyed: boolean = false;
-    protected hook_funs: t_hook_funs = {};
+    protected hook_funs: HookFunS = {};
     /** 绑定在别人身上的事件, 保存在这里用于销毁时 找到绑定的目标 去取消这些事件的绑定 */
-    protected hook_other_funs = [] as i_hook_other_events;
+    protected hook_other_funs = [] as HooOtherEvent[];
     /** 储存所有的timetimeout interval 在destroy的时候清除 */
     protected timeout_list: number[] = [];
     protected interval_list: number[] = [];
@@ -178,62 +177,8 @@ export abstract class BaseEvent {
         }
         this.hook_other_funs = [];
     }
-    /**
-     * 创建setTimeout, destroy时自动清除
-     * @param fun 执行函数
-     * @param time 延迟时间
-     */
-    protected createTimeout(fun: FuncVoid, time: number) {
-        const time_out = window.setTimeout(() => {
-            callFunc(fun);
-            this.clearTimeout(time_out);
-        }, time);
-        this.timeout_list.push(time_out);
-        return time_out;
-    }
-    /**
-     * 创建setInterval
-     * @param fun 执行函数
-     * @param time 时间间隔
-     */
-    protected createInterval(fun: FuncVoid, time: number) {
-        const interval = setInterval(fun, time);
-        this.interval_list.push(interval);
-        return interval;
-    }
-    /** 清除time_out setinterval */
-    protected clearTimeout(time_out) {
-        const timeout_list = this.timeout_list;
-        const interval_list = this.interval_list;
-
-        let index = timeout_list.indexOf(time_out);
-        if (index !== -1) {
-            timeout_list.splice(index, 1);
-            return;
-        }
-
-        index = interval_list.indexOf(time_out);
-        if (index !== -1) {
-            interval_list.splice(index, 1);
-            return;
-        }
-    }
-    /** 清除time_out setinterval */
-    protected clearAllTimeout() {
-        const timeout_list = this.timeout_list;
-        const interval_list = this.interval_list;
-        for (const item of timeout_list) {
-            clearTimeout(item);
-        }
-        for (const item of interval_list) {
-            clearInterval(item);
-        }
-        this.timeout_list = [];
-        this.interval_list = [];
-    }
     public destroy() {
-        this.trigger(event.destroy);
-        this.clearAllTimeout();
+        this.trigger(cmd.destroy);
         this.offAllOtherEvent();
         this.offAll();
         this.is_destroyed = true;

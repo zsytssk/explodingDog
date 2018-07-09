@@ -5,7 +5,7 @@
  * 可以在当前资源加载完成之后在后台默默的加载, 具体的方法还没有想好;
  */
 import { RES } from './res';
-import { ResMap } from '../mcTmpl/utils/load';
+import { ResMap } from '../mcTree/utils/load';
 
 export let RESMAP: ResMap = [
     {

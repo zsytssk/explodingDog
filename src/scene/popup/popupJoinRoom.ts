@@ -1,4 +1,4 @@
-import { getElementsByName } from '../../mcTmpl/utils/zutil';
+import { getElementsByName } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 
 export class PopupJoinRoom extends ui.popup.popupJoinRoomUI {
@@ -53,4 +53,4 @@ export class PopupJoinRoom extends ui.popup.popupJoinRoomUI {
             this.inputLabel.text = text.substr(0, text.length - 1);
         }
     }
-}   
+}

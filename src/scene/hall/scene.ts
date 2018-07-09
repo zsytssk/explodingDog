@@ -1,5 +1,4 @@
 import { CMD } from '../../data/cmd';
-import { RES } from '../../data/res';
 import { GameWrap } from '../game/sceneWrap';
 import { loadAssets } from '../loaing/main';
 
@@ -10,7 +9,9 @@ import { HallContent } from './content';
 export class Hall extends Sail.Scene {
     constructor() {
         super();
-        this.init();
+        loadAssets('hall').then(() => {
+            this.init();
+        });
     }
 
     init() {

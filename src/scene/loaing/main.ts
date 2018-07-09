@@ -1,4 +1,4 @@
-import { load_util } from '../../mcTmpl/utils/load';
+import { load_util } from '../../mcTree/utils/load';
 
 export async function loadAssets(name) {
     await load_util.load('loading');

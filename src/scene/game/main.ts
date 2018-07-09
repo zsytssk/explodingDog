@@ -1,14 +1,14 @@
 import { CMD } from '../../data/cmd';
-import { BaseCtrl } from '../../mcTmpl/ctrl/base';
-import { event as base_event } from '../../mcTmpl/event';
-import { getChildren, log } from '../../mcTmpl/utils/zutil';
+import { BaseCtrl } from '../../mcTree/ctrl/base';
+import { cmd as base_cmd } from '../../mcTree/event';
+import { getChildren, log } from '../../mcTree/utils/zutil';
 import { Hall } from '../hall/scene';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
 import {
     card_type_map,
     CardType,
-    event,
+    cmd as game_cmd,
     game_status_map,
     GameModel,
     GameStatus,
@@ -124,55 +124,44 @@ export class GameCtrl extends BaseCtrl {
             log('btn_setting');
         });
 
-        this.onModel(event.add_player, (data: { player: PlayerModel }) => {
+        this.onModel(game_cmd.add_player, (data: { player: PlayerModel }) => {
             this.addPlayer(data.player);
         });
-        this.onModel(event.status_change, (data: { status: GameStatus }) => {
+        this.onModel(game_cmd.status_change, (data: { status: GameStatus }) => {
             this.setStatus(data.status);
         });
         this.onModel(
-            event.card_type_change,
+            game_cmd.card_type_change,
             (data: { card_type: CardType }) => {
                 this.link.host_zone_ctrl.setCardType(data.card_type);
             },
         );
-        this.onModel(base_event.destroy, (data: { status: GameStatus }) => {
+        this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.leave();
         });
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
         this.is_ready = true;
-        this.cur_user_id = data.curUserInfo.userId;
-        this.cur_seat_id = Number(data.curUserInfo.seatId);
-        /** @test  */
-        this.model.setRoomInfo(data.roomInfo);
-        /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
-        if (!data.userList.length) {
-            data.userList.push(data.curUserInfo);
-        }
-        this.onServerUpdateUser(data);
+        /** 更新本地倒计时 */
+        this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
+        this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
     public onServerUpdateUser(data: UpdateUser) {
         if (!this.is_ready) {
             return;
         }
-        const user_list = data.userList;
-        /** 如果当前用户还没有seatId 需要设置seatId
-         * 出现在进入房间 但是还在匹配 没有进入游戏 所以没有userId
-         */
-        if (!this.cur_seat_id) {
-            for (const user of user_list) {
-                if (user.userId === this.cur_user_id) {
-                    this.cur_seat_id = Number(user.seatId);
-                }
-            }
-        }
-        this.model.updatePlayers(user_list);
+        /** 更新本地倒计时 */
+        this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
+        this.model.updatePlayers(data.userList);
     }
     /** 游戏开始 */
-    public onServerGameStart(data: GameStartData) {
+    public onServerGameStart(data: GameStartData, code: string, msg: string) {
+        if (Number(code) !== 200) {
+            alert(msg);
+            return;
+        }
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
     /** 游戏开始 */
@@ -181,6 +170,9 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 添加用户 */
     private addPlayer = (player: PlayerModel) => {
+        if (player.is_cur_player) {
+            this.cur_seat_id = player.seat_id;
+        }
         let local_id = this.serverIdToLocal(player.seat_id);
         /** 当前用户在为加入房间中要显示的特殊处理 */
         if (local_id === -1 && player.user_id === this.cur_user_id) {

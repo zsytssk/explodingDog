@@ -2,7 +2,7 @@ typings/
 release/
 script/releaseFile/config.json
 node_modules/
-laya/.laya
+.laya
 laya/src/*
 !laya/src/libs
 laya/bin/*

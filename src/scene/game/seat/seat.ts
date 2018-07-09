@@ -1,7 +1,7 @@
-import { event } from '../../../mcTmpl/event';
-import { BaseCtrl } from '../../../mcTmpl/ctrl/base';
+import { cmd } from '../../../mcTree/event';
+import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { PlayerModel } from '../model/player';
-import { tween } from "../../../mcTmpl/utils/animate";
+import { tween } from '../../../mcTree/utils/animate';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -16,7 +16,7 @@ export interface Link {
 export class SeatCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected model: PlayerModel;
-    public loadedPlayer = false;//是否加载了用户
+    public loadedPlayer = false; //是否加载了用户
     constructor(view: any) {
         super();
         this.link.view = view;
@@ -63,7 +63,8 @@ export class SeatCtrl extends BaseCtrl {
         this.link.die_avatar.visible = false;
     };
     private bindModeEvent() {
-        this.onModel(event.destroy, this.clearPlayer);
+        this.onModel(cmd.destroy, this.clearPlayer);
+        this.onModel(cmd.add, this.clearPlayer);
     }
     private unBindModeEvent() {
         this.offAllOtherEvent(this.model);

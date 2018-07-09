@@ -25,6 +25,7 @@ type UserData = {
 };
 
 type UpdateUser = {
+    roomInfo: RoomInfoData;
     userList: UserData[];
 };
 type RoomInfoData = {
@@ -34,6 +35,7 @@ type RoomInfoData = {
     roomId: string;
     roomStatus: RoomStatusData;
     userCount: string;
+    remainTime: number;
     createUser: '';
     createTime: string;
     activeTime: string;
@@ -61,3 +63,9 @@ type ChangeCardType = {
     userId: string;
     newCardType: number;
 };
+
+type CardData = string;
+/**
+ *
+ */
+type ServerCode = '200' | '10010';

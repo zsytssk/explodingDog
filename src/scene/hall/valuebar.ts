@@ -1,3 +1,5 @@
+import { extend } from '../../mcTree/utils/zutil';
+
 export class ValueBar extends ui.hall.valuebarUI {
     constructor() {
         super();
@@ -29,4 +31,4 @@ export class ValueBar extends ui.hall.valuebarUI {
     }
 }
 
-Sail.class(ValueBar, 'Component.valueBar');
+extend(ValueBar, null, 'Component.valueBar');

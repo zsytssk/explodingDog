@@ -1,8 +1,8 @@
-import { BaseCtrl } from '../../mcTmpl/ctrl/base';
+import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
 import { CMD } from '../../data/cmd';
 import { card_type_map, CardType } from './model/game';
-import { log } from '../../mcTmpl/utils/zutil';
+import { log } from '../../mcTree/utils/zutil';
 import { getKeyByValue } from '../../utils/tool';
 interface Link {
     view: Laya.Sprite;
@@ -42,7 +42,7 @@ export class HostZoneCtrl extends BaseCtrl {
         });
 
         start_btn.on(Laya.Event.CLICK, this, () => {
-            log('开始游戏');
+            Sail.io.emit(CMD.GAME_START);
         });
     }
     public show(room_id: string) {
