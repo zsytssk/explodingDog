@@ -45,6 +45,7 @@ export class GameModel extends BaseEvent {
     }
     private addPlayer(player_data: UserData) {
         const player = new PlayerModel(player_data);
+        this.player_list.push(player);
         this.trigger(event.add_player, { player });
     }
     public removePlayer(player: PlayerModel | string) {

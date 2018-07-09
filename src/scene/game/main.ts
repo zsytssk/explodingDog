@@ -34,6 +34,11 @@ interface Link {
 }
 
 const max_user_count: number = 5;
+const seat_position = {
+    1: [[60, -430]],
+    2: [],
+    5: []
+}
 export class GameCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected is_ready = false;
@@ -257,13 +262,19 @@ export class GameCtrl extends BaseCtrl {
      */
     private updateSeatPos() {
         const playerNum = this.model.getPlayerNum();
+        console.log(playerNum)
         if (playerNum == 5) {
             return;
         }
         let orderIndex = 0;
         this.link.seat_ctrl_list.slice(1).forEach(seatCtrl => {
             if (seatCtrl.loadedPlayer) {
-                seatCtrl.updatePos(100,100);
+                switch (playerNum) {
+                    case 2:
+                        seatCtrl.updatePos(seat_position[playerNum - 1][orderIndex]);
+                        break;
+                }
+                // seatCtrl.updatePos(100, 100);
             } else {
                 seatCtrl.hideSeat();
             }

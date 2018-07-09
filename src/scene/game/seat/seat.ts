@@ -73,8 +73,8 @@ export class SeatCtrl extends BaseCtrl {
         this.link.view.visible = false;
     }
 
-    public updatePos(x: number, y: number) {
+    public updatePos(position: any) {
         const view = this.link.view;
-        tween({ sprite: view, start_props: { x: view.x, y: view.y }, end_props: { x: x, y: y }, time: 500 });
+        tween({ sprite: view, start_props: { top: view.top, centerX: view.centerX }, end_props: { top: position[0], centerX: position[1] }, time: 500 });
     }
 }
