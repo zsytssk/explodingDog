@@ -1,8 +1,39 @@
 ## 2018-07-06 10:16:50
 
-git subtree add --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
-git subtree pull --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
-git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
+-   @ques remain time 放在 model 怎么样
+    -   增加我的复杂度 没有必要
+
+*   event 经常有重名的地方 能不能用 cmd，
+
+-   @ques 当前用户的手牌信息处理
+
+    -   需要知道用户是否是当前用户。。
+
+    *   我现在在 gameCtrl 里面记录 cur_seat_index cur_user_id 来处理。。。
+    *   怎么判断用户是否是当前用户
+
+-   @ques 怎么判断 Model 是否是当前用户
+
+    -   在填充数据的时候直接把修改原始数据。。
+
+    *   调用外面的函数。。。isCurUser
+
+-   @note 当前玩家的牌的处理
+
+    -   整理滑动
+    -   选中某张牌
+    -   从牌池抽出一张牌
+    -   选中某张牌给外面玩家。。。
+
+*   @note 交流难点
+    -   cardBox 测操作。。
+
+-   @ques js 有什么办法可以登 录 ssh
+
+*   @note
+    git subtree add --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+    git subtree pull --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master --squash
+    git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
 
 -   @todo 整理 麻将中的代码
 
@@ -15,13 +46,6 @@ git subtree push --prefix=src/mcTree git@git.coding.net:zsydev/mcTree.git master
 -   ctrl 基本上都有 view， 在销毁的的时候都要处理 有没有必要放在 BaseCtrl 中
 
 *   io 出现错误的时候要不要统一处理。。
-
--   @note 当前玩家的牌的处理
-
-    -   整理滑动
-    -   选中某张牌
-    -   从牌池抽出一张牌
-    -   选中某张牌给外面玩家。。。
 
 -   @note 牌的大小 [231x246]
 

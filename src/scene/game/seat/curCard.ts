@@ -21,5 +21,5 @@ export class CurCardCtrl extends BaseCtrl {
     }
     protected initLink() {}
     protected initEvent() {}
-    public loadModel() {}
+    private upShow() {}
 }

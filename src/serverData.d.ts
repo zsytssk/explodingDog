@@ -64,6 +64,7 @@ type ChangeCardType = {
     newCardType: number;
 };
 
+type CardData = string;
 /**
  *
  */

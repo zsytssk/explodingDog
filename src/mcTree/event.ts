@@ -24,7 +24,7 @@ type HookFunS = {
     [x: string]: HookFunItem[];
 };
 
-export const event = {
+export const cmd = {
     destroy: 'destroy',
 };
 /** 事件基础类 */
@@ -178,7 +178,7 @@ export abstract class BaseEvent {
         this.hook_other_funs = [];
     }
     public destroy() {
-        this.trigger(event.destroy);
+        this.trigger(cmd.destroy);
         this.offAllOtherEvent();
         this.offAll();
         this.is_destroyed = true;

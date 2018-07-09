@@ -1,10 +1,10 @@
 import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
 
-export const event = {
+export const cmd = {
     add_player: 'add_player',
-    status_change: 'status_change',
     card_type_change: 'card_type_change',
+    status_change: 'status_change',
 };
 
 /** 牌的类型  */
@@ -37,15 +37,45 @@ export class GameModel extends BaseEvent {
     public status: GameStatus;
     public room_id: string;
     private player_list: PlayerModel[] = [];
+    /** 游戏复盘 */
+    public gameReplay(data: GameReplayData) {
+        /** @test  */
+        this.setRoomInfo(data.roomInfo);
+        /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
+        if (data.curUserInfo) {
+            this.addPlayer(data.curUserInfo, true);
+        }
+        if (!data.userList.length) {
+            data.userList.push(data.curUserInfo);
+        }
+        this.updatePlayers(data.userList);
+    }
     /** 更新用户信息 */
     public updatePlayers(players_data: UpdateUser['userList']) {
+        const user_id_list = [];
         for (const player_data of players_data) {
+            const user_id = player_data.userId;
+            /** 用户已经存在不做处理 */
+            const player_model = this.getPlayerById(user_id);
+            if (player_model) {
+                player_model.updateInfo(player_data);
+                continue;
+            }
             this.addPlayer(player_data);
+            user_id_list.push(user_id);
+        }
+        /** 删除已经存在的user */
+        for (const player_model of this.player_list) {
+            if (user_id_list.indexOf(player_model.user_id) !== -1) {
+                continue;
+            }
+            this.removePlayer(player_model);
         }
     }
-    private addPlayer(player_data: UserData) {
-        const player = new PlayerModel(player_data);
-        this.trigger(event.add_player, { player });
+    private addPlayer(player_data: UserData, is_cur = false) {
+        const player = new PlayerModel(player_data, is_cur);
+        this.player_list.push(player);
+        this.trigger(cmd.add_player, { player });
     }
     public removePlayer(player: PlayerModel | string) {
         if (typeof player === 'string') {
@@ -74,7 +104,7 @@ export class GameModel extends BaseEvent {
             return;
         }
         this.status = status;
-        this.trigger(event.status_change, { status });
+        this.trigger(cmd.status_change, { status });
     }
     /**  设置游戏状态 */
     public setCardType(card_type: CardType) {
@@ -82,7 +112,7 @@ export class GameModel extends BaseEvent {
             return;
         }
         this.card_type = card_type;
-        this.trigger(event.card_type_change, { card_type });
+        this.trigger(cmd.card_type_change, { card_type });
     }
     public getPlayerById(id: string) {
         const player_list = this.player_list;

@@ -1,7 +1,7 @@
-import { event } from '../../../mcTree/event';
+import { cmd } from '../../../mcTree/event';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { PlayerModel } from '../model/player';
-import { tween } from "../../../mcTree/utils/animate";
+import { tween } from '../../../mcTree/utils/animate';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -16,7 +16,7 @@ export interface Link {
 export class SeatCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected model: PlayerModel;
-    public loadedPlayer = false;//是否加载了用户
+    public loadedPlayer = false; //是否加载了用户
     constructor(view: any) {
         super();
         this.link.view = view;
@@ -40,7 +40,7 @@ export class SeatCtrl extends BaseCtrl {
         this.link.die_avatar = die_avatar;
         this.link.nickname = nickname;
     }
-    protected initEvent() { }
+    protected initEvent() {}
     public loadPlayer(player: PlayerModel) {
         this.link.empty_box.visible = false;
         this.link.active_box.visible = true;
@@ -63,7 +63,8 @@ export class SeatCtrl extends BaseCtrl {
         this.link.die_avatar.visible = false;
     };
     private bindModeEvent() {
-        this.onModel(event.destroy, this.clearPlayer);
+        this.onModel(cmd.destroy, this.clearPlayer);
+        this.onModel(cmd.add, this.clearPlayer);
     }
     private unBindModeEvent() {
         this.offAllOtherEvent(this.model);
@@ -75,6 +76,11 @@ export class SeatCtrl extends BaseCtrl {
 
     public updatePos(x: number, y: number) {
         const view = this.link.view;
-        tween({ sprite: view, start_props: { x: view.x, y: view.y }, end_props: { x: x, y: y }, time: 500 });
+        tween({
+            sprite: view,
+            start_props: { x: view.x, y: view.y },
+            end_props: { x: x, y: y },
+            time: 500,
+        });
     }
 }
