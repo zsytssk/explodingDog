@@ -399,8 +399,6 @@ export class BaseCtrl extends BaseEvent {
         super.destroy();
         // 清除在所有node上绑定事件
         this.offAllNode();
-        // 取消所有需要延迟执行的函数
-        this.clearAllTimeout();
         // 删除所有的子类
         this.removeChildren();
 

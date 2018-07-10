@@ -3,8 +3,8 @@ import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { PlayerModel, cmd as player_cmd } from '../model/player';
 import { tween } from '../../../mcTree/utils/animate';
 import { CardModel } from '../model/card';
-import { OtherCardBoxCtrl } from './otherCardBox';
-import { CardBoxCtrl } from './cardBox';
+import { OtherCardBoxCtrl } from './cardBox/otherCardBox';
+import { CardBoxCtrl } from './cardBox/cardBox';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
