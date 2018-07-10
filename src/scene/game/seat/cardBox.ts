@@ -7,7 +7,6 @@ export interface Link {
 }
 
 export abstract class CardBoxCtrl extends BaseCtrl {
-    public children: CardCtrl[];
     protected link = {} as Link;
     constructor(view) {
         super();
@@ -22,7 +21,7 @@ export abstract class CardBoxCtrl extends BaseCtrl {
     public abstract addCard(card: CardModel): void;
     /** 牌的数目变化 重新排列牌发生b */
     protected sortCard() {
-        const card_list = this.children;
+        const card_list = this.children as CardCtrl[];
         for (let i = 0; i < card_list.length; i++) {
             card_list[i].tweenMove(i);
         }

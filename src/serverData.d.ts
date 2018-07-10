@@ -22,6 +22,7 @@ type UserData = {
     seatId: string;
     /** 手牌可数 */
     shouLen?: number;
+    shou?: string[];
 };
 
 type UpdateUser = {
@@ -45,7 +46,6 @@ type RoomInfoData = {
 type GameReplayData = {
     curUserInfo: UserData;
     userList: UserData[];
-    shou: string[];
     roomInfo: RoomInfoData;
 };
 

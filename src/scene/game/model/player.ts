@@ -1,3 +1,4 @@
+import { fill } from 'lodash';
 import { BaseEvent } from '../../../mcTree/event';
 import { CardModel } from './card';
 
@@ -10,20 +11,25 @@ export class PlayerModel extends BaseEvent {
     public user_id: string;
     public nickname: string;
     public avatar: string;
-    private card_list: CardModel[] = [];
+    public card_list: CardModel[] = [];
     constructor(player_data: UserData, is_cur_player: boolean) {
         super();
-        this.user_id = player_data.userId;
-        this.nickname = player_data.nickname;
-        this.avatar = player_data.avatar;
-        this.seat_id = Number(player_data.seatId);
         this.is_cur_player = is_cur_player;
+        this.updateInfo(player_data);
     }
     public updateInfo(player_data: UserData) {
         this.user_id = player_data.userId;
         this.nickname = player_data.nickname;
         this.avatar = player_data.avatar;
         this.seat_id = Number(player_data.seatId);
+
+        let shou = player_data.shou;
+        if (!this.is_cur_player) {
+            shou = fill(Array(player_data.shouLen), '*');
+        } else {
+            this.updateCards(fill());
+        }
+        this.updateCards(shou);
     }
     public updateCards(cards_info: CardData[]) {
         if (!cards_info) {

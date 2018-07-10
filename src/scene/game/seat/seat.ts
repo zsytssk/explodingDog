@@ -12,7 +12,7 @@ export interface Link {
     active_box: Laya.Sprite;
     avatar: Laya.Image;
     die_avatar: Laya.Image;
-    nickname: Laya.Label;
+    nickname: Laya.Text;
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
 }
 
@@ -32,12 +32,12 @@ export class SeatCtrl extends BaseCtrl {
     protected initLink() {
         const view = this.link.view;
         const player_box = view.player_box;
-        const empty_box = (player_box as any).empty_box;
-        const active_box = (player_box as any).active_box;
-        const avatar = (player_box as any).avatar;
-        const die_avatar = (player_box as any).die_avatar;
-        const nickname = (player_box as any).nickname;
-        const card_box = (player_box as any).card_box;
+        const empty_box = player_box.empty_box;
+        const active_box = player_box.active_box;
+        const avatar = player_box.avatar;
+        const die_avatar = player_box.die_avatar;
+        const nickname = player_box.nickname;
+        const card_box = view.card_box;
 
         this.link.empty_box = empty_box;
         this.link.active_box = active_box;
@@ -46,7 +46,7 @@ export class SeatCtrl extends BaseCtrl {
         this.link.nickname = nickname;
         this.link.card_box_ctrl = this.createCardBox(card_box);
     }
-    protected createCardBox(card_box: Laya.Sprite) {
+    protected createCardBox(card_box: Laya.Sprite): CardBoxCtrl {
         const card_box_ctrl = new OtherCardBoxCtrl(card_box);
         this.addChild(card_box_ctrl);
         card_box_ctrl.init();
@@ -62,7 +62,7 @@ export class SeatCtrl extends BaseCtrl {
 
         this.model = player;
         this.loadedPlayer = true;
-        this.bindModeEvent();
+        this.bindModel();
     }
     private clearPlayer = () => {
         this.unBindModeEvent();
@@ -74,7 +74,14 @@ export class SeatCtrl extends BaseCtrl {
         this.link.nickname.text = '';
         this.link.die_avatar.visible = false;
     };
-    private bindModeEvent() {
+    private bindModel() {
+        /** 渲染初始化的信息 */
+        const player = this.model;
+        const card_list = player.card_list;
+        for (const card of card_list) {
+            this.addCard(card);
+        }
+
         this.onModel(base_cmd.destroy, this.clearPlayer);
         this.onModel(player_cmd.add_card, this.addCard);
     }
