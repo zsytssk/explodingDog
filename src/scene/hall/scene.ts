@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { GameWrap } from '../game/sceneWrap';
 import { loadAssets } from '../loaing/main';
-
+import { PopuTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
@@ -33,13 +33,13 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
-    initEvent() {}
+    initEvent() { }
 
     onExit() {
         Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) {}
+    onResize(width, height) { }
 
     setUserInfo(data) {
         this.content.updateView(data);
@@ -54,7 +54,7 @@ export class Hall extends Sail.Scene {
         if (code == 200) {
             Sail.director.runScene(new GameWrap());
         } else {
-            alert(msg);
+            Sail.director.popScene(new PopuTip(msg));
         }
     }
 
