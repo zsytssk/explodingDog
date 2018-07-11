@@ -1,9 +1,12 @@
 import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
+import { CardModel } from './card';
+import { logErr } from '../../../mcTree/utils/zutil';
 
 export const cmd = {
     add_player: 'add_player',
     card_type_change: 'card_type_change',
+    discard_card: 'discard_card',
     status_change: 'status_change',
 };
 
@@ -37,6 +40,8 @@ export class GameModel extends BaseEvent {
     public status: GameStatus;
     public room_id: string;
     private player_list: PlayerModel[] = [];
+    /** 正在出的牌 */
+    private discard_card: CardModel;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
         /** @test  */
@@ -117,11 +122,29 @@ export class GameModel extends BaseEvent {
     public getPlayerById(id: string) {
         const player_list = this.player_list;
         for (const player of player_list) {
-            if (player.user_id === id) {
+            if (player.user_id === id + '') {
                 return player;
             }
         }
         return null;
+    }
+    public discardCard(data: HitData) {
+        /** 清理原来出的牌 */
+        if (this.discard_card) {
+            this.discard_card.destroy();
+            this.discard_card = undefined;
+        }
+        const player = this.getPlayerById(data.userId);
+        if (!player) {
+            logErr(`cant find player for ${data.userId}`);
+            return;
+        }
+        let card = player.discardCard(data);
+        if (!card) {
+            card = new CardModel(data.hitCardInfo.cardId);
+        }
+        this.discard_card = card;
+        this.trigger(cmd.discard_card, { card });
     }
     public getPlayerNum() {
         return this.player_list.length;

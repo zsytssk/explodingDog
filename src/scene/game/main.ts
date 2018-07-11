@@ -14,7 +14,9 @@ import {
     GameStatus,
 } from './model/game';
 import { PlayerModel } from './model/player';
+import { CardModel } from './model/card';
 import { QuickStartCtrl } from './quickStart';
+import { DiscardZoneCtrl } from './discardZone';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
@@ -24,7 +26,7 @@ interface Link {
     docker_ctrl: DockerCtrl;
     card_heap: Laya.Sprite;
     game_zone: Laya.Sprite;
-    discard_zone_ctrl: QuickStartCtrl;
+    discard_zone_ctrl: DiscardZoneCtrl;
     btn_back: Laya.Button;
     btn_setting: Laya.Button;
     seat_ctrl_list: SeatCtrl[];
@@ -38,8 +40,8 @@ const seat_position = {
     1: [[15, 0]],
     2: [[25, -295], [25, 295]],
     3: [[35, -320], [15, 0], [35, 320]],
-    4: [[60, -420], [20, -140], [20, 140], [60, 420]]
-}
+    4: [[60, -420], [20, -140], [20, 140], [60, 420]],
+};
 export class GameCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected is_ready = false;
@@ -64,7 +66,6 @@ export class GameCtrl extends BaseCtrl {
             view.banner_match,
             view.banner_countdown,
         );
-        this.addChild(quick_start_ctrl);
         quick_start_ctrl.init();
         this.link.quick_start_ctrl = quick_start_ctrl;
         const host_zone_ctrl = new HostZoneCtrl(view.host_zone);
@@ -94,6 +95,12 @@ export class GameCtrl extends BaseCtrl {
         docker_ctrl.init();
         this.link.docker_ctrl = docker_ctrl;
 
+        const discard_zone = view.discard_zone;
+        const discard_zone_ctrl = new DiscardZoneCtrl(discard_zone);
+        this.addChild(discard_zone_ctrl);
+        discard_zone_ctrl.init();
+        this.link.discard_zone_ctrl = discard_zone_ctrl;
+
         const turn_arrow = view.turn_arrow;
         const turn_arrow_ctrl = new TurnArrowCtrl(turn_arrow);
         this.addChild(turn_arrow_ctrl);
@@ -110,6 +117,9 @@ export class GameCtrl extends BaseCtrl {
             [CMD.UPDATE_USER]: this.onServerUpdateUser,
             [CMD.GAME_START]: this.onServerGameStart,
             [CMD.OUT_ROOM]: this.onServerOutRoom,
+            [CMD.HIT]: this.onServerHit,
+            [CMD.TAKE]: this.onServerTake,
+            [CMD.TURNS]: this.onServerTurns,
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
         };
         Sail.io.register(this.actions, this);
@@ -137,6 +147,9 @@ export class GameCtrl extends BaseCtrl {
                 this.link.host_zone_ctrl.setCardType(data.card_type);
             },
         );
+        this.onModel(game_cmd.discard_card, (data: { card: CardModel }) => {
+            this.link.discard_zone_ctrl.discardCard(data.card);
+        });
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.leave();
         });
@@ -165,8 +178,17 @@ export class GameCtrl extends BaseCtrl {
         }
         this.model.setGameStatus(game_status_map[2] as GameStatus);
     }
-    /** 游戏开始 */
+    /** 离开房间 */
     private onServerOutRoom() {
+        this.model.destroy();
+    }
+    private onServerHit(data) {
+        this.model.discardCard(data);
+    }
+    private onServerTake() {
+        this.model.destroy();
+    }
+    private onServerTurns() {
         this.model.destroy();
     }
     /** 添加用户 */
@@ -260,8 +282,7 @@ export class GameCtrl extends BaseCtrl {
      */
     private updateSeatPos() {
         const playerNum = this.model.getPlayerNum();
-        console.log(playerNum);
-        if (playerNum == 5) {
+        if (playerNum === 5) {
             return;
         }
         let orderIndex = 0;

@@ -1,6 +1,6 @@
 import { PlayerModel } from '../model/player';
 import { Link as BaseLink, SeatCtrl } from './seat';
-import { CurCardBoxCtrl, CurCardBoxUI } from './curCardBox';
+import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
 import { CardModel } from '../model/card';
 
 export interface Link extends BaseLink {

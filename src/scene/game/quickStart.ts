@@ -43,7 +43,7 @@ export class QuickStartCtrl extends BaseCtrl {
         count_down.clear();
     }
     public show() {
-        const { match_view, countdown_view, light, scroll_rect } = this.link;
+        const { match_view, light, scroll_rect } = this.link;
         match_view.visible = true;
         tweenLoop({
             props_arr: [

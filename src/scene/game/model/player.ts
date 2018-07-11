@@ -45,7 +45,19 @@ export class PlayerModel extends BaseEvent {
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card });
     }
-    private removeCard() {}
+    /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
+    public discardCard(data: HitData) {
+        const card_list = this.card_list;
+        const { cardId } = data.hitCardInfo;
+        for (let i = 0; i < card_list.length; i++) {
+            const card = card_list[i];
+            if (card.is_prepare_discarded && card.card_id === cardId + '') {
+                card_list.splice(i, 1);
+                card.discard();
+                return card;
+            }
+        }
+    }
     public leave() {
         this.destroy();
     }

@@ -69,3 +69,24 @@ type CardData = string;
  *
  */
 type ServerCode = '200' | '10010';
+type TakeData = {
+    userId: string;
+    takeCard: '2010';
+};
+type HitData = {
+    userId: string;
+    hitCardInfo: {
+        cardId: string;
+    };
+};
+
+type DirectionData = 0 | 1;
+type TurnsData = {
+    userId: string;
+    /**说话人id  */
+    speakerId: string;
+    /**方向, 0表示顺时针, 1表示逆时针  */
+    direction: 0;
+    /** 剩余轮次 */
+    remainTurn: 1;
+};

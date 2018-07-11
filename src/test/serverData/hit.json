@@ -1,0 +1,10 @@
+{
+    "cmd": "hit",
+    "code": 200,
+    "res": {
+        "userId": 3001,
+        "hitCardInfo": {
+            "cardId": 3401
+        }
+    }
+}

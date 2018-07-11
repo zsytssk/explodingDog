@@ -1,4 +1,4 @@
-type t_point = {
+type Point = {
     x: number;
     y: number;
 };

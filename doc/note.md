@@ -1,3 +1,90 @@
+##2018-07-10 10:33:55
+
+* @ques ts 测试 private
+
+-   @ques 复盘的时候会有
+
+-   discardZone card 和当前用户的牌 有很多相似的代码 能不能公用 initUI 方法公用
+
+-   @ques sail 能
+
+*   @ques 所有的事件 的方法处理加上 On 应该会 更清晰...
+
+-   @ques card 在销毁的时候的处理。。
+    -   card discard 的时候 model 并没有被销毁 但是 ctrl 需要销毁...
+
+*   @note 马一帆 import 比方说 primus socket http
+
+-   @note card unSelect 需要根据 card 的位置将他插入到不同的位置
+
+*   @ques 在什么地方判断是否出牌
+
+-   @bug 有时候 牌 拖动的时候 鼠标不再牌上
+
+*   @note 其他玩家的牌是居中对 齐的。。
+
+*   @ques CurCardBox 里面一大堆乱的属性 控制移动 很乱
+
+*   @ques 如果在 CurCard selecte 的时候 destroy
+    -   不要因为 view 加到 stage 而忘记删除
+
+-   @note 和章旸组织 code review()
+    _ 现在怎么写 怎么想
+    _ 对方什么意见 \* 吐槽交流会。。。
+
+*   @note sortCard 的动画
+
+-   @note 选中一次就无法再被选中了。。。
+
+*   @ques 出牌 的动作包括哪些内容。。
+
+    -   划出的位置 牌堆重新整理
+    -   等待处理 能出牌 出牌 不能出牌 牌重新进入牌堆
+
+*   @ques 划出去的牌我怎么去 放在什么地方
+
+    -   cardBox.selected_card
+
+*   @ques 划到什么位置 触发牌的重新整理
+    -   向上划出一定的位置触发 触发之后直接跳出牌堆
+        -   @ques 跳出多高？？
+            -   一半 且发光
+    *   选中的牌 在所有的牌的上面
+
+-   @note 牌的排列是一上一下牌一上一下
+
+-   @note 出牌区域先显示 突出这个区域
+
+-   @note 牌堆里的牌划到我的牌堆里面一定的区域才算 出牌
+
+-   @ques cardBox 整体滑动如何处理
+
+    -   @ques 是整体居中的吗
+    -   @ques 最多不能 有空白区域
+        -   @ques 查看牌的样式是例外 那张牌居中显示
+        -   返回之后 如果再次滑 动需要重新整理。。。
+
+-   Game -->
+
+    -   Seat --> CardBox --> Card
+    -   discardZone
+
+    *   CardCtrl --> CardModel --> player --> GameModel.discard_card
+        -   --> discard_zone
+
+*   @ques CurCard 中引用 CurCardBox 用 parent 来做这个处理
+    -   有没有更好的方法。。。
+    *   我这还要用到 discardZone...
+
+-   @ques 出牌的逻辑是什么
+
+    -   CardCtrl --> CardModel --> Game::discardCard --> discardZoneCtrl --> 等待服务器返回
+        -   成功 就这样...
+        -   失败 将牌还原到牌堆
+    -   @ques 在什么地方去发送命令给服务器
+
+-   @ques 不知道子类的方法在哪调用
+
 ## 2018-07-06 10:16:50
 
 -   @ques 怎么处理有些牌的类型需要显示 count 有些需要这个功能却不显示
