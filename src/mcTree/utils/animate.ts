@@ -294,8 +294,8 @@ export function tween(data: {
         }
 
         sprite.tween = laya_Tween.to(
-            end_props,
             sprite,
+            end_props,
             time,
             ease_fn as Func<number>,
             Laya.Handler.create(sprite, () => {
