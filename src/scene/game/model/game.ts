@@ -156,7 +156,7 @@ export class GameModel extends BaseEvent {
             if (player.is_cur_player) {
                 player.updateCards(shou);
             } else {
-                player.updateCards(fill(Array[user.shouLen], '*'));
+                player.updateCards(fill(Array(user.shouLen), '*'));
             }
         }
     }

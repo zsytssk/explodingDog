@@ -16,8 +16,6 @@ export class CurCardCtrl extends CardCtrl {
     protected model: CardModel;
     protected link: Link;
     public show_tip = false;
-    /** 是否被选中 */
-    public is_selected = false;
     /** 是否被触摸 */
     public is_touched = false;
     /** 是否被触摸 */
@@ -31,7 +29,7 @@ export class CurCardCtrl extends CardCtrl {
         const { view } = this.link;
 
         this.onModel(card_cmd.un_discard, () => {
-            this.unDiscard();
+            this.withDrawCard();
         });
 
         view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
@@ -119,7 +117,7 @@ export class CurCardCtrl extends CardCtrl {
         const start_props = { y: y1 };
         const end_props = { y: y2 };
 
-        card_box.selectCard(this);
+        card_box.sortCard();
         tween({
             end_props,
             sprite,
@@ -146,44 +144,47 @@ export class CurCardCtrl extends CardCtrl {
         if (!this.is_selected) {
             return;
         }
-        this.is_selected = false;
-
-        const { wrap, view, card_box } = this.link;
-        view.stopDrag();
+        const { wrap, view } = this.link;
         const pos = new Laya.Point(view.x, view.y);
+
+        this.is_selected = false;
+        Laya.stage.off(Laya.Event.MOUSE_UP, this, this.unSelect);
+        Laya.stage.off(Laya.Event.MOUSE_OVER, this, this.unSelect);
+        view.stopDrag();
         wrap.globalToLocal(pos);
         if (pos.y < -100) {
-            this.serverDiscard();
-            return;
+            const can_discard = this.model.preDiscard();
+            if (can_discard) {
+                Sail.io.emit(CMD.HIT, {
+                    hitCard: this.model.card_id,
+                    userId: CONFIG.user_id,
+                });
+                return;
+            }
         }
-        this.unDiscard();
+        this.withDrawCard();
     }
-    /**  */
-    private serverDiscard() {
-        this.model.preDiscard();
-        Sail.io.emit(CMD.HIT, {
-            hitCard: this.model.card_id,
-            userId: CONFIG.user_id,
-        });
-    }
-    private unDiscard() {
+    /**  这个方法现在用到 card + cardBox， 这很恶心
+     * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...
+     */
+    private withDrawCard() {
         const { wrap, view, card_box } = this.link;
+        const card_num = card_box.getCardNum();
         const pos = new Laya.Point(view.x, view.y);
         wrap.globalToLocal(pos);
-        wrap.addChild(view);
         view.pos(pos.x, pos.y);
-        card_box.unSelectCard(this);
+        const space = (view.width * wrap.height) / (view.height * 2);
+        let index = Math.ceil(pos.x / space);
+        index = card_box.withDrawCardIndex(this, index);
+        wrap.addChildAt(view, index);
+        card_box.sortCard();
     }
-    /** 移动位置 */
-    public tweenMove(index: number) {
+    public putToDisCardZone(wrap: Laya.Sprite) {
         const { view } = this.link;
-        const y = 0;
-        const x = 100 * index;
-        const end_props = { y, x };
-        tween({
-            end_props,
-            sprite: view,
-            time: 100,
-        });
+        view.off(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
+        view.off(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
+        view.off(Laya.Event.MOUSE_UP, this, this.mouseEnd);
+        view.off(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
+        return super.putToDisCardZone(wrap);
     }
 }

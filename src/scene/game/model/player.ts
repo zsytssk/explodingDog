@@ -1,6 +1,5 @@
 import { fill } from 'lodash';
 import { BaseEvent } from '../../../mcTree/event';
-import { logErr } from '../../../mcTree/utils/zutil';
 import { CardModel } from './card';
 
 export type PlayerStatus = 'speak' | 'normal';
@@ -29,7 +28,8 @@ export class PlayerModel extends BaseEvent {
         this.seat_id = Number(player_data.seatId);
 
         let shou = player_data.shou;
-        if (!this.is_cur_player) {
+        const shouLen = player_data.shouLen;
+        if (!this.is_cur_player && shouLen) {
             shou = fill(Array(player_data.shouLen), '*');
         }
         this.updateCards(shou);
@@ -46,7 +46,7 @@ export class PlayerModel extends BaseEvent {
         if (!data) {
             return;
         }
-        const card = new CardModel(data);
+        const card = new CardModel(data, this);
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card });
     }
@@ -56,22 +56,9 @@ export class PlayerModel extends BaseEvent {
         let discard_card: CardModel;
 
         const card_id = data.hitCard;
-        /** 非当前用户直接出第一张牌 */
-        if (!this.is_cur_player) {
-            discard_card = card_list[0];
-            card_list.splice(0, 1);
-            discard_card.updateInfo(card_id);
-            discard_card.discard();
-            return discard_card;
-        }
-
         for (let i = 0; i < card_list.length; i++) {
             const card = card_list[i];
-            if (card.is_prepare_discarded) {
-                if (card.card_id !== card_id + '') {
-                    logErr(`card card_id not equal ${card_id}`);
-                    return;
-                }
+            if (card.canDiscard(card_id)) {
                 discard_card = card;
                 card_list.splice(i, 1);
                 discard_card.discard();

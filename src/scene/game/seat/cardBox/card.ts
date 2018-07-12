@@ -12,14 +12,12 @@ export interface Link {
 }
 
 const card_height = 238;
-/** 其他玩家的牌缩小比例 */
-const other_scale = 40 / 230;
-/** 其他玩家的牌缩小比例 */
-const discard_scale = 40 / 230;
 export class CardCtrl extends BaseCtrl {
     public name = 'card';
     protected link = {} as Link;
     protected model: CardModel;
+    /** 是否被选中 */
+    public is_selected = false;
     constructor(model: CardModel, wrap: Laya.Sprite) {
         super();
         this.model = model;
@@ -32,6 +30,7 @@ export class CardCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
     }
+    /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
     public initUI() {
         const { wrap } = this.link;
         const view = new ui.game.seat.cardBox.cardUI();
@@ -81,7 +80,7 @@ export class CardCtrl extends BaseCtrl {
         const { card_box } = this.link;
         card_box.discardCard(this);
     }
-    public putToDisCardZone(wrap) {
+    public putToDisCardZone(wrap: Laya.Sprite) {
         const { view } = this.link;
         const scale = wrap.height / card_height;
         const card_pos = new Laya.Point(0, 0);
@@ -108,15 +107,17 @@ export class CardCtrl extends BaseCtrl {
             view.pos(0, 0);
         });
     }
-    public setOtherStyle() {
-        const { view } = this.link;
-        view.card_back.visible = true;
-        view.width = 40;
-        view.height = 41;
-    }
     /** 移动位置 */
     public tweenMove(index: number) {
-        const { view } = this.link;
-        view.x = 20 * index;
+        const { wrap, view } = this.link;
+        const space = (view.width * wrap.height) / (view.height * 2);
+        const y = 0;
+        const x = space * index;
+        const end_props = { y, x };
+        tween({
+            end_props,
+            sprite: view,
+            time: 100,
+        });
     }
 }

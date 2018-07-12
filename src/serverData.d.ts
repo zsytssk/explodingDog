@@ -80,7 +80,9 @@ type CardData = string;
 type ServerCode = '200' | '10010';
 type TakeData = {
     userId: string;
-    takeCard: '2010';
+    takeCard: string;
+    bombProb: number;
+    remainCard: number;
 };
 type HitData = {
     userId: string;
