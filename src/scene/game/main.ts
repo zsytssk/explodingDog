@@ -20,6 +20,7 @@ import { DiscardZoneCtrl } from './discardZone';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
+import { BillBoardCtrl } from './billboard';
 import { CardCtrl } from './seat/cardBox/card';
 import { isCurPlayer } from '../../utils/tool';
 import { CardHeapCtrl } from './cardHeep';
@@ -34,6 +35,7 @@ interface Link {
     quick_start_ctrl: QuickStartCtrl;
     host_zone_ctrl: HostZoneCtrl;
     turn_arrow_ctrl: TurnArrowCtrl;
+    bill_board_ctrl: BillBoardCtrl;
     card_heap_ctrl: CardHeapCtrl;
     game_zone: Laya.Sprite;
 }
@@ -52,7 +54,7 @@ export const cmd = {
 export class GameCtrl extends BaseCtrl {
     public is_top = true;
     public name = 'game';
-    protected link = {} as Link;
+    public link = {} as Link;
     protected is_ready = false;
     private actions = {} as SailIoAction;
     protected model = new GameModel();
@@ -122,6 +124,11 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
 
+        const bill_board_ctrl = new BillBoardCtrl(view.billboard);
+
+        this.link.game_zone = view.game_zone;
+        this.link.btn_back = view.btn_back;
+        this.link.btn_setting = view.btn_setting;
         this.link = {
             btn_back,
             btn_setting,
@@ -133,6 +140,7 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             turn_arrow_ctrl,
+            bill_board_ctrl,
             ...this.link,
         };
     }

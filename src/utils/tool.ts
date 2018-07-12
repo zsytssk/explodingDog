@@ -76,6 +76,10 @@ export function getCardInfo(card_id) {
     };
 }
 
+export function getAvatar(avatar_id) {
+    return `images/component/${avatar_id}.png`;
+}
+
 export function isCurPlayer(user_id) {
     return user_id + '' === CONFIG.user_id;
 }
