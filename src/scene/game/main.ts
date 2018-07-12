@@ -160,9 +160,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.HIT]: (data: HitData) => {
                 this.model.discardCard(data);
             },
-            [CMD.TAKE]: (data: TakeData) => {
-                this.model.addPlayerCard(data);
-            },
+            [CMD.TAKE]: this.onServerTake,
             [CMD.TURNS]: (data: TurnsData) => {
                 this.model.setSpeaker(data.speakerId);
             },
@@ -238,6 +236,13 @@ export class GameCtrl extends BaseCtrl {
         this.model.setGameStatus(game_status_map[2] as GameStatus);
         this.model.updatePlayersCards(data);
     }
+    /** 拿牌 */
+    private onServerTake(data: TakeData) {
+        const { docker_ctrl, card_heap_ctrl } = this.link;
+        this.model.addPlayerCard(data);
+        docker_ctrl.setRate(data.bombProb);
+        card_heap_ctrl.setRemainCard(data.remainCard);
+    }
     /** 离开房间 */
     private onServerOutRoom() {
         this.model.destroy();
@@ -307,15 +312,16 @@ export class GameCtrl extends BaseCtrl {
             } else {
                 quick_start_ctrl.show();
             }
-        } else {
-            docker_ctrl.start();
-            if (type === 'host') {
-                host_zone_ctrl.hide();
-            } else {
-                quick_start_ctrl.hide();
-            }
-            game_zone.visible = true;
+            return;
         }
+        this.updateSeatPos();
+        docker_ctrl.start();
+        if (type === 'host') {
+            host_zone_ctrl.hide();
+        } else {
+            quick_start_ctrl.hide();
+        }
+        game_zone.visible = true;
     }
     private leave() {
         this.destroy();

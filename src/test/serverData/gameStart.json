@@ -5,7 +5,6 @@
         "userId": "3001",
         "userList": [
             { "userId": "3001", "shouLen": 5 },
-            { "userId": "4001", "shouLen": 5 },
             { "userId": "3002", "shouLen": 5 }
         ],
         "remainCard": 26,

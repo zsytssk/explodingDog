@@ -24,6 +24,21 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         card_list.push(card_ctrl);
         this.sortCard();
     }
+    /** 牌没有打出去， 回收牌 */
+    public withDrawCardIndex(card, index: number) {
+        let { card_list } = this.link;
+        if (index > card_list.length - 1) {
+            index = card_list.length - 1;
+        }
+        card_list = card_list.filter(item => {
+            return item !== card;
+        });
+
+        card_list.splice(index, 0, card);
+        this.link.card_list = card_list;
+
+        return index;
+    }
     public unToggleExcept(card: CardCtrl) {
         const { card_list } = this.link;
         for (const card_item of card_list) {
@@ -34,20 +49,5 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
                 card_item.toggleTip();
             }
         }
-    }
-    /** 选中某张牌， 将其他的牌 */
-    public selectCard(card: CurCardCtrl) {
-        const { card_list } = this.link;
-        this.link.card_list = card_list.filter(item => {
-            return item !== card;
-        });
-
-        this.sortCard();
-    }
-    /** */
-    public unSelectCard(card: CurCardCtrl) {
-        const { card_list } = this.link;
-        card_list.push(card);
-        this.sortCard();
     }
 }

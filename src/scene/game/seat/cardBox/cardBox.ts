@@ -21,16 +21,25 @@ export class CardBoxCtrl extends BaseCtrl {
         // ...
     }
     /** 牌的数目变化 重新排列牌发生b */
-    protected sortCard() {
+    public sortCard() {
         const { card_list } = this.link;
-        for (let i = 0; i < card_list.length; i++) {
-            card_list[i].tweenMove(i);
+        /** 排列未选择的牌 */
+        const unslt_card_list = card_list.filter(item => {
+            return !item.is_selected;
+        });
+        for (let i = 0; i < unslt_card_list.length; i++) {
+            unslt_card_list[i].tweenMove(i);
         }
     }
-    /** 出牌 */
+    /** 出牌 将牌从列表中清除 */
     public discardCard(card: CardCtrl) {
+        const { card_list } = this.link;
+        this.link.card_list = card_list.filter(item => {
+            return item !== card;
+        });
         this.removeChild(card);
         this.report(cmd.discard, 'game', { card });
+        this.sortCard();
     }
     public addCard(card: CardModel) {
         const { view, card_list } = this.link;
@@ -38,7 +47,9 @@ export class CardBoxCtrl extends BaseCtrl {
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
-        card_ctrl.setOtherStyle();
         this.sortCard();
+    }
+    public getCardNum() {
+        return this.link.card_list.length;
     }
 }

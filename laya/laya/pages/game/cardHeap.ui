@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":2,
+    "selectedBox":9,
+    "selecteID":10,
     "props":{"width":264,"sceneColor":"#000000","height":303},
     "nodeParent":-1,
     "label":"View",
@@ -15,19 +15,18 @@
         {
             "x":15,
             "type":"Box",
-            "props":{"y":0,"x":0,"width":264,"height":303},
+            "props":{"y":0,"x":0,"width":264,"var":"heap","height":303},
             "nodeParent":1,
-            "label":"Box",
-            "isOpen":true,
+            "label":"Box(heap)",
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":2,
             "child":[
                 {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":0,"x":0,"skin":"images/game/card_back.png","name":"item4"},
+                    "props":{"y":0,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item4","height":273},
                     "nodeParent":2,
                     "label":"Image(item4)",
                     "isDirectory":false,
@@ -38,9 +37,8 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":20,"x":0,"skin":"images/game/card_back.png","name":"item0"},
+                    "props":{"y":20,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item0","height":273},
                     "nodeParent":2,
                     "label":"Image(item0)",
                     "isDirectory":false,
@@ -51,9 +49,8 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":15,"x":0,"skin":"images/game/card_back.png","name":"item1"},
+                    "props":{"y":15,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item1","height":273},
                     "nodeParent":2,
                     "label":"Image(item1)",
                     "isDirectory":false,
@@ -61,12 +58,12 @@
                     "hasChild":false,
                     "compId":5,
                     "child":[
-                        ]
+                        ],
+                    "$HIDDEN":false
                 },
                 {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":10,"x":0,"skin":"images/game/card_back.png","name":"item2"},
+                    "props":{"y":10,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item2","height":273},
                     "nodeParent":2,
                     "label":"Image(item2)",
                     "isDirectory":false,
@@ -77,15 +74,53 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":5,"x":0,"skin":"images/game/card_back.png","name":"item3"},
+                    "props":{"y":5,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item3","height":273},
                     "nodeParent":2,
                     "label":"Image(item3)",
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
                     "compId":7,
+                    "child":[
+                        ]
+                }]
+        },
+        {
+            "x":15,
+            "type":"Box",
+            "props":{"y":297,"x":36},
+            "nodeParent":1,
+            "label":"Box",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":9,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"skin":"images/game/bg_remain_card.png"},
+                    "nodeParent":9,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":8,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":9,"x":6,"width":151,"var":"remain_num","text":"剩余20张","height":27,"fontSize":24,"color":"#ffffff","bold":true,"align":"center"},
+                    "nodeParent":9,
+                    "label":"Text(remain_num)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":10,
                     "child":[
                         ]
                 }]
