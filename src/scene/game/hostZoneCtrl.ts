@@ -15,7 +15,6 @@ interface Link {
 /**  */
 export class HostZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
-    private actions = {} as SailIoAction;
     constructor(view) {
         super();
         this.link.view = view;

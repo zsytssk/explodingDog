@@ -2,6 +2,7 @@ import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
 import { CardModel } from './card';
 import { logErr } from '../../../mcTree/utils/zutil';
+import * as fill from 'lodash/fill';
 
 export const cmd = {
     add_player: 'add_player',
@@ -31,6 +32,12 @@ export const game_type_map = {
     1: 'host',
 };
 
+/** 游戏的方向 */
+export const game_direction = {
+    anti_clockwise: 1,
+    clockwise: 0,
+};
+
 export class GameModel extends BaseEvent {
     /** 游戏类型 */
     public game_type: GameType;
@@ -39,13 +46,13 @@ export class GameModel extends BaseEvent {
     /** 游戏状态 */
     public status: GameStatus;
     public room_id: string;
+    public remain_num: number;
+    public direction: DirectionData;
     private player_list: PlayerModel[] = [];
     /** 正在出的牌 */
     private discard_card: CardModel;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
-        /** @test  */
-        this.setRoomInfo(data.roomInfo);
         /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
         if (data.curUserInfo) {
             this.addPlayer(data.curUserInfo, true);
@@ -54,6 +61,9 @@ export class GameModel extends BaseEvent {
             data.userList.push(data.curUserInfo);
         }
         this.updatePlayers(data.userList);
+
+        this.setRoomInfo(data.roomInfo);
+        this.setRoundInfo(data.roundInfo);
     }
     /** 更新用户信息 */
     public updatePlayers(players_data: UpdateUser['userList']) {
@@ -80,6 +90,7 @@ export class GameModel extends BaseEvent {
     private addPlayer(player_data: UserData, is_cur = false) {
         const player = new PlayerModel(player_data, is_cur);
         this.player_list.push(player);
+        /** 保证在所有用户的信息都完成之后再去执行 */
         this.trigger(cmd.add_player, { player });
     }
     public removePlayer(player: PlayerModel | string) {
@@ -119,14 +130,48 @@ export class GameModel extends BaseEvent {
         this.card_type = card_type;
         this.trigger(cmd.card_type_change, { card_type });
     }
+    /** 设置房间信息 */
+    private setRoundInfo(data: RoundInfoData) {
+        if (!data) {
+            return;
+        }
+        this.setSpeaker(data.speakerId);
+        this.remain_num = data.remainCard;
+        this.direction = data.turnDirection;
+    }
+    public setSpeaker(speak_id: string) {
+        const player_list = this.player_list;
+        for (const player of player_list) {
+            if (player.isMyId(speak_id)) {
+                player.setStatus('speak');
+            } else {
+                player.setStatus('normal');
+            }
+        }
+    }
+    public updatePlayersCards(data: GameStartData) {
+        const { userList, shou } = data;
+        for (const user of userList) {
+            const player = this.getPlayerById(user.userId);
+            if (player.is_cur_player) {
+                player.updateCards(shou);
+            } else {
+                player.updateCards(fill(Array[user.shouLen], '*'));
+            }
+        }
+    }
+    public addPlayerCard(data: TakeData) {
+        const player = this.getPlayerById(data.userId);
+        player.addCard(data.takeCard);
+    }
     public getPlayerById(id: string) {
         const player_list = this.player_list;
         for (const player of player_list) {
-            if (player.user_id === id + '') {
+            if (player.isMyId(id)) {
                 return player;
             }
         }
-        return null;
+        return;
     }
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */
@@ -139,9 +184,13 @@ export class GameModel extends BaseEvent {
             logErr(`cant find player for ${data.userId}`);
             return;
         }
+        if (!data.hitInfo) {
+            player.unDiscardCard();
+            return;
+        }
         let card = player.discardCard(data);
         if (!card) {
-            card = new CardModel(data.hitCardInfo.cardId);
+            card = new CardModel(data.hitCard);
         }
         this.discard_card = card;
         this.trigger(cmd.discard_card, { card });

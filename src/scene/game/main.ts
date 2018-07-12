@@ -20,12 +20,13 @@ import { DiscardZoneCtrl } from './discardZone';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
+import { CardCtrl } from './seat/cardBox/card';
+import { isCurPlayer } from '../../utils/tool';
+import { CardHeapCtrl } from './cardHeep';
 
 interface Link {
     view: Laya.Node;
     docker_ctrl: DockerCtrl;
-    card_heap: Laya.Sprite;
-    game_zone: Laya.Sprite;
     discard_zone_ctrl: DiscardZoneCtrl;
     btn_back: Laya.Button;
     btn_setting: Laya.Button;
@@ -33,6 +34,8 @@ interface Link {
     quick_start_ctrl: QuickStartCtrl;
     host_zone_ctrl: HostZoneCtrl;
     turn_arrow_ctrl: TurnArrowCtrl;
+    card_heap_ctrl: CardHeapCtrl;
+    game_zone: Laya.Sprite;
 }
 
 const max_user_count: number = 5;
@@ -42,7 +45,13 @@ const seat_position = {
     3: [[35, -320], [15, 0], [35, 320]],
     4: [[60, -420], [20, -140], [20, 140], [60, 420]],
 };
+
+export const cmd = {
+    discard: 'discard',
+};
 export class GameCtrl extends BaseCtrl {
+    public is_top = true;
+    public name = 'game';
     protected link = {} as Link;
     protected is_ready = false;
     private actions = {} as SailIoAction;
@@ -62,19 +71,28 @@ export class GameCtrl extends BaseCtrl {
     }
     protected initLink() {
         const view = this.link.view as ui.game.mainUI;
+        const {
+            host_zone,
+            seat_wrap,
+            docker,
+            discard_zone,
+            card_heap,
+            turn_arrow,
+            btn_back,
+            btn_setting,
+            game_zone,
+        } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
             view.banner_countdown,
         );
         quick_start_ctrl.init();
-        this.link.quick_start_ctrl = quick_start_ctrl;
-        const host_zone_ctrl = new HostZoneCtrl(view.host_zone);
+        const host_zone_ctrl = new HostZoneCtrl(host_zone);
         this.addChild(host_zone_ctrl);
         host_zone_ctrl.init();
-        this.link.host_zone_ctrl = host_zone_ctrl;
 
         /** 座位控制器 */
-        const seat_view_list = getChildren(view.seat_wrap);
+        const seat_view_list = getChildren(seat_wrap);
         const seat_ctrl_list = [];
         for (let i = 0; i < seat_view_list.length; i++) {
             let player_ctrl;
@@ -87,39 +105,59 @@ export class GameCtrl extends BaseCtrl {
             player_ctrl.init();
             seat_ctrl_list.push(player_ctrl);
         }
-        this.link.seat_ctrl_list = seat_ctrl_list;
 
-        const docker = view.docker;
         const docker_ctrl = new DockerCtrl(docker);
         this.addChild(docker_ctrl);
         docker_ctrl.init();
-        this.link.docker_ctrl = docker_ctrl;
 
-        const discard_zone = view.discard_zone;
         const discard_zone_ctrl = new DiscardZoneCtrl(discard_zone);
         this.addChild(discard_zone_ctrl);
         discard_zone_ctrl.init();
-        this.link.discard_zone_ctrl = discard_zone_ctrl;
 
-        const turn_arrow = view.turn_arrow;
+        const card_heap_ctrl = new CardHeapCtrl(card_heap);
+        this.addChild(card_heap_ctrl);
+        card_heap_ctrl.init();
+
         const turn_arrow_ctrl = new TurnArrowCtrl(turn_arrow);
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
-        this.link.turn_arrow_ctrl = turn_arrow_ctrl;
 
-        this.link.game_zone = view.game_zone;
-        this.link.btn_back = view.btn_back;
-        this.link.btn_setting = view.btn_setting;
+        this.link = {
+            btn_back,
+            btn_setting,
+            card_heap_ctrl,
+            discard_zone_ctrl,
+            docker_ctrl,
+            game_zone,
+            host_zone_ctrl,
+            quick_start_ctrl,
+            seat_ctrl_list,
+            turn_arrow_ctrl,
+            ...this.link,
+        };
     }
     protected initEvnet() {
+        const { discard_zone_ctrl } = this.link;
+        this.on(cmd.discard, (data: { card: CardCtrl }) => {
+            discard_zone_ctrl.borrowCard(data.card);
+        });
+
         this.actions = {
             [CMD.GAME_REPLAY]: this.onServerGameReplay,
             [CMD.UPDATE_USER]: this.onServerUpdateUser,
             [CMD.GAME_START]: this.onServerGameStart,
-            [CMD.OUT_ROOM]: this.onServerOutRoom,
-            [CMD.HIT]: this.onServerHit,
-            [CMD.TAKE]: this.onServerTake,
-            [CMD.TURNS]: this.onServerTurns,
+            [CMD.OUT_ROOM]: () => {
+                this.onServerOutRoom();
+            },
+            [CMD.HIT]: (data: HitData) => {
+                this.model.discardCard(data);
+            },
+            [CMD.TAKE]: (data: TakeData) => {
+                this.model.addPlayerCard(data);
+            },
+            [CMD.TURNS]: (data: TurnsData) => {
+                this.model.setSpeaker(data.speakerId);
+            },
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
         };
         Sail.io.register(this.actions, this);
@@ -158,7 +196,9 @@ export class GameCtrl extends BaseCtrl {
     public onServerGameReplay(data: GameReplayData) {
         this.is_ready = true;
         /** 更新本地倒计时 */
+        this.calcCurSeatId(data.userList);
         this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
+
         this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
@@ -168,27 +208,30 @@ export class GameCtrl extends BaseCtrl {
         }
         /** 更新本地倒计时 */
         this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
+        this.calcCurSeatId(data.userList);
         this.model.updatePlayers(data.userList);
+    }
+    private calcCurSeatId(user_list: UserData[]) {
+        if (this.cur_seat_id) {
+            return;
+        }
+        for (const user of user_list) {
+            if (isCurPlayer(user.userId)) {
+                this.cur_seat_id = Number(user.seatId);
+            }
+        }
     }
     /** 游戏开始 */
     public onServerGameStart(data: GameStartData, code?: string, msg?: string) {
         if (Number(code) !== 200) {
-            alert(msg);
+            logErr(msg);
             return;
         }
         this.model.setGameStatus(game_status_map[2] as GameStatus);
+        this.model.updatePlayersCards(data);
     }
     /** 离开房间 */
     private onServerOutRoom() {
-        this.model.destroy();
-    }
-    private onServerHit(data) {
-        this.model.discardCard(data);
-    }
-    private onServerTake() {
-        this.model.destroy();
-    }
-    private onServerTurns() {
         this.model.destroy();
     }
     /** 添加用户 */
@@ -196,7 +239,6 @@ export class GameCtrl extends BaseCtrl {
         const { seat_ctrl_list } = this.link;
         let local_id;
         if (player.is_cur_player) {
-            this.cur_seat_id = player.seat_id;
             local_id = 0;
         } else {
             local_id = this.serverIdToLocal(player.seat_id);
@@ -253,7 +295,6 @@ export class GameCtrl extends BaseCtrl {
             docker_ctrl.reset();
             if (type === 'host') {
                 const room_id = this.model.room_id;
-                const card_type = this.model.card_type;
                 host_zone_ctrl.show(room_id);
             } else {
                 quick_start_ctrl.show();
@@ -288,9 +329,7 @@ export class GameCtrl extends BaseCtrl {
         let orderIndex = 0;
         this.link.seat_ctrl_list.slice(1).forEach(seatCtrl => {
             if (seatCtrl.loadedPlayer) {
-                seatCtrl.updatePos(
-                    seat_position[playerNum - 1][orderIndex],
-                );
+                seatCtrl.updatePos(seat_position[playerNum - 1][orderIndex]);
                 orderIndex++;
             } else {
                 seatCtrl.hideSeat();

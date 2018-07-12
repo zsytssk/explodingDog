@@ -304,7 +304,7 @@ export function tween(data: {
         );
     });
 }
-function setStyle(sprite, props) {
+export function setStyle(sprite, props) {
     if (!props) {
         return;
     }

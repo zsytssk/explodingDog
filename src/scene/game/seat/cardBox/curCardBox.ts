@@ -11,14 +11,9 @@ export interface Link {
 
 export class CurCardBoxCtrl extends CardBoxCtrl {
     protected link: Link;
-    private selected_card: CurCardCtrl;
     constructor(view: CurCardBoxUI) {
         super(view);
         this.link.view = view;
-    }
-    public init() {
-        this.initLink();
-        this.initEvent();
     }
     public addCard(card: CardModel) {
         const { view, card_list } = this.link;
@@ -47,15 +42,12 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             return item !== card;
         });
 
-        this.selected_card = card;
-
         this.sortCard();
     }
     /** */
     public unSelectCard(card: CurCardCtrl) {
         const { card_list } = this.link;
         card_list.push(card);
-        this.selected_card = undefined;
         this.sortCard();
     }
 }

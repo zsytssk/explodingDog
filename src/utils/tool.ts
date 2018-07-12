@@ -1,4 +1,5 @@
 import { CARD_MAP } from '../data/card';
+import { CONFIG } from '../data/config';
 import { logErr } from '../mcTree/utils/zutil';
 
 export function callFunc(func) {
@@ -57,7 +58,10 @@ export function getKeyByValue(obj: AnyObj, val) {
 export function getCardInfo(card_id) {
     const card_data = CARD_MAP[card_id];
     if (!card_data) {
-        logErr(`cant find card_info for ${card_id}`);
+        /* '*'是其他玩家的牌 */
+        if (card_id !== '*') {
+            logErr(`cant find card_info for ${card_id}`);
+        }
         return;
     }
     if (typeof card_data === 'string') {
@@ -70,4 +74,8 @@ export function getCardInfo(card_id) {
         ...card_data,
         url: `images/game/card/${name}.png`,
     };
+}
+
+export function isCurPlayer(user_id) {
+    return user_id + '' === CONFIG.user_id;
 }

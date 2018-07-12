@@ -1,7 +1,6 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
-import { cmd } from '../../mcTree/event';
-import { getCardInfo } from '../../utils/tool';
 import { CardModel } from './model/card';
+import { CardCtrl } from './seat/cardBox/card';
 
 export interface Link {
     view: ui.game.discardZoneUI;
@@ -10,7 +9,10 @@ export interface Link {
 
 /** 出牌区域控制器 */
 export class DiscardZoneCtrl extends BaseCtrl {
+    public name = 'discard_zone';
     protected link = {} as Link;
+    /** 是否是由cardBox直接借过来， 就不需要自己自取创建了 */
+    private is_borrowing = false;
     constructor(view: ui.game.discardZoneUI) {
         super();
         this.link.view = view;
@@ -27,53 +29,23 @@ export class DiscardZoneCtrl extends BaseCtrl {
         this.link.view.visible = false;
     }
     public discardCard(card: CardModel) {
+        if (this.is_borrowing) {
+            return;
+        }
         const { card_box } = this.link;
-        const card_ctrl = new DiscardCardCtrl(card, card_box);
+        const card_ctrl = new CardCtrl(card, card_box);
         this.addChild(card_ctrl);
         card_ctrl.init();
     }
-}
-
-type CardView = ui.game.seat.cardBox.cardBigUI;
-export interface CardLink {
-    view: CardView;
-    wrap: Laya.Sprite;
-}
-/** 出牌区域牌控制器 */
-class DiscardCardCtrl extends BaseCtrl {
-    protected link = {} as CardLink;
-    protected model: CardModel;
-    constructor(model: CardModel, wrap: Laya.Sprite) {
-        super(wrap);
-        this.model = model;
-        this.link.wrap = wrap;
-    }
-    public init() {
-        this.initLink();
-        this.initEvent();
-    }
-    protected initLink() {
-        this.initUI();
-    }
-    public initUI() {
-        const { card_id } = this.model;
-        const view = new ui.game.seat.cardBox.cardBigUI();
-        const { card_id: view_card_id, card_count, card_face } = view;
-        const { wrap } = this.link;
-        const card_info = getCardInfo(card_id);
-
-        card_face.skin = card_info.url;
-        if (card_info.show_count) {
-            card_count.visible = true;
-            card_count.text = card_info.count;
+    public borrowCard(card: CardCtrl) {
+        if (!(card instanceof CardCtrl)) {
+            return;
         }
-        view_card_id.text = `id:${card_id}`;
-        wrap.addChild(view);
-        this.link.view = view;
-    }
-    protected initEvent() {
-        this.onModel(cmd.destroy, () => {
-            this.destroy();
+        this.is_borrowing = true;
+        const { card_box } = this.link;
+        this.addChild(card);
+        card.putToDisCardZone(card_box).then(() => {
+            this.is_borrowing = false;
         });
     }
 }

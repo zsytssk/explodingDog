@@ -1,9 +1,12 @@
 import { fill } from 'lodash';
 import { BaseEvent } from '../../../mcTree/event';
+import { logErr } from '../../../mcTree/utils/zutil';
 import { CardModel } from './card';
 
+export type PlayerStatus = 'speak' | 'normal';
 export const cmd = {
     add_card: 'add_card',
+    status_change: 'status_change',
 };
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;
@@ -11,6 +14,8 @@ export class PlayerModel extends BaseEvent {
     public user_id: string;
     public nickname: string;
     public avatar: string;
+    /** 正在出牌 */
+    public status: PlayerStatus;
     public card_list: CardModel[] = [];
     constructor(player_data: UserData, is_cur_player: boolean) {
         super();
@@ -26,8 +31,6 @@ export class PlayerModel extends BaseEvent {
         let shou = player_data.shou;
         if (!this.is_cur_player) {
             shou = fill(Array(player_data.shouLen), '*');
-        } else {
-            this.updateCards(fill());
         }
         this.updateCards(shou);
     }
@@ -39,8 +42,10 @@ export class PlayerModel extends BaseEvent {
             this.addCard(card_info);
         }
     }
-    /**  */
-    private addCard(data: CardData) {
+    public addCard(data: CardData) {
+        if (!data) {
+            return;
+        }
         const card = new CardModel(data);
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card });
@@ -48,15 +53,55 @@ export class PlayerModel extends BaseEvent {
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public discardCard(data: HitData) {
         const card_list = this.card_list;
-        const { cardId } = data.hitCardInfo;
+        let discard_card: CardModel;
+
+        const card_id = data.hitCard;
+        /** 非当前用户直接出第一张牌 */
+        if (!this.is_cur_player) {
+            discard_card = card_list[0];
+            card_list.splice(0, 1);
+            discard_card.updateInfo(card_id);
+            discard_card.discard();
+            return discard_card;
+        }
+
         for (let i = 0; i < card_list.length; i++) {
             const card = card_list[i];
-            if (card.is_prepare_discarded && card.card_id === cardId + '') {
+            if (card.is_prepare_discarded) {
+                if (card.card_id !== card_id + '') {
+                    logErr(`card card_id not equal ${card_id}`);
+                    return;
+                }
+                discard_card = card;
                 card_list.splice(i, 1);
-                card.discard();
-                return card;
+                discard_card.discard();
+                return discard_card;
             }
         }
+    }
+    /** 取消出牌 */
+    public unDiscardCard() {
+        const card_list = this.card_list;
+        /** 非当前用户 不需要处理 */
+        if (!this.is_cur_player) {
+            return;
+        }
+        /** 当前用户还原出的状态 */
+        for (const card of card_list) {
+            if (card.is_prepare_discarded) {
+                card.unDiscard();
+            }
+        }
+    }
+    public setStatus(status: PlayerStatus) {
+        if (status === this.status) {
+            return;
+        }
+        this.status = status;
+        this.trigger(cmd.status_change, { status });
+    }
+    public isMyId(user_id: string) {
+        return this.user_id === user_id + '';
     }
     public leave() {
         this.destroy();
