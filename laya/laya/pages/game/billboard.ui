@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":7,
+    "selecteID":5,
     "props":{"width":287,"sceneColor":"#000000","height":360},
     "nodeParent":-1,
     "label":"View",
@@ -55,7 +55,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":156,"x":36,"wordWrap":true,"width":215,"var":"operationTip","valign":"middle","text":"操作","height":159,"fontSize":30,"font":"Microsoft YaHei","color":"#58271b","align":"center"},
+            "props":{"y":156,"x":36,"wordWrap":true,"width":215,"var":"operationTip","valign":"middle","text":"操\\n作","leading":15,"height":159,"fontSize":30,"font":"Microsoft YaHei","color":"#58271b","align":"center"},
             "nodeParent":1,
             "label":"Label(operationTip)",
             "isDirectory":false,

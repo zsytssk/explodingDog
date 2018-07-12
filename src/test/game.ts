@@ -20,3 +20,8 @@ export function gameHit() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
     game_ctrl.onServerHit(hitData.res);
 }
+
+export function billboard() {
+    const game_ctrl = (window as any).game_ctrl as GameCtrl;
+    game_ctrl.link.bill_board_ctrl.updateInfo({ name: '3301', avatar: 'avatar' }, { name: 'aaaaa', avatar: 'avatar' }, '3401', 1);
+}

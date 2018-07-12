@@ -42,7 +42,7 @@ export class BillBoardCtrl {
         //         text += `使用了${cardDescribe.name}`;
         //         break;
         // }
-        operationTip.changeText(text);
+        operationTip.text = text;
         if (cardDescribe.icon) {
             if (!cardIcon.visible) {
                 cardIcon.visible = true;

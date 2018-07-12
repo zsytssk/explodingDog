@@ -54,7 +54,7 @@ export const cmd = {
 export class GameCtrl extends BaseCtrl {
     public is_top = true;
     public name = 'game';
-    protected link = {} as Link;
+    public link = {} as Link;
     protected is_ready = false;
     private actions = {} as SailIoAction;
     protected model = new GameModel();
