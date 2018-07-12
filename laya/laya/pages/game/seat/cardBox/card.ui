@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":6,
     "props":{"width":230,"sceneColor":"#000000","height":238},
     "nodeParent":-1,
     "label":"View",
@@ -48,6 +48,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":5,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":0,"x":0,"var":"card_back","skin":"images/game/card_back.png"},
+            "nodeParent":1,
+            "label":"Image(card_back)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":6,
             "child":[
                 ]
         }],

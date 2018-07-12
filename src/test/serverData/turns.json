@@ -1,0 +1,5 @@
+{
+    "cmd": "turns",
+    "code": 200,
+    "res": { "speakerId": "4001", "direction": "0", "remainTurn": 1 }
+}

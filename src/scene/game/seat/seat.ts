@@ -1,9 +1,9 @@
 import { cmd as base_cmd } from '../../../mcTree/event';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
-import { PlayerModel, cmd as player_cmd } from '../model/player';
+import { tweenLoop, stopAni } from '../../../mcTree/utils/animate';
+import { PlayerModel, cmd as player_cmd, PlayerStatus } from '../model/player';
 import { tween } from '../../../mcTree/utils/animate';
 import { CardModel } from '../model/card';
-import { OtherCardBoxCtrl } from './cardBox/otherCardBox';
 import { CardBoxCtrl } from './cardBox/cardBox';
 
 export interface Link {
@@ -18,6 +18,7 @@ export interface Link {
 
 /**  */
 export class SeatCtrl extends BaseCtrl {
+    public name = 'seat';
     protected link = {} as Link;
     protected model: PlayerModel;
     public loadedPlayer = false; // 是否加载了用户
@@ -27,7 +28,7 @@ export class SeatCtrl extends BaseCtrl {
     }
     public init() {
         this.initLink();
-        this.initEvent();
+        // this.initEvent();
     }
     protected initLink() {
         const view = this.link.view;
@@ -47,12 +48,12 @@ export class SeatCtrl extends BaseCtrl {
         this.link.card_box_ctrl = this.createCardBox(card_box);
     }
     protected createCardBox(card_box: Laya.Sprite): CardBoxCtrl {
-        const card_box_ctrl = new OtherCardBoxCtrl(card_box);
+        const card_box_ctrl = new CardBoxCtrl(card_box);
         this.addChild(card_box_ctrl);
         card_box_ctrl.init();
         return card_box_ctrl;
     }
-    protected initEvent() {}
+    // protected initEvent() {}
     public loadPlayer(player: PlayerModel) {
         this.link.empty_box.visible = false;
         this.link.active_box.visible = true;
@@ -64,7 +65,7 @@ export class SeatCtrl extends BaseCtrl {
         this.loadedPlayer = true;
         this.bindModel();
     }
-    private clearPlayer = () => {
+    private clearPlayer() {
         this.unBindModeEvent();
         this.model = undefined;
         this.loadedPlayer = false;
@@ -73,7 +74,7 @@ export class SeatCtrl extends BaseCtrl {
         this.link.avatar.skin = '';
         this.link.nickname.text = '';
         this.link.die_avatar.visible = false;
-    };
+    }
     private bindModel() {
         /** 渲染初始化的信息 */
         const player = this.model;
@@ -82,15 +83,43 @@ export class SeatCtrl extends BaseCtrl {
             this.addCard(card);
         }
 
-        this.onModel(base_cmd.destroy, this.clearPlayer);
-        this.onModel(player_cmd.add_card, this.addCard);
+        this.onModel(base_cmd.destroy, this.clearPlayer.bind(this));
+        this.onModel(player_cmd.add_card, (data: { card: CardModel }) => {
+            this.addCard(data.card);
+        });
+        this.onModel(
+            player_cmd.status_change,
+            (data: { status: PlayerStatus }) => {
+                this.setStatus(data.status);
+            },
+        );
     }
     private unBindModeEvent() {
         this.offOtherEvent(this.model);
     }
-    protected addCard = (card: CardModel) => {
+    protected addCard(card: CardModel) {
         this.link.card_box_ctrl.addCard(card);
-    };
+    }
+    protected setStatus(status: PlayerStatus) {
+        const { nickname: sprite } = this.link;
+        if (status === 'speak') {
+            const start_props = {
+                scaleX: 1,
+                scaleY: 1,
+            };
+            const end_props = {
+                scaleX: 1.2,
+                scaleY: 1.2,
+            };
+            tweenLoop({
+                props_arr: [end_props, start_props],
+                sprite,
+                time: 1000,
+            });
+        } else {
+            stopAni(sprite);
+        }
+    }
     public hideSeat() {
         this.link.view.visible = false;
     }

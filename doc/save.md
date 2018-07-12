@@ -1,3 +1,40 @@
+## 面向对象
+
+-   面向对象的基本原则...
+
+*   父类调用子类的方法, 在子类中不知道在方法哪调用的
+    -   b extends a
+    -   a --> init() --> initView()
+    -   b --> initView()
+
+-   @ques 继承 继承交叉 相互调用看的真的很混乱...
+
+*   @ques 能不能做成 pwa
+
+## other
+
+-   尽量减少调用堆栈
+
+-   @ques 如何测试..
+    -   在浏览器中直接运行
+    -   describe assert beforeAll beforeEach after...
+    -   可以执行某个文件夹的所有测试 可以执行全部测试
+    -   直接在 console 中输出结果...
+    -   异步函数...
+    -   api 简单明了
+    -   coverage
+    -   浏览器中直接展示 ui...
+
+*   NodeCtrl 到底有没有必要存在...
+    -   只是为了处理 弹出层 以及场景和弹出层的层级。。。
+    *   所有子集的 view 都是自己创建的
+
+-   每一个需要加载资源的 自己去设置自己的 loading 的样式。。。
+
+-   emitToPrimus 这个做成 promise 好不好
+
+    -   不太好 因为这不是一对一的
+
 ## Timeout
 
 ```ts

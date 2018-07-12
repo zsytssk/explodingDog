@@ -5,11 +5,9 @@ import { CurCardBoxCtrl } from './curCardBox';
 import { CardCtrl, Link as BaseLink } from './card';
 import { tween } from '../../../../mcTree/utils/animate';
 import { log } from '../../../../mcTree/utils/zutil';
-import { getCardInfo } from '../../../../utils/tool';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
-    view: ui.game.seat.cardBox.cardSmallUI;
 }
 
 /** 当前用户的牌 */
@@ -28,35 +26,12 @@ export class CurCardCtrl extends CardCtrl {
     constructor(model, wrap) {
         super(model, wrap);
     }
-    public init() {
-        super.init();
-        this.initEvent();
-    }
-    protected initLink() {
-        super.initLink();
-        this.link.card_box = this.parent;
-    }
-    public initUI() {
-        const { card_id } = this.model;
-        const view = new ui.game.seat.cardBox.cardSmallUI();
-        const { card_id: view_card_id, card_count, card_face } = view;
-        const { wrap } = this.link;
-        const card_info = getCardInfo(card_id);
-
-        card_face.skin = card_info.url;
-        if (card_info.show_count) {
-            card_count.visible = true;
-            card_count.text = card_info.count;
-        }
-        view_card_id.text = `id:${card_id}`;
-        wrap.addChild(view);
-        this.link.view = view;
-    }
     protected initEvent() {
+        super.initEvent();
         const { view } = this.link;
 
-        this.onModel(card_cmd.discard, () => {
-            this.destroy();
+        this.onModel(card_cmd.un_discard, () => {
+            this.unDiscard();
         });
 
         view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
@@ -66,7 +41,6 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 显示牌的说明 */
     public toggleTip() {
-        log('click');
         const { view: sprite, card_box } = this.link;
         const show_tip = !this.show_tip;
 
@@ -144,6 +118,8 @@ export class CurCardCtrl extends CardCtrl {
         const y2 = -100;
         const start_props = { y: y1 };
         const end_props = { y: y2 };
+
+        card_box.selectCard(this);
         tween({
             end_props,
             sprite,
@@ -151,7 +127,6 @@ export class CurCardCtrl extends CardCtrl {
             time: 100,
         }).then(() => {
             this.handleSelectedEvent();
-            card_box.selectCard(this);
         });
     }
     /** 处理选中之后的事件 */
@@ -174,23 +149,30 @@ export class CurCardCtrl extends CardCtrl {
         this.is_selected = false;
 
         const { wrap, view, card_box } = this.link;
-        const pos = new Laya.Point(view.x, view.y);
         view.stopDrag();
+        const pos = new Laya.Point(view.x, view.y);
         wrap.globalToLocal(pos);
-        wrap.addChild(view);
         if (pos.y < -100) {
             this.serverDiscard();
             return;
         }
-        card_box.unSelectCard(this);
+        this.unDiscard();
     }
     /**  */
     private serverDiscard() {
         this.model.preDiscard();
         Sail.io.emit(CMD.HIT, {
-            cardId: this.model.card_id,
-            user_id: CONFIG.user_id,
+            hitCard: this.model.card_id,
+            userId: CONFIG.user_id,
         });
+    }
+    private unDiscard() {
+        const { wrap, view, card_box } = this.link;
+        const pos = new Laya.Point(view.x, view.y);
+        wrap.globalToLocal(pos);
+        wrap.addChild(view);
+        view.pos(pos.x, pos.y);
+        card_box.unSelectCard(this);
     }
     /** 移动位置 */
     public tweenMove(index: number) {

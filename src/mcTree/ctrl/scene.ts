@@ -1,5 +1,4 @@
 import { load_util } from '../utils/load';
-import { cmd as app_cmd } from '../app';
 import { DisplayStyle, NodeCtrl } from './node';
 
 /**
@@ -38,12 +37,6 @@ export class SceneCtrl extends NodeCtrl {
             this.hide();
             this.destroy();
             resolve();
-        });
-    }
-    protected initLink() {}
-    protected initEvent() {
-        this.on(app_cmd.resize, () => {
-            this.resize();
         });
     }
     /** 页面大小变化时 页面内容始终居中 */

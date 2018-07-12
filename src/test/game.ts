@@ -14,7 +14,7 @@ export function updateUser() {
 }
 export function gameStart() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
-    game_ctrl.onServerGameStart(gameStartData.res);
+    game_ctrl.onServerGameStart(gameStartData.res, gameStartData.code);
 }
 export function gameHit() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
