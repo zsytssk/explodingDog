@@ -49,6 +49,9 @@ export class DockerCtrl extends BaseCtrl {
      * @param rate 0-100
      */
     public setRate(rate: number) {
+        if (isNaN(rate) || rate < 0 || rate > 100) {
+            return;
+        }
         const { rateLabel, arrow } = this.link;
         const lastRate = parseInt(rateLabel.text);
         //大于20概率触发震动效果
