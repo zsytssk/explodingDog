@@ -71,3 +71,7 @@ export function getCardInfo(card_id) {
         url: `images/game/card/${name}.png`,
     };
 }
+
+export function getAvatar(avatar_id) {
+    return `images/component/${avatar_id}.png`;
+}

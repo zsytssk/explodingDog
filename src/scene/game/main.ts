@@ -20,6 +20,7 @@ import { DiscardZoneCtrl } from './discardZone';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
+import { BillBoardCtrl } from './billboard';
 
 interface Link {
     view: Laya.Node;
@@ -33,6 +34,7 @@ interface Link {
     quick_start_ctrl: QuickStartCtrl;
     host_zone_ctrl: HostZoneCtrl;
     turn_arrow_ctrl: TurnArrowCtrl;
+    bill_board_ctrl: BillBoardCtrl;
 }
 
 const max_user_count: number = 5;
@@ -106,6 +108,8 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
         this.link.turn_arrow_ctrl = turn_arrow_ctrl;
+
+        this.link.bill_board_ctrl = new BillBoardCtrl(view.billboard);
 
         this.link.game_zone = view.game_zone;
         this.link.btn_back = view.btn_back;

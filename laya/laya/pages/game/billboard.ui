@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":7,
     "props":{"width":287,"sceneColor":"#000000","height":360},
     "nodeParent":-1,
     "label":"View",
@@ -28,15 +28,16 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":46,"x":145,"width":74,"skin":"images/game/billboard_topsign.png","height":74,"anchorY":0.5,"anchorX":0.5},
+            "props":{"y":46,"x":145,"width":74,"var":"cardIcon","skin":"images/game/billboard_topsign.png","height":74,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(cardIcon)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -48,6 +49,45 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":4,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Label",
+            "props":{"y":156,"x":36,"wordWrap":true,"width":215,"var":"operationTip","valign":"middle","text":"操作","height":159,"fontSize":30,"font":"Microsoft YaHei","color":"#58271b","align":"center"},
+            "nodeParent":1,
+            "label":"Label(operationTip)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":5,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":134,"x":73,"width":85,"var":"avatarFrom","skin":"images/component/avatar.png","height":85,"anchorY":0.5,"anchorX":0.5},
+            "nodeParent":1,
+            "label":"Image(avatarFrom)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":6,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":134,"x":216,"width":85,"var":"avatarTo","skin":"images/component/avatar.png","height":85,"anchorY":0.5,"anchorX":0.5},
+            "nodeParent":1,
+            "label":"Image(avatarTo)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
             "child":[
                 ]
         }],
