@@ -1,7 +1,8 @@
 import { PlayerModel } from '../model/player';
+import { log } from '../../../mcTree/utils/zutil';
 import { Link as BaseLink, SeatCtrl } from './seat';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
-import { CardModel } from '../model/card';
+import { CardModel } from '../model/card/card';
 
 export interface Link extends BaseLink {
     view: ui.game.seat.curSeatUI;
@@ -27,7 +28,9 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     protected initEvent() {
         const btn_chat = this.link.btn_chat;
-        btn_chat.on(Laya.Event.CLICK, this, () => {});
+        btn_chat.on(Laya.Event.CLICK, this, () => {
+            log('chat');
+        });
     }
     protected createCardBox(card_box: CurCardBoxUI) {
         const card_box_ctrl = new CurCardBoxCtrl(card_box);
@@ -35,7 +38,7 @@ export class CurSeatCtrl extends SeatCtrl {
         card_box_ctrl.init();
         return card_box_ctrl;
     }
-    protected addCard = (card: CardModel) => {
+    protected addCard(card: CardModel) {
         this.link.card_box_ctrl.addCard(card);
-    };
+    }
 }

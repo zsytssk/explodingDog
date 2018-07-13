@@ -1,5 +1,66 @@
 ## 2018-07-10 10:33:55
 
+
+-   action active
+    -   作用 反馈
+
+*   @ques chooseTarget waitTarget 是不是应该属于一个动作
+
+*   @ques 激活到结束
+
+-   steal
+    -   判断 step 只有第一次是出去去..
+    -   多定义几个
+    -   step ！= 1 找到
+    *   step 每一个 step 命令不一样 找用户 显示箭头.
+    *   ..
+
+*   actions --> chooseTarget --> owner + target_list -->
+
+*   @ques chooseTarget 由 game 去选择一个目标这个想法其实不错；
+
+-   game 包括
+
+-   @ques 有那些牌可能需要特殊的处理
+    -   exploding 3001
+    *   steal 3401
+    *   see_the_future 3501
+    *   shuffle 3701
+    *   anooy 3901
+    *   blind 4001
+    *   fake_shuffle 4401
+
+*   @ques steal 的状态变化
+
+    -   step_list
+
+    *   active
+    *   chooseTarget
+    *   waitTarget
+    *   getCard
+    *   end
+
+*   @ques 牌已经打出 但是还是属于用户 用户可以接着操作...
+
+    -   active 开始激活
+
+    *   setStep ....
+
+    -   end 失去作用
+
+*   @note shuffle fake_shuffle 需要洗牌的声音
+
+    -   这个在牌打出的地方去处理
+    -   discard_zone
+
+*   @note blind player status + blind
+*   @note steal player status + need_give_card
+*   @note anooy card is_freeze:> freeze unFreeze | setStatus
+
+*   @ques 只有在自己能拿牌的时候才发送命令给服务器...
+    -   cardHeap 怎么知道 当前用户是否是可以抓牌
+    -   由 player 发送。。
+
 -   @todo 设置炸弹概率
 
 *   @note 玩家的牌飞行时间函数 先快后慢
@@ -58,7 +119,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                         @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

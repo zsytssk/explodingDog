@@ -1,7 +1,7 @@
-import { BaseEvent } from '../../../mcTree/event';
-import { PlayerModel } from './player';
-import { getCardInfo } from '../../../utils/tool';
-import { logErr } from '../../../mcTree/utils/zutil';
+import { BaseEvent } from '../../../../mcTree/event';
+import { PlayerModel } from '../player';
+import { getCardInfo } from '../../../../utils/tool';
+import { logErr } from '../../../../mcTree/utils/zutil';
 
 export const cmd = {
     discard: 'discard',
@@ -16,10 +16,11 @@ export class CardModel extends BaseEvent {
     /** 是否被出牌 */
     public is_prepare_discarded = false;
     /** 所属的玩家 */
-    public player: PlayerModel;
+    public owner: PlayerModel;
+    private actions;
     constructor(card_id: string, player?: PlayerModel) {
         super();
-        this.player = player;
+        this.owner = player;
         this.updateInfo(card_id);
     }
     public updateInfo(card_id: string) {
@@ -28,7 +29,7 @@ export class CardModel extends BaseEvent {
     }
     /** 真正的出牌前 需要记录状态 */
     public preDiscard() {
-        const player = this.player;
+        const player = this.owner;
         if (player.status !== 'speak') {
             return false;
         }

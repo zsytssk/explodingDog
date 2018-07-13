@@ -3,7 +3,7 @@ import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tweenLoop, stopAni } from '../../../mcTree/utils/animate';
 import { PlayerModel, cmd as player_cmd, PlayerStatus } from '../model/player';
 import { tween } from '../../../mcTree/utils/animate';
-import { CardModel } from '../model/card';
+import { CardModel } from '../model/card/card';
 import { CardBoxCtrl } from './cardBox/cardBox';
 
 export interface Link {

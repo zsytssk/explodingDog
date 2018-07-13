@@ -1,6 +1,6 @@
 import { fill } from 'lodash';
 import { BaseEvent } from '../../../mcTree/event';
-import { CardModel } from './card';
+import { CardModel } from './card/card';
 
 export type PlayerStatus = 'speak' | 'normal';
 export const cmd = {

@@ -145,101 +145,100 @@ export const CARD_MAP = {
     },
 };
 
-
 export const CARD_DISCRIBE_MAP = {
-    'turn': {
-        info: ['的回合']
-    },
     '3001': {
+        icon: 'bomb',
         info: ['获得了炸弹', '解除了炸弹，正在将此卡放入卡堆'],
-        icon: 'bomb'
     },
     '3101': {
+        icon: 'defuse',
         name: '剪断引线',
-        icon: 'defuse'
     },
     '3201': {
+        icon: 'skip',
         name: '跳过回合',
-        icon: 'skip'
     },
     '3301': {
+        icon: 'alter',
         name: '移花接木',
-        icon: 'alter'
     },
     '3321': {
+        icon: 'alter',
         name: '移花接木X2',
-        icon: 'alter'
     },
     '3331': {
+        icon: 'alter',
         name: '移花接木X3',
-        icon: 'alter'
     },
     '3401': {
+        icon: 'steal',
         info: ['使用要牌\n正在选择', '使用了要牌', '正在选择', '一张手牌'],
-        icon: 'steal'
     },
     '3501': {
+        icon: 'future',
         name: '偷看',
-        icon: 'future'
     },
     '3521': {
+        icon: 'future',
         name: '偷看X3',
-        icon: 'future'
     },
     '3541': {
+        icon: 'future',
         name: '偷看X5',
-        icon: 'future'
     },
     '3601': {
+        icon: 'reverse',
         name: '反转',
-        icon: 'reverse'
     },
     '3701': {
+        icon: 'shuffle',
         name: '洗牌',
-        icon: 'shuffle'
     },
     '3801': {
+        icon: 'bottom',
         name: '釜底抽薪',
-        icon: 'bottom'
     },
     '3901': {
+        icon: 'annoy',
         name: '干扰',
-        icon: 'annoy'
     },
     '3921': {
+        icon: 'annoy',
         name: '干扰X2',
-        icon: 'annoy'
     },
     '3931': {
+        icon: 'annoy',
         name: '干扰X3',
-        icon: 'annoy'
     },
     '4001': {
+        icon: 'blind',
         name: '致盲',
-        icon: 'blind'
     },
     '4101': {
-        name: '偷天换日X2'
+        name: '偷天换日X2',
     },
     '4121': {
-        name: '偷天换日X3'
+        name: '偷天换日X3',
     },
     '4141': {
-        name: '偷天换日X5'
+        name: '偷天换日X5',
     },
     '4201': {
+        icon: 'self_slap',
         name: '再来一次X2',
-        icon: 'self_slap'
     },
     '4221': {
+        icon: 'self_slap',
         name: '再来一次X3',
-        icon: 'self_slap'
     },
     '4301': {
-        name: '同归于尽'
+        name: '同归于尽',
     },
     '4401': {
+        icon: 'shuffle',
         name: '假装洗牌',
-        icon: 'shuffle'
+    },
+    turn: {
+        info: ['的回合'],
     },
 };

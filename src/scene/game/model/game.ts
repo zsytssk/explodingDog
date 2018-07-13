@@ -1,6 +1,6 @@
 import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
-import { CardModel } from './card';
+import { CardModel } from './card/card';
 import { logErr } from '../../../mcTree/utils/zutil';
 import * as fill from 'lodash/fill';
 
@@ -12,30 +12,31 @@ export const cmd = {
 };
 
 /** 牌的类型  */
-export type CardType = 'normal' | 'crazy' | 'dance';
-export const card_type_map = {
-    0: 'normal',
-    1: 'crazy',
-    2: 'dance',
+export type CardType = ValOfObj<typeof CARD_TYPE>;
+export const CARD_TYPE = {
+    NORMAL: 1,
+    CRAZY: 2, // tslint:disable-line:object-literal-sort-keys
+    DANCE: 3,
 };
 /** 游戏状态: 等待 开始 结束 */
-export type GameStatus = 'init' | 'starting' | 'playing';
-export const game_status_map = {
-    0: 'init',
-    2: 'starting',
-    3: 'playing',
+export type GameStatus = ValOfObj<typeof GAME_STATUS>;
+export const GAME_STATUS = {
+    /** 初始化 */
+    INIT: 0,
+    STARTING: 2,
+    PLAYING: 3, // tslint:disable-line:object-literal-sort-keys
 };
-export type GameType = 'quick_match' | 'host';
+export type GameType = ValOfObj<typeof GAME_TYPE>;
 /** 游戏类型: 快速匹配 房主创建 */
-export const game_type_map = {
-    0: 'quick_match',
-    1: 'host',
+export const GAME_TYPE = {
+    QUICK_MATCH: 0,
+    HOST: 1, // tslint:disable-line:object-literal-sort-keys
 };
 
 /** 游戏的方向 */
-export const game_direction = {
-    anti_clockwise: 1,
-    clockwise: 0,
+export const GAME_DIRECTION = {
+    ANTI_CLOCKWISE: 1,
+    CLOCKWISE: 0,
 };
 
 export class GameModel extends BaseEvent {
@@ -107,12 +108,12 @@ export class GameModel extends BaseEvent {
     /** 设置房间信息 */
     public setRoomInfo(data: RoomInfoData) {
         const type_no = data.isUserCreate || 0;
-        const status_no = data.roomStatus;
-        const card_no = Number(data.cardType) - 1;
+        const status_no = Number(data.roomStatus);
+        const card_no = Number(data.cardType);
         this.room_id = data.roomId;
-        this.game_type = game_type_map[type_no] as GameType;
-        this.setCardType(card_type_map[card_no]);
-        this.setGameStatus(game_status_map[status_no] as GameStatus);
+        this.game_type = GAME_TYPE[type_no] as GameType;
+        this.setCardType(card_no);
+        this.setGameStatus(status_no);
     }
     /**  设置游戏状态 */
     public setGameStatus(status: GameStatus) {
@@ -124,7 +125,7 @@ export class GameModel extends BaseEvent {
     }
     /**  设置游戏状态 */
     public setCardType(card_type: CardType) {
-        if (status === this.status) {
+        if (card_type === this.card_type) {
             return;
         }
         this.card_type = card_type;

@@ -2,28 +2,28 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
+import { isCurPlayer } from '../../utils/tool';
 import { Hall } from '../hall/scene';
+import { BillBoardCtrl } from './billboard';
+import { CardHeapCtrl } from './cardHeep';
+import { DiscardZoneCtrl } from './discardZone';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
+import { CardModel } from './model/card/card';
 import {
-    card_type_map,
     CardType,
     cmd as game_cmd,
-    game_status_map,
     GameModel,
     GameStatus,
+    GAME_STATUS,
+    GAME_TYPE,
 } from './model/game';
 import { PlayerModel } from './model/player';
-import { CardModel } from './model/card';
 import { QuickStartCtrl } from './quickStart';
-import { DiscardZoneCtrl } from './discardZone';
+import { CardCtrl } from './seat/cardBox/card';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
-import { BillBoardCtrl } from './billboard';
-import { CardCtrl } from './seat/cardBox/card';
-import { isCurPlayer } from '../../utils/tool';
-import { CardHeapCtrl } from './cardHeep';
 
 interface Link {
     view: Laya.Node;
@@ -130,6 +130,7 @@ export class GameCtrl extends BaseCtrl {
         this.link.btn_back = view.btn_back;
         this.link.btn_setting = view.btn_setting;
         this.link = {
+            bill_board_ctrl,
             btn_back,
             btn_setting,
             card_heap_ctrl,
@@ -140,7 +141,6 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             turn_arrow_ctrl,
-            bill_board_ctrl,
             ...this.link,
         };
     }
@@ -200,10 +200,12 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
+        const { quick_start_ctrl, card_heap_ctrl } = this.link;
         this.is_ready = true;
         /** 更新本地倒计时 */
         this.calcCurSeatId(data.userList);
-        this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
+        quick_start_ctrl.countDown(data.roomInfo.remainTime);
+        card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
 
         this.model.gameReplay(data);
     }
@@ -233,7 +235,7 @@ export class GameCtrl extends BaseCtrl {
             logErr(msg);
             return;
         }
-        this.model.setGameStatus(game_status_map[2] as GameStatus);
+        this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
         this.model.updatePlayersCards(data);
     }
     /** 拿牌 */
@@ -291,7 +293,7 @@ export class GameCtrl extends BaseCtrl {
         return server_id;
     }
     private onServerChangeCardType(data: ChangeCardType) {
-        const card_type = card_type_map[Number(data.newCardType) - 1];
+        const card_type = Number(data.newCardType);
         this.model.setCardType(card_type);
     }
     /** 根据游戏的状态显示不同的ui */
@@ -303,10 +305,10 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
         } = this.link;
         const type = this.model.game_type;
-        if (status === 'init') {
+        if (status === GAME_STATUS.INIT) {
             game_zone.visible = false;
             docker_ctrl.reset();
-            if (type === 'host') {
+            if (type === GAME_TYPE.HOST) {
                 const room_id = this.model.room_id;
                 host_zone_ctrl.show(room_id);
             } else {
@@ -316,7 +318,7 @@ export class GameCtrl extends BaseCtrl {
         }
         this.updateSeatPos();
         docker_ctrl.start();
-        if (type === 'host') {
+        if (type === GAME_TYPE.HOST) {
             host_zone_ctrl.hide();
         } else {
             quick_start_ctrl.hide();

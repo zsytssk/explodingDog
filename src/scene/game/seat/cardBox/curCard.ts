@@ -1,6 +1,6 @@
 import { CMD } from '../../../../data/cmd';
 import { CONFIG } from '../../../../data/config';
-import { CardModel, cmd as card_cmd } from '../../model/card';
+import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CurCardBoxCtrl } from './curCardBox';
 import { CardCtrl, Link as BaseLink } from './card';
 import { tween } from '../../../../mcTree/utils/animate';

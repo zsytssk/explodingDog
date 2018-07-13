@@ -1,5 +1,5 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
-import { CardModel, cmd as card_cmd } from '../../model/card';
+import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { getCardInfo } from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import { CardBoxCtrl } from './cardBox';

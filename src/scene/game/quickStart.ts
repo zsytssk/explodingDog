@@ -21,7 +21,6 @@ export class QuickStartCtrl extends BaseCtrl {
     }
     public init() {
         this.initLink();
-        this.initEvent();
     }
     protected initLink() {
         const { match_view, countdown_view } = this.link;
@@ -32,7 +31,6 @@ export class QuickStartCtrl extends BaseCtrl {
         match_txt.scrollRect = scrollRect;
         this.link.scroll_rect = scrollRect;
     }
-    protected initEvent() {}
     public hide() {
         const { count_down } = this;
         const { match_view, countdown_view, light, scroll_rect } = this.link;

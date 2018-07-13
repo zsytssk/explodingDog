@@ -1,8 +1,7 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
 import { CMD } from '../../data/cmd';
-import { card_type_map, CardType } from './model/game';
-import { log } from '../../mcTree/utils/zutil';
+import { CARD_TYPE, CardType } from './model/game';
 import { getKeyByValue } from '../../utils/tool';
 interface Link {
     view: Laya.Sprite;
@@ -55,11 +54,11 @@ export class HostZoneCtrl extends BaseCtrl {
     }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {
-        const { card_type } = this.link;
-        const type_num = getKeyByValue(card_type_map, type);
-        if (!type_num) {
+        if (!type) {
             return;
         }
+        const { card_type } = this.link;
+        const type_num = type - 1;
         card_type.selectedIndex = Number(type_num);
     }
 }

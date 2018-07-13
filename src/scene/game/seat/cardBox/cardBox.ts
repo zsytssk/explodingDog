@@ -1,5 +1,5 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
-import { CardModel } from '../../model/card';
+import { CardModel } from '../../model/card/card';
 import { CardCtrl } from './card';
 import { cmd } from '../../main';
 

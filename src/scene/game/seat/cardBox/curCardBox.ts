@@ -1,5 +1,5 @@
 import { CurCardCtrl } from './curCard';
-import { CardModel } from '../../model/card';
+import { CardModel } from '../../model/card/card';
 import { CardBoxCtrl } from './cardBox';
 import { CardCtrl } from './card';
 

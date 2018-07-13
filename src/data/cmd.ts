@@ -15,7 +15,7 @@ export const CMD = {
     /** 离开房间 */
     OUT_ROOM: 'outRoom',
     /** 创建房间 */
-    CREATE_ROOM: 'createRoom',
+    CREATE_ROOM: 'createRoom', // tslint:disable-line:object-literal-sort-keys
     /** 更新用户个数  */
     UPDATE_USER: 'updateUser',
     /** 出牌  */
