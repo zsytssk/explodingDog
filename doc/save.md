@@ -9,13 +9,15 @@
 
 -   @ques 继承 继承交叉 相互调用看的真的很混乱...
 
-*   @ques 能不能做成 pwa
+*   player 如何访问 game...
 
 ## other
 
--   尽量减少调用堆栈
+-   @ques 能不能做成 pwa
 
--   @ques 如何测试..
+*   尽量减少调用堆栈
+
+*   @ques 如何测试..
     -   在浏览器中直接运行
     -   describe assert beforeAll beforeEach after...
     -   可以执行某个文件夹的所有测试 可以执行全部测试
@@ -25,13 +27,13 @@
     -   coverage
     -   浏览器中直接展示 ui...
 
-*   NodeCtrl 到底有没有必要存在...
+-   NodeCtrl 到底有没有必要存在...
     -   只是为了处理 弹出层 以及场景和弹出层的层级。。。
     *   所有子集的 view 都是自己创建的
 
--   每一个需要加载资源的 自己去设置自己的 loading 的样式。。。
+*   每一个需要加载资源的 自己去设置自己的 loading 的样式。。。
 
--   emitToPrimus 这个做成 promise 好不好
+*   emitToPrimus 这个做成 promise 好不好
 
     -   不太好 因为这不是一对一的
 

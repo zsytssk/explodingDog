@@ -52,6 +52,8 @@ export class GameModel extends BaseEvent {
     private player_list: PlayerModel[] = [];
     /** 正在出的牌 */
     private discard_card: CardModel;
+    /** 准备出的牌 */
+    private pre_discard_card: CardModel;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
         /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
@@ -139,6 +141,16 @@ export class GameModel extends BaseEvent {
         this.setSpeaker(data.speakerId);
         this.remain_num = data.remainCard;
         this.direction = data.turnDirection;
+
+        const hit_data = data.hitData;
+        if (hit_data) {
+            const { hitCard, hitInfo, hitUserId } = hit_data;
+            this.discardCard({
+                hitCard,
+                hitInfo,
+                userId: hitUserId,
+            });
+        }
     }
     public setSpeaker(speak_id: string) {
         const player_list = this.player_list;
@@ -176,25 +188,37 @@ export class GameModel extends BaseEvent {
     }
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */
-        if (this.discard_card) {
-            this.discard_card.destroy();
-            this.discard_card = undefined;
-        }
+        const { discard_card } = this;
         const player = this.getPlayerById(data.userId);
+        const hit_info = data.hitInfo;
+        const hit_card = data.hitCard;
         if (!player) {
             logErr(`cant find player for ${data.userId}`);
             return;
         }
-        if (!data.hitInfo) {
+        if (!hit_info) {
             player.unDiscardCard();
             return;
         }
         let card = player.discardCard(data);
+        /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {
-            card = new CardModel(data.hitCard);
+            if (!discard_card) {
+                card = new CardModel(hit_card, player);
+                this.trigger(cmd.discard_card, { card });
+            } else {
+                card = discard_card;
+            }
+        } else if (this.discard_card) {
+            this.discard_card.destroy();
+            this.discard_card = undefined;
         }
+        /** 更新action */
+        card.updateAction({
+            ...hit_info,
+            game: this,
+        });
         this.discard_card = card;
-        this.trigger(cmd.discard_card, { card });
     }
     public getPlayerNum() {
         return this.player_list.length;

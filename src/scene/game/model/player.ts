@@ -1,12 +1,26 @@
 import { fill } from 'lodash';
 import { BaseEvent } from '../../../mcTree/event';
 import { CardModel } from './card/card';
+import { ActionType, ActionStatus } from './card/action';
 
 export type PlayerStatus = 'speak' | 'normal';
 export const cmd = {
+    /** 动作信息 */
+    action: 'action',
     add_card: 'add_card',
     status_change: 'status_change',
+    wait_choose: 'wait_choose',
 };
+/** 动作的信息 */
+export type ActionInfo = {
+    /** 动作的名称 */
+    action: ActionType;
+    /** 动作执行的resolve */
+    resolve?: FuncVoid;
+    /** 动作执行的状态 */
+    status: ActionStatus;
+};
+
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;
     public seat_id: number;
@@ -50,6 +64,7 @@ export class PlayerModel extends BaseEvent {
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card });
     }
+    public removeCard(card: CardModel) {}
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public discardCard(data: HitData) {
         const card_list = this.card_list;
@@ -86,6 +101,21 @@ export class PlayerModel extends BaseEvent {
         }
         this.status = status;
         this.trigger(cmd.status_change, { status });
+    }
+    public actionAct(action: ActionType): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.trigger(cmd.action, {
+                action,
+                resolve,
+                status: 'act',
+            } as ActionInfo);
+        });
+    }
+    public actionComplete(action) {
+        this.trigger(cmd.action, {
+            action,
+            status: 'complete',
+        } as ActionInfo);
     }
     public isMyId(user_id: string) {
         return this.user_id === user_id + '';

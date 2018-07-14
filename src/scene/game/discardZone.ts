@@ -44,7 +44,7 @@ export class DiscardZoneCtrl extends BaseCtrl {
         this.is_borrowing = true;
         const { card_box } = this.link;
         this.addChild(card);
-        card.putToDisCardZone(card_box).then(() => {
+        card.putCardInWrap(card_box).then(() => {
             this.is_borrowing = false;
         });
     }

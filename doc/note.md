@@ -1,5 +1,108 @@
 ## 2018-07-10 10:33:55
 
+-   @todo 猫手动画 整理下
+
+*   @ques 怎么判断是正常出牌还是给牌给其他人...
+
+-   @ques 动作的操作人也需要创给 action
+
+*   @ques load 怎么很长时间才消失...
+
+-   @ques giveCard 这个应该等到服务器返回时候 才把牌放到狗的手里
+    -   这也应该在 cardBox 中执行
+    -   收到服务器 --> Action --> playerA Card to PlayerB --> Seat --> cardBox
+    -   牌放到狗手里 狗都一下 牌飞到用户手里 变成隐形
+    *   其他用户只显示牌增加的动画...
+    *   如果失败牌直接飞回用户的手里 像出牌一样...
+    *   感觉这有点复杂..
+    *   ...
+    *   狗手直接消失 其他用户增加一张牌...
+    *   ...
+    *   @ques 给牌的命令在哪里发
+
+*   @ques 曾小平 其他用户的牌已经出了我怎么处理
+    -   我怎么知道 他牌已经出了呢 都是 ‘\*’
+
+-   CardData 要不要就删除了
+
+*   @ques 曾小平
+
+    -   gameReplay hitData hitUserId 能不能换成 userId 和 hit 一样
+
+*   @ques 为什么我监听两个 player_cmd.status_change 就会死机呢
+
+-   @ques 这有一个问题
+    1.  seat 上面 action_info 什么时候清除【complete】
+    2.  如果同时有多个 action 作用在用户身上那么 这就不行了
+        ...
+
+*   @ques 每一个 action_act 是作用改变每一个人的属性 还是直接绑定 action
+    -   哪一个更合理 哪一个更方便
+    *   似乎直接使用 action 更方便 不需要额外再去定义一些属性了..
+
+-   @ques 只有当前用户的 card 才会去监听 action_send
+
+*   @ques 能不能把 docker 。。。全部放在 widget 文件夹 ui + ts
+
+-   @ques 如果 promise es5 支持有问题 那我就跪了
+
+*   @note 小功能区域 WidgetWrap
+
+-   @ques 发给服务器 hit 里面做怎么是 hitParams
+
+*   @ques 能不能将动作全部设置为动作...
+
+    -   action 的名称要说明他的意义
+
+*   @ques action 的类型
+    -   发给服务器 actionSend
+    -   act actionAct
+    *   act complete
+
+-   @ques 将 promise Resolve 放在 playerModel 上 等待 ctrl 去执行
+    -   有没有更好的方法
+
+*   @ques 为什么 要无 null
+
+-   @ques 有些命令不是当前用户不去执行 这怎么处理
+
+    -   选着用户。。。 自己选择别人 操作者是自己...
+
+    *   给牌 只有自己给牌给别人
+    *   比方说其他用户 targetChooseId， 我根本就不需要展示...
+    *   但是别人给了牌我要加进去
+
+-   @ques 这 action 能使用不同的命令有点乱 能不能使用统一的 action 命令呢？？
+
+*   @ques 新建的 promise resolve 没有执行会不会导致 无法删除 内存泄漏的 bug 【google】
+
+*   PartialAll<T, U, ...> 这后面能不能是任意多个数
+
+-   @ques 牌属于一个人 或者 discard_card 这如何处理
+    -   在玩家手上出去去
+    -   复盘的时候如何设置
+    *   owner player 两个处理太麻纺了
+
+*   不需要 stealCard 这个类了
+    -   只需要根据 cardId 找 action 就可以了;
+
+-   @note 偷牌 选择一个人 如果选择一个人 那么就返回...
+
+*   ActionCtrl
+
+-   action --> cardm --> cardctrl --> seaTheFuture
+
+-   @note 用来判断 一张牌 有没有出去
+    1.  准备出牌可以在 game 设置一个属性。。。记录准备出的牌
+    2.  game discard_card 还能不能设置属性...
+
+*   @ques choose 选择目标 选择成功之后 消除 却在另外一个命令里面这有问题
+
+-   @ques 所有关于牌的动画需要在一个地方统一处理
+
+-   @ques
+
+*   @ques 致盲时 干扰的牌的样式...
 
 -   action active
     -   作用 反馈
@@ -119,7 +222,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                     @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

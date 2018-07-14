@@ -1,10 +1,16 @@
 import { cmd as base_cmd } from '../../../mcTree/event';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tweenLoop, stopAni } from '../../../mcTree/utils/animate';
-import { PlayerModel, cmd as player_cmd, PlayerStatus } from '../model/player';
+import {
+    PlayerModel,
+    cmd as player_cmd,
+    PlayerStatus,
+    ActionInfo,
+} from '../model/player';
 import { tween } from '../../../mcTree/utils/animate';
 import { CardModel } from '../model/card/card';
 import { CardBoxCtrl } from './cardBox/cardBox';
+import { logErr } from '../../../mcTree/utils/zutil';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -16,19 +22,19 @@ export interface Link {
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
 }
 
-/**  */
 export class SeatCtrl extends BaseCtrl {
     public name = 'seat';
     protected link = {} as Link;
     protected model: PlayerModel;
     public loadedPlayer = false; // 是否加载了用户
+    public action_info: ActionInfo;
     constructor(view: any) {
         super();
         this.link.view = view;
     }
     public init() {
         this.initLink();
-        // this.initEvent();
+        this.initEvent();
     }
     protected initLink() {
         const view = this.link.view;
@@ -53,7 +59,19 @@ export class SeatCtrl extends BaseCtrl {
         card_box_ctrl.init();
         return card_box_ctrl;
     }
-    // protected initEvent() {}
+    protected initEvent() {
+        const { view } = this.link;
+        view.on(Laya.Event.CLICK, this, () => {
+            const { action_info } = this;
+            if (!action_info) {
+                return;
+            }
+            const { status, action, resolve } = action_info;
+            if (action === 'choose_target' && status === 'act') {
+                resolve(this.model.user_id);
+            }
+        });
+    }
     public loadPlayer(player: PlayerModel) {
         this.link.empty_box.visible = false;
         this.link.active_box.visible = true;
@@ -93,6 +111,9 @@ export class SeatCtrl extends BaseCtrl {
                 this.setStatus(data.status);
             },
         );
+        this.onModel(player_cmd.action, (data: ActionInfo) => {
+            this.injectAction(data);
+        });
     }
     private unBindModeEvent() {
         this.offOtherEvent(this.model);
@@ -119,6 +140,73 @@ export class SeatCtrl extends BaseCtrl {
         } else {
             stopAni(sprite);
         }
+    }
+    private injectAction(data: ActionInfo) {
+        const { nickname: sprite } = this.link;
+        const { status, resolve, action } = data;
+        /** 处理动作的完成 */
+        if (status === 'complete') {
+            stopAni(sprite);
+            if (!this.action_info) {
+                return;
+            }
+            const {
+                action: self_action,
+                status: self_status,
+            } = this.action_info;
+            if (self_action !== action) {
+                logErr(
+                    `action complete but self_action (${self_action}) !== action(${action}) `,
+                );
+            }
+            if (self_status !== 'act') {
+                logErr(` self_action (${self_status}) !== act `);
+            }
+            this.action_info = undefined;
+            return;
+        }
+
+        if (action === 'choose_target') {
+            this.waitChoose();
+        }
+        if (action === 'wait_get_card') {
+            this.waitChoose();
+        }
+
+        this.action_info = {
+            action,
+            resolve,
+            status,
+        };
+    }
+    private waitChoose() {
+        const { nickname: sprite } = this.link;
+        const start_props = {
+            rotation: 0,
+        };
+        const end_props = {
+            rotation: 360,
+        };
+        tweenLoop({
+            props_arr: [end_props, start_props],
+            sprite,
+            time: 1000,
+        });
+    }
+    /** 等待给牌 */
+    private waitGiveCard() {
+        const { nickname: sprite } = this.link;
+        const start_props = {
+            rotation: 0,
+        };
+        const end_props = {
+            rotation: 360,
+        };
+        tweenLoop({
+            props_arr: [end_props, start_props],
+            sprite,
+            time: 1000,
+        });
     }
     public hideSeat() {
         this.link.view.visible = false;

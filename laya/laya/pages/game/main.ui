@@ -2,6 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
+    "selecteID":80,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -238,20 +239,6 @@
         {
             "x":15,
             "type":"UIView",
-            "source":"game/alarm.ui",
-            "props":{"y":575,"x":1453,"width":175,"var":"alarm","pivotY":88,"pivotX":88,"height":175},
-            "nodeParent":1,
-            "label":"UIView(alarm)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":35,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"UIView",
             "source":"game/hostZone/main.ui",
             "props":{"y":222,"x":390,"visible":false,"var":"host_zone"},
             "nodeParent":1,
@@ -403,6 +390,20 @@
         {
             "x":15,
             "type":"UIView",
+            "source":"game/bannerMatch.ui",
+            "props":{"y":302,"x":400,"visible":false,"var":"banner_match"},
+            "nodeParent":1,
+            "label":"UIView(banner_match)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":62,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
             "source":"game/bannerCountdown.ui",
             "props":{"y":580,"x":520,"visible":false,"var":"banner_countdown","bottom":30},
             "nodeParent":1,
@@ -416,17 +417,44 @@
         },
         {
             "x":15,
-            "type":"UIView",
-            "source":"game/bannerMatch.ui",
-            "props":{"y":302,"x":400,"visible":false,"var":"banner_match"},
+            "type":"Box",
+            "props":{"y":0,"x":0,"width":1334,"var":"widget_wrap","staticCache":true,"mouseThrough":true,"height":750},
             "nodeParent":1,
-            "label":"UIView(banner_match)",
-            "isDirectory":false,
+            "label":"Box(widget_wrap)",
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":62,
+            "hasChild":true,
+            "compId":80,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"UIView",
+                    "source":"game/widget/alarm.ui",
+                    "props":{"y":587,"x":1468,"width":175,"var":"alarm","pivotY":88,"pivotX":88,"height":175},
+                    "nodeParent":80,
+                    "label":"UIView(alarm)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":35,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"UIView",
+                    "source":"game/widget/giveCard.ui",
+                    "props":{"y":-261,"x":1033,"var":"give_card"},
+                    "nodeParent":80,
+                    "label":"UIView(give_card)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":81,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {

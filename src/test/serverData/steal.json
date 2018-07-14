@@ -1,0 +1,15 @@
+{
+    "cmd": "hit",
+    "code": 200,
+    "res": {
+        "userId": "3002",
+        "hitCard": "3401",
+        "hitUserId": "3002",
+        "hitInfo": {
+            "type": "steal",
+            "step": 1,
+            "targetUserId": 0,
+            "canChooseUserIds": ["3001", "3003"]
+        }
+    }
+}

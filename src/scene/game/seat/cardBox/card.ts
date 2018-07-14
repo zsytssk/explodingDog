@@ -1,7 +1,8 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
-import { CardModel, cmd as card_cmd } from '../../model/card/card';
+import { CardModel, cmd as card_cmd, ActionData } from '../../model/card/card';
 import { getCardInfo } from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
+import { CMD } from '../../../../data/cmd';
 import { CardBoxCtrl } from './cardBox';
 
 type CardView = ui.game.seat.cardBox.cardUI;
@@ -49,6 +50,12 @@ export class CardCtrl extends BaseCtrl {
         this.onModel(card_cmd.discard, () => {
             this.discard();
         });
+        this.onModel(card_cmd.action_send, (data: ActionData) => {
+            Sail.io.emit(CMD.HIT, {
+                hitCard: this.model.card_id,
+                hitParams: data,
+            } as HitBackData);
+        });
         this.onModel(card_cmd.update_info, () => {
             this.setStyle();
         });
@@ -80,7 +87,7 @@ export class CardCtrl extends BaseCtrl {
         const { card_box } = this.link;
         card_box.discardCard(this);
     }
-    public putToDisCardZone(wrap: Laya.Sprite) {
+    public putCardInWrap(wrap: Laya.Sprite) {
         const { view } = this.link;
         const scale = wrap.height / card_height;
         const card_pos = new Laya.Point(0, 0);

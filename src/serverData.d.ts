@@ -43,8 +43,13 @@ type RoomInfoData = {
     danGrading: string;
     roundId: string;
 };
+type ReplayHitData = {
+    hitUserId: string;
+    hitCard: string;
+    hitInfo: HitData['hitInfo'];
+};
 type RoundInfoData = {
-    hitData: {};
+    hitData: ReplayHitData;
     turnDirection: DirectionData;
     speakerId: string;
     lastHitUserId: string;
@@ -88,9 +93,19 @@ type HitData = {
     userId: string;
     hitCard: string;
     hitInfo?: {
-        step: number;
+        card?: string;
+        step?: number;
         targetUserId?: '4001';
-        getCard?: string;
+        canChooseUserIds?: string[];
+    };
+};
+type HitBackData = {
+    hitCard: string;
+    hitParams?: {
+        card?: string;
+        step?: number;
+        targetUserId?: '4001';
+        canChooseUserIds?: string[];
     };
 };
 

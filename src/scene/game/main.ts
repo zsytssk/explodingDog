@@ -24,6 +24,8 @@ import { CardCtrl } from './seat/cardBox/card';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
+import { GiveCardCtrl } from './widget/giveCard';
+import { AlarmCtrl } from './widget/alarm';
 
 interface Link {
     view: Laya.Node;
@@ -37,6 +39,8 @@ interface Link {
     turn_arrow_ctrl: TurnArrowCtrl;
     bill_board_ctrl: BillBoardCtrl;
     card_heap_ctrl: CardHeapCtrl;
+    give_card_ctrl: GiveCardCtrl;
+    alarm_ctrl: AlarmCtrl;
     game_zone: Laya.Sprite;
 }
 
@@ -83,6 +87,9 @@ export class GameCtrl extends BaseCtrl {
             btn_back,
             btn_setting,
             game_zone,
+            alarm,
+            give_card,
+            billboard,
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -124,12 +131,18 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
 
-        const bill_board_ctrl = new BillBoardCtrl(view.billboard);
+        const bill_board_ctrl = new BillBoardCtrl(billboard);
 
-        this.link.game_zone = view.game_zone;
-        this.link.btn_back = view.btn_back;
-        this.link.btn_setting = view.btn_setting;
+        const alarm_ctrl = new AlarmCtrl(alarm);
+        this.addChild(alarm_ctrl);
+        alarm_ctrl.init();
+
+        const give_card_ctrl = new GiveCardCtrl(give_card);
+        this.addChild(give_card_ctrl);
+        give_card_ctrl.init();
+
         this.link = {
+            alarm_ctrl,
             bill_board_ctrl,
             btn_back,
             btn_setting,
@@ -137,6 +150,7 @@ export class GameCtrl extends BaseCtrl {
             discard_zone_ctrl,
             docker_ctrl,
             game_zone,
+            give_card_ctrl,
             host_zone_ctrl,
             quick_start_ctrl,
             seat_ctrl_list,
@@ -204,8 +218,10 @@ export class GameCtrl extends BaseCtrl {
         this.is_ready = true;
         /** 更新本地倒计时 */
         this.calcCurSeatId(data.userList);
-        quick_start_ctrl.countDown(data.roomInfo.remainTime);
-        card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
+        quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
+        card_heap_ctrl.setRemainCard(
+            data.roundInfo && data.roundInfo.remainCard,
+        );
 
         this.model.gameReplay(data);
     }

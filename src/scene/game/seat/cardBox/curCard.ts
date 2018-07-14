@@ -1,5 +1,4 @@
 import { CMD } from '../../../../data/cmd';
-import { CONFIG } from '../../../../data/config';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CurCardBoxCtrl } from './curCardBox';
 import { CardCtrl, Link as BaseLink } from './card';
@@ -157,7 +156,6 @@ export class CurCardCtrl extends CardCtrl {
             if (can_discard) {
                 Sail.io.emit(CMD.HIT, {
                     hitCard: this.model.card_id,
-                    userId: CONFIG.user_id,
                 });
                 return;
             }
@@ -179,12 +177,12 @@ export class CurCardCtrl extends CardCtrl {
         wrap.addChildAt(view, index);
         card_box.sortCard();
     }
-    public putToDisCardZone(wrap: Laya.Sprite) {
+    public putCardInWrap(wrap: Laya.Sprite) {
         const { view } = this.link;
         view.off(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
         view.off(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
         view.off(Laya.Event.MOUSE_UP, this, this.mouseEnd);
         view.off(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
-        return super.putToDisCardZone(wrap);
+        return super.putCardInWrap(wrap);
     }
 }
