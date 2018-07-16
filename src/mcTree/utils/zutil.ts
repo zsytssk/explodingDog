@@ -430,7 +430,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const empty_fn = () => { };
 
     if (!type) {
         return empty_fn;
@@ -443,24 +443,22 @@ export function createLogAll() {
     }
     return this.createLog();
 }
-// log
-export function createLog(log_type?) {
+
+
+const sucess_style = 'font-weight: bold; color: green';
+const fail_style = 'font-weight: bold; color: red';
+export function createLog(type?, msg_type?) {
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const style =
+        type === 'error' || msg_type === 'error' ? fail_style : sucess_style;
+    type = type || debugFE();
 
-    const type = log_type || debugFE();
-
-    if (!type) {
-        return empty_fn;
-    }
-    if (!window.console) {
-        return empty_fn;
-    }
     let log_fun = console[type];
     if (!log_fun) {
         log_fun = console.log;
     }
-    return log_fun.bind(window.console);
+
+    return log_fun.bind(window.console, '%c %s', style);
 }
 // 分析字符串
 export function getQueryString(query) {
@@ -750,9 +748,8 @@ export function extendUtil(sub_class, super_class, name_space) {
     return sub_class;
 }
 
-/**  log信息  */
 export const log = createLog();
-/**  log错误信息  */
+export const group = createLog('groupCollapsed');
+export const groupEnd = createLog('groupEnd');
+export const groupErr = createLog('groupCollapsed', 'error');
 export const logErr = createLog('error');
-/**  般不显示的信息  */
-export const logAll = createLogAll();
