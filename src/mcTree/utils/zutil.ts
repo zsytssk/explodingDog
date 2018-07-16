@@ -430,7 +430,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => { };
+    const empty_fn = () => {};
 
     if (!type) {
         return empty_fn;
@@ -443,7 +443,6 @@ export function createLogAll() {
     }
     return this.createLog();
 }
-
 
 const sucess_style = 'font-weight: bold; color: green';
 const fail_style = 'font-weight: bold; color: red';
@@ -749,6 +748,7 @@ export function extendUtil(sub_class, super_class, name_space) {
 }
 
 export const log = createLog();
+export const logAll = createLogAll();
 export const group = createLog('groupCollapsed');
 export const groupEnd = createLog('groupEnd');
 export const groupErr = createLog('groupCollapsed', 'error');

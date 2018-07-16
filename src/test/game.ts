@@ -4,6 +4,7 @@ import { default as gameStartData } from './serverData/gameStart.json';
 import { default as updateUserData } from './serverData/updateUser.json';
 import { default as hitData } from './serverData/hit.json';
 import { default as StealData } from './serverData/steal.json';
+import { describe, assert } from '../mcTree/utils/testUtil';
 
 export function gameReplay() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
@@ -22,8 +23,13 @@ export function gameHit() {
     game_ctrl.model.discardCard(hitData.res);
 }
 export function gameSteal() {
-    const game_ctrl = (window as any).game_ctrl as GameCtrl;
-    game_ctrl.model.discardCard(StealData.res);
+    describe('game steal', it => {
+        it.test('game steal', () => {
+            const game_ctrl = (window as any).game_ctrl as GameCtrl;
+            game_ctrl.model.discardCard(StealData.res);
+            assert(game_ctrl.model.discard_card.card_id === '3402');
+        });
+    });
 }
 
 export function billboard() {
