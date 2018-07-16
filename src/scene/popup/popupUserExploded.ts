@@ -17,9 +17,6 @@ export class popupUserExploded extends ui.popup.popupUserExplodedUI {
         if (Array.isArray(data.userList)) {
             data.userList.forEach((user, index) => {
                 let avatar = new Avatar(user);
-                if (user.isDead && data.explodeUserId != user.userId) {
-                    avatar.die();
-                }
                 if (data.explodeUserId == user.userId) {
                     explodeUserAvatar = avatar;
                 }
@@ -28,10 +25,7 @@ export class popupUserExploded extends ui.popup.popupUserExplodedUI {
             });
         }
         //动效
-        Laya.timer.once(1000, this, () => {
-            explodeUserAvatar.die();
-            Laya.Tween.from(explodeUserAvatar, { scaleX: 1.5, scaleY: 1.5 }, 500);
-        });
+
     }
 }
 
@@ -41,11 +35,8 @@ class Avatar extends ui.popup.component.avatarUI {
         this.init(data);
     }
     init({ avatar, nickname, isDead }) {
-        this.avatar.skin = getAvatar(avatar);
+        this.avatar.skin = isDead ? 'images/game/avatar_die.png' : getAvatar(avatar);
         this.username.changeText(nickname);
-    }
-    die() {
-        this.avatar.skin = 'images/game/avatar_die.png';
     }
 
 }
