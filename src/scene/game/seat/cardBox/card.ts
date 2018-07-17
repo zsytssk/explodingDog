@@ -35,7 +35,7 @@ export class CardCtrl extends BaseCtrl {
         return this.model.card_id;
     }
     /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
-    public initUI() {
+    private initUI() {
         const { wrap } = this.link;
         const view = new ui.game.seat.cardBox.cardUI();
         const scale = wrap.height / view.height;
