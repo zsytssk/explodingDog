@@ -32,6 +32,8 @@ class LoadingUI extends ui.loading.mainUI {
         this.init();
     }
     init() {
+        this.size(Laya.stage.width, Laya.stage.height);
+        this.bg.size(Laya.stage.width, Laya.stage.height);
         if (
             GM.gamePublishInfo &&
             window.laya &&

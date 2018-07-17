@@ -22,12 +22,13 @@ export class Hall extends Sail.Scene {
             [CMD.CREATE_ROOM]: this.createRoom,
         };
         Sail.io.register(this.ACTIONS, this);
-        let bgImg = new Laya.Image('images/bg/bg.jpg');
+        this.bgImg = new Laya.Image('images/bg/bg.jpg');
+        this.bgImg.size(Laya.stage.width, Laya.stage.height);
         this.topbar = new TopBar();
         this.topbar.top = 20;
         this.content = new HallContent();
         this.content.centerY = 60;
-        this.addChildren(bgImg, this.topbar, this.content);
+        this.addChildren(this.bgImg, this.topbar, this.content);
         this.initEvent();
 
         Sail.io.emit(CMD.GET_USER_INFO);
@@ -39,7 +40,9 @@ export class Hall extends Sail.Scene {
         Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) { }
+    onResize(width, height) {
+        this.bgImg.size(Laya.stage.width, Laya.stage.height);
+    }
 
     setUserInfo(data) {
         this.content.updateView(data);
