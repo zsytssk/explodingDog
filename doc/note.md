@@ -1,5 +1,19 @@
 ## 2018-07-10 10:33:55
 
+-   import 循环引用
+
+*   @ques 骨骼动画播放的位置...
+
+-   @ques 能不能将代码重用 the_future + card cardBox cardModel
+    -   渲染 滑动排序
+    *   首先 the_future 中最精简的功能
+    *   initUI
+
+*   @todo 剪短引线 倒计时
+
+*   @ques 弹出层关闭调用。。sail 的方法
+    -   @ques 能不能看 popScene 有没有相同已经创建 的...
+
 -   @imp player.status card_status 太重复了
     -   能不能牌 只要被选中的状态
     -   其他的通过 player 的属性来判断。。。
@@ -274,7 +288,7 @@
 
 *   郑铭 保卫萝卜的源码再发给我。。
 
-*                                                                                                                                                                                                                                                     @note hit 服务器返回错误 要将牌再放到牌堆里面
+*                                                                                                                                                                                                                                                                     @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 -   @ques ts 测试 private
 

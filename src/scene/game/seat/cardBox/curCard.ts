@@ -179,7 +179,6 @@ export class CurCardCtrl extends CardCtrl {
      */
     private withDrawCard() {
         const { wrap, view, card_box } = this.link;
-        const card_num = card_box.getCardNum();
         const pos = new Laya.Point(view.x, view.y);
         wrap.globalToLocal(pos);
         view.pos(pos.x, pos.y);

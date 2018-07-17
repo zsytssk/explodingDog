@@ -1,5 +1,3 @@
-##
-
 ## steal
 
 choose
@@ -20,6 +18,8 @@ exploding
 chooseBombPos
 
 ## see_the_future
+
+## \*\*\*
 
 ## annoy
 

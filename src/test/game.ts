@@ -5,6 +5,8 @@ import { default as updateUserData } from './serverData/updateUser.json';
 import { default as hitData } from './serverData/hit.json';
 import { default as StealData } from './serverData/steal.json';
 import { describe, assert } from '../mcTree/utils/testUtil';
+import { seeTheFuture } from '../scene/popup/theFuture/theFuture';
+import { log } from '../mcTree/utils/zutil';
 
 export function gameReplay() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
@@ -30,6 +32,14 @@ export function gameSteal() {
             assert(game_ctrl.model.discard_card.card_id === '3402');
         });
     });
+}
+
+export function testTheFuture() {
+    seeTheFuture('alter', ['3101', '3201', '3321', '3321', '3321']).subscribe(
+        data => {
+            log(data);
+        },
+    );
 }
 
 export function billboard() {
