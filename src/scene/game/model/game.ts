@@ -145,10 +145,14 @@ export class GameModel extends BaseEvent {
         const hit_data = data.hitData;
         if (hit_data) {
             const { hitCard, hitInfo, hitUserId } = hit_data;
+            if (!hitInfo) {
+                return;
+            }
+            hitInfo.discard = 0;
             this.discardCard({
                 hitCard,
                 hitInfo,
-                userId: hitUserId,
+                hitUserId,
             });
         }
     }
@@ -189,22 +193,27 @@ export class GameModel extends BaseEvent {
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */
         const { discard_card } = this;
-        const player = this.getPlayerById(data.userId);
+        const player = this.getPlayerById(data.hitUserId);
         const hit_info = data.hitInfo;
         const hit_card = data.hitCard;
-        if (!player) {
-            logErr(`cant find player for ${data.userId}`);
-            return;
-        }
+
         if (!hit_info) {
-            player.unDiscardCard();
             return;
         }
-        let card = player.discardCard(data);
+        if (!player) {
+            logErr(`cant find player for ${data.hitUserId}`);
+            return;
+        }
+        const need_discard = hit_info.discard === 1;
+
+        let card;
+        if (need_discard) {
+            card = player.discardCard(hit_card);
+        }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {
             if (!discard_card) {
-                card = new CardModel(hit_card, player);
+                card = new CardModel(hit_card);
                 this.trigger(cmd.discard_card, { card });
             } else {
                 card = discard_card;
@@ -217,8 +226,13 @@ export class GameModel extends BaseEvent {
         card.updateAction({
             ...hit_info,
             game: this,
+            player,
         });
         this.discard_card = card;
+    }
+    public unDiscardCard(data: HitData) {
+        const player = this.getPlayerById(data.userId);
+        player.unDiscardCard();
     }
     public getPlayerNum() {
         return this.player_list.length;

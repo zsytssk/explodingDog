@@ -20,9 +20,10 @@ const hide_pos = {
 };
 /** 给与对方一张牌 */
 export class GiveCardCtrl extends BaseCtrl {
+    public name = 'give_card';
     protected link = {} as Link;
     private end_resolve: FuncVoid;
-    private card_id: string;
+    private card: CardCtrl;
     constructor(view: View) {
         super();
         this.link.view = view;
@@ -41,7 +42,7 @@ export class GiveCardCtrl extends BaseCtrl {
         };
     }
     protected initEvent() {}
-    public show() {
+    public show(): Promise<string> {
         return new Promise((resolve, reject) => {
             const { view: sprite } = this.link;
             const start_props = {
@@ -63,9 +64,35 @@ export class GiveCardCtrl extends BaseCtrl {
     public getCard(card: CardCtrl) {
         const { card_box } = this.link;
         this.addChild(card);
+        this.card = card;
         card.putCardInWrap(card_box).then(() => {
-            this.hide();
+            if (this.end_resolve) {
+                this.end_resolve(card.getCardId());
+            }
         });
     }
-    private hide() {}
+    public hide() {
+        const { view: sprite } = this.link;
+        const { card } = this;
+        const start_props = {
+            alpha: 1,
+            ...show_pos,
+        };
+        const end_props = {
+            alpha: 0,
+            ...hide_pos,
+        };
+        tween({
+            end_props,
+            sprite,
+            start_props,
+        }).then(() => {
+            if (card) {
+                card.destroy();
+                this.card = undefined;
+            }
+        });
+
+        this.end_resolve = undefined;
+    }
 }

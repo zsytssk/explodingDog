@@ -152,15 +152,27 @@ export class CurCardCtrl extends CardCtrl {
         view.stopDrag();
         wrap.globalToLocal(pos);
         if (pos.y < -100) {
-            const can_discard = this.model.preDiscard();
-            if (can_discard) {
-                Sail.io.emit(CMD.HIT, {
-                    hitCard: this.model.card_id,
-                });
-                return;
-            }
+            this.calcDiscard();
+            return;
         }
         this.withDrawCard();
+    }
+    /** 计算 各种出牌的类型 */
+    private calcDiscard() {
+        const { card_box } = this.link;
+        const card_status = this.model.preDiscard();
+        /** 不是出牌状态 直接退回牌堆 */
+        if (card_status === 'normal') {
+            this.withDrawCard();
+            return;
+        }
+        if (card_status === 'wait_give') {
+            card_box.giveCard(this);
+            return;
+        }
+        Sail.io.emit(CMD.HIT, {
+            hitCard: this.model.card_id,
+        });
     }
     /**  这个方法现在用到 card + cardBox， 这很恶心
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...

@@ -171,8 +171,12 @@ export class GameCtrl extends BaseCtrl {
             [CMD.OUT_ROOM]: () => {
                 this.onServerOutRoom();
             },
-            [CMD.HIT]: (data: HitData) => {
-                this.model.discardCard(data);
+            [CMD.HIT]: (data: HitData, code) => {
+                if (code !== 200) {
+                    this.model.unDiscardCard(data);
+                } else {
+                    this.model.discardCard(data);
+                }
             },
             [CMD.TAKE]: this.onServerTake,
             [CMD.TURNS]: (data: TurnsData) => {

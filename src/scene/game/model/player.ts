@@ -1,9 +1,10 @@
 import { fill } from 'lodash';
+import { Observable, Subscriber } from 'rxjs';
 import { BaseEvent } from '../../../mcTree/event';
 import { CardModel } from './card/card';
-import { ActionType, ActionStatus } from './card/action';
+import { BeActionInfo } from './card/action';
 
-export type PlayerStatus = 'speak' | 'normal';
+export type PlayerStatus = 'speak' | 'wait_give' | 'normal';
 export const cmd = {
     /** 动作信息 */
     action: 'action',
@@ -12,14 +13,13 @@ export const cmd = {
     wait_choose: 'wait_choose',
 };
 /** 动作的信息 */
-export type ActionInfo = {
-    /** 动作的名称 */
-    action: ActionType;
-    /** 动作执行的resolve */
-    resolve?: FuncVoid;
-    /** 动作执行的状态 */
-    status: ActionStatus;
-};
+export type ObserverActionInfo = PartialAll<
+    BeActionInfo,
+    {
+        /** 动作执行的resolve */
+        observer?: Subscriber<string>;
+    }
+>;
 
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;
@@ -53,24 +53,33 @@ export class PlayerModel extends BaseEvent {
             return;
         }
         for (const card_info of cards_info) {
-            this.addCard(card_info);
+            this.addCard(card_info + '');
         }
     }
-    public addCard(data: CardData) {
-        if (!data) {
+    public addCard(card: string | CardModel) {
+        if (!card) {
             return;
         }
-        const card = new CardModel(data, this);
+        if (!(card instanceof CardModel)) {
+            card = new CardModel(card);
+        }
+        card.setOwner(this);
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card });
     }
-    public removeCard(card: CardModel) {}
+    public removeCard(card: CardModel) {
+        const card_list = this.card_list;
+        for (let i = 0; i < card_list.length; i++) {
+            if (card_list[i] === card) {
+                card_list.splice(i, 1);
+            }
+        }
+    }
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
-    public discardCard(data: HitData) {
+    public discardCard(card_id: string) {
         const card_list = this.card_list;
         let discard_card: CardModel;
 
-        const card_id = data.hitCard;
         for (let i = 0; i < card_list.length; i++) {
             const card = card_list[i];
             if (card.canDiscard(card_id)) {
@@ -78,6 +87,19 @@ export class PlayerModel extends BaseEvent {
                 card_list.splice(i, 1);
                 discard_card.discard();
                 return discard_card;
+            }
+        }
+    }
+    public giveCard(card_id: string) {
+        const card_list = this.card_list;
+        let give_card: CardModel;
+
+        for (let i = 0; i < card_list.length; i++) {
+            const card = card_list[i];
+            if (card.canGive(card_id)) {
+                give_card = card;
+                card_list.splice(i, 1);
+                return give_card;
             }
         }
     }
@@ -90,9 +112,7 @@ export class PlayerModel extends BaseEvent {
         }
         /** 当前用户还原出的状态 */
         for (const card of card_list) {
-            if (card.is_prepare_discarded) {
-                card.unDiscard();
-            }
+            card.unDiscard();
         }
     }
     public setStatus(status: PlayerStatus) {
@@ -102,20 +122,21 @@ export class PlayerModel extends BaseEvent {
         this.status = status;
         this.trigger(cmd.status_change, { status });
     }
-    public actionAct(action: ActionType): Promise<string> {
-        return new Promise((resolve, reject) => {
+    public beActioned(data: BeActionInfo): Observable<string> {
+        return new Observable(observer => {
+            const { status, action } = data;
+            if (action === 'wait_get_card') {
+                if (status === 'act') {
+                    this.setStatus('wait_give');
+                } else {
+                    this.setStatus('normal');
+                }
+            }
             this.trigger(cmd.action, {
-                action,
-                resolve,
-                status: 'act',
-            } as ActionInfo);
+                observer,
+                ...data,
+            } as ObserverActionInfo);
         });
-    }
-    public actionComplete(action) {
-        this.trigger(cmd.action, {
-            action,
-            status: 'complete',
-        } as ActionInfo);
     }
     public isMyId(user_id: string) {
         return this.user_id === user_id + '';

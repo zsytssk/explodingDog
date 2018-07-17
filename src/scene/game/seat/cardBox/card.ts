@@ -31,6 +31,9 @@ export class CardCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
     }
+    public getCardId() {
+        return this.model.card_id;
+    }
     /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
     public initUI() {
         const { wrap } = this.link;
@@ -126,5 +129,11 @@ export class CardCtrl extends BaseCtrl {
             sprite: view,
             time: 100,
         });
+    }
+    public destroy() {
+        const { view } = this.link;
+        view.destroy();
+
+        super.destroy();
     }
 }

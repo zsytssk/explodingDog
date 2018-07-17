@@ -399,6 +399,7 @@ export class BaseCtrl extends BaseEvent {
         super.destroy();
         // 清除在所有node上绑定事件
         this.offAllNode();
+        this.model = undefined;
         // 删除所有的子类
         this.removeChildren();
 

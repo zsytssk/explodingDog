@@ -1,15 +1,21 @@
 import { PlayerModel } from '../player';
+import { race } from 'rxjs';
 import { CardModel } from './card';
 import { log } from '../../../../mcTree/utils/zutil';
 import { GameModel } from '../game';
 
 type Data = {
     game: GameModel;
+    player?: PlayerModel;
 };
 export type ActionDataInfo = PartialAll<HitData['hitInfo'], Data>;
 export type ActionType = 'choose_target' | 'wait_get_card';
 export type ActionStatus = 'act' | 'complete';
 
+export type BeActionInfo = {
+    action: ActionType;
+    status: ActionStatus;
+};
 export abstract class Action {
     protected card: CardModel;
     /** 动作的作用 */
@@ -28,16 +34,24 @@ export class ChooseTarget extends Action {
         super(card);
     }
     public act(data: ActionDataInfo) {
-        const { game, canChooseUserIds } = data;
+        const { game, canChooseUserIds, player } = data;
         const { card } = this;
         const wait_arr = [];
-        for (const id of canChooseUserIds) {
-            const player = game.getPlayerById(id);
-            const wait = player.actionAct(this.name);
-            wait_arr.push(wait);
-            this.choose_list.push(player);
+        const { is_cur_player } = player;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
         }
-        Promise.race(wait_arr).then(user_id => {
+        for (const id of canChooseUserIds) {
+            const choose_player = game.getPlayerById(id);
+            const wait = choose_player.beActioned({
+                action: this.name,
+                status: 'act',
+            });
+            wait_arr.push(wait);
+            this.choose_list.push(choose_player);
+        }
+        race(wait_arr).subscribe((user_id: string) => {
             card.action({
                 targetUserId: user_id,
             });
@@ -45,9 +59,19 @@ export class ChooseTarget extends Action {
         log('act', data);
     }
     public complete(data: ActionDataInfo) {
+        const { is_cur_player } = data.player;
         const { choose_list } = this;
-        for (const player of choose_list) {
-            player.actionComplete(this.name);
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+        for (const choose_player of choose_list) {
+            choose_player
+                .beActioned({
+                    action: this.name,
+                    status: 'complete',
+                })
+                .subscribe();
         }
         log('complete', data);
     }
@@ -61,11 +85,47 @@ export class WaitGetCard extends Action {
     }
     public act(data: ActionDataInfo) {
         const { game, targetUserId } = data;
+        const { card } = this;
         const target = game.getPlayerById(targetUserId);
-        target.actionAct(this.name);
+        this.target = target;
+        const { is_cur_player } = target;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        target
+            .beActioned({
+                action: this.name,
+                status: 'act',
+            })
+            .subscribe((card_id: string) => {
+                card.action({
+                    card: card_id,
+                });
+            });
         log('act', data);
     }
     public complete(data: ActionDataInfo) {
-        log('result', data);
+        const { player, card } = data;
+        const target = this.target;
+        const { is_cur_player } = target;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        const card_model = target.giveCard(card);
+        if (!player.is_cur_player) {
+            card_model.updateInfo('*');
+        }
+        player.addCard(card_model);
+        target
+            .beActioned({
+                action: this.name,
+                status: 'complete',
+            })
+            .subscribe();
+        log('complete', data);
     }
 }

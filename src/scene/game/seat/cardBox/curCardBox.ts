@@ -2,10 +2,12 @@ import { CurCardCtrl } from './curCard';
 import { CardModel } from '../../model/card/card';
 import { CardBoxCtrl } from './cardBox';
 import { CardCtrl } from './card';
+import { CurSeatCtrl } from '../curSeat';
 
 export type CurCardBoxUI = ui.game.seat.cardBox.curCardBoxUI;
 export interface Link {
     view: CurCardBoxUI;
+    seat: CurSeatCtrl;
     card_list: CurCardCtrl[];
 }
 
@@ -14,6 +16,12 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     constructor(view: CurCardBoxUI) {
         super(view);
         this.link.view = view;
+    }
+    public init() {
+        this.initLink();
+    }
+    protected initLink() {
+        this.link.seat = this.parent as CurSeatCtrl;
     }
     public addCard(card: CardModel) {
         const { view, card_list } = this.link;
@@ -38,6 +46,16 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         this.link.card_list = card_list;
 
         return index;
+    }
+    /** 给牌给别人 */
+    public giveCard(card: CardCtrl) {
+        const { seat, card_list } = this.link;
+        this.link.card_list = card_list.filter(item => {
+            return item !== card;
+        });
+        this.removeChild(card);
+        this.sortCard();
+        seat.giveCard(card);
     }
     public unToggleExcept(card: CardCtrl) {
         const { card_list } = this.link;

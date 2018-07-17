@@ -23,10 +23,12 @@ export class CurSeatCtrl extends SeatCtrl {
     protected initLink() {
         super.initLink();
         const view = this.link.view;
-        const btn_chat = (view as any).btn_chat;
+        const { player_box, btn_chat } = view;
+        this.link.player_box = player_box;
         this.link.btn_chat = btn_chat;
     }
     protected initEvent() {
+        super.initEvent();
         const btn_chat = this.link.btn_chat;
         btn_chat.on(Laya.Event.CLICK, this, () => {
             log('chat');

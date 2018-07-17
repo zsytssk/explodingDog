@@ -448,16 +448,22 @@ const sucess_style = 'font-weight: bold; color: green';
 const fail_style = 'font-weight: bold; color: red';
 export function createLog(type?, msg_type?) {
     // tslint:disable-next-line:no-empty
-    const style =
-        type === 'error' || msg_type === 'error' ? fail_style : sucess_style;
+    let style;
+    if (msg_type === 'right') {
+        style = sucess_style;
+    } else if (msg_type === 'error') {
+        style = fail_style;
+    }
     type = type || debugFE();
 
     let log_fun = console[type];
     if (!log_fun) {
         log_fun = console.log;
     }
-
-    return log_fun.bind(window.console, '%c %s', style);
+    if (style) {
+        return log_fun.bind(window.console, '%c %s', style);
+    }
+    return log_fun.bind(window.console);
 }
 // 分析字符串
 export function getQueryString(query) {

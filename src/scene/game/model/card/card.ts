@@ -1,11 +1,11 @@
 import { BaseEvent } from '../../../../mcTree/event';
 import { PlayerModel } from '../player';
-import { GameModel } from '../game';
 import { getCardInfo } from '../../../../utils/tool';
 import { Action, ActionDataInfo } from './action';
 import { action_map } from './actionMap';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
+export type CardStatus = 'normal' | 'discard' | 'wait_give' | 'exploding';
 export const cmd = {
     action_send: 'action_send',
     discard: 'discard',
@@ -18,15 +18,13 @@ export class CardModel extends BaseEvent {
     public card_id: string;
     /** 牌的类型名称 */
     private card_type: string;
-    /** 是否被出牌 */
-    public is_prepare_discarded = false;
     /** 所属者 */
     public owner: PlayerModel;
+    public status: CardStatus = 'normal';
     /** 动作列表 */
     private actions: Action[];
-    constructor(card_id: string, player?: PlayerModel) {
+    constructor(card_id: string) {
         super();
-        this.owner = player;
         this.updateInfo(card_id);
     }
     public updateInfo(card_id: string) {
@@ -41,6 +39,9 @@ export class CardModel extends BaseEvent {
 
         this.initAction();
         this.trigger(cmd.update_info);
+    }
+    public setOwner(owner: PlayerModel) {
+        this.owner = owner;
     }
     private initAction() {
         const { card_type } = this;
@@ -73,13 +74,19 @@ export class CardModel extends BaseEvent {
         }
     }
     /** 真正的出牌前 需要记录状态 */
-    public preDiscard() {
-        const player = this.owner;
-        if (player.status !== 'speak') {
-            return false;
+    public preDiscard(): CardStatus {
+        const { status: owner_status } = this.owner;
+        let status = 'normal' as CardStatus;
+        /** 偷牌 */
+        if (owner_status === 'wait_give') {
+            status = 'wait_give';
         }
-        this.is_prepare_discarded = true;
-        return true;
+        /** 出牌 */
+        if (owner_status === 'speak') {
+            status = 'discard';
+        }
+        this.status = status;
+        return status;
     }
     /** 真正的出牌 */
     public discard() {
@@ -96,7 +103,7 @@ export class CardModel extends BaseEvent {
             this.updateInfo(card_id);
             return true;
         }
-        if (this.is_prepare_discarded) {
+        if (this.status === 'discard') {
             if (this.card_id !== card_id + '') {
                 logErr(`card card_id not equal ${card_id}`);
             }
@@ -107,12 +114,29 @@ export class CardModel extends BaseEvent {
         }
         return false;
     }
+    public canGive(card_id: string) {
+        if (this.card_id === '*') {
+            this.updateInfo(card_id);
+            return true;
+        }
+        if (this.status === 'wait_give') {
+            return true;
+        }
+        return false;
+    }
     public action(data: ActionData) {
         this.trigger(cmd.action_send, { ...data });
     }
     /** 取消出牌， 服务器返回数据错误 */
     public unDiscard() {
-        this.is_prepare_discarded = false;
+        if (this.status !== 'discard') {
+            return;
+        }
+        this.status = 'normal';
         this.trigger(cmd.un_discard);
+    }
+    public destroy() {
+        this.owner = undefined;
+        super.destroy();
     }
 }

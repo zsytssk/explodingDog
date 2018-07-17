@@ -1,5 +1,55 @@
 ## 2018-07-10 10:33:55
 
+-   @imp player.status card_status 太重复了
+    -   能不能牌 只要被选中的状态
+    -   其他的通过 player 的属性来判断。。。
+    -   这样应该可以
+
+*   @ques action_info 要放在 player 还是 seat 上面
+
+    -   @ques 放在哪个上面更合理
+    -   放在哪个上面 更简单
+
+*   @ques action 导致的 billboard 信息展示在什么地方抛出去
+    -   action --> card
+    *   这个和 action 本身地 作用是分离的这样 显的很乱？？
+
+-   @ques 和章旸目前最大的意见冲突是什么
+    -   action 要不要放在 card 上面
+
+*   @ques 当前用户不展示其他用户的的选择用户的样式
+
+    -   beAction 需要哪些 data
+
+*   @ques 是先 super destroy 还是自己 destroy
+
+-   @ques 我怎么区分在其他用户的牌有没有打出...
+
+*   @ques 我怎么知道那张牌是被给的呢？？？
+
+    -   设置属性???
+
+    *   和 discard 的冲突？？？
+
+-   @ques 这个是复杂 别人 不一定看得懂？？
+
+    -   怎么变得简单， 最简单是什么样子的
+
+-   @ques 复盘是不是需要特殊处理...
+
+*   @ques 偷牌：：给牌要不要等到狗手消失 再去添加牌
+
+*   @ques 出千 alter_the_future 这些通过什么去掉更合适
+
+-   @ques promise 只能一次 如果服务器出错了 我就没办法继续了...
+
+-   action 需要 status act complete 这个属性吗
+-   @ques player action_info 能不能用 status 来代替
+
+*   @ques 除了选择用户， 其他的 action 都只有当前用户才需要执行
+
+*   @ques 如何在服务器返回成功的时候才将 give_card_ctrl hide
+
 -   @ques tslint ignore folder
 
 *   @todo 猫手动画 整理下
@@ -224,7 +274,7 @@
 
 *   郑铭 保卫萝卜的源码再发给我。。
 
-*                                                                                                                                                                                                                       @note hit 服务器返回错误 要将牌再放到牌堆里面
+*                                                                                                                                                                                                                                                     @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 -   @ques ts 测试 private
 

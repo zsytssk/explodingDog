@@ -90,12 +90,14 @@ type TakeData = {
     remainCard: number;
 };
 type HitData = {
-    userId: string;
+    userId?: string;
     hitCard: string;
+    hitUserId: string;
     hitInfo?: {
+        discard?: 0 | 1;
         card?: string;
         step?: number;
-        targetUserId?: '4001';
+        targetUserId?: string;
         canChooseUserIds?: string[];
     };
 };

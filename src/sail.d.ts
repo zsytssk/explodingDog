@@ -2,7 +2,7 @@ namespace Sail {
     class Scene {}
 }
 type SailIoAction = {
-    [key: string]: FuncListener;
+    [key: string]: FuncVoid;
 };
 namespace Tools {
     class KeyBoardNumber {}
