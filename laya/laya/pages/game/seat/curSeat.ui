@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":1,
+    "selecteID":5,
     "props":{"width":1334,"sceneColor":"#000000","mouseThrough":true,"mouseEnabled":true,"height":400},
     "nodeParent":-1,
     "label":"View",
@@ -41,17 +41,29 @@
         },
         {
             "x":15,
-            "type":"UIView",
-            "source":"game/seat/cardBox/curCardBox.ui",
-            "props":{"y":0,"x":234,"var":"card_box"},
+            "type":"Box",
+            "props":{"y":0,"x":234,"var":"card_box_wrap"},
             "nodeParent":1,
-            "label":"UIView(card_box)",
-            "isDirectory":false,
+            "label":"Box(card_box_wrap)",
+            "isOpen":null,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
+            "hasChild":true,
+            "compId":5,
             "child":[
-                ]
+                {
+                    "type":"UIView",
+                    "source":"game/seat/cardBox/curCardBox.ui",
+                    "props":{"var":"card_box"},
+                    "nodeParent":5,
+                    "label":"UIView(card_box)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":3,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {

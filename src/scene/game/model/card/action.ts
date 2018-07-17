@@ -128,4 +128,26 @@ export class WaitGetCard extends Action {
             .subscribe();
         log('complete', data);
     }
+
+
+}
+export class ShowDefuse extends Action {
+    public name = "show_defuse"
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        if (!player.is_cur_player) {
+            //TODO 面板显示
+            return;
+        }
+
+        player
+            .beActioned({
+                action: this.name,
+                status: 'act',
+            })
+            .subscribe((card_id: string) => {
+            });
+        log('act', data);
+    }
+    public complete() { }
 }

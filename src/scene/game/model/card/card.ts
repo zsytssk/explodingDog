@@ -22,7 +22,7 @@ export class CardModel extends BaseEvent {
     public owner: PlayerModel;
     public status: CardStatus = 'normal';
     /** 动作列表 */
-    private actions: Action[];
+    public actions: Action[];
     constructor(card_id: string) {
         super();
         this.updateInfo(card_id);

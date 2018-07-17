@@ -2,9 +2,9 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": 3001,
+        "userId": 3002,
         "hitCardInfo": {
-            "cardId": 3401
+            "cardId": 3001
         }
     }
 }

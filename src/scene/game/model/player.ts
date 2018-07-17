@@ -19,7 +19,7 @@ export type ObserverActionInfo = PartialAll<
         /** 动作执行的resolve */
         observer?: Subscriber<string>;
     }
->;
+    >;
 
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;

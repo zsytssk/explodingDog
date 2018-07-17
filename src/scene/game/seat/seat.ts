@@ -17,6 +17,7 @@ import {
 } from '../../../mcTree/utils/zutil';
 import { GiveCardCtrl } from '../widget/giveCard';
 import { CardCtrl } from './cardBox/card';
+import { PopupDefuse } from '../widget/defuse';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -28,6 +29,7 @@ export interface Link {
     give_card_ctrl: GiveCardCtrl;
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
+    card_box_wrap: Laya.Sprite;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -53,6 +55,7 @@ export class SeatCtrl extends BaseCtrl {
         const die_avatar = player_box.die_avatar;
         const nickname = player_box.nickname;
         const card_box = view.card_box;
+        const card_box_wrap = view.card_box_wrap;
         const card_box_ctrl = this.createCardBox(card_box);
 
         this.link = {
@@ -64,6 +67,7 @@ export class SeatCtrl extends BaseCtrl {
             empty_box,
             nickname,
             player_box,
+            card_box_wrap,
             view,
         };
     }
@@ -184,6 +188,9 @@ export class SeatCtrl extends BaseCtrl {
         if (action === 'wait_get_card') {
             this.waitGiveCard();
         }
+        if (action === 'show_defuse') {
+            this.showDefuse(data);
+        }
     }
     private waitChoose() {
         const { nickname: sprite } = this.link;
@@ -227,6 +234,22 @@ export class SeatCtrl extends BaseCtrl {
     private waitGiveCardComplete() {
         const { give_card_ctrl } = this.link;
         give_card_ctrl.hide();
+    }
+    private showDefuse(data: ObserverActionInfo) {
+        const popupDefuse = new PopupDefuse();
+        const player = this.model;
+        const card_box_ctrl = this.link.card_box_ctrl;
+        popupDefuse.setCards(player.card_list, card_box_ctrl);
+        Sail.director.popScene(popupDefuse);
+
+    }
+    public putCardBoxInWrap(wrap: Laya.Sprite) {
+        const { card_box_ctrl } = this.link;
+        return card_box_ctrl.putCardBoxInWrap(wrap);
+    }
+    public putCardBoxBack() {
+        const { card_box_ctrl, card_box_wrap } = this.link;
+        return card_box_ctrl.putCardBoxInWrap(card_box_wrap);
     }
     public giveCard(card: CardCtrl) {
         const { give_card_ctrl } = this.link;
