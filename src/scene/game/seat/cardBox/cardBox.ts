@@ -52,4 +52,15 @@ export class CardBoxCtrl extends BaseCtrl {
     public getCardNum() {
         return this.link.card_list.length;
     }
+    public putCardBoxInWrap(wrap: Laya.Sprite) {
+        const { view } = this.link;
+        const ori_pos = new Laya.Point(0, 0);
+        const wrap_pos = new Laya.Point(0, 0);
+        view.localToGlobal(ori_pos);
+        wrap.globalToLocal(ori_pos);
+
+        view.pos(ori_pos.x, ori_pos.y);
+        wrap.addChild(view);
+        return this;
+    }
 }

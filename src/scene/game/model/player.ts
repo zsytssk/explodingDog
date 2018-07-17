@@ -17,7 +17,7 @@ export type ObserverActionInfo = PartialAll<
     BeActionInfo,
     {
         /** 动作执行的resolve */
-        observer?: Subscriber<string>;
+        observer?: Subscriber<string | string[]>;
     }
 >;
 

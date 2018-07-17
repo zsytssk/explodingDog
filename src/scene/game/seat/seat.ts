@@ -21,6 +21,7 @@ import { CardCtrl } from './cardBox/card';
 import { ActionDataInfo } from '../model/card/action';
 import { theFuture } from '../../popup/theFuture/theFuture';
 import { Type } from '../../popup/theFuture/popup';
+import { PopupDefuse } from '../widget/defuse';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -32,6 +33,7 @@ export interface Link {
     give_card_ctrl: GiveCardCtrl;
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
+    card_box_wrap: Laya.Sprite;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -57,6 +59,7 @@ export class SeatCtrl extends BaseCtrl {
         const die_avatar = player_box.die_avatar;
         const nickname = player_box.nickname;
         const card_box = view.card_box;
+        const card_box_wrap = view.card_box_wrap;
         const card_box_ctrl = this.createCardBox(card_box);
 
         this.link = {
@@ -68,6 +71,7 @@ export class SeatCtrl extends BaseCtrl {
             empty_box,
             nickname,
             player_box,
+            card_box_wrap,
             view,
         };
     }
@@ -189,8 +193,11 @@ export class SeatCtrl extends BaseCtrl {
             this.waitGiveCard();
         }
         /** 只有当前用户需要给牌才显示 */
-        if (action === 'see_the_future' || action == 'alter_the_future') {
+        if (action === 'see_the_future' || action === 'alter_the_future') {
             this.theFuture(data);
+        }
+        if (action === 'show_defuse') {
+            this.showDefuse(data);
         }
     }
     private waitChoose() {
@@ -244,6 +251,21 @@ export class SeatCtrl extends BaseCtrl {
                 observer.next(rdata);
             }
         });
+    }
+    private showDefuse(data: ObserverActionInfo) {
+        const popupDefuse = new PopupDefuse();
+        const player = this.model;
+        const card_box_ctrl = this.link.card_box_ctrl;
+        popupDefuse.setCards(player.card_list, card_box_ctrl);
+        Sail.director.popScene(popupDefuse);
+    }
+    public putCardBoxInWrap(wrap: Laya.Sprite) {
+        const { card_box_ctrl } = this.link;
+        return card_box_ctrl.putCardBoxInWrap(wrap);
+    }
+    public putCardBoxBack() {
+        const { card_box_ctrl, card_box_wrap } = this.link;
+        return card_box_ctrl.putCardBoxInWrap(card_box_wrap);
     }
     public giveCard(card: CardCtrl) {
         const { give_card_ctrl } = this.link;
