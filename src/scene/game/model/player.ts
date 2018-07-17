@@ -122,7 +122,7 @@ export class PlayerModel extends BaseEvent {
         this.status = status;
         this.trigger(cmd.status_change, { status });
     }
-    public beActioned(data: BeActionInfo): Observable<string> {
+    public beActioned(data: BeActionInfo): Observable<string | string[]> {
         return new Observable(observer => {
             const { status, action } = data;
             if (action === 'wait_get_card') {

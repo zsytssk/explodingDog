@@ -1,7 +1,7 @@
 import { CardBoxCtrl } from './cardBox';
 import { Subscriber } from 'rxjs';
 
-export type Type = 'alter' | 'peek';
+export type Type = 'alter_the_future' | 'see_the_future';
 export interface Link {
     card_box_ctrl: CardBoxCtrl;
 }
@@ -31,6 +31,7 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         const { btn_confirm } = this;
         btn_confirm.on(Laya.Event.CLICK, this, () => {
             this.replay();
+            Sail.director.closeByName('the_future');
         });
     }
     public replay() {
@@ -47,7 +48,7 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         this.type = type;
         this.observer = observer;
         const { card_box_ctrl } = this.link;
-        if (type === 'alter') {
+        if (type === 'alter_the_future') {
             card_box_ctrl.can_sort = true;
         }
         for (const card of data) {

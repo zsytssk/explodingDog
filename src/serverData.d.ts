@@ -99,6 +99,7 @@ type HitData = {
         step?: number;
         targetUserId?: string;
         canChooseUserIds?: string[];
+        topCards?: string[];
     };
 };
 type HitBackData = {

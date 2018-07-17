@@ -9,12 +9,17 @@ type Data = {
     player?: PlayerModel;
 };
 export type ActionDataInfo = PartialAll<HitData['hitInfo'], Data>;
-export type ActionType = 'choose_target' | 'wait_get_card';
+export type ActionType =
+    | 'choose_target'
+    | 'wait_get_card'
+    | 'see_the_future'
+    | 'alter_the_future';
 export type ActionStatus = 'act' | 'complete';
 
 export type BeActionInfo = {
     action: ActionType;
     status: ActionStatus;
+    data?: ActionDataInfo;
 };
 export abstract class Action {
     protected card: CardModel;
@@ -121,6 +126,92 @@ export class WaitGetCard extends Action {
         }
         player.addCard(card_model);
         target
+            .beActioned({
+                action: this.name,
+                status: 'complete',
+            })
+            .subscribe();
+        log('complete', data);
+    }
+}
+
+export class SeeTheFuture extends Action {
+    private name = 'see_the_future' as ActionType;
+    constructor(card: CardModel) {
+        super(card);
+    }
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        const { is_cur_player } = player;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        player
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'act',
+            })
+            .subscribe();
+        log('act', data);
+    }
+    public complete(data: ActionDataInfo) {
+        const { player, card } = data;
+        const { is_cur_player } = player;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        player
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'complete',
+            })
+            .subscribe();
+        log('complete', data);
+    }
+}
+
+export class AlterTheFuture extends Action {
+    private name = 'alter_the_future' as ActionType;
+    constructor(card: CardModel) {
+        super(card);
+    }
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        const { card } = this;
+        const { is_cur_player } = player;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        player
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'act',
+            })
+            .subscribe((topCards: string[]) => {
+                card.action({
+                    topCards,
+                });
+            });
+        log('act', data);
+    }
+    public complete(data: ActionDataInfo) {
+        const { player, card } = data;
+        const { is_cur_player } = player;
+        /** 非当前用户不需要选择 */
+        if (!is_cur_player) {
+            return;
+        }
+
+        player
             .beActioned({
                 action: this.name,
                 status: 'complete',

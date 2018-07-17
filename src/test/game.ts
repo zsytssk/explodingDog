@@ -5,7 +5,7 @@ import { default as updateUserData } from './serverData/updateUser.json';
 import { default as hitData } from './serverData/hit.json';
 import { default as StealData } from './serverData/steal.json';
 import { describe, assert } from '../mcTree/utils/testUtil';
-import { seeTheFuture } from '../scene/popup/theFuture/theFuture';
+import { theFuture } from '../scene/popup/theFuture/theFuture';
 import { log } from '../mcTree/utils/zutil';
 
 export function gameReplay() {
@@ -35,11 +35,15 @@ export function gameSteal() {
 }
 
 export function testTheFuture() {
-    seeTheFuture('alter', ['3101', '3201', '3321', '3321', '3321']).subscribe(
-        data => {
-            log(data);
-        },
-    );
+    theFuture('alter_the_future', [
+        '3101',
+        '3201',
+        '3321',
+        '3321',
+        '3321',
+    ]).subscribe(data => {
+        log(data);
+    });
 }
 
 export function billboard() {
