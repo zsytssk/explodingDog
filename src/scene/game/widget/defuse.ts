@@ -5,13 +5,13 @@ import { CardModel } from "../model/card/card";
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
     ani: Laya.Skeleton;
+    public closeEffect;
     cardBoxCtrl;
     constructor(remainTime) {
         super();
         this.init(remainTime);
     }
     init(remainTime) {
-        console.log('defuse----', remainTime)
         this.ani = new Laya.Skeleton();
         this.ani.pos(675, 355);
         this.ani.load('animation/chaidan.sk', new Laya.Handler(this, () => {
@@ -22,6 +22,11 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             }
             this.addChild(this.ani);
         }));
+        // this.closeEffect = function () {
+        //     if (this.cardBoxCtrl) {
+        //         this.cardBoxCtrl.putCardBoxBack();
+        //     }
+        // };
     }
     setCards(cards: CardModel[], card_box_ctrl) {
         const { card_box_wrap, ani } = this;

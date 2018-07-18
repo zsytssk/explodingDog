@@ -197,6 +197,7 @@ export class SeatCtrl extends BaseCtrl {
         }).subscribe((user_id: string) => {
             action_observer.next(user_id);
         });
+
     }
     private slap(action_data: ObserverActionInfo) {
         let { slap_ctrl } = this.link;

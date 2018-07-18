@@ -251,6 +251,7 @@ export class AlterTheFuture extends Action {
     }
 }
 
+<<<<<<< HEAD
 export class showSetExplorde extends Action {
     public act() {}
     public complete() {}
@@ -261,6 +262,20 @@ export class Slap extends Action {
     private target: PlayerModel;
     constructor(card: CardModel) {
         super(card);
+=======
+export class showSetExplode extends Action {
+    private name = 'show_set_explode';
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        if (player.is_cur_player) {
+            player
+                .beActioned({
+                    action: this.name,
+                    status: 'act',
+                })
+                .subscribe();
+        }
+>>>>>>> 4e78dcd24e860376cfbd840d6ffc4d626b8be640
     }
     public act(data: ActionDataInfo) {
         const { game, targetUserId } = data;
