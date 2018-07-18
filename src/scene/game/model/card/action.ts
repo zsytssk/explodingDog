@@ -248,9 +248,18 @@ export class AlterTheFuture extends Action {
     }
 }
 
-export class showSetExplorde extends Action {
-    public act() {
-
+export class showSetExplode extends Action {
+    private name = 'show_set_explode';
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        if (player.is_cur_player) {
+            player
+                .beActioned({
+                    action: this.name,
+                    status: 'act',
+                })
+                .subscribe();
+        }
     }
     public complete() {
 

@@ -17,7 +17,7 @@ export class BillBoardCtrl {
         }
     }
 
-    public updateInfo(fromUser: PlayerModel, toUser: PlayerModel, cardId: string, step: number) {
+    public updateInfo({ fromUser, toUser, cardId, step }: { fromUser: PlayerModel, toUser?: PlayerModel, cardId: string, step?: number }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.name;

@@ -26,6 +26,7 @@ import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
 import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
+import { ExplodePosCtrl } from './widget/explodePos';
 
 interface Link {
     view: ui.game.mainUI;
@@ -42,6 +43,7 @@ interface Link {
     give_card_ctrl: GiveCardCtrl;
     alarm_ctrl: AlarmCtrl;
     game_zone: Laya.Sprite;
+    explode_pos_ctrl: ExplodePosCtrl
 }
 
 const max_user_count: number = 5;
@@ -143,6 +145,8 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(give_card_ctrl);
         give_card_ctrl.init();
 
+        const explode_pos_ctrl = new ExplodePosCtrl(explode_pos);
+
         this.link = {
             ...this.link,
             alarm_ctrl,
@@ -158,6 +162,7 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             turn_arrow_ctrl,
+            explode_pos_ctrl
         };
     }
     protected initEvnet() {

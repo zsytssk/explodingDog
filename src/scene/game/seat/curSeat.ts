@@ -84,6 +84,9 @@ export class CurSeatCtrl extends SeatCtrl {
         if (action === 'show_defuse') {
             this.showDefuse(data);
         }
+        if (action === 'show_set_explode') {
+            this.showSetExplode();
+        }
     }
     /** 等待给牌 */
     private waitGiveCard(action_data: ObserverActionInfo) {
@@ -141,5 +144,17 @@ export class CurSeatCtrl extends SeatCtrl {
     public giveCard(card: CardCtrl) {
         const { give_card_ctrl } = this.link;
         give_card_ctrl.getCard(card);
+    }
+    private showSetExplode() {
+        const game_ctrl = queryClosest(this, 'name:game');
+        let popupDefuse = Sail.director.getDialogByName('popup_defuse');
+        if (popupDefuse) {
+            popupDefuse.defuseSuccess();
+        }
+        Laya.timer.once(1000, this, () => {
+            Sail.director.closeByName('popup_defuse');
+            let explode_pos_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+            explode_pos_ctrl.show();
+        });
     }
 }

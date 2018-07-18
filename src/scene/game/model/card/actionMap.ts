@@ -4,13 +4,13 @@ import {
     ShowDefuse,
     SeeTheFuture,
     AlterTheFuture,
-    showSetExplorde,
+    showSetExplode,
 } from './action';
 
 export const action_map = {
     alter_the_future: [AlterTheFuture],
     exploding: [ShowDefuse],
-    defuse: [showSetExplorde],
+    defuse: [showSetExplode],
     see_the_future: [SeeTheFuture],
     steal: [ChooseTarget, WaitGetCard],
 };

@@ -192,6 +192,7 @@ export class SeatCtrl extends BaseCtrl {
         }).subscribe((user_id: string) => {
             action_observer.next(user_id);
         });
+
     }
     public hideSeat() {
         this.link.view.visible = false;
