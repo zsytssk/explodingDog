@@ -143,16 +143,16 @@ export class ShowDefuse extends Action {
             //TODO 面板显示
             return;
         }
-
         player
             .beActioned({
                 action: this.name,
                 status: 'act',
+                data
             })
-            .subscribe((card_id: string) => {});
+            .subscribe((card_id: string) => { });
         log('act', data);
     }
-    public complete() {}
+    public complete() { }
 }
 
 export class SeeTheFuture extends Action {
@@ -238,5 +238,14 @@ export class AlterTheFuture extends Action {
             })
             .subscribe();
         log('complete', data);
+    }
+}
+
+export class showSetExplorde extends Action {
+    public act() {
+
+    }
+    public complete() {
+
     }
 }

@@ -253,7 +253,7 @@ export class SeatCtrl extends BaseCtrl {
         });
     }
     private showDefuse(data: ObserverActionInfo) {
-        const popupDefuse = new PopupDefuse();
+        const popupDefuse = new PopupDefuse(data.data.remainTime);
         const player = this.model;
         const card_box_ctrl = this.link.card_box_ctrl;
         popupDefuse.setCards(player.card_list, card_box_ctrl);

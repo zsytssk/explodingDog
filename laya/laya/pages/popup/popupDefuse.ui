@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":2,
+    "selecteID":10,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"Dialog",
@@ -40,19 +40,6 @@
         },
         {
             "x":15,
-            "type":"SkeletonPlayer",
-            "props":{"y":355,"x":675,"var":"ani","url":"animation/chaidan.sk"},
-            "nodeParent":1,
-            "label":"SkeletonPlayer(ani)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":7,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
             "type":"Box",
             "props":{"y":347,"x":144,"width":1100,"var":"card_box_wrap","height":400},
             "nodeParent":1,
@@ -62,6 +49,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":9,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":252,"x":774,"visible":false,"var":"defuseCard","skin":"images/game/card/defuse.png"},
+            "nodeParent":1,
+            "label":"Image(defuseCard)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":10,
             "child":[
                 ]
         }],

@@ -100,6 +100,7 @@ type HitData = {
         targetUserId?: string;
         canChooseUserIds?: string[];
         topCards?: string[];
+        remainTime?: number;
     };
 };
 type HitBackData = {
