@@ -196,7 +196,14 @@ export class SeatCtrl extends BaseCtrl {
     public hideSeat() {
         this.link.view.visible = false;
     }
-
+    /** 获得座位底部的坐标 用来slap */
+    public getSeatPos() {
+        const { view } = this.link;
+        const { width, height } = view;
+        const pos = new Laya.Point(width / 2, height / 2);
+        view.localToGlobal(pos);
+        return pos;
+    }
     public updatePos(position: any) {
         const view = this.link.view;
         tween({

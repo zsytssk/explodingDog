@@ -14,7 +14,7 @@ export interface Link {
     view: CardView;
     wrap: Laya.Sprite;
     /** 牌移动需要放置的位置 */
-    animate_box: Laya.Sprite;
+    widget_box: Laya.Sprite;
 }
 
 const card_height = 238;
@@ -39,8 +39,8 @@ export class CardCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
         const game_ctrl = queryClosest(this, 'name:game') as GameCtrl;
-        const animate_box = game_ctrl.getAnimateBox();
-        this.link.animate_box = animate_box;
+        const widget_box = game_ctrl.getWidgetBox();
+        this.link.widget_box = widget_box;
     }
     public getCardId() {
         return this.model.card_id;
@@ -115,15 +115,15 @@ export class CardCtrl extends BaseCtrl {
     }
     /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */
     public putCardInWrap(wrap: Laya.Sprite) {
-        const { view, animate_box } = this.link;
+        const { view, widget_box } = this.link;
 
         const scale = wrap.height / card_height;
         const card_pos = new Laya.Point(0, 0);
         const wrap_pos = new Laya.Point(0, 0);
-        convertPos(card_pos, view, animate_box);
-        convertPos(wrap_pos, wrap, animate_box);
+        convertPos(card_pos, view, widget_box);
+        convertPos(wrap_pos, wrap, widget_box);
 
-        animate_box.addChild(view);
+        widget_box.addChild(view);
         view.pos(card_pos.x, card_pos.y);
 
         this.link.card_box = undefined;

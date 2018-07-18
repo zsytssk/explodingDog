@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":-605,"x":-12,"var":"hand_face","skin":"images/game/hand_face.png"},
+            "props":{"y":36,"x":58,"width":597,"visible":false,"var":"hand_face","skin":"images/game/hand_face.png","pivotY":641,"pivotX":70,"height":747},
             "nodeParent":1,
             "label":"Image(hand_face)",
             "isDirectory":false,
@@ -23,12 +23,13 @@
             "hasChild":false,
             "compId":3,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":164,"x":40,"width":597,"var":"hand_back","skin":"images/game/hand_back.png","rotation":-30,"height":738,"anchorY":1,"anchorX":0},
+            "props":{"y":94,"x":46,"width":597,"visible":false,"var":"hand_back","skin":"images/game/hand_back.png","scaleY":0.3,"scaleX":0.3,"rotation":-30,"height":738,"anchorY":1,"anchorX":0},
             "nodeParent":1,
             "label":"Image(hand_back)",
             "isDirectory":false,
@@ -36,20 +37,22 @@
             "hasChild":false,
             "compId":4,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
             "type":"SkeletonPlayer",
-            "props":{"y":50,"x":50,"width":0,"url":"animation/slap.sk","height":0},
+            "props":{"y":50,"x":50,"width":0,"visible":false,"var":"ani","url":"animation/slap.sk","height":0},
             "nodeParent":1,
-            "label":"SkeletonPlayer",
+            "label":"SkeletonPlayer(ani)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":2,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         }],
     "animations":[
         {
