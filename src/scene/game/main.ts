@@ -91,6 +91,7 @@ export class GameCtrl extends BaseCtrl {
             host_zone,
             seat_wrap,
             turn_arrow,
+            explode_pos
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
