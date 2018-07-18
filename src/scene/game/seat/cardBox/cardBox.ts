@@ -6,6 +6,7 @@ import { cmd } from '../../main';
 export interface Link {
     view: Laya.Sprite;
     card_list: CardCtrl[];
+    card_wrap: Laya.Sprite;
 }
 
 export class CardBoxCtrl extends BaseCtrl {
@@ -18,18 +19,35 @@ export class CardBoxCtrl extends BaseCtrl {
         this.link.view = view;
     }
     public init() {
-        // ...
+        this.initLink();
+    }
+    protected initLink() {
+        const { view } = this.link;
+        this.link = {
+            ...this.link,
+            card_wrap: view,
+        };
     }
     /** 牌的数目变化 重新排列牌发生b */
     public sortCard() {
-        const { card_list } = this.link;
+        const { card_list, card_wrap } = this.link;
         /** 排列未选择的牌 */
         const unslt_card_list = card_list.filter(item => {
             return !item.is_selected;
         });
+        const len = unslt_card_list.length;
+        let card_bound: {
+            width: number;
+            space: number;
+        };
         for (let i = 0; i < unslt_card_list.length; i++) {
-            unslt_card_list[i].tweenMove(i);
+            const card = unslt_card_list[i];
+            if (!card_bound) {
+                card_bound = card.getCardBound();
+            }
+            card.tweenMove(i);
         }
+        card_wrap.width = card_bound.width + card_bound.space * (len - 1);
     }
     /** 出牌 将牌从列表中清除 */
     public discardCard(card: CardCtrl) {
@@ -51,16 +69,5 @@ export class CardBoxCtrl extends BaseCtrl {
     }
     public getCardNum() {
         return this.link.card_list.length;
-    }
-    public putCardBoxInWrap(wrap: Laya.Sprite) {
-        const { view } = this.link;
-        const ori_pos = new Laya.Point(0, 0);
-        const wrap_pos = new Laya.Point(0, 0);
-        view.localToGlobal(ori_pos);
-        wrap.globalToLocal(ori_pos);
-
-        view.pos(ori_pos.x, ori_pos.y);
-        wrap.addChild(view);
-        return this;
     }
 }

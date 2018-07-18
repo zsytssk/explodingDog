@@ -1,7 +1,16 @@
-import { ChooseTarget, WaitGetCard, ShowDefuse, showSetExplorde } from './action';
+import {
+    ChooseTarget,
+    WaitGetCard,
+    ShowDefuse,
+    SeeTheFuture,
+    AlterTheFuture,
+    showSetExplorde,
+} from './action';
 
 export const action_map = {
-    steal: [ChooseTarget, WaitGetCard],
+    alter_the_future: [AlterTheFuture],
     exploding: [ShowDefuse],
     defuse: [showSetExplorde],
+    see_the_future: [SeeTheFuture],
+    steal: [ChooseTarget, WaitGetCard],
 };

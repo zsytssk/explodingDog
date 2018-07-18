@@ -11,7 +11,6 @@ interface Link {
 export class CardCtrl extends BaseCtrl {
     private is_touched = false;
     public card_id: string;
-    private scale: number;
     private space: number;
     public link = {} as Link;
     constructor(card_id, wrap: Laya.Sprite) {
@@ -32,10 +31,8 @@ export class CardCtrl extends BaseCtrl {
         const view = new ui.game.seat.cardBox.cardUI();
         const scale = wrap.height / view.height;
         const space = (view.width * scale) / 2;
-        const card_box = this.parent;
         wrap.addChild(view);
         setStyle(view, { scaleX: scale, scaleY: scale });
-        this.scale = scale;
         this.space = space;
 
         wrap.addChild(view);

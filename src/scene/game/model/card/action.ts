@@ -1,8 +1,10 @@
-import { PlayerModel } from '../player';
+// tslint:disable:max-classes-per-file
+
 import { race } from 'rxjs';
-import { CardModel } from './card';
 import { log } from '../../../../mcTree/utils/zutil';
 import { GameModel } from '../game';
+import { PlayerModel } from '../player';
+import { CardModel } from './card';
 
 type Data = {
     game: GameModel;
@@ -16,11 +18,16 @@ export type ActionType =
     | 'alter_the_future'
     | 'show_defuse';
 export type ActionStatus = 'act' | 'complete';
-
 export type BeActionInfo = {
     action: ActionType;
     status: ActionStatus;
     data?: ActionDataInfo;
+};
+/** 发给服务器hit的数据结构 */
+export type ActionSendData = {
+    targetUserId?: string;
+    newSortCards?: string[];
+    card?: string;
 };
 export abstract class Action {
     protected card: CardModel;
@@ -136,11 +143,11 @@ export class WaitGetCard extends Action {
     }
 }
 export class ShowDefuse extends Action {
-    public name = 'show_defuse';
+    public name = 'show_defuse' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
         if (!player.is_cur_player) {
-            //TODO 面板显示
+            // todo 面板显示
             return;
         }
         player
@@ -216,9 +223,9 @@ export class AlterTheFuture extends Action {
                 data,
                 status: 'act',
             })
-            .subscribe((topCards: string[]) => {
+            .subscribe((newSortCards: string[]) => {
                 card.action({
-                    topCards,
+                    newSortCards,
                 });
             });
         log('act', data);

@@ -28,7 +28,7 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 
 interface Link {
-    view: Laya.Node;
+    view: ui.game.mainUI;
     docker_ctrl: DockerCtrl;
     discard_zone_ctrl: DiscardZoneCtrl;
     btn_back: Laya.Button;
@@ -64,7 +64,7 @@ export class GameCtrl extends BaseCtrl {
     protected model = new GameModel();
     public cur_seat_id: number;
     public cur_user_id: string;
-    constructor(view: Laya.Node) {
+    constructor(view: ui.game.mainUI) {
         super();
         this.link.view = view;
 
@@ -76,20 +76,21 @@ export class GameCtrl extends BaseCtrl {
         this.initEvnet();
     }
     protected initLink() {
-        const view = this.link.view as ui.game.mainUI;
+        const view = this.link.view;
         const {
-            host_zone,
-            seat_wrap,
-            docker,
-            discard_zone,
-            card_heap,
-            turn_arrow,
+            alarm,
+            animate_box,
+            billboard,
             btn_back,
             btn_setting,
+            card_heap,
+            discard_zone,
+            docker,
             game_zone,
-            alarm,
             give_card,
-            billboard,
+            host_zone,
+            seat_wrap,
+            turn_arrow,
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -142,6 +143,7 @@ export class GameCtrl extends BaseCtrl {
         give_card_ctrl.init();
 
         this.link = {
+            ...this.link,
             alarm_ctrl,
             bill_board_ctrl,
             btn_back,
@@ -155,7 +157,6 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             turn_arrow_ctrl,
-            ...this.link,
         };
     }
     protected initEvnet() {
@@ -315,6 +316,11 @@ export class GameCtrl extends BaseCtrl {
     private onServerChangeCardType(data: ChangeCardType) {
         const card_type = Number(data.newCardType);
         this.model.setCardType(card_type);
+    }
+    /** 牌飞行动画的位置。。。 */
+    public getAnimateBox() {
+        const { view } = this.link;
+        return view.animate_box;
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {

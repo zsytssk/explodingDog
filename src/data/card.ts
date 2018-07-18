@@ -79,21 +79,21 @@ export const CARD_MAP = {
     },
     '3901': {
         count: 1,
-        name: 'anooy',
+        name: 'annoy',
         show_count: true,
-        type: 'anooy',
+        type: 'annoy',
     },
     '3921': {
         count: 2,
-        name: 'anooy',
+        name: 'annoy',
         show_count: true,
-        type: 'anooy',
+        type: 'annoy',
     },
     '3931': {
         count: 3,
-        name: 'anooy',
+        name: 'annoy',
         show_count: true,
-        type: 'anooy',
+        type: 'annoy',
     },
     '4001': {
         count: 1,

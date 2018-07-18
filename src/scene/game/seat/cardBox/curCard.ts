@@ -86,7 +86,6 @@ export class CurCardCtrl extends CardCtrl {
             x: stageX - x,
             y: stageY - y,
         };
-        log(move_delta);
         if (move_delta.y < -30) {
             this.select();
             return;
@@ -128,10 +127,11 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 处理选中之后的事件 */
     private handleSelectedEvent() {
-        const { view } = this.link;
+        const { view, animate_box } = this.link;
         const pos = new Laya.Point(0, 0);
         view.localToGlobal(pos);
-        Laya.stage.addChild(view);
+        animate_box.globalToLocal(pos);
+        animate_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
 
