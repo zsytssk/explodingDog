@@ -8,3 +8,4 @@ laya/src/*
 laya/bin/*
 !laya/bin/libs
 !laya/bin/*.html
+monitor

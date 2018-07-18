@@ -320,7 +320,7 @@ export class GameCtrl extends BaseCtrl {
     /** 牌飞行动画的位置。。。 */
     public getAnimateBox() {
         const { view } = this.link;
-        return view.animate_box;
+        return view.widget_wrap;
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
