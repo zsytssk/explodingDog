@@ -12,11 +12,13 @@ import { CardCtrl } from './cardBox/card';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
 import { Link as BaseLink, SeatCtrl } from './seat';
 import { tweenLoop } from '../../../mcTree/utils/animate';
+import { GiveCardCtrl } from '../widget/giveCard';
 
 export interface Link extends BaseLink {
     view: ui.game.seat.curSeatUI;
     btn_chat: Laya.Button;
     card_box_ctrl: CurCardBoxCtrl;
+    give_card_ctrl: GiveCardCtrl;
     card_box_wrap: Laya.Sprite;
 }
 
@@ -62,6 +64,8 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
+        super.beActioned(data);
+
         const { nickname: sprite } = this.link;
         const { status, action } = data;
 

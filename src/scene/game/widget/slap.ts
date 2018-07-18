@@ -40,6 +40,7 @@ const slap_other_pros_arr = [
 ];
 /**  */
 export class SlapCtrl extends BaseCtrl {
+    public name = 'slap';
     protected link = {} as Link;
     constructor() {
         super();

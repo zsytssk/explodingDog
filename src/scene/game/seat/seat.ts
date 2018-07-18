@@ -9,8 +9,9 @@ import {
     PlayerModel,
     PlayerStatus,
 } from '../model/player';
-import { GiveCardCtrl } from '../widget/giveCard';
 import { CardBoxCtrl } from './cardBox/cardBox';
+import { SlapCtrl, SlapType } from '../widget/slap';
+import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -19,8 +20,8 @@ export interface Link {
     avatar: Laya.Image;
     die_avatar: Laya.Image;
     nickname: Laya.Text;
-    give_card_ctrl: GiveCardCtrl;
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
+    slap_ctrl: SlapCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
 }
 
@@ -170,6 +171,10 @@ export class SeatCtrl extends BaseCtrl {
         if (action === 'choose_target') {
             this.waitChoose(data);
         }
+        /** 当前用户需要选择其他 才显示 */
+        if (action === 'slap') {
+            this.slap(data);
+        }
     }
     /** 等待被选择 */
     private waitChoose(action_data: ObserverActionInfo) {
@@ -192,6 +197,22 @@ export class SeatCtrl extends BaseCtrl {
         }).subscribe((user_id: string) => {
             action_observer.next(user_id);
         });
+    }
+    private slap(action_data: ObserverActionInfo) {
+        let { slap_ctrl } = this.link;
+        const { target, count } = action_data.data;
+
+        let type = 'slap_other' as SlapType;
+        if (target.is_cur_player) {
+            type = 'slap_self';
+        }
+
+        if (!slap_ctrl) {
+            const game_ctrl = queryClosest(this, 'name:game');
+            slap_ctrl = getChildrenByName(game_ctrl, 'slap')[0];
+            this.link.slap_ctrl = slap_ctrl;
+        }
+        slap_ctrl.slap(type, this, count);
     }
     public hideSeat() {
         this.link.view.visible = false;

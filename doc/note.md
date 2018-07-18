@@ -1,7 +1,11 @@
 ## 2018-07-18 16:27:08
-* @bug 移动牌牌经常飞出去
-* toggleTip 牌时有问题
 
+-   @bug 移动牌牌经常飞出去
+-   toggleTip 牌时有问题
+
+-   @ques 这一大堆 observer 没有清除会不会造成新能问题
+
+*   @ques ts absctract optional
 
 ## 2018-07-10 10:33:55
 
@@ -322,7 +326,7 @@
 
 *   郑铭 保卫萝卜的源码再发给我。。
 
-*                                                                                                                                                                                                                                                                                 @note hit 服务器返回错误 要将牌再放到牌堆里面
+*                                                                                                                                                                                                                                                                                     @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 -   @ques ts 测试 private
 

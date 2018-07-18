@@ -17,7 +17,9 @@ export class CardModel extends BaseEvent {
     /** 牌的id */
     public card_id: string;
     /** 牌的类型名称 */
-    private card_type: string;
+    public card_type: string;
+    /** 牌的执行数目 */
+    public card_count: number;
     /** 所属者 */
     public owner: PlayerModel;
     public status: CardStatus = 'normal';
@@ -34,8 +36,9 @@ export class CardModel extends BaseEvent {
         if (card_id === '*') {
             return;
         }
-        const { type } = getCardInfo(card_id);
+        const { type, count } = getCardInfo(card_id);
         this.card_type = type;
+        this.card_count = count;
 
         this.initAction();
         this.trigger(cmd.update_info);

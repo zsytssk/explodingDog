@@ -7,8 +7,10 @@ import { PlayerModel } from '../player';
 import { CardModel } from './card';
 
 type Data = {
+    count: number;
     game: GameModel;
     player?: PlayerModel;
+    target?: PlayerModel;
 };
 export type ActionDataInfo = PartialAll<HitData['hitInfo'], Data>;
 export type ActionType =
@@ -16,7 +18,8 @@ export type ActionType =
     | 'wait_get_card'
     | 'see_the_future'
     | 'alter_the_future'
-    | 'show_defuse';
+    | 'show_defuse'
+    | 'slap';
 export type ActionStatus = 'act' | 'complete';
 export type BeActionInfo = {
     action: ActionType;
@@ -154,12 +157,12 @@ export class ShowDefuse extends Action {
             .beActioned({
                 action: this.name,
                 status: 'act',
-                data
+                data,
             })
-            .subscribe((card_id: string) => { });
+            .subscribe((card_id: string) => {});
         log('act', data);
     }
-    public complete() { }
+    public complete() {}
 }
 
 export class SeeTheFuture extends Action {
@@ -249,10 +252,33 @@ export class AlterTheFuture extends Action {
 }
 
 export class showSetExplorde extends Action {
-    public act() {
+    public act() {}
+    public complete() {}
+}
 
+export class Slap extends Action {
+    private name = 'slap' as ActionType;
+    private target: PlayerModel;
+    constructor(card: CardModel) {
+        super(card);
     }
-    public complete() {
-
+    public act(data: ActionDataInfo) {
+        const { game, targetUserId } = data;
+        const { card_count } = this.card;
+        const target = game.getPlayerById(targetUserId);
+        this.target = target;
+        data.target = target;
+        data.count = card_count;
+        target
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'act',
+            })
+            .subscribe();
+        log('act', data);
+    }
+    public complete(data: ActionDataInfo) {
+        //
     }
 }
