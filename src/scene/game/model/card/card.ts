@@ -1,7 +1,7 @@
 import { BaseEvent } from '../../../../mcTree/event';
 import { PlayerModel } from '../player';
 import { getCardInfo } from '../../../../utils/tool';
-import { Action, ActionDataInfo } from './action';
+import { Action, ActionDataInfo, ActionSendData } from './action';
 import { action_map } from './actionMap';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
@@ -12,7 +12,7 @@ export const cmd = {
     un_discard: 'un_discard',
     update_info: 'update_info',
 };
-export type ActionData = HitData['hitInfo'];
+
 export class CardModel extends BaseEvent {
     /** 牌的id */
     public card_id: string;
@@ -124,7 +124,7 @@ export class CardModel extends BaseEvent {
         }
         return false;
     }
-    public action(data: ActionData) {
+    public action(data: ActionSendData) {
         this.trigger(cmd.action_send, { ...data });
     }
     /** 取消出牌， 服务器返回数据错误 */

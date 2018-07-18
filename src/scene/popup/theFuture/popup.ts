@@ -29,9 +29,16 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
     }
     private initEvent() {
         const { btn_confirm } = this;
+
+        /** 如果是 see_the_future直接关闭弹出层
+         * alter_the_future需要在服务器收到命令再关闭
+         */
         btn_confirm.on(Laya.Event.CLICK, this, () => {
-            this.replay();
-            Sail.director.closeByName('the_future');
+            if (this.type === 'see_the_future') {
+                Sail.director.closeByName('the_future');
+            } else {
+                this.replay();
+            }
         });
     }
     public replay() {

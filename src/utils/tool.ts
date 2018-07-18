@@ -83,3 +83,18 @@ export function getAvatar(avatar_id) {
 export function isCurPlayer(user_id) {
     return user_id + '' === CONFIG.user_id;
 }
+
+/**
+ * 将原始节点的位置 转化成目标节点的位置
+ * @param pos ori_node中的位置
+ * @param ori_node 开始所在的节点
+ * @param end_node 目标的节点
+ */
+export function convertPos(
+    pos: Laya.Point,
+    ori_node: Laya.Sprite,
+    end_node: Laya.Sprite,
+) {
+    ori_node.localToGlobal(pos);
+    end_node.globalToLocal(pos);
+}

@@ -3,14 +3,14 @@
     "code": 200,
     "res": {
         "userId": 3001,
-        "hitCard": "3931",
+        "hitCard": 4101,
         "hitUserId": 3001,
         "hitInfo": {
-            "type": "annoy",
+            "type": "alter_the_future",
             "step": 1,
             "targetUserId": 0,
-            "discard": 1,
-            "canChooseUserIds": ["3002", "3003"]
+            "discard": 0,
+            "topCards": ["4001", "3921"]
         }
     }
 }
