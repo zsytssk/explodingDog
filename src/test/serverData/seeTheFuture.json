@@ -1,0 +1,16 @@
+{
+    "cmd": "hit",
+    "code": 200,
+    "res": {
+        "userId": 3001,
+        "hitCard": "3521",
+        "hitUserId": 3001,
+        "hitInfo": {
+            "type": "seeFuture",
+            "step": 1,
+            "targetUserId": 0,
+            "discard": 1,
+            "topCards": ["3101", "3401", "3521"]
+        }
+    }
+}

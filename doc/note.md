@@ -1,4 +1,11 @@
 ## 2018-07-10 10:33:55
+* @ques seeTheFuture 要不要复盘
+* @todo cardBox 中所有的当前用户的行为全部放到curCardBox
+
+* @todo 牌飞行的Box + CarBox 可以看到所有的牌
+
+* @ques player 的observer 没有必要记录只要传递就可以了
+    * seat 需要记录是自己的 就像 give_card_ctrl 一样
 
 -   @ques import 循环引用
 
@@ -12,7 +19,8 @@
 *   @todo 剪短引线 倒计时
 
 *   @ques 弹出层关闭调用。。sail 的方法
-    -   @ques 能不能看 popScene 有没有相同已经创建 的...
+    -   @ques 能不能看 popScene 有没有相同
+    已经创建 的...
 
 -   @imp player.status card_status 太重复了
     -   能不能牌 只要被选中的状态

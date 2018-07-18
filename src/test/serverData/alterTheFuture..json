@@ -1,0 +1,16 @@
+{
+    "cmd": "hit",
+    "code": 200,
+    "res": {
+        "userId": 3001,
+        "hitCard": "3931",
+        "hitUserId": 3001,
+        "hitInfo": {
+            "type": "annoy",
+            "step": 1,
+            "targetUserId": 0,
+            "discard": 1,
+            "canChooseUserIds": ["3002", "3003"]
+        }
+    }
+}
