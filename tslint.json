@@ -26,10 +26,10 @@
             "options": [120]
         }
     },
-    "linterOptions": {
-        "exclude": ["laya"]
-    },
 
     "semicolon": [true, "always", "ignore-bound-class-methods"],
-    "extends": ["tslint:recommended"]
+    "extends": ["tslint:recommended"],
+    "linterOptions": {
+        "exclude": ["laya"]
+    }
 }

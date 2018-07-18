@@ -4,6 +4,11 @@ choose
 wait
 getCard
 
+## slap + self slap
+
+choose
+slap
+
 ## slap
 
 choose

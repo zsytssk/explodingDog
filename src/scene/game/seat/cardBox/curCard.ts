@@ -127,11 +127,11 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 处理选中之后的事件 */
     private handleSelectedEvent() {
-        const { view, animate_box } = this.link;
+        const { view, widget_box } = this.link;
         const pos = new Laya.Point(0, 0);
         view.localToGlobal(pos);
-        animate_box.globalToLocal(pos);
-        animate_box.addChild(view);
+        widget_box.globalToLocal(pos);
+        widget_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
 

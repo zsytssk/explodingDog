@@ -27,6 +27,7 @@ import { TurnArrowCtrl } from './turnArrow';
 import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 import { ExplodePosCtrl } from './widget/explodePos';
+import { SlapCtrl } from './widget/slap';
 
 interface Link {
     view: ui.game.mainUI;
@@ -42,6 +43,7 @@ interface Link {
     card_heap_ctrl: CardHeapCtrl;
     give_card_ctrl: GiveCardCtrl;
     alarm_ctrl: AlarmCtrl;
+    slap_ctrl: SlapCtrl;
     game_zone: Laya.Sprite;
     explode_pos_ctrl: ExplodePosCtrl
 }
@@ -81,7 +83,6 @@ export class GameCtrl extends BaseCtrl {
         const view = this.link.view;
         const {
             alarm,
-            animate_box,
             billboard,
             btn_back,
             btn_setting,
@@ -93,7 +94,7 @@ export class GameCtrl extends BaseCtrl {
             host_zone,
             seat_wrap,
             turn_arrow,
-            explode_pos
+            explode_pos,
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -122,6 +123,10 @@ export class GameCtrl extends BaseCtrl {
         const docker_ctrl = new DockerCtrl(docker);
         this.addChild(docker_ctrl);
         docker_ctrl.init();
+
+        const slap_ctrl = new SlapCtrl();
+        this.addChild(slap_ctrl);
+        slap_ctrl.init();
 
         const discard_zone_ctrl = new DiscardZoneCtrl(discard_zone);
         this.addChild(discard_zone_ctrl);
@@ -161,6 +166,7 @@ export class GameCtrl extends BaseCtrl {
             host_zone_ctrl,
             quick_start_ctrl,
             seat_ctrl_list,
+            slap_ctrl,
             turn_arrow_ctrl,
             explode_pos_ctrl
         };
@@ -324,9 +330,9 @@ export class GameCtrl extends BaseCtrl {
         this.model.setCardType(card_type);
     }
     /** 牌飞行动画的位置。。。 */
-    public getAnimateBox() {
+    public getWidgetBox() {
         const { view } = this.link;
-        return view.animate_box;
+        return view.widget_wrap;
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
