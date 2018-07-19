@@ -151,6 +151,7 @@ export class GameCtrl extends BaseCtrl {
         give_card_ctrl.init();
 
         const explode_pos_ctrl = new ExplodePosCtrl(explode_pos);
+        this.addChild(explode_pos_ctrl);
 
         this.link = {
             ...this.link,

@@ -1,12 +1,12 @@
 
 // import { CurCardBoxCtrl } from "../seat/cardBox/curCardBox";
 import { CardModel } from "../model/card/card";
+import { log } from "../../../mcTree/utils/zutil";
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
     ani: Laya.Skeleton;
-    public closeEffect;
-    cardBoxCtrl;
+    curSeatCtrl;
     constructor(remainTime) {
         super();
         this.init(remainTime);
@@ -22,16 +22,17 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             }
             this.addChild(this.ani);
         }));
-        // this.closeEffect = function () {
-        //     if (this.cardBoxCtrl) {
-        //         this.cardBoxCtrl.putCardBoxBack();
-        //     }
-        // };
+        this.onClosed = () => {
+            if (this.curSeatCtrl) {
+                this.curSeatCtrl.putCardBoxBack();
+            }
+        }
+        this.defuseCard.zOrder = 5;
     }
-    setCards(cards: CardModel[], card_box_ctrl) {
+    setCards(cards: CardModel[], cur_seat_ctrl) {
         const { card_box_wrap, ani } = this;
-        this.cardBoxCtrl = card_box_ctrl;
-        card_box_ctrl.putCardBoxInWrap(card_box_wrap);
+        this.curSeatCtrl = cur_seat_ctrl;
+        cur_seat_ctrl.putCardBoxInWrap(card_box_wrap);
     }
     defuseSuccess() {
         this.ani.paused();

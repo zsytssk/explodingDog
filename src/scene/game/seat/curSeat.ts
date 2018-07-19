@@ -70,6 +70,9 @@ export class CurSeatCtrl extends SeatCtrl {
             if (action === 'wait_get_card') {
                 this.waitGiveCardComplete();
             }
+            if (action === 'show_set_explode') {
+                this.hideSetExplode();
+            }
             return;
         }
 
@@ -130,7 +133,7 @@ export class CurSeatCtrl extends SeatCtrl {
         const popupDefuse = new PopupDefuse(data.data.remainTime);
         const player = this.model;
         const { card_box_ctrl } = this.link;
-        popupDefuse.setCards(player.card_list, card_box_ctrl);
+        popupDefuse.setCards(player.card_list, this);
         Sail.director.popScene(popupDefuse);
     }
     public putCardBoxInWrap(wrap: Laya.Sprite) {
@@ -153,8 +156,14 @@ export class CurSeatCtrl extends SeatCtrl {
         }
         Laya.timer.once(1000, this, () => {
             Sail.director.closeByName('popup_defuse');
-            let explode_pos_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
-            explode_pos_ctrl.show();
+            let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+            explode_pos_ctrl.showView();
         });
+    }
+    private hideSetExplode() {
+        log('hideSetExplode')
+        const game_ctrl = queryClosest(this, 'name:game');
+        let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+        explode_pos_ctrl.hideView();
     }
 }

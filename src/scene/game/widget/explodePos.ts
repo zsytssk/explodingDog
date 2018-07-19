@@ -2,11 +2,12 @@ import { BaseCtrl } from "../../../mcTree/ctrl/base";
 import { log } from "../../../mcTree/utils/zutil";
 import { CMD } from "../../../data/cmd";
 
-export class ExplodePosCtrl {
+export class ExplodePosCtrl extends BaseCtrl {
     private view: ui.game.widget.setExplordeUI;
     private lastSelection: Laya.Button;
     public name = 'explode_pos_ctrl';
     constructor(view: ui.game.widget.setExplordeUI) {
+        super();
         this.view = view;
         this.init();
     }
@@ -31,7 +32,7 @@ export class ExplodePosCtrl {
         btnList.selectEnable = true;
         //选择按钮事件
         btnSelect.on(Laya.Event.CLICK, this, () => {
-            if (btnList.selectedIndex != -1) {
+            if (btnList.selectedItem) {
                 let explodingPos = btnList.selectedItem.value;
                 Sail.io.emit(CMD.HIT, {
                     hitCard: 3101,
@@ -40,7 +41,14 @@ export class ExplodePosCtrl {
             }
         });
     }
-    public show() {
+    public showView() {
         this.view.visible = true;
+    }
+    public hideView() {
+        if (this.lastSelection) {
+            this.lastSelection = null;
+        }
+        this.view.btnList.selectedItem.selected = false;;
+        this.view.visible = false;
     }
 }

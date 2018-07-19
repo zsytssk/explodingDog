@@ -261,7 +261,16 @@ export class showSetExplode extends Action {
                 .subscribe();
         }
     }
-    public complete() {
-
+    public complete(data: ActionDataInfo) {
+        const { player } = data;
+        log('======================', player)
+        if (player.is_cur_player) {
+            player
+                .beActioned({
+                    action: this.name,
+                    status: 'complete',
+                })
+                .subscribe();
+        }
     }
 }
