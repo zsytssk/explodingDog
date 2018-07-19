@@ -1,6 +1,6 @@
-import { PlayerModel } from "./model/player";
-import { getAvatar } from "../../utils/tool";
-import { CARD_DISCRIBE_MAP } from "../../data/card";
+import { PlayerModel } from './model/player';
+import { getAvatar } from '../../utils/tool';
+import { CARD_DISCRIBE_MAP } from '../../data/card';
 
 export class BillBoardCtrl {
     private link;
@@ -13,11 +13,21 @@ export class BillBoardCtrl {
     initLink(view) {
         this.link = {
             view,
-            ...view
-        }
+            ...view,
+        };
     }
 
-    public updateInfo({ fromUser, toUser, cardId, step }: { fromUser: PlayerModel, toUser?: PlayerModel, cardId: string, step?: number }) {
+    public updateInfo({
+        fromUser,
+        toUser,
+        cardId,
+        step,
+    }: {
+        fromUser: PlayerModel;
+        toUser?: PlayerModel;
+        cardId: string;
+        step?: number;
+    }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.name;
@@ -47,10 +57,9 @@ export class BillBoardCtrl {
             if (!cardIcon.visible) {
                 cardIcon.visible = true;
             }
-            cardIcon.skin = `images/game/card/icon_${cardDescribe.icon}.png`
+            cardIcon.skin = `images/game/card/icon_${cardDescribe.icon}.png`;
         } else {
             cardIcon.visible = false;
         }
-
     }
 }

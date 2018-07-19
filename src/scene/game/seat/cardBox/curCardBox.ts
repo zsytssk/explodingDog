@@ -73,7 +73,6 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             x: last_pos.x - x,
             y: last_pos.y - y,
         };
-        log('move', delta);
         this.touch_info = {
             ...touch_info,
             delta,
@@ -81,6 +80,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             status: 'move',
         };
         view.x += delta.x;
+        log('cardBox move', delta);
     }
     private mouseEnd(event: Laya.Event) {
         const { touch_info } = this;
@@ -105,7 +105,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             sprite: view,
         });
         touch_info.status = 'default';
-        log('end');
+        log('cardBox end');
     }
     public addCard(card: CardModel) {
         const { card_list, card_wrap } = this.link;

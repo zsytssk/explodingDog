@@ -47,7 +47,7 @@ interface Link {
     alarm_ctrl: AlarmCtrl;
     slap_ctrl: SlapCtrl;
     game_zone: Laya.Sprite;
-    explode_pos_ctrl: ExplodePosCtrl
+    explode_pos_ctrl: ExplodePosCtrl;
 }
 
 const max_user_count: number = 5;
@@ -171,7 +171,7 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list,
             slap_ctrl,
             turn_arrow_ctrl,
-            explode_pos_ctrl
+            explode_pos_ctrl,
         };
     }
     protected initEvnet() {
@@ -235,14 +235,16 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
-        const { quick_start_ctrl, card_heap_ctrl } = this.link;
+        const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
         this.is_ready = true;
         /** 更新本地倒计时 */
         this.calcCurSeatId(data.userList);
         quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
-        card_heap_ctrl.setRemainCard(
-            data.roundInfo && data.roundInfo.remainCard,
-        );
+
+        if (data.roundInfo) {
+            card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
+            docker_ctrl.setRate(data.roundInfo.bombProb);
+        }
 
         this.model.gameReplay(data);
     }

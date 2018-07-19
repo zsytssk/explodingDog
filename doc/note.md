@@ -1,30 +1,51 @@
 ## 2018-07-18 16:27:08
 
--   @ques 我有很多类 每一个类有很多方法 public private
+-   @ques 操作台的展示
+    -   @ques 有哪些展示
+        * 出牌
+        * turn
+
+    -   action 时如何去处理...
+
+-   @imp player.status card_status 太重复了
+    -   能不能牌 只要被选中的状态
+    -   其他的通过 player 的属性来判断。。。
+    -   这样应该可以
+
+*   @ques 如何将事件 从 card 和 cardBox 中分离出来
+
+-   @ques cardBox 牌的回弹动画时间缩小
+
+*   @ques action 如果中间跳过， 我如何怎么将上一个的 complete
+    -   如果 action 的流程
+
+-   @todo 企业文化
+
+-   @todo AcionManager 处理 action 每一步的切换
+
+    -   提供初始化+更新的方法
+
+-   @note curCardBox 在放到炸弹弹出层的时候 整个大小要改变 同时放回去要还原...
+
+*   @ques 我有很多类 每一个类有很多方法 public private
     -   如何保持最少的 private
     *   CardBoxCtrl 基本上都是 public 方法。。
     *   开会整理下 每一个类
 
-*   @bug 移动牌牌经常飞出去
-*   toggleTip 牌时有问题
+-   @bug 当前用户的牌
 
-*   @ques 这一大堆 observer 没有清除会不会造成新能问题
+    -   移动牌牌经常飞出去
+    -   toggleTip 牌时有问题
 
--   @ques ts absctract optional
+-   @ques 这一大堆 observer 没有清除会不会造成新能问题
+
+*   @ques ts absctract optional
 
 ## 2018-07-10 10:33:55
 
--   @todo 选择玩家 + slap ... self slap
-
-*   @ques 操作台的展示
-
-    -   @ques 有哪些展示
-    -   action 时如何去处理...
+-   @todo 选择玩家 + slap ... + self slap
 
 *   @todo defuse 展示概率 剩余牌数
-
--   @ques action 如果中间跳过， 我如何怎么将上一个的 complete
-    -   如果 action 的流程
 
 *   @ques 其他人的牌应该有边框 @设计
 
@@ -58,13 +79,9 @@
 -   @todo 剪短引线 倒计时
 
 -   @ques 弹出层关闭调用。。sail 的方法
+
     -   @ques 能不能看 popScene 有没有相同
         已经创建 的...
-
-*   @imp player.status card_status 太重复了
-    -   能不能牌 只要被选中的状态
-    -   其他的通过 player 的属性来判断。。。
-    -   这样应该可以
 
 -   @ques action_info 要放在 player 还是 seat 上面
 
@@ -92,7 +109,7 @@
 
     *   和 discard 的冲突？？？
 
-*   @ques 这个是复杂 别人 不一定看得懂？？
+*   @ques 牌的 action 这个是复杂 别人 不一定看得懂？？
 
     -   怎么变得简单， 最简单是什么样子的
 
@@ -335,7 +352,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                               @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                       @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 
