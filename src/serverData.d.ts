@@ -123,3 +123,14 @@ type TurnsData = {
     /** 剩余轮次 */
     remainTurn: 1;
 };
+
+type UserExplodingData = {
+    userId: string;
+    userList: Object[];
+    explodeUserName: string;
+    explodeUserId: string;
+    remainUser: number,
+    remainCard: number,
+    remainBomb: number,
+    bombProb: number
+};

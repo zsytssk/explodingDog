@@ -35,7 +35,7 @@ export type ActionSendData = {
 // tslint:disable-next-line:interface-name
 export interface IAction {
     /** 动作的作用 */
-    act?(data: ActionDataInfo);
+    act(data: ActionDataInfo);
     /** 动作完成 */
     complete?(data: ActionDataInfo);
 }

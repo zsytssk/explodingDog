@@ -28,6 +28,8 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 import { ExplodePosCtrl } from './widget/explodePos';
 import { SlapCtrl } from './widget/slap';
+import { PopupTakeExplode } from '../popup/popupTakeExplode';
+import { PopupUserExploded } from '../popup/popupUserExploded';
 
 interface Link {
     view: ui.game.mainUI;
@@ -197,6 +199,7 @@ export class GameCtrl extends BaseCtrl {
                 this.model.setSpeaker(data.speakerId);
             },
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
+            [CMD.USER_EXPLODING]: this.onServerUserExploding,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -389,6 +392,23 @@ export class GameCtrl extends BaseCtrl {
             } else {
                 seatCtrl.hideSeat();
             }
+        });
+    }
+    /**
+     * 用户淘汰
+     */
+    public onServerUserExploding(data: UserExplodingData) {
+        const { explodeUserId, bombProb } = data;
+        let delay = 0;
+        let popupUserExploded = new PopupUserExploded();
+        popupUserExploded.updateData(data);
+        if (isCurPlayer(explodeUserId)) {
+            delay = 2000;
+            Sail.director.popScene(new PopupTakeExplode());
+        }
+        Laya.timer.once(delay, this, () => {
+            Sail.director.popScene(popupUserExploded);
+            this.link.docker_ctrl.setRate(bombProb);
         });
     }
 }

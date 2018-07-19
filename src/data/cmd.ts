@@ -26,4 +26,6 @@ export const CMD = {
     TURNS: 'turns',
     /** 房主修改卡组 */
     CHANGE_CARD_TYPE: 'changeCardType',
+    /** 用户淘汰 */
+    USER_EXPLODING: 'userExploding',
 };

@@ -145,6 +145,7 @@ export const CARD_MAP = {
     },
 };
 
+export const TURN_CHANGE_ID = '0000';
 export const CARD_DISCRIBE_MAP = {
     '3001': {
         icon: 'bomb',
@@ -238,7 +239,7 @@ export const CARD_DISCRIBE_MAP = {
         icon: 'shuffle',
         name: '假装洗牌',
     },
-    turn: {
+    [TURN_CHANGE_ID]: {
         info: ['的回合'],
     },
 };
