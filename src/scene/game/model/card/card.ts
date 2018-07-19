@@ -1,7 +1,7 @@
 import { BaseEvent } from '../../../../mcTree/event';
 import { PlayerModel } from '../player';
 import { getCardInfo } from '../../../../utils/tool';
-import { Action, ActionDataInfo, ActionSendData } from './action';
+import { IAction, ActionDataInfo, ActionSendData } from './action';
 import { action_map } from './actionMap';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
@@ -17,12 +17,14 @@ export class CardModel extends BaseEvent {
     /** 牌的id */
     public card_id: string;
     /** 牌的类型名称 */
-    private card_type: string;
+    public card_type: string;
+    /** 牌的执行数目 */
+    public card_count: number;
     /** 所属者 */
     public owner: PlayerModel;
     public status: CardStatus = 'normal';
     /** 动作列表 */
-    public actions: Action[];
+    public actions: IAction[];
     constructor(card_id: string) {
         super();
         this.updateInfo(card_id);
@@ -34,8 +36,9 @@ export class CardModel extends BaseEvent {
         if (card_id === '*') {
             return;
         }
-        const { type } = getCardInfo(card_id);
+        const { type, count } = getCardInfo(card_id);
         this.card_type = type;
+        this.card_count = count;
 
         this.initAction();
         this.trigger(cmd.update_info);
@@ -49,7 +52,7 @@ export class CardModel extends BaseEvent {
         if (!actions_ori) {
             return;
         }
-        const actions = [] as Action[];
+        const actions = [] as IAction[];
         // tslint:disable-next-line:variable-name
         for (const ActionCreate of actions_ori) {
             actions.push(new ActionCreate(this));
@@ -66,7 +69,7 @@ export class CardModel extends BaseEvent {
         const pre_action = actions[step - 1];
         const cur_action = actions[step];
         /** 前一个结束 */
-        if (pre_action) {
+        if (pre_action && pre_action.complete) {
             pre_action.complete(action_info);
         }
         if (cur_action) {

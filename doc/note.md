@@ -1,7 +1,16 @@
 ## 2018-07-18 16:27:08
-* @bug 移动牌牌经常飞出去
-* toggleTip 牌时有问题
 
+-   @ques 我有很多类 每一个类有很多方法 public private
+    -   如何保持最少的 private
+    *   CardBoxCtrl 基本上都是 public 方法。。
+    *   开会整理下 每一个类
+
+*   @bug 移动牌牌经常飞出去
+*   toggleTip 牌时有问题
+
+*   @ques 这一大堆 observer 没有清除会不会造成新能问题
+
+-   @ques ts absctract optional
 
 ## 2018-07-10 10:33:55
 
@@ -28,87 +37,91 @@
 -   @ques 如果爆炸 爆炸的 action 没有后续操作...
 
 -   @ques seeTheFuture 要不要复盘
--   @todo cardBox 中所有的当前用户的行为全部放到 curCardBox
+    -   有些不需要显示的执行功能的牌但是复盘的时候需要显示这些牌
+    -   。。。‘’
+    *   这需不需要做回放的功能？？
 
-*   @ques player 的 observer 没有必要记录只要传递就可以了
+*   @todo cardBox 中所有的当前用户的行为全部放到 curCardBox
+
+-   @ques player 的 observer 没有必要记录只要传递就可以了
     -   seat 需要记录是自己的 就像 give_card_ctrl 一样
 
--   @ques import 循环引用
+*   @ques import 循环引用
 
-*   @ques 骨骼动画播放的位置...
+-   @ques 骨骼动画播放的位置...
 
--   @ques 能不能将代码重用 the_future + card cardBox cardModel
+*   @ques 能不能将代码重用 the_future + card cardBox cardModel
     -   渲染 滑动排序
     *   首先 the_future 中最精简的功能
     *   initUI
 
-*   @todo 剪短引线 倒计时
+-   @todo 剪短引线 倒计时
 
-*   @ques 弹出层关闭调用。。sail 的方法
+-   @ques 弹出层关闭调用。。sail 的方法
     -   @ques 能不能看 popScene 有没有相同
         已经创建 的...
 
--   @imp player.status card_status 太重复了
+*   @imp player.status card_status 太重复了
     -   能不能牌 只要被选中的状态
     -   其他的通过 player 的属性来判断。。。
     -   这样应该可以
 
-*   @ques action_info 要放在 player 还是 seat 上面
+-   @ques action_info 要放在 player 还是 seat 上面
 
     -   @ques 放在哪个上面更合理
     -   放在哪个上面 更简单
 
-*   @ques action 导致的 billboard 信息展示在什么地方抛出去
+-   @ques action 导致的 billboard 信息展示在什么地方抛出去
     -   action --> card
     *   这个和 action 本身地 作用是分离的这样 显的很乱？？
 
--   @ques 和章旸目前最大的意见冲突是什么
+*   @ques 和章旸目前最大的意见冲突是什么
     -   action 要不要放在 card 上面
 
-*   @ques 当前用户不展示其他用户的的选择用户的样式
+-   @ques 当前用户不展示其他用户的的选择用户的样式
 
     -   beAction 需要哪些 data
 
-*   @ques 是先 super destroy 还是自己 destroy
+-   @ques 是先 super destroy 还是自己 destroy
 
--   @ques 我怎么区分在其他用户的牌有没有打出...
+*   @ques 我怎么区分在其他用户的牌有没有打出...
 
-*   @ques 我怎么知道那张牌是被给的呢？？？
+-   @ques 我怎么知道那张牌是被给的呢？？？
 
     -   设置属性???
 
     *   和 discard 的冲突？？？
 
--   @ques 这个是复杂 别人 不一定看得懂？？
+*   @ques 这个是复杂 别人 不一定看得懂？？
 
     -   怎么变得简单， 最简单是什么样子的
 
--   @ques 复盘是不是需要特殊处理...
+*   @ques 复盘是不是需要特殊处理...
 
-*   @ques 偷牌：：给牌要不要等到狗手消失 再去添加牌
+-   @ques 偷牌：：给牌要不要等到狗手消失 再去添加牌
 
-*   @ques 出千 alter_the_future 这些通过什么去掉更合适
+-   @ques 出千 alter_the_future 这些通过什么去掉更合适
 
--   @ques promise 只能一次 如果服务器出错了 我就没办法继续了...
+*   @ques promise 只能一次 如果服务器出错了 我就没办法继续了...
 
--   action 需要 status act complete 这个属性吗
--   @ques player action_info 能不能用 status 来代替
+*   action 需要 status act complete 这个属性吗
+*   @ques player action_info 能不能用 status 来代替
 
-*   @ques 除了选择用户， 其他的 action 都只有当前用户才需要执行
+-   @ques 除了选择用户， 其他的 action 都只有当前用户才需要执行
 
-*   @ques 如何在服务器返回成功的时候才将 give_card_ctrl hide
+-   @ques 如何在服务器返回成功的时候才将 give_card_ctrl hide
 
--   @ques tslint ignore folder
+*   @ques tslint ignore folder
 
-*   @todo 猫手动画 整理下
+-   @todo 猫手动画 整理下
 
--   @ques 怎么判断是正常出牌还是给牌给其他人...
+*   @ques 怎么判断是正常出牌还是给牌给其他人...
 
-*   @ques 动作的操作人也需要创给 action
+-   @ques 动作的操作人也需要创给 action
 
--   @ques load 怎么很长时间才消失...
+*   @ques load 怎么很长时间才消失...
 
-*   @ques giveCard 这个应该等到服务器返回时候 才把牌放到狗的手里
+-   @ques giveCard 这个应该等到服务器返回时候 才把牌放到狗的手里
     -   这也应该在 cardBox 中执行
     -   收到服务器 --> Action --> playerA Card to PlayerB --> Seat --> cardBox
     -   牌放到狗手里 狗都一下 牌飞到用户手里 变成隐形
@@ -120,51 +133,51 @@
     *   ...
     *   @ques 给牌的命令在哪里发
 
--   @ques 曾小平 其他用户的牌已经出了我怎么处理
+*   @ques 曾小平 其他用户的牌已经出了我怎么处理
     -   我怎么知道 他牌已经出了呢 都是 ‘\*’
 
-*   CardData 要不要就删除了
+-   CardData 要不要就删除了
 
--   @ques 曾小平
+*   @ques 曾小平
 
     -   gameReplay hitData hitUserId 能不能换成 userId 和 hit 一样
 
--   @ques 为什么我监听两个 player_cmd.status_change 就会死机呢
+*   @ques 为什么我监听两个 player_cmd.status_change 就会死机呢
 
-*   @ques 这有一个问题
+-   @ques 这有一个问题
     1.  seat 上面 action_info 什么时候清除【complete】
     2.  如果同时有多个 action 作用在用户身上那么 这就不行了
         ...
 
--   @ques 每一个 action_act 是作用改变每一个人的属性 还是直接绑定 action
+*   @ques 每一个 action_act 是作用改变每一个人的属性 还是直接绑定 action
     -   哪一个更合理 哪一个更方便
     *   似乎直接使用 action 更方便 不需要额外再去定义一些属性了..
 
-*   @ques 只有当前用户的 card 才会去监听 action_send
+-   @ques 只有当前用户的 card 才会去监听 action_send
 
--   @ques 能不能把 docker 。。。全部放在 widget 文件夹 ui + ts
+*   @ques 能不能把 docker 。。。全部放在 widget 文件夹 ui + ts
 
-*   @ques 如果 promise es5 支持有问题 那我就跪了
+-   @ques 如果 promise es5 支持有问题 那我就跪了
 
--   @note 小功能区域 WidgetWrap
+*   @note 小功能区域 WidgetWrap
 
-*   @ques 发给服务器 hit 里面做怎么是 hitParams
+-   @ques 发给服务器 hit 里面做怎么是 hitParams
 
--   @ques 能不能将动作全部设置为动作...
+*   @ques 能不能将动作全部设置为动作...
 
     -   action 的名称要说明他的意义
 
--   @ques action 的类型
+*   @ques action 的类型
     -   发给服务器 actionSend
     -   act actionAct
     *   act complete
 
-*   @ques 将 promise Resolve 放在 playerModel 上 等待 ctrl 去执行
+-   @ques 将 promise Resolve 放在 playerModel 上 等待 ctrl 去执行
     -   有没有更好的方法
 
--   @ques 为什么 要无 null
+*   @ques 为什么 要无 null
 
-*   @ques 有些命令不是当前用户不去执行 这怎么处理
+-   @ques 有些命令不是当前用户不去执行 这怎么处理
 
     -   选着用户。。。 自己选择别人 操作者是自己...
 
@@ -172,59 +185,59 @@
     *   比方说其他用户 targetChooseId， 我根本就不需要展示...
     *   但是别人给了牌我要加进去
 
-*   @ques 这 action 能使用不同的命令有点乱 能不能使用统一的 action 命令呢？？
+-   @ques 这 action 能使用不同的命令有点乱 能不能使用统一的 action 命令呢？？
 
--   @ques 新建的 promise resolve 没有执行会不会导致 无法删除 内存泄漏的 bug 【google】
+*   @ques 新建的 promise resolve 没有执行会不会导致 无法删除 内存泄漏的 bug 【google】
 
--   PartialAll<T, U, ...> 这后面能不能是任意多个数
+*   PartialAll<T, U, ...> 这后面能不能是任意多个数
 
-*   @ques 牌属于一个人 或者 discard_card 这如何处理
+-   @ques 牌属于一个人 或者 discard_card 这如何处理
     -   在玩家手上出去去
     -   复盘的时候如何设置
     *   owner player 两个处理太麻纺了
 
--   不需要 stealCard 这个类了
+*   不需要 stealCard 这个类了
     -   只需要根据 cardId 找 action 就可以了;
 
-*   @note 偷牌 选择一个人 如果选择一个人 那么就返回...
+-   @note 偷牌 选择一个人 如果选择一个人 那么就返回...
 
--   ActionCtrl
+*   ActionCtrl
 
-*   action --> cardm --> cardctrl --> seaTheFuture
+-   action --> cardm --> cardctrl --> seaTheFuture
 
-*   @note 用来判断 一张牌 有没有出去
+-   @note 用来判断 一张牌 有没有出去
     1.  准备出牌可以在 game 设置一个属性。。。记录准备出的牌
     2.  game discard_card 还能不能设置属性...
 
--   @ques choose 选择目标 选择成功之后 消除 却在另外一个命令里面这有问题
+*   @ques choose 选择目标 选择成功之后 消除 却在另外一个命令里面这有问题
 
-*   @ques 所有关于牌的动画需要在一个地方统一处理
+-   @ques 所有关于牌的动画需要在一个地方统一处理
 
-*   @ques
+-   @ques
 
--   @ques 致盲时 干扰的牌的样式...
+*   @ques 致盲时 干扰的牌的样式...
 
-*   action active
+-   action active
     -   作用 反馈
 
--   @ques chooseTarget waitTarget 是不是应该属于一个动作
+*   @ques chooseTarget waitTarget 是不是应该属于一个动作
 
--   @ques 激活到结束
+*   @ques 激活到结束
 
-*   steal
+-   steal
     -   判断 step 只有第一次是出去去..
     -   多定义几个
     -   step ！= 1 找到
     *   step 每一个 step 命令不一样 找用户 显示箭头.
     *   ..
 
--   actions --> chooseTarget --> owner + target_list -->
+*   actions --> chooseTarget --> owner + target_list -->
 
--   @ques chooseTarget 由 game 去选择一个目标这个想法其实不错；
+*   @ques chooseTarget 由 game 去选择一个目标这个想法其实不错；
 
-*   game 包括
+-   game 包括
 
-*   @ques 有那些牌可能需要特殊的处理
+-   @ques 有那些牌可能需要特殊的处理
     -   exploding 3001
     *   steal 3401
     *   see_the_future 3501
@@ -233,7 +246,7 @@
     *   blind 4001
     *   fake_shuffle 4401
 
--   @ques steal 的状态变化
+*   @ques steal 的状态变化
 
     -   step_list
 
@@ -243,7 +256,7 @@
     *   getCard
     *   end
 
--   @ques 牌已经打出 但是还是属于用户 用户可以接着操作...
+*   @ques 牌已经打出 但是还是属于用户 用户可以接着操作...
 
     -   active 开始激活
 
@@ -251,50 +264,50 @@
 
     -   end 失去作用
 
--   @note shuffle fake_shuffle 需要洗牌的声音
+*   @note shuffle fake_shuffle 需要洗牌的声音
 
     -   这个在牌打出的地方去处理
     -   discard_zone
 
--   @note blind player status + blind
--   @note steal player status + need_give_card
--   @note anooy card is_freeze:> freeze unFreeze | setStatus
+*   @note blind player status + blind
+*   @note steal player status + need_give_card
+*   @note anooy card is_freeze:> freeze unFreeze | setStatus
 
--   @ques 只有在自己能拿牌的时候才发送命令给服务器...
+*   @ques 只有在自己能拿牌的时候才发送命令给服务器...
     -   cardHeap 怎么知道 当前用户是否是可以抓牌
     -   由 player 发送。。
 
-*   @todo 设置炸弹概率
+-   @todo 设置炸弹概率
 
--   @note 玩家的牌飞行时间函数 先快后慢
+*   @note 玩家的牌飞行时间函数 先快后慢
 
-*   @todo 炸弹自动打出 但是还在牌堆里面
+-   @todo 炸弹自动打出 但是还在牌堆里面
 
--   @imp 拖出牌 重新整理 还是有问题..
+*   @imp 拖出牌 重新整理 还是有问题..
 
--   @note tween 对象属性变化
+*   @note tween 对象属性变化
     -   变化间隔..
 
-*   @ques 其他玩家的牌没有居中
+-   @ques 其他玩家的牌没有居中
 
-*   @ques 其他玩家 gameStart 牌没有更新
+-   @ques 其他玩家 gameStart 牌没有更新
 
--   @ques 当前用户的牌堆要比其他的一切都高
+*   @ques 当前用户的牌堆要比其他的一切都高
 
--   @ques 其他玩家的出牌动画
+*   @ques 其他玩家的出牌动画
 
     -   要不要所有的牌全部用一个类
 
-*   @todo 当前用户牌放到 出牌区 就清除所有的事件绑定
+-   @todo 当前用户牌放到 出牌区 就清除所有的事件绑定
 
--   @ques
+*   @ques
 
-*   @bug tween 不支持 rotation
+-   @bug tween 不支持 rotation
     -   tween loop 有时候不灵 is_stop, 有问题
 
--   @note tween 直接使用 Laya.Ease.BackIn 怎么样
+*   @note tween 直接使用 Laya.Ease.BackIn 怎么样
 
--   @ques 当前用户的 seat_id
+*   @ques 当前用户的 seat_id
 
     -   @ques 其他用户的信息在当前用户的前面，
     -   每次你去判断当前用户的座位 id
@@ -304,91 +317,91 @@
 
     -   这是要放在 model 还是 ctrl 里面去执行。。。
 
--   @bug 自己拍拖动 可能会飞出去
+*   @bug 自己拍拖动 可能会飞出去
 
-*   @todo game_type_map
+-   @todo game_type_map
 
-*   @ques discardCard 当前用户 非当前用户 判断 有没有必要抽成两个 class
+-   @ques discardCard 当前用户 非当前用户 判断 有没有必要抽成两个 class
 
--   @ques 出牌失败 返回牌堆...
+*   @ques 出牌失败 返回牌堆...
 
-*   @ques 其他用户出牌 我怎么知道出了那一张牌
+-   @ques 其他用户出牌 我怎么知道出了那一张牌
 
-*   @ques 如果是 borrow 从背面到正面展示
+-   @ques 如果是 borrow 从背面到正面展示
     -   我如何去控制大小
     -   其他玩家本来都没有逼的牌 我如何控制显示牌面...
 
--   card box borrow card to discard zone
+*   card box borrow card to discard zone
 
-*   郑铭 保卫萝卜的源码再发给我。。
+-   郑铭 保卫萝卜的源码再发给我。。
 
-*                                                                                                                                                                                                                                                                                 @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                               @note hit 服务器返回错误 要将牌再放到牌堆里面
 
--   @ques ts 测试 private
+*   @ques ts 测试 private
 
-*   @ques 复盘的时候会有
+-   @ques 复盘的时候会有
 
-*   discardZone card 和当前用户的牌 有很多相似的代码 能不能公用 initUI 方法公用
+-   discardZone card 和当前用户的牌 有很多相似的代码 能不能公用 initUI 方法公用
 
-*   @ques sail 能
+-   @ques sail 能
 
--   @ques 所有的事件 的方法处理加上 On 应该会 更清晰...
+*   @ques 所有的事件 的方法处理加上 On 应该会 更清晰...
 
-*   @ques card 在销毁的时候的处理。。
+-   @ques card 在销毁的时候的处理。。
     -   card discard 的时候 model 并没有被销毁 但是 ctrl 需要销毁...
 
--   @note 马一帆 import 比方说 primus socket http
+*   @note 马一帆 import 比方说 primus socket http
 
-*   @note card unSelect 需要根据 card 的位置将他插入到不同的位置
+-   @note card unSelect 需要根据 card 的位置将他插入到不同的位置
 
--   @ques 在什么地方判断是否出牌
+*   @ques 在什么地方判断是否出牌
 
-*   @bug 有时候 牌 拖动的时候 鼠标不再牌上
+-   @bug 有时候 牌 拖动的时候 鼠标不再牌上
 
--   @note 其他玩家的牌是居中对 齐的。。
+*   @note 其他玩家的牌是居中对 齐的。。
 
--   @ques CurCardBox 里面一大堆乱的属性 控制移动 很乱
+*   @ques CurCardBox 里面一大堆乱的属性 控制移动 很乱
 
--   @ques 如果在 CurCard selecte 的时候 destroy
+*   @ques 如果在 CurCard selecte 的时候 destroy
     -   不要因为 view 加到 stage 而忘记删除
 
-*   @note 和章旸组织 code review()
+-   @note 和章旸组织 code review()
     _ 现在怎么写 怎么想
     _ 对方什么意见 \* 吐槽交流会。。。
 
--   @note sortCard 的动画
+*   @note sortCard 的动画
 
-*   @note 选中一次就无法再被选中了。。。
+-   @note 选中一次就无法再被选中了。。。
 
--   @ques 出牌 的动作包括哪些内容。。
+*   @ques 出牌 的动作包括哪些内容。。
 
     -   划出的位置 牌堆重新整理
     -   等待处理 能出牌 出牌 不能出牌 牌重新进入牌堆
 
--   @ques 划出去的牌我怎么去 放在什么地方
+*   @ques 划出去的牌我怎么去 放在什么地方
 
     -   cardBox.selected_card
 
--   @ques 划到什么位置 触发牌的重新整理
+*   @ques 划到什么位置 触发牌的重新整理
     -   向上划出一定的位置触发 触发之后直接跳出牌堆
         -   @ques 跳出多高？？
             -   一半 且发光
     *   选中的牌 在所有的牌的上面
 
-*   @note 牌的排列是一上一下牌一上一下
+-   @note 牌的排列是一上一下牌一上一下
 
-*   @note 出牌区域先显示 突出这个区域
+-   @note 出牌区域先显示 突出这个区域
 
-*   @note 牌堆里的牌划到我的牌堆里面一定的区域才算 出牌
+-   @note 牌堆里的牌划到我的牌堆里面一定的区域才算 出牌
 
-*   @ques cardBox 整体滑动如何处理
+-   @ques cardBox 整体滑动如何处理
 
     -   @ques 是整体居中的吗
     -   @ques 最多不能 有空白区域
         -   @ques 查看牌的样式是例外 那张牌居中显示
         -   返回之后 如果再次滑 动需要重新整理。。。
 
-*   Game -->
+-   Game -->
 
     -   Seat --> CardBox --> Card
     -   discardZone
@@ -396,18 +409,18 @@
     *   CardCtrl --> CardModel --> player --> GameModel.discard_card
         -   --> discard_zone
 
--   @ques CurCard 中引用 CurCardBox 用 parent 来做这个处理
+*   @ques CurCard 中引用 CurCardBox 用 parent 来做这个处理
     -   有没有更好的方法。。。
     *   我这还要用到 discardZone...
 
-*   @ques 出牌的逻辑是什么
+-   @ques 出牌的逻辑是什么
 
     -   CardCtrl --> CardModel --> Game::discardCard --> discardZoneCtrl --> 等待服务器返回
         -   成功 就这样...
         -   失败 将牌还原到牌堆
     -   @ques 在什么地方去发送命令给服务器
 
-*   @ques 不知道子类的方法在哪调用
+-   @ques 不知道子类的方法在哪调用
 
 ## 2018-07-06 10:16:50
 

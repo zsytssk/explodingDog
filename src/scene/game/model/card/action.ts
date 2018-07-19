@@ -7,8 +7,10 @@ import { PlayerModel } from '../player';
 import { CardModel } from './card';
 
 type Data = {
+    count: number;
     game: GameModel;
     player?: PlayerModel;
+    target?: PlayerModel;
 };
 export type ActionDataInfo = PartialAll<HitData['hitInfo'], Data>;
 export type ActionType =
@@ -16,7 +18,8 @@ export type ActionType =
     | 'wait_get_card'
     | 'see_the_future'
     | 'alter_the_future'
-    | 'show_defuse';
+    | 'show_defuse'
+    | 'slap';
 export type ActionStatus = 'act' | 'complete';
 export type BeActionInfo = {
     action: ActionType;
@@ -29,18 +32,23 @@ export type ActionSendData = {
     newSortCards?: string[];
     card?: string;
 };
-export abstract class Action {
-    protected card: CardModel;
+// tslint:disable-next-line:interface-name
+export interface IAction {
     /** 动作的作用 */
-    public abstract act(data: ActionDataInfo);
+    act?(data: ActionDataInfo);
     /** 动作完成 */
-    public abstract complete(data: ActionDataInfo);
+    complete?(data: ActionDataInfo);
+}
+export abstract class Action {
+    public card: CardModel;
+    /** 动作的作用 */
+    /** 动作完成 */
     constructor(card: CardModel) {
         this.card = card;
     }
 }
 
-export class ChooseTarget extends Action {
+export class ChooseTarget extends Action implements IAction {
     private name = 'choose_target' as ActionType;
     private choose_list: PlayerModel[] = [];
     constructor(card: CardModel) {
@@ -90,7 +98,7 @@ export class ChooseTarget extends Action {
     }
 }
 
-export class WaitGetCard extends Action {
+export class WaitGetCard extends Action implements IAction {
     private name = 'wait_get_card' as ActionType;
     private target: PlayerModel;
     constructor(card: CardModel) {
@@ -142,7 +150,7 @@ export class WaitGetCard extends Action {
         log('complete', data);
     }
 }
-export class ShowDefuse extends Action {
+export class ShowDefuse extends Action implements IAction {
     public name = 'show_defuse' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
@@ -153,8 +161,8 @@ export class ShowDefuse extends Action {
         player
             .beActioned({
                 action: this.name,
+                data,
                 status: 'act',
-                data
             })
             .subscribe((card_id: string) => { });
         log('act', data);
@@ -162,7 +170,7 @@ export class ShowDefuse extends Action {
     public complete() { }
 }
 
-export class SeeTheFuture extends Action {
+export class SeeTheFuture extends Action implements IAction {
     private name = 'see_the_future' as ActionType;
     constructor(card: CardModel) {
         super(card);
@@ -203,7 +211,7 @@ export class SeeTheFuture extends Action {
     }
 }
 
-export class AlterTheFuture extends Action {
+export class AlterTheFuture extends Action implements IAction {
     private name = 'alter_the_future' as ActionType;
     constructor(card: CardModel) {
         super(card);
@@ -247,9 +255,29 @@ export class AlterTheFuture extends Action {
         log('complete', data);
     }
 }
-
-export class showSetExplode extends Action {
-    private name = 'show_set_explode';
+export class Slap extends Action {
+    private name = 'slap' as ActionType;
+    constructor(card: CardModel) {
+        super(card);
+    }
+    public act(data: ActionDataInfo) {
+        const { game, targetUserId } = data;
+        const { card_count } = this.card;
+        const target = game.getPlayerById(targetUserId);
+        data.target = target;
+        data.count = card_count;
+        target
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'act',
+            })
+            .subscribe();
+        log('act', data);
+    }
+}
+export class ShowSetExplode extends Action {
+    private name = 'show_set_explode' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
         if (player.is_cur_player) {
