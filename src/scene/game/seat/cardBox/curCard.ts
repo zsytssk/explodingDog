@@ -79,29 +79,36 @@ export class CurCardCtrl extends CardCtrl {
         if (this.show_tip) {
             return false;
         }
-        this.is_move = true;
         const { x, y } = this.start_pos;
         const { stageX, stageY } = event;
         const move_delta = {
             x: stageX - x,
             y: stageY - y,
         };
+        this.is_move = true;
+        log('card:>move', move_delta);
+        if (Math.abs(move_delta.y) < Math.abs(move_delta.x)) {
+            this.mouseEnd();
+            return;
+        }
+        event.stopPropagation();
         if (move_delta.y < -30) {
             this.select();
             return;
         }
     }
-    private mouseEnd(event: Laya.Event) {
-        log('end');
+    private mouseEnd() {
         if (!this.is_touched) {
             return false;
         }
         this.is_touched = false;
+        this.start_pos = {} as Point;
         if (!this.is_move) {
             this.toggleTip();
             return;
         }
         this.is_move = false;
+        log('card:>end');
     }
     /** 选中某张牌吧 */
     public select() {

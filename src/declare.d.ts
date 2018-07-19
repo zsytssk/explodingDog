@@ -11,6 +11,13 @@ interface CusWindow extends Window {
     userId: string;
 }
 
+declare namespace Component {
+    export class ScaleBox {}
+    export class ScaleImg {}
+    export class ScaleBtn {}
+    export class valueBar {}
+}
+
 // declare const ui;
 
 declare class Primus {

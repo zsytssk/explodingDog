@@ -55,6 +55,7 @@ type RoundInfoData = {
     lastHitUserId: string;
     lastHitCard: string;
     remainCard: 9;
+    bombProb: number;
 };
 type GameReplayData = {
     curUserInfo: UserData;
