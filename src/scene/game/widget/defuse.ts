@@ -1,6 +1,5 @@
-
-// import { CurCardBoxCtrl } from "../seat/cardBox/curCardBox";
-import { CardModel } from "../model/card/card";
+import { CurCardBoxCtrl } from '../seat/cardBox/curCardBox';
+import { CardModel } from '../model/card/card';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
@@ -14,21 +13,24 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     init(remainTime) {
         this.ani = new Laya.Skeleton();
         this.ani.pos(675, 355);
-        this.ani.load('animation/chaidan.sk', new Laya.Handler(this, () => {
-            this.ani.play(0, false);
-            if (remainTime && !isNaN(remainTime)) {
-                let rate = 6 / remainTime;
-                this.ani.playbackRate(rate);
-            }
-            this.addChild(this.ani);
-        }));
+        this.ani.load(
+            'animation/chaidan.sk',
+            new Laya.Handler(this, () => {
+                this.ani.play(0, false);
+                if (remainTime && !isNaN(remainTime)) {
+                    let rate = 6 / remainTime;
+                    this.ani.playbackRate(rate);
+                }
+                this.addChild(this.ani);
+            }),
+        );
         // this.closeEffect = function () {
         //     if (this.cardBoxCtrl) {
         //         this.cardBoxCtrl.putCardBoxBack();
         //     }
         // };
     }
-    setCards(cards: CardModel[], card_box_ctrl) {
+    setCards(cards: CardModel[], card_box_ctrl: CurCardBoxCtrl) {
         const { card_box_wrap, ani } = this;
         this.cardBoxCtrl = card_box_ctrl;
         card_box_ctrl.putCardBoxInWrap(card_box_wrap);
