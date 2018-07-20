@@ -173,7 +173,7 @@ export const CARD_DISCRIBE_MAP = {
     },
     '3401': {
         icon: 'steal',
-        info: ['使用要牌\n正在选择', '使用了要牌', '正在选择', '一张手牌'],
+        info: ['使用要牌\n正在选择', '正在选择', '一张手牌'],
     },
     '3501': {
         icon: 'future',
@@ -197,7 +197,7 @@ export const CARD_DISCRIBE_MAP = {
     },
     '3801': {
         icon: 'bottom',
-        name: '釜底抽薪',
+        name: '偷牌',
     },
     '3901': {
         icon: 'annoy',

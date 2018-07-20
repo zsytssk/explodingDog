@@ -51,7 +51,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             let item = data.maxInfo[key];
             if (item && Object.keys(item) != 0) {
                 let maxInfo = new MaxInfo(key, item.nickname);
-                maxInfo.top = 65 * index;
+                maxInfo.top = 65 * index++;
                 this.maxInfoBox.addChild(maxInfo);
             }
         }

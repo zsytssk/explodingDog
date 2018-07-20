@@ -234,6 +234,9 @@ export class GameCtrl extends BaseCtrl {
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.leave();
         });
+        this.onModel(game_cmd.update_bill_board, (data: { fromUser, toUser, cardId, step }) => {
+            this.link.bill_board_ctrl.updateInfo(data);
+        });
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
