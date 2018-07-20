@@ -21,7 +21,9 @@ type TouchInfo = {
 
 export class CurCardBoxCtrl extends CardBoxCtrl {
     protected link: Link;
-    private touch_info = {} as TouchInfo;
+    private touch_info = {
+        status: 'default'
+    } as TouchInfo;
     constructor(view: CurCardBoxUI) {
         super(view);
         this.link.view = view;

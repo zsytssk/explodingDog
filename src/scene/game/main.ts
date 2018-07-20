@@ -30,6 +30,7 @@ import { ExplodePosCtrl } from './widget/explodePos';
 import { SlapCtrl } from './widget/slap';
 import { PopupTakeExplode } from '../popup/popupTakeExplode';
 import { PopupUserExploded } from '../popup/popupUserExploded';
+import { PopupGameOver } from '../popup/popupGameOver';
 
 interface Link {
     view: ui.game.mainUI;
@@ -200,6 +201,7 @@ export class GameCtrl extends BaseCtrl {
             },
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
+            [CMD.GAME_OVER]: this.onServerGameOver
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -412,5 +414,11 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(popupUserExploded);
             this.link.docker_ctrl.setRate(bombProb);
         });
+    }
+
+    public onServerGameOver(data) {
+        let pop = new PopupGameOver();
+        pop.updateView(data);
+        Sail.director.popScene(pop);
     }
 }

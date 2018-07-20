@@ -1,4 +1,5 @@
 import { getAvatar } from "../../utils/tool";
+import { Avatar } from "./component/avatar";
 
 export class PopupUserExploded extends ui.popup.popupUserExplodedUI {
     CONFIG = {
@@ -35,14 +36,3 @@ export class PopupUserExploded extends ui.popup.popupUserExplodedUI {
     }
 }
 
-class Avatar extends ui.popup.component.avatarUI {
-    constructor(data) {
-        super();
-        this.init(data);
-    }
-    init({ avatar, nickname, isDead }) {
-        this.avatar.skin = isDead ? 'images/game/avatar_die.png' : getAvatar(avatar);
-        this.username.changeText(nickname);
-    }
-
-}

@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":5,
     "props":{"y":0,"x":0,"width":190,"sceneColor":"#000000","height":190,"anchorY":0,"anchorX":0},
     "nodeParent":-1,
     "label":"View",
@@ -12,6 +12,19 @@
     "hasChild":true,
     "compId":1,
     "child":[
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":-89,"x":23,"visible":false,"var":"crown","skin":"images/game/icon_win.png"},
+            "nodeParent":1,
+            "label":"Image(crown)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":4,
+            "child":[
+                ]
+        },
         {
             "x":15,
             "type":"Image",
@@ -35,6 +48,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Label",
+            "props":{"y":192,"x":0,"width":189,"visible":false,"var":"score","height":31,"fontSize":24,"font":"Microsoft YaHei","color":"#ca9c4b","align":"center"},
+            "nodeParent":1,
+            "label":"Label(score)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":5,
             "child":[
                 ]
         }],

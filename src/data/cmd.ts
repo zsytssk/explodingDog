@@ -28,4 +28,6 @@ export const CMD = {
     CHANGE_CARD_TYPE: 'changeCardType',
     /** 用户淘汰 */
     USER_EXPLODING: 'userExploding',
+    /** 游戏结束 */
+    GAME_OVER: 'gameOver'
 };
