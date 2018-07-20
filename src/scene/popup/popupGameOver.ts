@@ -3,8 +3,12 @@ import { isCurPlayer } from "../../utils/tool";
 import { tween } from "../../mcTree/utils/animate";
 import { log } from "../../mcTree/utils/zutil";
 import { CMD } from "../../data/cmd";
+import { Hall } from "../hall/scene";
 
 export class PopupGameOver extends ui.popup.popupGameOverUI {
+    isUserCreate;//是否为用户创建的房间
+    name = 'game_over';
+    group = 'exoploding';
     constructor() {
         super();
         this.init();
@@ -12,6 +16,10 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     init() {
         this.progressBar.bar.y = 2;
         this.btnBack.on(Laya.Event.CLICK, this, () => {
+            if (!this.isUserCreate) {
+                Sail.director.runScene(new Hall());
+                return;
+            }
             Sail.io.emit(CMD.OUT_ROOM);
         });
     }
@@ -47,6 +55,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
                 this.maxInfoBox.addChild(maxInfo);
             }
         }
+        this.isUserCreate = data.isUserCreate;
     }
 }
 
