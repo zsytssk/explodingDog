@@ -106,7 +106,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":690,"x":503,"var":"btnBack","stateNum":"1","skin":"images/game/btn_back_hall.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
+            "props":{"y":690,"x":503,"var":"btnBack","stateNum":"1","skin":"images/game/btn_back_hall.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btnBack)",
             "isDirectory":false,

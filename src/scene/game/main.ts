@@ -380,6 +380,7 @@ export class GameCtrl extends BaseCtrl {
     }
     public destroy() {
         super.destroy();
+        this.link.docker_ctrl.destroy();
         Sail.io.unregister(this.actions);
     }
 

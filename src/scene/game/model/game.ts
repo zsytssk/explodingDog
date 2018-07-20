@@ -163,10 +163,10 @@ export class GameModel extends BaseEvent {
         for (const player of player_list) {
             if (player.isMyId(speak_id)) {
                 player.setStatus('speak');
-                this.trigger(cmd.update_bill_board, {
-                    fromUser: player,
-                    cardId: TURN_CHANGE_ID
-                });
+                // this.trigger(cmd.update_bill_board, {
+                //     fromUser: player,
+                //     cardId: TURN_CHANGE_ID
+                // });
             } else {
                 player.setStatus('normal');
             }

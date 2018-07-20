@@ -108,4 +108,8 @@ export class DockerCtrl extends BaseCtrl {
         const view = this.link.view;
         stopAni(view);
     }
+    public destroy() {
+        super.destroy();
+        stopAni(this.link.view);
+    }
 }
