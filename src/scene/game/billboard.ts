@@ -1,6 +1,7 @@
 import { PlayerModel } from './model/player';
 import { getAvatar } from '../../utils/tool';
 import { CARD_DISCRIBE_MAP } from '../../data/card';
+import { log } from '../../mcTree/utils/zutil';
 
 export class BillBoardCtrl {
     private link;
@@ -21,18 +22,18 @@ export class BillBoardCtrl {
         fromUser,
         toUser,
         cardId,
-        step,
+        step = 1,
     }: {
-        fromUser: PlayerModel;
-        toUser?: PlayerModel;
-        cardId: string;
-        step?: number;
-    }) {
+            fromUser: PlayerModel;
+            toUser?: PlayerModel;
+            cardId: string;
+            step?: number;
+        }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
-        let text = fromUser.name;
+        let text = fromUser.nickname;
         if (toUser) {
-            text += `对${toUser.name}`;
+            text += `对${toUser.nickname}`;
             avatarTo.skin = getAvatar(toUser.avatar);
         } else {
             avatarTo.skin = `images/game/card/icon_unknow.png`;
@@ -40,18 +41,10 @@ export class BillBoardCtrl {
         text += '\n';
         const cardDescribe = CARD_DISCRIBE_MAP[cardId];
         if (cardDescribe.info) {
-            text += `${cardDescribe.info[step]}`;
+            text += `${cardDescribe.info[step - 1]}`;
         } else {
             text += `使用了${cardDescribe.name}`;
         }
-        // switch (cardId) {
-        //     case '3001':
-        //         text += `${cardDescribe.info[step]}`;
-        //         break;
-        //     default:
-        //         text += `使用了${cardDescribe.name}`;
-        //         break;
-        // }
         operationTip.text = text;
         if (cardDescribe.icon) {
             if (!cardIcon.visible) {

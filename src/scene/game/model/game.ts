@@ -3,12 +3,14 @@ import { PlayerModel } from './player';
 import { CardModel } from './card/card';
 import { logErr } from '../../../mcTree/utils/zutil';
 import * as fill from 'lodash/fill';
+import { TURN_CHANGE_ID } from '../../../data/card';
 
 export const cmd = {
     add_player: 'add_player',
     card_type_change: 'card_type_change',
     discard_card: 'discard_card',
     status_change: 'status_change',
+    update_bill_board: 'update_bill_board'
 };
 
 /** 牌的类型  */
@@ -161,6 +163,10 @@ export class GameModel extends BaseEvent {
         for (const player of player_list) {
             if (player.isMyId(speak_id)) {
                 player.setStatus('speak');
+                // this.trigger(cmd.update_bill_board, {
+                //     fromUser: player,
+                //     cardId: TURN_CHANGE_ID
+                // });
             } else {
                 player.setStatus('normal');
             }
@@ -229,6 +235,21 @@ export class GameModel extends BaseEvent {
             player,
         });
         this.discard_card = card;
+        //更新billboard
+        let targetPlayer = null;
+        if (hit_info.targetUserId) {
+            targetPlayer = this.getPlayerById(hit_info.targetUserId);
+        }
+        switch (data.hitCard) {
+            default:
+                this.trigger(cmd.update_bill_board, {
+                    fromUser: player,
+                    toUser: targetPlayer,
+                    cardId: data.hitCard,
+                    step: hit_info.step
+                });
+                break;
+        }
     }
     public unDiscardCard(data: HitData) {
         const player = this.getPlayerById(data.userId);

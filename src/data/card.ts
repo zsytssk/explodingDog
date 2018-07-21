@@ -145,6 +145,7 @@ export const CARD_MAP = {
     },
 };
 
+export const TURN_CHANGE_ID = '0000';
 export const CARD_DISCRIBE_MAP = {
     '3001': {
         icon: 'bomb',
@@ -172,7 +173,7 @@ export const CARD_DISCRIBE_MAP = {
     },
     '3401': {
         icon: 'steal',
-        info: ['使用要牌\n正在选择', '使用了要牌', '正在选择', '一张手牌'],
+        info: ['使用要牌\n正在选择', '正在选择', '一张手牌'],
     },
     '3501': {
         icon: 'future',
@@ -196,7 +197,7 @@ export const CARD_DISCRIBE_MAP = {
     },
     '3801': {
         icon: 'bottom',
-        name: '釜底抽薪',
+        name: '偷牌',
     },
     '3901': {
         icon: 'annoy',
@@ -238,7 +239,7 @@ export const CARD_DISCRIBE_MAP = {
         icon: 'shuffle',
         name: '假装洗牌',
     },
-    turn: {
+    [TURN_CHANGE_ID]: {
         info: ['的回合'],
     },
 };

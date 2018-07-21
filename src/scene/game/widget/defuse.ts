@@ -5,6 +5,7 @@ import { log } from "../../../mcTree/utils/zutil";
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
+    group = 'exploding';
     ani: Laya.Skeleton;
     curSeatCtrl;
     constructor(remainTime) {

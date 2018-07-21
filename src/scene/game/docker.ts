@@ -32,7 +32,7 @@ export class DockerCtrl extends BaseCtrl {
         this.link.arrow = arrow;
         this.link.rateLabel = view.rateLabel;
     }
-    protected initEvent() {}
+    protected initEvent() { }
     public start() {
         const { wire, tip, arrow } = this.link;
         wire.visible = true;
@@ -107,5 +107,9 @@ export class DockerCtrl extends BaseCtrl {
         this.isShaking = false;
         const view = this.link.view;
         stopAni(view);
+    }
+    public destroy() {
+        super.destroy();
+        stopAni(this.link.view);
     }
 }

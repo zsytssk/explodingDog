@@ -28,6 +28,9 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 import { ExplodePosCtrl } from './widget/explodePos';
 import { SlapCtrl } from './widget/slap';
+import { PopupTakeExplode } from '../popup/popupTakeExplode';
+import { PopupUserExploded } from '../popup/popupUserExploded';
+import { PopupGameOver } from '../popup/popupGameOver';
 
 interface Link {
     view: ui.game.mainUI;
@@ -197,6 +200,8 @@ export class GameCtrl extends BaseCtrl {
                 this.model.setSpeaker(data.speakerId);
             },
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
+            [CMD.USER_EXPLODING]: this.onServerUserExploding,
+            [CMD.GAME_OVER]: this.onServerGameOver
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -228,6 +233,9 @@ export class GameCtrl extends BaseCtrl {
         });
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.leave();
+        });
+        this.onModel(game_cmd.update_bill_board, (data: { fromUser, toUser, cardId, step }) => {
+            this.link.bill_board_ctrl.updateInfo(data);
         });
     }
     /** 游戏复盘逻辑 */
@@ -372,6 +380,7 @@ export class GameCtrl extends BaseCtrl {
     }
     public destroy() {
         super.destroy();
+        this.link.docker_ctrl.destroy();
         Sail.io.unregister(this.actions);
     }
 
@@ -392,5 +401,28 @@ export class GameCtrl extends BaseCtrl {
                 seatCtrl.hideSeat();
             }
         });
+    }
+    /**
+     * 用户淘汰
+     */
+    public onServerUserExploding(data: UserExplodingData) {
+        const { explodeUserId, bombProb } = data;
+        let delay = 0;
+        let popupUserExploded = new PopupUserExploded();
+        popupUserExploded.updateData(data);
+        if (isCurPlayer(explodeUserId)) {
+            delay = 2000;
+            Sail.director.popScene(new PopupTakeExplode());
+        }
+        Laya.timer.once(delay, this, () => {
+            Sail.director.popScene(popupUserExploded);
+            this.link.docker_ctrl.setRate(bombProb);
+        });
+    }
+
+    public onServerGameOver(data) {
+        let pop = new PopupGameOver();
+        pop.updateView(data);
+        Sail.director.popScene(pop);
     }
 }

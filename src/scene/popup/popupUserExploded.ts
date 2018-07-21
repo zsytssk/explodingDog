@@ -1,11 +1,18 @@
 import { getAvatar } from "../../utils/tool";
+import { Avatar } from "./component/avatar";
 
-export class popupUserExploded extends ui.popup.popupUserExplodedUI {
+export class PopupUserExploded extends ui.popup.popupUserExplodedUI {
+    CONFIG = {
+        shadowAlpha: 0.8,
+        closeByGroup: true,
+        autoClose: 2500
+    }
+    group = 'exploding';
     constructor() {
         super();
     }
 
-    updateView(data) {
+    updateData(data) {
         //更新数据
         this.explodeUserName.changeText(data.explodeUserName);
         this.remainBomb.changeText(data.remainBomb);
@@ -20,7 +27,7 @@ export class popupUserExploded extends ui.popup.popupUserExplodedUI {
                 if (data.explodeUserId == user.userId) {
                     explodeUserAvatar = avatar;
                 }
-                avatar.left = 100 + (this.avatarBox.width - 200) / (data.userList.length + 1) * (index + 1);
+                avatar.left = (this.avatarBox.width - 80) / (data.userList.length + 1) * (index + 1);
                 this.avatarBox.addChild(avatar);
             });
         }
@@ -29,14 +36,3 @@ export class popupUserExploded extends ui.popup.popupUserExplodedUI {
     }
 }
 
-class Avatar extends ui.popup.component.avatarUI {
-    constructor(data) {
-        super();
-        this.init(data);
-    }
-    init({ avatar, nickname, isDead }) {
-        this.avatar.skin = isDead ? 'images/game/avatar_die.png' : getAvatar(avatar);
-        this.username.changeText(nickname);
-    }
-
-}

@@ -6,6 +6,8 @@ import { default as hitData } from './serverData/hit.json';
 import { default as StealData } from './serverData/steal.json';
 import { default as AlterTheFutureData } from './serverData/alterTheFuture.json';
 import { default as SeeTheFutureData } from './serverData/seeTheFuture.json';
+import { default as userExplodingData } from './serverData/userExploding.json';
+import { default as gameOverData } from './serverData/gameOver.json';
 import { describe, assert } from '../mcTree/utils/testUtil';
 import { log } from '../mcTree/utils/zutil';
 
@@ -53,4 +55,14 @@ export function billboard() {
         '3401',
         1,
     );
+}
+
+export function testUserExploding() {
+    const game_ctrl = (window as any).game_ctrl as GameCtrl;
+    game_ctrl.onServerUserExploding(userExplodingData.res);
+}
+
+export function testGameOver() {
+    const game_ctrl = (window as any).game_ctrl as GameCtrl;
+    game_ctrl.onServerGameOver(gameOverData.res);
 }

@@ -1,0 +1,68 @@
+import { Avatar } from "./component/avatar";
+import { isCurPlayer } from "../../utils/tool";
+import { tween } from "../../mcTree/utils/animate";
+import { log } from "../../mcTree/utils/zutil";
+import { CMD } from "../../data/cmd";
+import { Hall } from "../hall/scene";
+
+export class PopupGameOver extends ui.popup.popupGameOverUI {
+    isUserCreate;//是否为用户创建的房间
+    name = 'game_over';
+    group = 'exoploding';
+    constructor() {
+        super();
+        this.init();
+    }
+    init() {
+        this.progressBar.bar.y = 2;
+        this.btnBack.on(Laya.Event.CLICK, this, () => {
+            if (!this.isUserCreate) {
+                Sail.director.runScene(new Hall());
+                return;
+            }
+            Sail.io.emit(CMD.OUT_ROOM);
+        });
+    }
+    updateView(data) {
+        const { avatarBox } = this;
+        //添加用户头像
+        data.list.forEach((user, index) => {
+            let avatar = new Avatar(user);
+            avatar.left = (this.avatarBox.width) / (data.list.length + 1) * (index + 1) - 100;
+            this.avatarBox.addChild(avatar);
+            if (user.isWinUser) {
+                this.winUserNamme.text = user.nickname;
+            }
+            if (isCurPlayer(user.userId)) {
+                log(user.userId)
+                this.levLabel.text = `Lv:${user.level}`;
+                tween({
+                    sprite: this.progressBar,
+                    start_props: { value: 0 },
+                    end_props: { value: user.currentExp / user.nextLvlExp },
+                    time: 1000,
+                    ease_fn: Laya.Ease.cubicInOut
+                });
+            }
+        });
+        //maxinfo
+        let index = 0;
+        for (let key in data.maxInfo) {
+            let item = data.maxInfo[key];
+            if (item && Object.keys(item) != 0) {
+                let maxInfo = new MaxInfo(key, item.nickname);
+                maxInfo.top = 65 * index++;
+                this.maxInfoBox.addChild(maxInfo);
+            }
+        }
+        this.isUserCreate = data.isUserCreate;
+    }
+}
+
+class MaxInfo extends ui.popup.component.maxInfoUI {
+    constructor(type, userName) {
+        super();
+        this.type.skin = `images/game/text_max_${type}.png`;
+        this.userName.text = userName;
+    }
+}
