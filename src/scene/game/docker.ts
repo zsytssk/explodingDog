@@ -97,10 +97,10 @@ export class DockerCtrl extends BaseCtrl {
         const view = this.link.view;
         this.isShaking = true;
         tweenLoop({
+            ease_fn: Laya.Ease.bounceInOut,
             props_arr: [{ y: view.y + 3 }, { y: view.y - 3 }],
             sprite: view,
             time: 40,
-            time_name: Laya.Ease.bounceInOut,
         });
     }
     private stopShake() {

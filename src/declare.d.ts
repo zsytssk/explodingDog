@@ -9,13 +9,18 @@ interface CusWindow extends Window {
     gameId: string;
     token: string;
     userId: string;
+    laya: laya;
 }
 
 declare namespace Component {
-    export class ScaleBox {}
-    export class ScaleImg {}
-    export class ScaleBtn {}
-    export class valueBar {}
+    export class ScaleBox extends Laya.Box {}
+    export class ScaleImg extends Laya.Image {}
+    export class ScaleBtn extends Laya.Button {}
+    export class valueBar extends Laya.Sprite {}
+}
+
+declare namespace laya {
+    export namespace components { export class Isbn extends Laya.Sprite {} }
 }
 
 // declare const ui;

@@ -4,12 +4,14 @@
         "experimentalDecorators": true,
         "module": "esnext",
         "moduleResolution": "node",
-        "rootDir": "src",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
-        "sourceMap": false,
+        "sourceMap": true,
         "target": "es6",
+        "outDir": "dist",
         "watch": true
     },
-    "include": ["src", "typings", "laya/libs", "laya/src"]
+    "exclude": ["src/test", "src/mcTree"],
+    "include": ["src", "typings", "laya/libs", "laya/src/ui"],
+    "files": ["src/mcTree/cusType.d.ts"]
 }

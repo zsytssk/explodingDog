@@ -160,14 +160,20 @@ export class CurSeatCtrl extends SeatCtrl {
         }
         Laya.timer.once(1000, this, () => {
             Sail.director.closeByName('popup_defuse');
-            let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+            let explode_pos_ctrl = getChildrenByName(
+                game_ctrl,
+                'explode_pos_ctrl',
+            )[0];
             explode_pos_ctrl.showView();
         });
     }
     private hideSetExplode() {
-        log('hideSetExplode')
+        log('hideSetExplode');
         const game_ctrl = queryClosest(this, 'name:game');
-        let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+        let explode_pos_ctrl = getChildrenByName(
+            game_ctrl,
+            'explode_pos_ctrl',
+        )[0];
         explode_pos_ctrl.hideView();
     }
 }

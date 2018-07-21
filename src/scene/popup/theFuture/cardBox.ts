@@ -1,5 +1,4 @@
 import { CardCtrl } from './card';
-import { Type } from './theFuture';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 
 interface Link {

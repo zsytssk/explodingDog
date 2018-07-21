@@ -15,7 +15,7 @@ export class PopupJoinRoom extends ui.popup.popupJoinRoomUI {
         const numButtons = getElementsByName(this, 'btnNum');
         numButtons.forEach(numButton => {
             numButton.on(Laya.Event.CLICK, this, () => {
-                this.insertNum(numButton.label)
+                this.insertNum(numButton.label);
             });
         });
         this.btnDelete.on(Laya.Event.CLICK, this, () => {
@@ -24,8 +24,8 @@ export class PopupJoinRoom extends ui.popup.popupJoinRoomUI {
         this.btnJoin.on(Laya.Event.CLICK, this, () => {
             Sail.io.emit(CMD.JOIN_ROOM, {
                 roomId: this.roomId,
-                type: 'fixed'
-            })
+                type: 'fixed',
+            });
         });
     }
 

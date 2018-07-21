@@ -36,7 +36,7 @@ class LoadingUI extends ui.loading.mainUI {
         this.bg.size(Laya.stage.width, Laya.stage.height);
         if (
             GM.gamePublishInfo &&
-            window.laya &&
+            (window as CusWindow).laya &&
             laya.components &&
             laya.components.Isbn
         ) {

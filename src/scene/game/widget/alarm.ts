@@ -3,7 +3,6 @@ import { BaseCtrl } from '../../../mcTree/ctrl/base';
 type View = ui.game.widget.alarmUI;
 export interface Link {
     view: View;
-    card_box: Laya.Box;
 }
 
 /** 显示的位置 */
@@ -29,10 +28,8 @@ export class AlarmCtrl extends BaseCtrl {
     }
     protected initLink() {
         const { view } = this.link;
-        const { card_box } = view;
 
         this.link = {
-            card_box,
             view,
         };
     }

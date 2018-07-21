@@ -9,17 +9,17 @@ export class CardPack extends ui.popup.component.cardPackUI {
 
     init({ isLock, cardType, staminaCost }) {
         this.bg.skin = `images/component/cards/icon_card${cardType}.png`;
-        this.chooseBtn.skin = isLock
+        (this.chooseBtn as Laya.Image).skin = isLock
             ? `images/component/cards/btn_lock.png`
             : `images/component/cards/btn_choose.png`;
-        this.chooseBtn.mouseEnabled = !isLock;
+        (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.iconI.visible = isLock;
         this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
         this.initEvent(cardType);
     }
 
     initEvent(cardType) {
-        this.chooseBtn.on(Laya.Event.CLICK, this, () => {
+        (this.chooseBtn as Laya.Image).on(Laya.Event.CLICK, this, () => {
             switch (this.type) {
                 case 'play':
                     Sail.io.emit(CMD.JOIN_ROOM, {

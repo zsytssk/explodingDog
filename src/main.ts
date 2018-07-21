@@ -11,7 +11,6 @@ import { GameWrap } from './scene/game/sceneWrap';
 import { CMD } from './data/cmd';
 import './effect/scaleBtn';
 import { detectModel } from './mcTree/utils/zutil';
-
 Sail.onStart = () => {
     load_util.setResmap(RESMAP);
     if (detectModel('showStat')) {

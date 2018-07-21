@@ -1,6 +1,7 @@
 import { extend } from '../../mcTree/utils/zutil';
 
 export class ValueBar extends ui.hall.valuebarUI {
+    type: any;
     constructor() {
         super();
         this.init();

@@ -3,41 +3,30 @@
 const exec = require('child_process').exec;
 
 function excuse(command, path) {
-    let result;
-    let config = { maxBuffer: 1024 * 1024 * 100 };
+    let config = { maxBuffer: 1024 * 1024 * 100, encoding: 'utf-8' };
     if (path) {
         config.cwd = path;
     }
     return new Promise((resolve, reject) => {
+        let std_out = '',
+            std_err = '';
         const run_process = exec(command, config);
 
-        run_process.stdout.setEncoding('utf8');
-        run_process.stderr.setEncoding('utf8');
-
+        run_process.stdout.pipe(process.stdout);
+        run_process.stderr.pipe(process.stderr);
         run_process.stdout.on('data', data => {
-            result = data;
-            console.log(
-                '\x1b[32m%s\x1b[0m',
-                `[${command}]:>${data.toString()}`
-            );
+            std_out += data;
         });
-
         run_process.stderr.on('data', data => {
-            result = data;
-            console.log(
-                '\x1b[31m%s\x1b[0m',
-                `[${command}]:err:>${data.toString()}`
-            );
+            std_err += data;
         });
 
         run_process.on('exit', code => {
-            code = code && code.toString ? code.toString() : code;
-            if (code == 1) {
-                console.log('\x1b[31m%s\x1b[0m', `[${command}]:>exit;`);
-                resolve(result);
+            console.log(`[${cmd}]:>exit code = ${code};`);
+            if (code == 0) {
+                resolve(std_out);
             } else {
-                console.log('\x1b[31m%s\x1b[0m', `[${command}]:>exit with error code:${code}:> `);
-                resolve(result);
+                resolve(std_err);
             }
         });
     });

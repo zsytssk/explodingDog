@@ -327,7 +327,7 @@ export async function tweenLoop(data: {
     sprite;
     props_arr: any[];
     time?: number;
-    ease_fn?: string;
+    ease_fn?: string | Func<number>;
     is_jump?: boolean;
 }) {
     const { sprite, props_arr, time, ease_fn, is_jump } = data;
