@@ -12,7 +12,6 @@ import {
 import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
-import { GameCtrl } from '../main';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -24,6 +23,7 @@ export interface Link {
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
     slap_ctrl: SlapCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
+    highlight: Laya.Sprite;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -44,6 +44,7 @@ export class SeatCtrl extends BaseCtrl {
         const view = this.link.view;
         const player_box = view.player_box;
         const empty_box = player_box.empty_box;
+        const highlight = player_box.highlight;
         const active_box = player_box.active_box;
         const avatar = player_box.avatar;
         const die_avatar = player_box.die_avatar;
@@ -58,6 +59,7 @@ export class SeatCtrl extends BaseCtrl {
             card_box_ctrl,
             die_avatar,
             empty_box,
+            highlight,
             nickname,
             player_box,
             view,
@@ -138,23 +140,40 @@ export class SeatCtrl extends BaseCtrl {
         this.link.card_box_ctrl.addCard(card);
     }
     protected setStatus(status: PlayerStatus) {
-        const { nickname: sprite } = this.link;
+        const {} = this.link;
+        const {
+            empty_box,
+            active_box,
+            avatar,
+            die_avatar,
+            highlight,
+        } = this.link;
         if (status === 'speak') {
             const start_props = {
-                scaleX: 1,
-                scaleY: 1,
+                alpha: 0.6,
+                scaleX: 0.8,
+                scaleY: 0.8,
             };
             const end_props = {
-                scaleX: 1.2,
-                scaleY: 1.2,
+                alpha: 0.5,
+                scaleX: 0.9,
+                scaleY: 0.9,
             };
+            highlight.visible = true;
             tweenLoop({
                 props_arr: [end_props, start_props],
-                sprite,
+                sprite: highlight,
                 time: 1000,
             });
+        } else if (status === 'die') {
+            empty_box.visible = false;
+            active_box.visible = true;
+            die_avatar.visible = true;
+            highlight.visible = false;
+            avatar.visible = false;
         } else {
-            stopAni(sprite);
+            highlight.visible = false;
+            //
         }
     }
     /** 处理被action作用 */
@@ -168,15 +187,22 @@ export class SeatCtrl extends BaseCtrl {
             if (action === 'show_set_explode') {
                 // data.data.
                 const game_ctrl = queryClosest(this, 'name:game');
-                game_ctrl.getChildByName('docker_ctrl').setRate(data.data.bombProb);
-                game_ctrl.getChildByName('card_heap_ctrl').setRemainCard(data.data.remainCard);
+                game_ctrl
+                    .getChildByName('docker_ctrl')
+                    .setRate(data.data.bombProb);
+                game_ctrl
+                    .getChildByName('card_heap_ctrl')
+                    .setRemainCard(data.data.remainCard);
+            }
+            if (action === 'choose_target') {
+                this.beChoosed();
             }
             return;
         }
 
         /** 当前用户需要选择其他 才显示 */
         if (action === 'choose_target') {
-            this.waitChoose(data);
+            this.waitBeChoose(data);
         }
         /** 当前用户需要选择其他 才显示 */
         if (action === 'slap') {
@@ -192,27 +218,33 @@ export class SeatCtrl extends BaseCtrl {
         game_ctrl.getChildByName('turn_arrow_ctrl').rotate();
     }
     /** 等待被选择 */
-    private waitChoose(action_data: ObserverActionInfo) {
+    private waitBeChoose(action_data: ObserverActionInfo) {
         const { observer: action_observer } = action_data;
-        const { nickname: sprite } = this.link;
+        const { arrow } = this.link.view as ui.game.seat.otherSeatUI;
 
+        arrow.visible = true;
         new Observable(observer => {
             const start_props = {
-                rotation: 0,
+                y: 176,
             };
             const end_props = {
-                rotation: 360,
+                y: 200,
             };
             tweenLoop({
                 props_arr: [end_props, start_props],
-                sprite,
+                sprite: arrow,
                 time: 1000,
             });
             this.wait_choose_observer = observer;
         }).subscribe((user_id: string) => {
             action_observer.next(user_id);
         });
-
+    }
+    private beChoosed() {
+        const { arrow } = this.link.view as ui.game.seat.otherSeatUI;
+        this.wait_choose_observer = undefined;
+        stopAni(arrow);
+        arrow.visible = false;
     }
     private slap(action_data: ObserverActionInfo) {
         let { slap_ctrl } = this.link;
@@ -250,4 +282,6 @@ export class SeatCtrl extends BaseCtrl {
             time: 500,
         });
     }
+    /** 用户死亡处理 */
+    public die() {}
 }

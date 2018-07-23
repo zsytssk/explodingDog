@@ -1,28 +1,41 @@
 ## 2018-07-23 10:09:07
-* @note alarm 已经show， 正在show 这如何处理
-    * 想要的效果是 不改变位置 但是功能正常
 
-* @note 出牌不好出
+-   @note
 
-* * @bug 偷牌 + 倒计时 处理
--   @ques 用户的牌怎么不见了
-* @ques
+    -   用户爆炸了
+    -   当前用户的表示
+    -   偷牌选择玩家标志
+    -   炸弹出牌
 
-*   @ques tweenFun caller 和 step_fun 的冲突
+-   @ques tweenLoop 如果有一样的属性的就会奔溃
+
+-   @note alarm 已经 show， 正在 show 这如何处理
+
+    -   想要的效果是 不改变位置 但是功能正常
+
+-   @note 出牌不好出
+
+-   -   @bug 偷牌 + 倒计时 处理
+
+*   @ques 用户的牌怎么不见了
+
+-   @ques
+
+-   @ques tweenFun caller 和 step_fun 的冲突
     -   参数太复杂了
     -   如果 start_props 是数字怎么处理
     *   要不要建立一个 step 函数去处理这些事情。。。
 
--   @note 要不要将 frameLoop 做成 Laya.timer 一样
+*   @note 要不要将 frameLoop 做成 Laya.timer 一样
 
--   Laya.timer.loop(interval_time, this, interval); 每次都需要去计算这个 是不是太耗费性能了
+*   Laya.timer.loop(interval_time, this, interval); 每次都需要去计算这个 是不是太耗费性能了
     -   每次添加 计算最小值 去改变 loop 的时间间隔
     -   每次清除也是这样， 如果为空就静止这个 interval
     -   最小的 timmer 如何去计算 所有 delay 的公约数
     *   const gcd = (x, y) => !y ? x : gcd(y, x % y);
 
-*   @ques 章旸 billboard 是怎么做的。。。
-*   @ques 属性渐变变化 + 每次变化的函数
+-   @ques 章旸 billboard 是怎么做的。。。
+-   @ques 属性渐变变化 + 每次变化的函数
 
 ## 2018-07-20 15:14:01
 
@@ -391,7 +404,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                         @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                           @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

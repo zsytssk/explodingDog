@@ -165,8 +165,8 @@ export class GameModel extends BaseEvent {
             if (player.isMyId(speak_id)) {
                 player.setStatus('speak');
                 this.trigger(cmd.update_bill_board, {
-                    fromUser: player,
                     cardId: TURN_CHANGE_ID,
+                    fromUser: player,
                 });
             } else {
                 player.setStatus('normal');
@@ -196,6 +196,11 @@ export class GameModel extends BaseEvent {
             }
         }
         return;
+    }
+    /** 玩家失败 */
+    public playerExploding(data: UserExplodingData) {
+        const player = this.getPlayerById(data.explodeUserId);
+        player.exploding();
     }
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */

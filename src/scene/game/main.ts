@@ -254,7 +254,9 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
             docker_ctrl.setRate(data.roundInfo.bombProb);
             const turnDirection = data.roundInfo.turnDirection;
-            turnDirection && this.link.turn_arrow_ctrl.rotate(turnDirection);
+            if (turnDirection) {
+                this.link.turn_arrow_ctrl.rotate(turnDirection);
+            }
         }
 
         this.model.gameReplay(data);
@@ -423,6 +425,7 @@ export class GameCtrl extends BaseCtrl {
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(popupUserExploded);
             this.link.docker_ctrl.setRate(bombProb);
+            this.model.playerExploding(data);
         });
     }
 
