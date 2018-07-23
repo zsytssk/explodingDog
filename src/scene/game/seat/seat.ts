@@ -165,6 +165,11 @@ export class SeatCtrl extends BaseCtrl {
         /** 处理动作的完成 */
         if (status === 'complete') {
             stopAni(sprite);
+            if (action === 'show_set_explode') {
+                // data.data.
+                const game_ctrl = queryClosest(this, 'name:game');
+                game_ctrl.getChildByName('docker_ctrl').setRate(data.data.bombProb);
+            }
             return;
         }
 
@@ -180,6 +185,7 @@ export class SeatCtrl extends BaseCtrl {
             this.reverseArrows();
         }
     }
+
     private reverseArrows() {
         const game_ctrl = queryClosest(this, 'name:game');
         game_ctrl.getChildByName('turn_arrow_ctrl').rotate();

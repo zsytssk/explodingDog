@@ -11,6 +11,7 @@ export interface Link {
 
 /**  */
 export class DockerCtrl extends BaseCtrl {
+    name = 'docker_ctrl';
     private isShaking = false;
     protected link = {} as Link;
     constructor(view) {
