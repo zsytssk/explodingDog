@@ -9,6 +9,7 @@ export type CardStatus = 'normal' | 'discard' | 'wait_give' | 'exploding';
 export const cmd = {
     action_send: 'action_send',
     discard: 'discard',
+    give: 'give',
     un_discard: 'un_discard',
     update_info: 'update_info',
 };
@@ -94,6 +95,10 @@ export class CardModel extends BaseEvent {
     /** 真正的出牌 */
     public discard() {
         this.trigger(cmd.discard);
+    }
+    /** 真正的出牌 */
+    public give() {
+        this.trigger(cmd.give);
     }
     /** 能够被打出
      * ! 1. 其他玩家的都牌可以打出

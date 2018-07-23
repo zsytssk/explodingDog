@@ -1,4 +1,5 @@
 ## 2018-07-23 10:09:07
+* @ques 其他用户的give card, card_ctrl如何销毁
 
 -   @note
 

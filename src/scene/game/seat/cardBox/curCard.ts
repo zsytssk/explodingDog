@@ -53,6 +53,10 @@ export class CurCardCtrl extends CardCtrl {
         }
         return true;
     }
+    /** 当前用户牌再被给别人时直接放在give——card_ctrl上， 自己隐藏销毁， 这里覆盖父类的方法 */
+    protected give() {
+        return;
+    }
     /** 显示牌的说明 */
     public toggleTip() {
         const { view: sprite, card_box } = this.link;

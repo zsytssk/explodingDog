@@ -98,19 +98,7 @@ export class CurSeatCtrl extends SeatCtrl {
     /** 等待给牌 */
     private waitGiveCard(action_data: ObserverActionInfo) {
         let { give_card_ctrl } = this.link;
-        const { nickname: sprite } = this.link;
         const { observer } = action_data;
-        const start_props = {
-            rotation: 0,
-        };
-        const end_props = {
-            rotation: 360,
-        };
-        tweenLoop({
-            props_arr: [end_props, start_props],
-            sprite,
-            time: 1000,
-        });
         if (!give_card_ctrl) {
             const game_ctrl = queryClosest(this, 'name:game');
             give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];

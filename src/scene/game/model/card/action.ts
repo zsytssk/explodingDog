@@ -132,9 +132,8 @@ export class WaitGetCard extends Action implements IAction {
     public complete(data: ActionDataInfo) {
         const { player, card } = data;
         const target = this.target;
-        const { is_cur_player } = target;
         /** 非当前用户不需要选择 */
-        if (!is_cur_player) {
+        if (!target) {
             return;
         }
 

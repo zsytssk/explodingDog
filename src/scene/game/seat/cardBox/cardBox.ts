@@ -36,6 +36,9 @@ export class CardBoxCtrl extends BaseCtrl {
             return !item.is_selected;
         });
         const len = unslt_card_list.length;
+        if (!len) {
+            return;
+        }
         let card_bound: {
             width: number;
             space: number;
@@ -56,7 +59,15 @@ export class CardBoxCtrl extends BaseCtrl {
             return item !== card;
         });
         this.removeChild(card);
+        this.sortCard();
         this.report(cmd.discard, 'game', { card });
+    }
+    public giveCard(card: CardCtrl) {
+        const { card_list } = this.link;
+        this.link.card_list = card_list.filter(item => {
+            return item !== card;
+        });
+        this.removeChild(card);
         this.sortCard();
     }
     public addCard(card: CardModel) {

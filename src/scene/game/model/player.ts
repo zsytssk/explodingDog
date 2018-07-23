@@ -73,7 +73,7 @@ export class PlayerModel extends BaseEvent {
     }
     public removeCard(card: CardModel) {
         const card_list = this.card_list;
-        for (const len = card_list.length, i = len - 1; i >= 0; i--) {
+        for (let len = card_list.length, i = len - 1; i >= 0; i--) {
             if (card_list[i] === card) {
                 card_list.splice(i, 1);
             }
@@ -102,6 +102,7 @@ export class PlayerModel extends BaseEvent {
             const card = card_list[i];
             if (card.canGive(card_id)) {
                 give_card = card;
+                card.give();
                 card_list.splice(i, 1);
                 return give_card;
             }
