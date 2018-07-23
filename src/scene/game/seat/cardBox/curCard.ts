@@ -36,6 +36,23 @@ export class CurCardCtrl extends CardCtrl {
         view.on(Laya.Event.MOUSE_UP, this, this.mouseEnd);
         view.on(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
     }
+    /** 牌可以被选中 */
+    private canSelect() {
+        if (!this.is_touched) {
+            return false;
+        }
+        if (this.is_selected) {
+            return false;
+        }
+        if (this.show_tip) {
+            return false;
+        }
+        const { card_box } = this.link;
+        if (card_box.isMove()) {
+            return false;
+        }
+        return true;
+    }
     /** 显示牌的说明 */
     public toggleTip() {
         const { view: sprite, card_box } = this.link;
@@ -70,13 +87,7 @@ export class CurCardCtrl extends CardCtrl {
         };
     }
     private mouseMove(event: Laya.Event) {
-        if (!this.is_touched) {
-            return false;
-        }
-        if (this.is_selected) {
-            return false;
-        }
-        if (this.show_tip) {
+        if (!this.canSelect()) {
             return false;
         }
         const { x, y } = this.start_pos;
@@ -87,12 +98,11 @@ export class CurCardCtrl extends CardCtrl {
         };
         this.is_move = true;
         log('card:>move', move_delta);
-        if (Math.abs(move_delta.y) < Math.abs(move_delta.x)) {
-            this.mouseEnd();
-            return;
-        }
         event.stopPropagation();
-        if (move_delta.y < -30) {
+        if (
+            move_delta.y < -30 &&
+            Math.abs(move_delta.x) < Math.abs(move_delta.y)
+        ) {
             this.select();
             return;
         }

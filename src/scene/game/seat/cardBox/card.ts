@@ -1,3 +1,4 @@
+import { cmd as base_cmd } from '../../../../mcTree/event';
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { ActionSendData } from '../../model/card/action';
@@ -75,6 +76,9 @@ export class CardCtrl extends BaseCtrl {
     protected initEvent() {
         this.onModel(card_cmd.discard, () => {
             this.discard();
+        });
+        this.onModel(base_cmd.destroy, () => {
+            this.destroy();
         });
         this.onModel(card_cmd.action_send, (data: ActionSendData) => {
             Sail.io.emit(CMD.HIT, {

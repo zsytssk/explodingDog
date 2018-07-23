@@ -139,6 +139,8 @@ export class CardModel extends BaseEvent {
         this.trigger(cmd.un_discard);
     }
     public destroy() {
+        /** 从所有者中移除自己 */
+        this.owner.removeCard(this);
         this.owner = undefined;
         super.destroy();
     }

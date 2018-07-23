@@ -19,6 +19,7 @@ export type ActionType =
     | 'see_the_future'
     | 'alter_the_future'
     | 'show_defuse'
+    | 'reverse_arrows'
     | 'show_set_explode'
     | 'slap';
 export type ActionStatus = 'act' | 'complete';
@@ -165,10 +166,10 @@ export class ShowDefuse extends Action implements IAction {
                 data,
                 status: 'act',
             })
-            .subscribe((card_id: string) => { });
+            .subscribe((card_id: string) => {});
         log('act', data);
     }
-    public complete() { }
+    public complete() {}
 }
 
 export class SeeTheFuture extends Action implements IAction {
@@ -296,7 +297,7 @@ export class ShowSetExplode extends Action {
             .beActioned({
                 action: this.name,
                 status: 'complete',
-                data: data
+                data: data,
             })
             .subscribe();
     }
@@ -305,9 +306,11 @@ export class ShowSetExplode extends Action {
 export class reverseArrows extends Action {
     private name = 'reverse_arrows';
     public act(data: ActionDataInfo) {
-        data.player.beActioned({
-            action: this.name,
-            status: 'act',
-        }).subscribe();
+        data.player
+            .beActioned({
+                action: this.name,
+                status: 'act',
+            })
+            .subscribe();
     }
 }

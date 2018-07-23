@@ -22,7 +22,7 @@ type TouchInfo = {
 export class CurCardBoxCtrl extends CardBoxCtrl {
     protected link: Link;
     private touch_info = {
-        status: 'default'
+        status: 'default',
     } as TouchInfo;
     constructor(view: CurCardBoxUI) {
         super(view);
@@ -75,6 +75,13 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             x: last_pos.x - x,
             y: last_pos.y - y,
         };
+        if (!this.isMove()) {
+            if (Math.abs(delta.x) < 30) {
+                return;
+            } else {
+                delta.x = 0;
+            }
+        }
         this.touch_info = {
             ...touch_info,
             delta,
@@ -97,7 +104,10 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         let x = view.x;
         if (x > 0) {
             x = 0;
-        } else if (min_x < 0 && x < min_x) {
+        } else if (min_x >= 0) {
+            /** 如果cardBox中没有填满牌 直接x=0就可以了 */
+            x = 0;
+        } else if (x < min_x) {
             x = min_x;
         }
         tween({
@@ -108,6 +118,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         });
         touch_info.status = 'default';
         log('cardBox end');
+    }
+    public isMove() {
+        return this.touch_info.status === 'move';
     }
     public addCard(card: CardModel) {
         const { card_list, card_wrap } = this.link;

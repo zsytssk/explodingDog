@@ -102,6 +102,7 @@ type HitData = {
         canChooseUserIds?: string[];
         topCards?: string[];
         remainTime?: number;
+        bombProb: number;
     };
 };
 type HitBackData = {
@@ -130,8 +131,8 @@ type UserExplodingData = {
     userList: Object[];
     explodeUserName: string;
     explodeUserId: string;
-    remainUser: number,
-    remainCard: number,
-    remainBomb: number,
-    bombProb: number
+    remainUser: number;
+    remainCard: number;
+    remainBomb: number;
+    bombProb: number;
 };
