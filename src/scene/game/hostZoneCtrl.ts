@@ -24,9 +24,10 @@ export class HostZoneCtrl extends BaseCtrl {
     }
     protected initLink() {
         const view = this.link.view as ui.game.hostZone.mainUI;
-        this.link.choose_card_btn = view.card_type.choose_card_btn;
+        this.link.choose_card_btn = view.card_type
+            .choose_card_btn as Laya.Sprite;
         this.link.card_type = view.card_type.card_type;
-        this.link.start_btn = view.start.start_btn;
+        this.link.start_btn = view.start.start_btn as Laya.Sprite;
         this.link.room_id_text = view.billboard.room_id;
     }
     protected initEvent() {

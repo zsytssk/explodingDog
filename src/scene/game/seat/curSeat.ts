@@ -154,19 +154,25 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     private showSetExplode() {
         const game_ctrl = queryClosest(this, 'name:game');
-        let popupDefuse = Sail.director.getDialogByName('popup_defuse');
+        const popupDefuse = Sail.director.getDialogByName('popup_defuse');
         if (popupDefuse) {
             popupDefuse.defuseSuccess();
         }
         Laya.timer.once(1000, this, () => {
             Sail.director.closeByName('popup_defuse');
-            let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+            const explode_pos_ctrl = getChildrenByName(
+                game_ctrl,
+                'explode_pos_ctrl',
+            )[0];
             explode_pos_ctrl.showView();
         });
     }
     private hideSetExplode() {
         const game_ctrl = queryClosest(this, 'name:game');
-        let explode_pos_ctrl = getChildrenByName(game_ctrl, 'explode_pos_ctrl')[0];
+        const explode_pos_ctrl = getChildrenByName(
+            game_ctrl,
+            'explode_pos_ctrl',
+        )[0];
         explode_pos_ctrl.hideView();
     }
 }

@@ -3,10 +3,13 @@ import { CardPack } from './component/cardPack';
 import { TopBar } from '../hall/topbarCard';
 import { getChildren } from '../../mcTree/utils/zutil';
 
-const position2 = [190, 730];//两个牌组时的定位
-const position3 = [20, 460, 900];//三个牌组时的定位
+const position2 = [190, 730]; //两个牌组时的定位
+const position3 = [20, 460, 900]; //三个牌组时的定位
 
 export class PopupCards extends ui.popup.popupCardsUI {
+    private topbar: TopBar;
+    private actions: SailIoAction;
+    private type: 'play' | 'create';
     constructor() {
         super();
         this.init();
@@ -19,7 +22,7 @@ export class PopupCards extends ui.popup.popupCardsUI {
         this.initEvent();
         this.actions = {
             [CMD.CARD_TYPE_LIST]: this.initCardPack,
-            [CMD.GET_USER_AMOUNT]: this.setUserAmount
+            [CMD.GET_USER_AMOUNT]: this.setUserAmount,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.CARD_TYPE_LIST);
@@ -33,9 +36,9 @@ export class PopupCards extends ui.popup.popupCardsUI {
     }
 
     /**
-    * 设置类型
-    * @param data choose:选择卡组、create:创建房间、play:快速游戏
-    */
+     * 设置类型
+     * @param data choose:选择卡组、create:创建房间、play:快速游戏
+     */
     setType(type) {
         this.topbar.setTitle(type);
         this.type = type;
