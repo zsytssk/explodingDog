@@ -140,8 +140,10 @@ export class CardModel extends BaseEvent {
     }
     public destroy() {
         /** 从所有者中移除自己 */
-        this.owner.removeCard(this);
-        this.owner = undefined;
+        if (this.owner) {
+            this.owner.removeCard(this);
+            this.owner = undefined;
+        }
         super.destroy();
     }
 }

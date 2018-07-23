@@ -42,9 +42,13 @@ export class PlayerModel extends BaseEvent {
         this.seat_id = Number(player_data.seatId);
 
         let shou = player_data.shou;
+        const user_status = player_data.userStatus;
         const shouLen = player_data.shouLen;
         if (!this.is_cur_player && shouLen) {
             shou = fill(Array(player_data.shouLen), '*');
+        }
+        if (user_status + '' === '5') {
+            this.setStatus('die');
         }
         this.updateCards(shou);
     }
@@ -69,7 +73,7 @@ export class PlayerModel extends BaseEvent {
     }
     public removeCard(card: CardModel) {
         const card_list = this.card_list;
-        for (let len = card_list.length, i = len - 1; i >= 0; i--) {
+        for (const len = card_list.length, i = len - 1; i >= 0; i--) {
             if (card_list[i] === card) {
                 card_list.splice(i, 1);
             }

@@ -12,7 +12,6 @@ import {
 import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
-import { GameCtrl } from '../main';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -24,6 +23,7 @@ export interface Link {
     card_box_ctrl: CardBoxCtrl; // 是否加载了用户
     slap_ctrl: SlapCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
+    highlight: Laya.Sprite;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -44,6 +44,7 @@ export class SeatCtrl extends BaseCtrl {
         const view = this.link.view;
         const player_box = view.player_box;
         const empty_box = player_box.empty_box;
+        const highlight = player_box.highlight;
         const active_box = player_box.active_box;
         const avatar = player_box.avatar;
         const die_avatar = player_box.die_avatar;
@@ -58,6 +59,7 @@ export class SeatCtrl extends BaseCtrl {
             card_box_ctrl,
             die_avatar,
             empty_box,
+            highlight,
             nickname,
             player_box,
             view,
@@ -138,36 +140,40 @@ export class SeatCtrl extends BaseCtrl {
         this.link.card_box_ctrl.addCard(card);
     }
     protected setStatus(status: PlayerStatus) {
-        const { nickname: sprite } = this.link;
+        const {} = this.link;
+        const {
+            empty_box,
+            active_box,
+            avatar,
+            die_avatar,
+            highlight,
+        } = this.link;
         if (status === 'speak') {
             const start_props = {
-                scaleX: 1,
-                scaleY: 1,
+                alpha: 0.6,
+                scaleX: 0.8,
+                scaleY: 0.8,
             };
             const end_props = {
-                scaleX: 1.2,
-                scaleY: 1.2,
+                alpha: 0.5,
+                scaleX: 0.9,
+                scaleY: 0.9,
             };
+            highlight.visible = true;
             tweenLoop({
                 props_arr: [end_props, start_props],
-                sprite,
+                sprite: highlight,
                 time: 1000,
             });
         } else if (status === 'die') {
-            const {
-                empty_box,
-                active_box,
-                avatar,
-                nickname,
-                die_avatar,
-            } = this.link;
-
             empty_box.visible = false;
             active_box.visible = true;
             die_avatar.visible = true;
+            highlight.visible = false;
             avatar.visible = false;
         } else {
-            stopAni(sprite);
+            highlight.visible = false;
+            //
         }
     }
     /** 处理被action作用 */
