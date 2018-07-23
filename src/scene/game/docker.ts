@@ -110,7 +110,9 @@ export class DockerCtrl extends BaseCtrl {
         stopAni(view);
     }
     public destroy() {
-        super.destroy();
+        console.log('=======dockerview', this.link.view)
         stopAni(this.link.view);
+        Laya.timer.clear(this, this.arrowLoop);
+        super.destroy();
     }
 }
