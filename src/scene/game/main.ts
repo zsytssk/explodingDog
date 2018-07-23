@@ -387,7 +387,6 @@ export class GameCtrl extends BaseCtrl {
     }
     public destroy() {
         super.destroy();
-        this.link.docker_ctrl.destroy();
         Sail.io.unregister(this.actions);
     }
 
@@ -428,7 +427,7 @@ export class GameCtrl extends BaseCtrl {
     }
 
     public onServerGameOver(data) {
-        const pop = new PopupGameOver();
+        const pop = new PopupGameOver(this);
         pop.updateView(data);
         Sail.director.popScene(pop);
     }
@@ -441,5 +440,9 @@ export class GameCtrl extends BaseCtrl {
             alarm_ctrl.clear();
         }
         this.model.setSpeaker(data.speakerId);
+    }
+    public outRoom() {
+        this.destroy();
+        Sail.director.runScene(new Hall());
     }
 }

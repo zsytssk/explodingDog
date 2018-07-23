@@ -9,15 +9,20 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     private isUserCreate; // 是否为用户创建的房间
     name = 'game_over';
     group = 'exoploding';
-    constructor() {
+    CONFIG = {
+        closeByGroup: true
+    }
+    game_ctrl;
+    constructor(game_ctrl) {
         super();
+        this.game_ctrl = game_ctrl;
         this.init();
     }
     init() {
         this.progressBar.bar.y = 2;
         this.btnBack.on(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
-                Sail.director.runScene(new Hall());
+                this.game_ctrl.outRoom();
                 return;
             }
             Sail.io.emit(CMD.OUT_ROOM);
