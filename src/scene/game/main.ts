@@ -254,9 +254,7 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
             docker_ctrl.setRate(data.roundInfo.bombProb);
             const turnDirection = data.roundInfo.turnDirection;
-            if (turnDirection && turnDirection != '0') {
-                this.link.turn_arrow_ctrl.rotate();
-            }
+            turnDirection && this.link.turn_arrow_ctrl.rotate(turnDirection);
         }
 
         this.model.gameReplay(data);
