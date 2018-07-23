@@ -10,7 +10,8 @@ export const cmd = {
     card_type_change: 'card_type_change',
     discard_card: 'discard_card',
     status_change: 'status_change',
-    update_bill_board: 'update_bill_board'
+    update_bill_board: 'update_bill_board',
+    update_turn_arrows: 'update_turn_arrows'
 };
 
 /** 牌的类型  */
@@ -143,7 +144,7 @@ export class GameModel extends BaseEvent {
         this.setSpeaker(data.speakerId);
         this.remain_num = data.remainCard;
         this.direction = data.turnDirection;
-
+        this.trigger(cmd.update_turn_arrows, data.turnDirection);
         const hit_data = data.hitData;
         if (hit_data) {
             const { hitCard, hitInfo, hitUserId } = hit_data;

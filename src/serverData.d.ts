@@ -114,7 +114,7 @@ type HitBackData = {
     };
 };
 
-type DirectionData = 0 | 1;
+type DirectionData = '0' | '1';
 type TurnsData = {
     userId: string;
     /**说话人id  */

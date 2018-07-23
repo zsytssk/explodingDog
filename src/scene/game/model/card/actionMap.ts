@@ -6,6 +6,7 @@ import {
     AlterTheFuture,
     ShowSetExplode,
     Slap,
+    reverseArrows
 } from './action';
 
 export const action_map = {
@@ -16,4 +17,5 @@ export const action_map = {
     slap: [ChooseTarget, Slap],
     slef_slap: [ChooseTarget, Slap],
     steal: [ChooseTarget, WaitGetCard],
+    reverse: [reverseArrows]
 };

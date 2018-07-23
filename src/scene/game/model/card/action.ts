@@ -302,3 +302,13 @@ export class ShowSetExplode extends Action {
         }
     }
 }
+
+export class reverseArrows extends Action {
+    private name = 'reverse_arrows';
+    public act(data: ActionDataInfo) {
+        data.player.beActioned({
+            action: this.name,
+            status: 'act',
+        }).subscribe();
+    }
+}

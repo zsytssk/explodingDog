@@ -8,7 +8,10 @@ export interface Link {
 
 /** 指示箭头 */
 export class TurnArrowCtrl extends BaseCtrl {
+    name = 'turn_arrow_ctrl';
     protected link = {} as Link;
+    private currentArrowBox: Laya.Box;
+    private currentTurn = '0';
     constructor(view) {
         super();
         this.link.view = view;
@@ -17,18 +20,36 @@ export class TurnArrowCtrl extends BaseCtrl {
         this.initLink();
         this.initEvent();
     }
-    protected initLink() { }
+    protected initLink() {
+
+    }
     protected initEvent() { }
     public loadModel() { }
 
     /**
-     * 
-     * @param clockWise true:顺时针方向
+     * 显示箭头
+     * @param playerCount 玩家数
      */
-    public rotate(clockWise?: boolean) {
-        const arrows = getChildren(this.link.view);
+    public showArrow(playerCount: number) {
+        const arrowBox = this.link.view.getChildByName('arrow' + playerCount) as Laya.Box;
+        if (arrowBox) {
+            this.currentArrowBox = arrowBox;
+            arrowBox.visible = true;
+        }
+    }
+
+    /**
+     * 
+     * @param clockWise '0':顺时针方向'1':逆时针
+     */
+    public rotate(clockWise) {
+        if (!this.currentArrowBox || clockWise == this.currentTurn) {
+            return;
+        }
+        this.currentTurn = clockWise;
+        const arrows = getChildren(this.currentArrowBox);
         arrows.forEach(arrow => {
-            let endRotation = clockWise ? arrow.rotation += 180 : arrow.rotation -= 180;
+            let endRotation = arrow.rotation += 180;
             tween({
                 sprite: arrow,
                 start_props: { rotation: arrow.rotation },

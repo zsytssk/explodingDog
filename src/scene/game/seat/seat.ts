@@ -12,6 +12,7 @@ import {
 import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
+import { GameCtrl } from '../main';
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -175,6 +176,13 @@ export class SeatCtrl extends BaseCtrl {
         if (action === 'slap') {
             this.slap(data);
         }
+        if (action === 'reverse_arrows') {
+            this.reverseArrows();
+        }
+    }
+    private reverseArrows() {
+        const game_ctrl = queryClosest(this, 'name:game');
+        game_ctrl.getChildByName('turn_arrow_ctrl').rotate();
     }
     /** 等待被选择 */
     private waitChoose(action_data: ObserverActionInfo) {
