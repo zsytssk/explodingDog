@@ -165,6 +165,7 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl,
             discard_zone_ctrl,
             docker_ctrl,
+            explode_pos_ctrl,
             game_zone,
             give_card_ctrl,
             host_zone_ctrl,
@@ -172,7 +173,6 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list,
             slap_ctrl,
             turn_arrow_ctrl,
-            explode_pos_ctrl,
         };
     }
     protected initEvnet() {
@@ -196,12 +196,10 @@ export class GameCtrl extends BaseCtrl {
                 }
             },
             [CMD.TAKE]: this.onServerTake,
-            [CMD.TURNS]: (data: TurnsData) => {
-                this.model.setSpeaker(data.speakerId);
-            },
+            [CMD.TURNS]: this.onServerTurn,
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
-            [CMD.GAME_OVER]: this.onServerGameOver
+            [CMD.GAME_OVER]: this.onServerGameOver,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -234,9 +232,12 @@ export class GameCtrl extends BaseCtrl {
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.leave();
         });
-        this.onModel(game_cmd.update_bill_board, (data: { fromUser, toUser, cardId, step }) => {
-            this.link.bill_board_ctrl.updateInfo(data);
-        });
+        this.onModel(
+            game_cmd.update_bill_board,
+            (data: { fromUser; toUser; cardId; step }) => {
+                this.link.bill_board_ctrl.updateInfo(data);
+            },
+        );
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
@@ -408,7 +409,7 @@ export class GameCtrl extends BaseCtrl {
     public onServerUserExploding(data: UserExplodingData) {
         const { explodeUserId, bombProb } = data;
         let delay = 0;
-        let popupUserExploded = new PopupUserExploded();
+        const popupUserExploded = new PopupUserExploded();
         popupUserExploded.updateData(data);
         if (isCurPlayer(explodeUserId)) {
             delay = 2000;
@@ -421,8 +422,18 @@ export class GameCtrl extends BaseCtrl {
     }
 
     public onServerGameOver(data) {
-        let pop = new PopupGameOver();
+        const pop = new PopupGameOver();
         pop.updateView(data);
         Sail.director.popScene(pop);
+    }
+    public onServerTurn(data: TurnsData) {
+        const { speakerId: user_id } = data;
+        const { alarm_ctrl } = this.link;
+        if (isCurPlayer(user_id)) {
+            alarm_ctrl.preCountDown();
+        } else {
+            alarm_ctrl.clear();
+        }
+        this.model.setSpeaker(data.speakerId);
     }
 }

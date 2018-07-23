@@ -8,4 +8,8 @@ type PartialAll<T, U> = {
         ? T[p]
         : p extends keyof U ? U[p] : never
 };
+declare module '*.json' {
+    const value: any;
+    export default value;
+}
 // type ValOfObj<T> = P extends keyof T ? T[P] : never;

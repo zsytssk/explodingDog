@@ -30,7 +30,6 @@ export class GiveCardCtrl extends BaseCtrl {
     }
     public init() {
         this.initLink();
-        this.initEvent();
     }
     protected initLink() {
         const { view } = this.link;
@@ -41,7 +40,6 @@ export class GiveCardCtrl extends BaseCtrl {
             view,
         };
     }
-    protected initEvent() {}
     public show(): Promise<string> {
         return new Promise((resolve, reject) => {
             const { view: sprite } = this.link;

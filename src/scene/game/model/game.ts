@@ -10,7 +10,7 @@ export const cmd = {
     card_type_change: 'card_type_change',
     discard_card: 'discard_card',
     status_change: 'status_change',
-    update_bill_board: 'update_bill_board'
+    update_bill_board: 'update_bill_board',
 };
 
 /** 牌的类型  */
@@ -235,7 +235,7 @@ export class GameModel extends BaseEvent {
             player,
         });
         this.discard_card = card;
-        //更新billboard
+        // 更新billboard
         let targetPlayer = null;
         if (hit_info.targetUserId) {
             targetPlayer = this.getPlayerById(hit_info.targetUserId);
@@ -243,10 +243,10 @@ export class GameModel extends BaseEvent {
         switch (data.hitCard) {
             default:
                 this.trigger(cmd.update_bill_board, {
-                    fromUser: player,
-                    toUser: targetPlayer,
                     cardId: data.hitCard,
-                    step: hit_info.step
+                    fromUser: player,
+                    step: hit_info.step,
+                    toUser: targetPlayer,
                 });
                 break;
         }

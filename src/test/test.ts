@@ -3,6 +3,7 @@ import { CONFIG } from '../data/config';
 import * as animate from '../mcTree/utils/animate';
 import * as zutil from '../mcTree/utils/zutil';
 import * as game from './game';
+import * as animateTest from './animate';
 
 import * as server from './server';
 import { default as token } from './token.json';
@@ -13,7 +14,7 @@ interface CusWindow extends Window {
 
 if (zutil.debugFE()) {
     const test = {};
-    assign(test, [game, animate, zutil, server]);
+    assign(test, [game, animateTest, animate, zutil, server]);
     (window as CusWindow).CONFIG = CONFIG;
     (window as any).test = test;
 

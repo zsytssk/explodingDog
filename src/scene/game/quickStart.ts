@@ -1,6 +1,5 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
-import { stopAni, tweenLoop } from '../../mcTree/utils/animate';
-import { CountDown, CountInfo } from '../../mcTree/utils/countDown';
+import { stopAni, tweenLoop, countDown } from '../../mcTree/utils/animate';
 
 interface Link {
     match_view: ui.game.bannerMatchUI;
@@ -13,7 +12,6 @@ interface Link {
 /** 快速匹配进入游戏 匹配 + 马上要开始倒计时 */
 export class QuickStartCtrl extends BaseCtrl {
     protected link = {} as Link;
-    private count_down = new CountDown();
     constructor(match_view, countdown_view) {
         super();
         this.link.match_view = match_view;
@@ -32,13 +30,11 @@ export class QuickStartCtrl extends BaseCtrl {
         this.link.scroll_rect = scrollRect;
     }
     public hide() {
-        const { count_down } = this;
         const { match_view, countdown_view, light, scroll_rect } = this.link;
         match_view.visible = false;
         countdown_view.visible = false;
         stopAni(light);
         stopAni(scroll_rect);
-        count_down.clear();
     }
     public show() {
         const { match_view, light, scroll_rect } = this.link;
@@ -70,12 +66,10 @@ export class QuickStartCtrl extends BaseCtrl {
             return;
         }
         const { count_down_text, countdown_view } = this.link;
-        const { count_down } = this;
+        countDown(count_down_text, count_num, count => {
+            count_down_text.text = count + '';
+        });
 
         countdown_view.visible = true;
-        count_down.start(count_num);
-        count_down.onCount((data: CountInfo) => {
-            count_down_text.text = data.show_time + '';
-        });
     }
 }

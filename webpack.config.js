@@ -16,7 +16,7 @@ let common_config = {
     module: {
         rules: [
             {
-                test: /\.(.*)?$/,
+                test: /\.(js|ts)$/,
                 loader: 'ts-loader',
                 options: {
                     transpileOnly: true,

@@ -9,7 +9,6 @@ import { default as SeeTheFutureData } from './serverData/seeTheFuture.json';
 import { default as userExplodingData } from './serverData/userExploding.json';
 import { default as gameOverData } from './serverData/gameOver.json';
 import { describe, assert } from '../mcTree/utils/testUtil';
-import { log } from '../mcTree/utils/zutil';
 
 export function gameReplay() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;

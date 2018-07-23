@@ -35,8 +35,3 @@ declare class Primus {
 }
 
 declare const CryptoJS: any;
-
-declare module '*.json' {
-    const value: any;
-    export default value;
-}
