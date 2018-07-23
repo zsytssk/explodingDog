@@ -235,9 +235,12 @@ export class GameCtrl extends BaseCtrl {
         this.onModel(
             game_cmd.update_bill_board,
             (data: { fromUser; toUser; cardId; step }) => {
-                this.link.bill_board_ctrl.updateInfo(data);
+                this.link.bill_board_ctrl.addMsg(data);
             },
         );
+        this.onModel(game_cmd.update_turn_arrows, data => {
+            this.link.turn_arrow_ctrl.rotate(data);
+        });
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
@@ -250,6 +253,10 @@ export class GameCtrl extends BaseCtrl {
         if (data.roundInfo) {
             card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
             docker_ctrl.setRate(data.roundInfo.bombProb);
+            const turnDirection = data.roundInfo.turnDirection;
+            if (turnDirection && turnDirection != '0') {
+                this.link.turn_arrow_ctrl.rotate();
+            }
         }
 
         this.model.gameReplay(data);
@@ -367,6 +374,7 @@ export class GameCtrl extends BaseCtrl {
             return;
         }
         this.updateSeatPos();
+        this.link.turn_arrow_ctrl.showArrow(this.model.getPlayerNum());
         docker_ctrl.start();
         if (type === GAME_TYPE.HOST) {
             host_zone_ctrl.hide();

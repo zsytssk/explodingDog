@@ -165,10 +165,10 @@ export class ShowDefuse extends Action implements IAction {
                 data,
                 status: 'act',
             })
-            .subscribe((card_id: string) => {});
+            .subscribe((card_id: string) => { });
         log('act', data);
     }
-    public complete() {}
+    public complete() { }
 }
 
 export class SeeTheFuture extends Action implements IAction {
@@ -292,14 +292,22 @@ export class ShowSetExplode extends Action {
     }
     public complete(data: ActionDataInfo) {
         const { player } = data;
-        log('======================', player);
-        if (player.is_cur_player) {
-            player
-                .beActioned({
-                    action: this.name,
-                    status: 'complete',
-                })
-                .subscribe();
-        }
+        player
+            .beActioned({
+                action: this.name,
+                status: 'complete',
+                data: data
+            })
+            .subscribe();
+    }
+}
+
+export class reverseArrows extends Action {
+    private name = 'reverse_arrows';
+    public act(data: ActionDataInfo) {
+        data.player.beActioned({
+            action: this.name,
+            status: 'act',
+        }).subscribe();
     }
 }

@@ -11,6 +11,7 @@ export const cmd = {
     discard_card: 'discard_card',
     status_change: 'status_change',
     update_bill_board: 'update_bill_board',
+    update_turn_arrows: 'update_turn_arrows',
 };
 
 /** 牌的类型  */
@@ -143,7 +144,7 @@ export class GameModel extends BaseEvent {
         this.setSpeaker(data.speakerId);
         this.remain_num = data.remainCard;
         this.direction = data.turnDirection;
-
+        this.trigger(cmd.update_turn_arrows, data.turnDirection);
         const hit_data = data.hitData;
         if (hit_data) {
             const { hitCard, hitInfo, hitUserId } = hit_data;
@@ -163,10 +164,10 @@ export class GameModel extends BaseEvent {
         for (const player of player_list) {
             if (player.isMyId(speak_id)) {
                 player.setStatus('speak');
-                // this.trigger(cmd.update_bill_board, {
-                //     fromUser: player,
-                //     cardId: TURN_CHANGE_ID
-                // });
+                this.trigger(cmd.update_bill_board, {
+                    fromUser: player,
+                    cardId: TURN_CHANGE_ID,
+                });
             } else {
                 player.setStatus('normal');
             }

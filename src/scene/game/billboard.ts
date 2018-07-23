@@ -5,6 +5,7 @@ import { log } from '../../mcTree/utils/zutil';
 
 export class BillBoardCtrl {
     private link;
+    private msgList = [];
     constructor(view: ui.game.billboardUI) {
         this.init(view);
     }
@@ -16,6 +17,33 @@ export class BillBoardCtrl {
             view,
             ...view,
         };
+    }
+
+    public addMsg(data) {
+        this.msgList.push(data);
+        if (this.msgList.length == 1) {
+            this.updateMsg();
+        }
+    }
+
+    private updateMsg() {
+        if (!this.msgList[0]) {
+            return;
+        }
+        const { view } = this.link;
+        const period = 200;
+        let originX = view.x;
+        let localPoint = view.parent.globalToLocal(new Laya.Point(Laya.stage.width, 0));
+        log(localPoint)
+        Laya.Tween.to(view, { x: localPoint.x }, period, null, new Laya.Handler(this, () => {
+            this.updateInfo(this.msgList[0]);
+        }));
+        Laya.Tween.to(view, { x: originX }, period, null, null, period);
+
+        Laya.timer.once(1000, this, () => {
+            this.msgList.shift();
+            this.updateMsg();
+        });
     }
 
     public updateInfo({
