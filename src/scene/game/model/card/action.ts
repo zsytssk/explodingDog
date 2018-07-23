@@ -291,7 +291,6 @@ export class ShowSetExplode extends Action {
     }
     public complete(data: ActionDataInfo) {
         const { player } = data;
-        log('======================', player)
         if (player.is_cur_player) {
             player
                 .beActioned({

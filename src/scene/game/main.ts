@@ -235,7 +235,7 @@ export class GameCtrl extends BaseCtrl {
             this.leave();
         });
         this.onModel(game_cmd.update_bill_board, (data: { fromUser, toUser, cardId, step }) => {
-            this.link.bill_board_ctrl.updateInfo(data);
+            this.link.bill_board_ctrl.addMsg(data);
         });
     }
     /** 游戏复盘逻辑 */
