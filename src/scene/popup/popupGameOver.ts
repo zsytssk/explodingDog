@@ -6,7 +6,7 @@ import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
 
 export class PopupGameOver extends ui.popup.popupGameOverUI {
-    isUserCreate; // 是否为用户创建的房间
+    private isUserCreate; // 是否为用户创建的房间
     name = 'game_over';
     group = 'exoploding';
     constructor() {
@@ -21,6 +21,13 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
                 return;
             }
             Sail.io.emit(CMD.OUT_ROOM);
+        });
+        this.btnAgain.on(Laya.Event.CLICK, this, () => {
+            if (!this.isUserCreate) {
+                //重新开始匹配
+            } else {
+                Sail.io.emit(CMD.PLAY_INVITE);
+            }
         });
     }
     updateView(data) {

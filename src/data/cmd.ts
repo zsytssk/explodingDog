@@ -29,5 +29,7 @@ export const CMD = {
     /** 用户淘汰 */
     USER_EXPLODING: 'userExploding',
     /** 游戏结束 */
-    GAME_OVER: 'gameOver'
+    GAME_OVER: 'gameOver',
+    /**邀请再来一局 */
+    PLAY_INVITE: 'playInvite'
 };

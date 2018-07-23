@@ -169,6 +169,7 @@ export class SeatCtrl extends BaseCtrl {
                 // data.data.
                 const game_ctrl = queryClosest(this, 'name:game');
                 game_ctrl.getChildByName('docker_ctrl').setRate(data.data.bombProb);
+                game_ctrl.getChildByName('card_heap_ctrl').setRemainCard(data.data.remainCard);
             }
             return;
         }

@@ -9,6 +9,7 @@ export interface Link {
 
 /**  */
 export class CardHeapCtrl extends BaseCtrl {
+    name = 'card_heap_ctrl';
     protected link = {} as Link;
     constructor(view: ui.game.cardHeapUI) {
         super();
