@@ -184,6 +184,9 @@ export class SeatCtrl extends BaseCtrl {
                 game_ctrl
                     .getChildByName('docker_ctrl')
                     .setRate(data.data.bombProb);
+                game_ctrl
+                    .getChildByName('card_heap_ctrl')
+                    .setRemainCard(data.data.remainCard);
             }
             if (action === 'choose_target') {
                 this.beChoosed();

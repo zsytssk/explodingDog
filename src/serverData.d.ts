@@ -102,7 +102,8 @@ type HitData = {
         canChooseUserIds?: string[];
         topCards?: string[];
         remainTime?: number;
-        bombProb: number;
+        bombProb?: number;
+        remainCard?: number;
     };
 };
 type HitBackData = {
