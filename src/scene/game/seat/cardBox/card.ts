@@ -165,6 +165,7 @@ export class CardCtrl extends BaseCtrl {
         const end_props = { y, x };
         if (this.is_insert) {
             view.x = x;
+            view.visible = true;
             this.is_insert = false;
         }
         tween({

@@ -123,9 +123,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     public isMove() {
         return this.touch_info.status === 'move';
     }
-    public addCard(card: CardModel) {
+    public addCard(card: CardModel, is_insert?: boolean) {
         const { card_list, card_wrap } = this.link;
-        const card_ctrl = new CurCardCtrl(card, card_wrap);
+        const card_ctrl = new CurCardCtrl(card, card_wrap, is_insert);
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
