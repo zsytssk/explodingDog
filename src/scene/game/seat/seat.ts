@@ -90,6 +90,9 @@ export class SeatCtrl extends BaseCtrl {
         this.link.nickname.text = player.nickname;
         this.link.die_avatar.visible = false;
 
+        /** 设置默认状态 */
+        this.setStatus(player.status);
+
         this.model = player;
         this.loadedPlayer = true;
         this.bindModel();

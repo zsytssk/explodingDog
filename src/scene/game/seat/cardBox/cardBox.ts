@@ -1,12 +1,15 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
 import { CardModel } from '../../model/card/card';
 import { CardCtrl } from './card';
-import { cmd } from '../../main';
+import { cmd, GameCtrl } from '../../main';
+import { queryClosest } from '../../../../mcTree/utils/zutil';
 
 export interface Link {
     view: Laya.Sprite;
     card_list: CardCtrl[];
     card_wrap: Laya.Sprite;
+    /** 牌飞行移动时 要放置的节点 */
+    card_move_box: Laya.Sprite;
 }
 
 export class CardBoxCtrl extends BaseCtrl {
@@ -23,10 +26,17 @@ export class CardBoxCtrl extends BaseCtrl {
     }
     protected initLink() {
         const { view } = this.link;
+        const game_ctrl = queryClosest(this, 'name:game') as GameCtrl;
+        const card_move_box = game_ctrl.getWidgetBox();
+
         this.link = {
             ...this.link,
+            card_move_box,
             card_wrap: view,
         };
+    }
+    public getCardMoveBox() {
+        return this.link.card_move_box;
     }
     /** 牌的数目变化 重新排列牌发生b */
     public sortCard() {
