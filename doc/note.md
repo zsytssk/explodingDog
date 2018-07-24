@@ -1,4 +1,16 @@
 ## 2018-07-23 10:09:07
+* @note putCardBoxInWrap
+
+* @opt 抓牌 动画抖动
+
+* @bug 创建房间
+
+* @bug 其他人没有看到 偷牌增加减少
+
+* @bug 出牌后 原出牌区的牌被清楚了
+
+* @todo 炸弹 是移动牌  关闭之后 牌位置不对
+
 * @ques 其他用户的give card, card_ctrl如何销毁
 
 -   @note

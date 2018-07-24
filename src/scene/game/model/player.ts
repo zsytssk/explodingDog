@@ -47,7 +47,8 @@ export class PlayerModel extends BaseEvent {
         if (!this.is_cur_player && shouLen) {
             shou = fill(Array(player_data.shouLen), '*');
         }
-        if (user_status + '' === '5') {
+        /** UserStatusData */
+        if (user_status + '' === '6') {
             this.setStatus('die');
         }
         this.updateCards(shou);

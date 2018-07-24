@@ -11,8 +11,8 @@ import { PopupDefuse } from '../widget/defuse';
 import { CardCtrl } from './cardBox/card';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
 import { Link as BaseLink, SeatCtrl } from './seat';
-import { tweenLoop } from '../../../mcTree/utils/animate';
 import { GiveCardCtrl } from '../widget/giveCard';
+import { GameCtrl } from '../main';
 
 export interface Link extends BaseLink {
     view: ui.game.seat.curSeatUI;
@@ -124,17 +124,24 @@ export class CurSeatCtrl extends SeatCtrl {
     private showDefuse(data: ObserverActionInfo) {
         const popupDefuse = new PopupDefuse(data.data.remainTime);
         const player = this.model;
-        const { card_box_ctrl } = this.link;
         popupDefuse.setCards(player.card_list, this);
         Sail.director.popScene(popupDefuse);
     }
-    public putCardBoxInWrap(wrap: Laya.Sprite) {
+    /**
+     * 将将牌池放置到特定的节点上， 炸弹出现时 弹出层需要借用这ctrl
+     * @param wrap card_box 要放置的地方
+     * @param card_move_box 牌在移动时要放置的地方
+     */
+    public putCardBoxInWrap(wrap: Laya.Sprite, card_move_box: Laya.Sprite) {
         const { card_box_ctrl } = this.link;
-        return card_box_ctrl.putCardBoxInWrap(wrap);
+        return card_box_ctrl.putCardBoxInWrap(wrap, card_move_box);
     }
+    /** 借用牌池结束后还原到原来节点中 */
     public putCardBoxBack() {
         const { card_box_ctrl, card_box_wrap } = this.link;
-        return card_box_ctrl.putCardBoxInWrap(card_box_wrap);
+        const game_ctrl = queryClosest(this, 'name:game') as GameCtrl;
+        const widget_box = game_ctrl.getWidgetBox();
+        return card_box_ctrl.putCardBoxInWrap(card_box_wrap, widget_box);
     }
     public giveCard(card: CardCtrl) {
         const { give_card_ctrl } = this.link;

@@ -1,5 +1,5 @@
 /* 玩家状态: 0-init 1-waiting 3-2-seating 3-playing 4-speaking 5-dead */
-type UserStatusData = '0' | '1' | '2' | '3' | '4' | '5';
+type UserStatusData = '0' | '1' | '2' | '3' | '4' | '5' | '6';
 /* 游戏状态: 0-init 2-starting 3-playing  */
 type RoomStatusData = '0' | '2' | '3';
 /** 牌组类型: 1-基础卡包 2,3-拓展卡包- */

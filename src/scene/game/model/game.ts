@@ -112,11 +112,11 @@ export class GameModel extends BaseEvent {
     }
     /** 设置房间信息 */
     public setRoomInfo(data: RoomInfoData) {
-        const type_no = data.isUserCreate || 0;
+        const game_type = data.isUserCreate || 0;
         const status_no = Number(data.roomStatus);
         const card_no = Number(data.cardType);
         this.room_id = data.roomId;
-        this.game_type = GAME_TYPE[type_no] as GameType;
+        this.game_type = game_type as GameType;
         this.setCardType(card_no);
         this.setGameStatus(status_no);
     }

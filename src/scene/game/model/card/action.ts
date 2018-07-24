@@ -1,7 +1,7 @@
 // tslint:disable:max-classes-per-file
 
 import { race } from 'rxjs';
-import { log } from '../../../../mcTree/utils/zutil';
+import { log, logErr } from '../../../../mcTree/utils/zutil';
 import { GameModel } from '../game';
 import { PlayerModel } from '../player';
 import { CardModel } from './card';
@@ -110,7 +110,6 @@ export class WaitGetCard extends Action implements IAction {
         const { game, targetUserId } = data;
         const { card } = this;
         const target = game.getPlayerById(targetUserId);
-        this.target = target;
         const { is_cur_player } = target;
         /** 非当前用户不需要选择 */
         if (!is_cur_player) {
@@ -130,14 +129,20 @@ export class WaitGetCard extends Action implements IAction {
         log('act', data);
     }
     public complete(data: ActionDataInfo) {
-        const { player, card } = data;
-        const target = this.target;
+        const { game, targetUserId, player, card } = data;
+        const target = game.getPlayerById(targetUserId);
         /** 非当前用户不需要选择 */
         if (!target) {
             return;
         }
 
         const card_model = target.giveCard(card);
+        if (!card_model) {
+            logErr(
+                `cant find cardModel card=${card} in player${player.user_id}`,
+            );
+            return;
+        }
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }

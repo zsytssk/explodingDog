@@ -33,6 +33,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         this.initEvent();
     }
     protected initLink() {
+        super.initLink();
         const { view } = this.link;
         const { card_wrap } = view;
         const seat = this.parent as CurSeatCtrl;
@@ -167,7 +168,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         }
     }
     /** 将本身放到另外的上面去， 炸弹弹出层里面 */
-    public putCardBoxInWrap(wrap: Laya.Sprite) {
+    public putCardBoxInWrap(wrap: Laya.Sprite, card_move_box: Laya.Sprite) {
         const { view } = this.link;
         const ori_pos = new Laya.Point(0, 0);
         view.localToGlobal(ori_pos);
@@ -175,6 +176,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
 
         view.pos(ori_pos.x, ori_pos.y);
         wrap.addChild(view);
+        this.link.card_move_box = card_move_box;
         return this;
     }
 }

@@ -2,17 +2,14 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": 3001,
+        "userId": "3004",
         "hitCard": "3401",
-        "hitUserId": 3002,
+        "hitUserId": "3003",
         "hitInfo": {
             "type": "steal",
             "step": 3,
-            "targetUserId": "3001",
-            "discard": 0,
-            "newSortCards": null,
-            "card": "3301",
-            "getCard": "3301"
+            "targetUserId": "3004",
+            "discard": 0
         }
     }
 }
