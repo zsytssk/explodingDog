@@ -9,7 +9,7 @@
             "type": "alter_the_future",
             "step": 1,
             "targetUserId": 0,
-            "discard": 0,
+            "discard": 1,
             "topCards": ["4001", "3921"]
         }
     }

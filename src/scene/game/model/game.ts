@@ -201,10 +201,12 @@ export class GameModel extends BaseEvent {
     }
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */
+
+        this.updateBillboard(data);
         const { discard_card } = this;
         const player = this.getPlayerById(data.hitUserId);
         const hit_info = data.hitInfo;
-        const hit_card = data.hitCard;
+        const hit_card = data.hitCard + '';
 
         if (!hit_info) {
             return;
@@ -221,7 +223,7 @@ export class GameModel extends BaseEvent {
         }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {
-            if (!discard_card) {
+            if (!discard_card || discard_card.card_id !== hit_card) {
                 card = new CardModel(hit_card);
                 this.trigger(cmd.discard_card, { card });
             } else {
@@ -238,13 +240,17 @@ export class GameModel extends BaseEvent {
             player,
         });
         this.discard_card = card;
+    }
+    private updateBillboard(data) {
+        const hit_info = data.hitInfo;
+        const player = this.getPlayerById(data.hitUserId);
         // 更新billboard
-        let step = hit_info.step;
+        const step = hit_info.step;
         let fromUser = null;
         let targetPlayer = null;
-        let cardid_setp = data.hitCard + '_' + step;
+        const cardid_setp = data.hitCard + '_' + step;
         switch (cardid_setp) {
-            case "3401_2":
+            case '3401_2':
                 fromUser = this.getPlayerById(hit_info.targetUserId);
                 break;
             default:
@@ -256,7 +262,7 @@ export class GameModel extends BaseEvent {
         }
         this.trigger(cmd.update_bill_board, {
             cardId: data.hitCard,
-            fromUser: fromUser,
+            fromUser,
             step: hit_info.step,
             toUser: targetPlayer,
         });

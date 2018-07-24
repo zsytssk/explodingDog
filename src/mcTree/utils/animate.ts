@@ -285,7 +285,7 @@ export function tween(data: {
 
         time = time || 700;
 
-        ease_fn = ease_fn || Ease.cubicInOut;
+        ease_fn = ease_fn || Ease.linearNone;
         if (typeof ease_fn === 'string') {
             ease_fn = Ease[ease_fn];
         }
@@ -311,7 +311,9 @@ export function tween(data: {
             time,
             ease_fn as Func<number>,
             Laya.Handler.create(sprite, () => {
-                resolve();
+                if (!(sprite as Laya.Sprite).destroyed) {
+                    resolve();
+                }
             }),
         );
     });
@@ -356,7 +358,8 @@ export async function tweenLoop(data: {
             } else {
                 let next = i + 1;
                 if (next >= len) {
-                    next = 0;
+                    i = 0;
+                    next = 1;
                 }
                 const start_props = props_arr[i];
                 const end_props = props_arr[next];

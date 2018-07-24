@@ -49,6 +49,7 @@ export class AlarmCtrl extends BaseCtrl {
     }
     private show() {
         const { view: sprite } = this.link;
+        sprite.visible = true;
         const end_props = {
             alpha: 1,
             ...show_pos,
@@ -96,6 +97,7 @@ export class AlarmCtrl extends BaseCtrl {
             end_props,
             sprite,
         }).then(() => {
+            sprite.visible = false;
             arrow.rotation = start_angle;
         });
     }

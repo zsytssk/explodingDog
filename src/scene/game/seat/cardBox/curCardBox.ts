@@ -69,13 +69,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         }
         const { x, y } = touch_info.last_pos;
         const { view } = this.link;
-        const last_pos = {
-            x: event.stageX,
-            y: event.stageY,
-        };
         const delta = {
-            x: last_pos.x - x,
-            y: last_pos.y - y,
+            x: event.stageX - x,
+            y: event.stageY - y,
         };
         if (!this.isMove()) {
             if (Math.abs(delta.x) < 30) {
@@ -84,6 +80,10 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
                 delta.x = 0;
             }
         }
+        const last_pos = {
+            x: event.stageX,
+            y: event.stageY,
+        };
         this.touch_info = {
             ...touch_info,
             delta,

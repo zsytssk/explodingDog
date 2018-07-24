@@ -87,8 +87,8 @@ export class CardBoxCtrl extends BaseCtrl {
      * @param is_insert s
      */
     public addCard(card: CardModel, is_insert?: boolean) {
-        const { view, card_list } = this.link;
-        const card_ctrl = new this.card_creator(card, view, is_insert);
+        const { card_list, card_wrap } = this.link;
+        const card_ctrl = new this.card_creator(card, card_wrap, is_insert);
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
@@ -98,9 +98,9 @@ export class CardBoxCtrl extends BaseCtrl {
      * 初始化牌时需要处理多张的牌
      */
     public addCards(cards: CardModel[]) {
-        const { view, card_list } = this.link;
+        const { card_list, card_wrap } = this.link;
         for (const card of cards) {
-            const card_ctrl = new this.card_creator(card, view);
+            const card_ctrl = new this.card_creator(card, card_wrap);
             this.addChild(card_ctrl);
             card_ctrl.init();
             card_list.push(card_ctrl);

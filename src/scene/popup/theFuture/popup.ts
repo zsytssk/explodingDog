@@ -56,7 +56,9 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         this.observer = observer;
         const { card_box_ctrl } = this.link;
         if (type === 'alter_the_future') {
-            card_box_ctrl.can_sort = true;
+            card_box_ctrl.setCanSort(true);
+        } else {
+            card_box_ctrl.setCanSort(false);
         }
         for (const card of data) {
             card_box_ctrl.addCard(card);
