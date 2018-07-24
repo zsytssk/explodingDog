@@ -33,6 +33,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         this.initEvent();
     }
     protected initLink() {
+        super.initLink();
         const { view } = this.link;
         const { card_wrap } = view;
         const seat = this.parent as CurSeatCtrl;
