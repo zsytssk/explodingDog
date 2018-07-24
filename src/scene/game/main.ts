@@ -238,9 +238,6 @@ export class GameCtrl extends BaseCtrl {
                 this.link.bill_board_ctrl.addMsg(data);
             },
         );
-        this.onModel(game_cmd.update_turn_arrows, data => {
-            this.link.turn_arrow_ctrl.rotate(data);
-        });
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
@@ -361,13 +358,14 @@ export class GameCtrl extends BaseCtrl {
             host_zone_ctrl,
             quick_start_ctrl,
         } = this.link;
-        const type = this.model.game_type;
+        const game_type = this.model.game_type;
         if (status === GAME_STATUS.INIT) {
             game_zone.visible = false;
             docker_ctrl.reset();
-            if (type === GAME_TYPE.HOST) {
-                const room_id = this.model.room_id;
-                host_zone_ctrl.show(room_id);
+            if (game_type === GAME_TYPE.HOST) {
+                const { room_id, create_user_id } = this.model;
+                const is_cur_create = isCurPlayer(create_user_id);
+                host_zone_ctrl.show(room_id, is_cur_create);
             } else {
                 quick_start_ctrl.show();
             }
@@ -376,7 +374,7 @@ export class GameCtrl extends BaseCtrl {
         this.updateSeatPos();
         this.link.turn_arrow_ctrl.showArrow(this.model.getPlayerNum());
         docker_ctrl.start();
-        if (type === GAME_TYPE.HOST) {
+        if (game_type === GAME_TYPE.HOST) {
             host_zone_ctrl.hide();
         } else {
             quick_start_ctrl.hide();

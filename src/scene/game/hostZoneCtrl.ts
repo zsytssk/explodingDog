@@ -1,19 +1,18 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
 import { CMD } from '../../data/cmd';
-import { CARD_TYPE, CardType } from './model/game';
-import { getKeyByValue } from '../../utils/tool';
+import { CardType } from './model/game';
+import { getGrayFilter } from '../../utils/tool';
 interface Link {
-    view: Laya.Sprite;
+    view: ui.game.hostZone.mainUI;
     card_type: Laya.ViewStack;
-    choose_card_btn: Laya.Sprite;
-    start_btn: Laya.Sprite;
+    choose_card_btn: Laya.Button;
+    start_btn: Laya.Button;
     room_id_text: Laya.Text;
 }
-
-/**  */
 export class HostZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
+    private is_disabled = false;
     constructor(view) {
         super();
         this.link.view = view;
@@ -23,16 +22,18 @@ export class HostZoneCtrl extends BaseCtrl {
         this.initEvent();
     }
     protected initLink() {
-        const view = this.link.view as ui.game.hostZone.mainUI;
-        this.link.choose_card_btn = view.card_type
-            .choose_card_btn as Laya.Sprite;
+        const { view } = this.link;
+        this.link.choose_card_btn = view.card_type.choose_card_btn;
         this.link.card_type = view.card_type.card_type;
-        this.link.start_btn = view.start.start_btn as Laya.Sprite;
+        this.link.start_btn = view.start.start_btn;
         this.link.room_id_text = view.billboard.room_id;
     }
     protected initEvent() {
         const { choose_card_btn, start_btn } = this.link;
         choose_card_btn.on(Laya.Event.CLICK, this, () => {
+            if (this.is_disabled) {
+                return;
+            }
             const popupCards = new PopupCards();
             popupCards.setType('choose');
             popupCards.popupEffect = null;
@@ -41,17 +42,33 @@ export class HostZoneCtrl extends BaseCtrl {
         });
 
         start_btn.on(Laya.Event.CLICK, this, () => {
+            if (this.is_disabled) {
+                return;
+            }
             Sail.io.emit(CMD.GAME_START);
         });
     }
-    public show(room_id: string) {
+    public show(room_id: string, is_cur_create: boolean) {
         const { view, room_id_text } = this.link;
         view.visible = true;
         /** 设置roomId */
         room_id_text.text = room_id;
+        /** 非当前用户禁用。。 */
+        if (!is_cur_create) {
+            this.disable();
+        }
     }
     public hide() {
         this.link.view.visible = false;
+    }
+    public disable() {
+        const { choose_card_btn, start_btn } = this.link;
+        const { card_type, start } = this.link.view;
+        card_type.filters = [getGrayFilter()];
+        start.filters = [getGrayFilter()];
+
+        choose_card_btn.disabled = true;
+        start_btn.disabled = true;
     }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {

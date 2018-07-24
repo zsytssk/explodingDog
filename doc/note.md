@@ -1,4 +1,19 @@
 ## 2018-07-23 10:09:07
+* @ques 创建房间其他人要将 开始游戏置灰
+    * filter
+
+* @ques 是当前用户创建的房间 这个数据在哪放在哪
+    * room_id create_user_id
+    * 这些数据我只有在hostZone 才需要
+    * 我要其他用户置灰 hostZone
+
+* @ques curCardBox cardBox addCard addCards大量重复代码
+
+* Sail socker 连接之后再发送命令...
+
+* @ques 倒计时退出房间报错...
+
+
 * @ques 初始化牌的时候牌的动画 加牌时牌的动画...
 
 * @opt 抓牌 动画抖动
