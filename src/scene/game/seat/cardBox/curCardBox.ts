@@ -24,6 +24,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     private touch_info = {
         status: 'default',
     } as TouchInfo;
+    protected card_creator = CurCardCtrl;
     constructor(view: CurCardBoxUI) {
         super(view);
         this.link.view = view;
@@ -122,24 +123,6 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     public isMove() {
         return this.touch_info.status === 'move';
-    }
-    public addCard(card: CardModel, is_insert?: boolean) {
-        const { card_list, card_wrap } = this.link;
-        const card_ctrl = new CurCardCtrl(card, card_wrap, is_insert);
-        this.addChild(card_ctrl);
-        card_ctrl.init();
-        card_list.push(card_ctrl);
-        this.sortCard();
-    }
-    public addCards(cards: CardModel[]) {
-        const { card_list, card_wrap } = this.link;
-        for (const card of cards) {
-            const card_ctrl = new CurCardCtrl(card, card_wrap);
-            this.addChild(card_ctrl);
-            card_ctrl.init();
-            card_list.push(card_ctrl);
-        }
-        this.sortCard();
     }
     /** 牌没有打出去， 回收牌 */
     public withDrawCardIndex(card, index: number) {

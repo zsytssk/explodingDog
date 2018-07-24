@@ -1,72 +1,91 @@
 ## 2018-07-23 10:09:07
-* @ques 创建房间其他人要将 开始游戏置灰
-    * filter
 
-* @ques 是当前用户创建的房间 这个数据在哪放在哪
-    * room_id create_user_id
-    * 这些数据我只有在hostZone 才需要
-    * 我要其他用户置灰 hostZone
+-   @todo 再来一局 reset
 
-* @ques curCardBox cardBox addCard addCards大量重复代码
+-   @todo 音效 产品
 
-* Sail socker 连接之后再发送命令...
+-   @ques the_the_future 点击查看牌
+    -   选择卡组没有显示当前卡组
 
-* @ques 倒计时退出房间报错...
+* @todo 一个个小ui的出现动画
 
+* @ques 自适应复盘如何处理
+    * 牌居中背景延伸
 
-* @ques 初始化牌的时候牌的动画 加牌时牌的动画...
+*   @ques 创建房间其他人要将 开始游戏置灰
 
-* @opt 抓牌 动画抖动
+    -   filter
+    -   置灰按钮
 
-* @bug 出牌后 原出牌区的牌被清楚了
+*   @ques alarm
+    -   出牌[自己出了洗牌]
+    -   偷牌选人+给牌
+    -   alter——the——future
 
-* @note putCardBoxInWrap
+-   @ques 是当前用户创建的房间 这个数据在哪放在哪
 
-* @bug 创建房间
+    -   room_id create_user_id
+    -   这些数据我只有在 hostZone 才需要
+    -   我要其他用户置灰 hostZone
 
-* @bug 其他人没有看到 偷牌增加减少
+-   @ques curCardBox cardBox addCard addCards 大量重复代码
 
+-   Sail socker 连接之后再发送命令...
 
-* @todo 炸弹 是移动牌  关闭之后 牌位置不对
+-   @ques 倒计时退出房间报错...
 
-* @ques 其他用户的give card, card_ctrl如何销毁
+*   @ques 初始化牌的时候牌的动画 加牌时牌的动画...
 
--   @note
+*   @opt 抓牌 动画抖动
+
+*   @bug 出牌后 原出牌区的牌被清楚了
+
+*   @note putCardBoxInWrap
+
+*   @bug 创建房间
+
+*   @bug 其他人没有看到 偷牌增加减少
+
+-   @todo 炸弹 是移动牌 关闭之后 牌位置不对
+
+-   @ques 其他用户的 give card, card_ctrl 如何销毁
+
+*   @note
 
     -   用户爆炸了
     -   当前用户的表示
     -   偷牌选择玩家标志
     -   炸弹出牌
 
--   @ques tweenLoop 如果有一样的属性的就会奔溃
+*   @ques tweenLoop 如果有一样的属性的就会奔溃
 
--   @note alarm 已经 show， 正在 show 这如何处理
+*   @note alarm 已经 show， 正在 show 这如何处理
 
     -   想要的效果是 不改变位置 但是功能正常
 
--   @note 出牌不好出
+*   @note 出牌不好出
 
--   -   @bug 偷牌 + 倒计时 处理
+*   -   @bug 偷牌 + 倒计时 处理
 
-*   @ques 用户的牌怎么不见了
+-   @ques 用户的牌怎么不见了
 
--   @ques
+*   @ques
 
--   @ques tweenFun caller 和 step_fun 的冲突
+*   @ques tweenFun caller 和 step_fun 的冲突
     -   参数太复杂了
     -   如果 start_props 是数字怎么处理
     *   要不要建立一个 step 函数去处理这些事情。。。
 
-*   @note 要不要将 frameLoop 做成 Laya.timer 一样
+-   @note 要不要将 frameLoop 做成 Laya.timer 一样
 
-*   Laya.timer.loop(interval_time, this, interval); 每次都需要去计算这个 是不是太耗费性能了
+-   Laya.timer.loop(interval_time, this, interval); 每次都需要去计算这个 是不是太耗费性能了
     -   每次添加 计算最小值 去改变 loop 的时间间隔
     -   每次清除也是这样， 如果为空就静止这个 interval
     -   最小的 timmer 如何去计算 所有 delay 的公约数
     *   const gcd = (x, y) => !y ? x : gcd(y, x % y);
 
--   @ques 章旸 billboard 是怎么做的。。。
--   @ques 属性渐变变化 + 每次变化的函数
+*   @ques 章旸 billboard 是怎么做的。。。
+*   @ques 属性渐变变化 + 每次变化的函数
 
 ## 2018-07-20 15:14:01
 
@@ -435,7 +454,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                           @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

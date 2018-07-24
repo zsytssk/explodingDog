@@ -436,7 +436,7 @@ export class GameCtrl extends BaseCtrl {
         const { speakerId: user_id } = data;
         const { alarm_ctrl } = this.link;
         if (isCurPlayer(user_id)) {
-            alarm_ctrl.preCountDown();
+            alarm_ctrl.countDown(20);
         } else {
             alarm_ctrl.clear();
         }

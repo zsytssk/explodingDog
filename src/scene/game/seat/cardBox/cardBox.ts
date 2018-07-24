@@ -17,6 +17,7 @@ export class CardBoxCtrl extends BaseCtrl {
     protected link = {
         card_list: [],
     } as Link;
+    protected card_creator = CardCtrl;
     constructor(view) {
         super();
         this.link.view = view;
@@ -87,7 +88,7 @@ export class CardBoxCtrl extends BaseCtrl {
      */
     public addCard(card: CardModel, is_insert?: boolean) {
         const { view, card_list } = this.link;
-        const card_ctrl = new CardCtrl(card, view, is_insert);
+        const card_ctrl = new this.card_creator(card, view, is_insert);
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
@@ -99,7 +100,7 @@ export class CardBoxCtrl extends BaseCtrl {
     public addCards(cards: CardModel[]) {
         const { view, card_list } = this.link;
         for (const card of cards) {
-            const card_ctrl = new CardCtrl(card, view);
+            const card_ctrl = new this.card_creator(card, view);
             this.addChild(card_ctrl);
             card_ctrl.init();
             card_list.push(card_ctrl);

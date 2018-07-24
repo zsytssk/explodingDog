@@ -102,17 +102,17 @@ export function convertPos(
 /** 置灰的滤镜 */
 export function getGrayFilter() {
     const data = [
-        0.5,
+        0.3,
         0.6094,
         0.082,
         0,
         0,
-        0.5,
+        0.3,
         0.6094,
         0.082,
         0,
         0,
-        0.5,
+        0.3,
         0.6094,
         0.082,
         0,

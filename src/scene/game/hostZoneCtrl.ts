@@ -63,12 +63,11 @@ export class HostZoneCtrl extends BaseCtrl {
     }
     public disable() {
         const { choose_card_btn, start_btn } = this.link;
-        const { card_type, start } = this.link.view;
-        card_type.filters = [getGrayFilter()];
-        start.filters = [getGrayFilter()];
 
         choose_card_btn.disabled = true;
         start_btn.disabled = true;
+        choose_card_btn.selected = true;
+        start_btn.selected = true;
     }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {
