@@ -59,9 +59,6 @@ export class CurSeatCtrl extends SeatCtrl {
         card_box_ctrl.init();
         return card_box_ctrl;
     }
-    protected addCard(card: CardModel) {
-        this.link.card_box_ctrl.addCard(card);
-    }
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
         super.beActioned(data);

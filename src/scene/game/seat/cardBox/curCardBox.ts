@@ -131,6 +131,16 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         card_list.push(card_ctrl);
         this.sortCard();
     }
+    public addCards(cards: CardModel[]) {
+        const { card_list, card_wrap } = this.link;
+        for (const card of cards) {
+            const card_ctrl = new CurCardCtrl(card, card_wrap);
+            this.addChild(card_ctrl);
+            card_ctrl.init();
+            card_list.push(card_ctrl);
+        }
+        this.sortCard();
+    }
     /** 牌没有打出去， 回收牌 */
     public withDrawCardIndex(card, index: number) {
         let { card_list } = this.link;

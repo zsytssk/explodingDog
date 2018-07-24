@@ -80,12 +80,30 @@ export class CardBoxCtrl extends BaseCtrl {
         this.removeChild(card);
         this.sortCard();
     }
-    public addCard(card: CardModel) {
+    /**
+     *
+     * @param card
+     * @param is_insert s
+     */
+    public addCard(card: CardModel, is_insert?: boolean) {
         const { view, card_list } = this.link;
-        const card_ctrl = new CardCtrl(card, view);
+        const card_ctrl = new CardCtrl(card, view, is_insert);
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
+        this.sortCard();
+    }
+    /**
+     * 初始化牌时需要处理多张的牌
+     */
+    public addCards(cards: CardModel[]) {
+        const { view, card_list } = this.link;
+        for (const card of cards) {
+            const card_ctrl = new CardCtrl(card, view);
+            this.addChild(card_ctrl);
+            card_ctrl.init();
+            card_list.push(card_ctrl);
+        }
         this.sortCard();
     }
     public getCardNum() {

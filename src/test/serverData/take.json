@@ -1,5 +1,10 @@
 {
     "cmd": "take",
     "code": 200,
-    "res": { "userId": "4001", "takeCard": "*", "remainCard": 18 }
+    "res": {
+        "userId": "3001",
+        "remainCard": 24,
+        "bombProb": 8,
+        "takeCard": "*"
+    }
 }

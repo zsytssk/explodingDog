@@ -6,8 +6,6 @@ import { getCardInfo, convertPos } from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import { CMD } from '../../../../data/cmd';
 import { CardBoxCtrl } from './cardBox';
-import { queryClosest } from '../../../../mcTree/utils/zutil';
-import { GameCtrl } from '../../main';
 
 type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
@@ -21,14 +19,16 @@ const space_scale = 1 / 2;
 export class CardCtrl extends BaseCtrl {
     public name = 'card';
     protected link = {} as Link;
+    protected is_insert: boolean;
     protected model: CardModel;
     /** 是否被选中 */
     public is_selected = false;
     /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
     private scale: number;
-    constructor(model: CardModel, wrap: Laya.Sprite) {
+    constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
         super();
         this.model = model;
+        this.is_insert = is_insert;
         this.link.wrap = wrap;
     }
     public init() {
@@ -58,6 +58,9 @@ export class CardCtrl extends BaseCtrl {
         const view = new ui.game.seat.cardBox.cardUI();
         const scale = wrap.height / view.height;
 
+        if (this.is_insert) {
+            view.visible = false;
+        }
         wrap.addChild(view);
         setStyle(view, { scaleX: scale, scaleY: scale });
         this.link = {
@@ -160,6 +163,10 @@ export class CardCtrl extends BaseCtrl {
         const y = 0;
         const x = space * index;
         const end_props = { y, x };
+        if (this.is_insert) {
+            view.x = x;
+            this.is_insert = false;
+        }
         tween({
             end_props,
             sprite: view,

@@ -118,13 +118,11 @@ export class SeatCtrl extends BaseCtrl {
         /** 渲染初始化的信息 */
         const player = this.model;
         const card_list = player.card_list;
-        for (const card of card_list) {
-            this.addCard(card);
-        }
+        this.link.card_box_ctrl.addCards(card_list);
 
         this.onModel(base_cmd.destroy, this.clearPlayer.bind(this));
         this.onModel(player_cmd.add_card, (data: { card: CardModel }) => {
-            this.addCard(data.card);
+            this.link.card_box_ctrl.addCard(data.card, true);
         });
         this.onModel(
             player_cmd.status_change,
@@ -138,9 +136,6 @@ export class SeatCtrl extends BaseCtrl {
     }
     private unBindModeEvent() {
         this.offOtherEvent(this.model);
-    }
-    protected addCard(card: CardModel) {
-        this.link.card_box_ctrl.addCard(card);
     }
     protected setStatus(status: PlayerStatus) {
         const {} = this.link;

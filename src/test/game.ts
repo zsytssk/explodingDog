@@ -4,6 +4,7 @@ import { default as gameStartData } from './serverData/gameStart.json';
 import { default as updateUserData } from './serverData/updateUser.json';
 import { default as hitData } from './serverData/hit.json';
 import { default as StealData } from './serverData/steal.json';
+import { default as TakeData } from './serverData/take.json';
 import { default as AlterTheFutureData } from './serverData/alterTheFuture.json';
 import { default as SeeTheFutureData } from './serverData/seeTheFuture.json';
 import { default as userExplodingData } from './serverData/userExploding.json';
@@ -25,6 +26,10 @@ export function gameStart() {
 export function gameHit() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
     game_ctrl.model.discardCard(hitData.res);
+}
+export function gameTake() {
+    const game_ctrl = (window as any).game_ctrl as GameCtrl;
+    game_ctrl.model.addPlayerCard(TakeData.res);
 }
 export function gameSteal() {
     describe('game steal', it => {
