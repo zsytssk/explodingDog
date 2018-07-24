@@ -546,7 +546,7 @@
                 {
                     "type":"UIView",
                     "source":"game/billboard.ui",
-                    "props":{"x":586,"var":"billboard"},
+                    "props":{"y":-28,"x":586,"var":"billboard"},
                     "nodeParent":70,
                     "label":"UIView(billboard)",
                     "isOpen":true,

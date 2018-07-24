@@ -8,7 +8,7 @@ import { Hall } from '../hall/scene';
 export class PopupGameOver extends ui.popup.popupGameOverUI {
     private isUserCreate; // 是否为用户创建的房间
     name = 'game_over';
-    group = 'exoploding';
+    group = 'exploding';
     CONFIG = {
         closeByGroup: true
     }

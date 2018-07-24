@@ -1,12 +1,14 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { tween, tweenLoop, stopAni } from '../../mcTree/utils/animate';
+import { log } from '../../mcTree/utils/zutil';
 
 export interface Link {
     view: Laya.Sprite;
-    wire: Laya.Sprite;
+    wire: Laya.Skeleton;
     tip: Laya.Sprite;
     arrow: Laya.Sprite;
     rateLabel: Laya.Label;
+    smoke: Laya.Sprite;
 }
 
 /**  */
@@ -21,6 +23,23 @@ export class DockerCtrl extends BaseCtrl {
     public init() {
         this.initLink();
         this.initEvent();
+        this.initAni();
+    }
+    private initAni() {
+        let wire = this.link.wire = new Laya.Skeleton();
+        wire.load('animation/zhadanjiqi_mopai.sk', new Laya.Handler(this, () => {
+            wire.stop();
+            wire.pos(115, 100);
+            wire.zOrder = -1;
+            this.link.view.addChild(wire);
+        }));
+        let smoke = this.link.smoke = new Laya.Skeleton();
+        smoke.load('animation/zhadanjiqi_jingbao.sk', new Laya.Handler(this, () => {
+            smoke.pos(115, 115);
+            smoke.zOrder = -1;
+            smoke.visible = false;
+            this.link.view.addChild(smoke);
+        }));
     }
     protected initLink() {
         const view = this.link.view as any;
@@ -53,14 +72,23 @@ export class DockerCtrl extends BaseCtrl {
         if (isNaN(rate) || rate < 0 || rate > 100) {
             return;
         }
-        const { rateLabel, arrow } = this.link;
+        const { rateLabel, arrow, wire } = this.link;
         const lastRate = parseInt(rateLabel.text);
+        wire.parent && wire.play(0, false);
         // 大于20概率触发震动效果
         if (rate > 20 && !this.isShaking) {
             this.shake();
         } else if (rate <= 20 && this.isShaking) {
             this.stopShake();
         }
+        //大于40概率显示烟雾
+        setTimeout(() => {
+            if (rate > 40) {
+                this.link.smoke.visible = true;
+            } else {
+                this.link.smoke.visible = false;
+            }
+        }, 200);
         // 概率从100下降时，取消持续旋转效果
         if (lastRate === 100 && rate < 100) {
             Laya.timer.clear(this, this.arrowLoop);
@@ -110,7 +138,6 @@ export class DockerCtrl extends BaseCtrl {
         stopAni(view);
     }
     public destroy() {
-        console.log('=======dockerview', this.link.view)
         stopAni(this.link.view);
         Laya.timer.clear(this, this.arrowLoop);
         super.destroy();

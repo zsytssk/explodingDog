@@ -30,6 +30,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             }
         };
         this.defuseCard.zOrder = 5;
+        this.card_box_wrap.zOrder = 5;
     }
     setCards(cards: CardModel[], cur_seat_ctrl: CurSeatCtrl) {
         const { card_box_wrap, ani } = this;

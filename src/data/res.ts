@@ -45,6 +45,8 @@ export const RES = {
         { url: 'images/bg/bg2.jpg', type: Laya.Loader.IMAGE },
         { type: Laya.Loader.BUFFER, url: 'animation/slap.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/chaidan.sk' },
+        { type: Laya.Loader.BUFFER, url: 'animation/zhadanjiqi_mopai.sk' },
+        { type: Laya.Loader.BUFFER, url: 'animation/zhadanjiqi_jingbao.sk' },
     ],
     LOADING: [
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },
