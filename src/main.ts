@@ -11,7 +11,11 @@ import { GameWrap } from './scene/game/sceneWrap';
 import { CMD } from './data/cmd';
 import './effect/scaleBtn';
 import { detectModel } from './mcTree/utils/zutil';
+import { checkLogin } from './utils/tool';
 Sail.onStart = () => {
+    if (!checkLogin()) {
+        return;
+    }
     load_util.setResmap(RESMAP);
     if (detectModel('showStat')) {
         Laya.Stat.show();
