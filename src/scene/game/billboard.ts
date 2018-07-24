@@ -61,7 +61,11 @@ export class BillBoardCtrl {
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
         if (toUser) {
-            text += `对${toUser.nickname}`;
+            if (cardId == '3401' && step == 3) {
+                text += `获得${toUser.nickname}`;
+            } else {
+                text += `对${toUser.nickname}`;
+            }
             avatarTo.skin = getAvatar(toUser.avatar);
         } else {
             avatarTo.skin = `images/game/card/icon_unknow.png`;

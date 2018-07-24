@@ -239,20 +239,27 @@ export class GameModel extends BaseEvent {
         });
         this.discard_card = card;
         // 更新billboard
+        let step = hit_info.step;
+        let fromUser = null;
         let targetPlayer = null;
-        if (hit_info.targetUserId) {
-            targetPlayer = this.getPlayerById(hit_info.targetUserId);
-        }
-        switch (data.hitCard) {
+        let cardid_setp = data.hitCard + '_' + step;
+        switch (cardid_setp) {
+            case "3401_2":
+                fromUser = this.getPlayerById(hit_info.targetUserId);
+                break;
             default:
-                this.trigger(cmd.update_bill_board, {
-                    cardId: data.hitCard,
-                    fromUser: player,
-                    step: hit_info.step,
-                    toUser: targetPlayer,
-                });
+                fromUser = player;
+                if (hit_info.targetUserId) {
+                    targetPlayer = this.getPlayerById(hit_info.targetUserId);
+                }
                 break;
         }
+        this.trigger(cmd.update_bill_board, {
+            cardId: data.hitCard,
+            fromUser: fromUser,
+            step: hit_info.step,
+            toUser: targetPlayer,
+        });
     }
     public unDiscardCard(data: HitData) {
         const player = this.getPlayerById(data.userId);
