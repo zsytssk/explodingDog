@@ -124,7 +124,10 @@ export class CardModel extends BaseEvent {
     }
     public canGive(card_id: string) {
         if (this.card_id === '*') {
-            this.updateInfo(card_id);
+            /** 如果是其他人偷到牌 服务器不会给card_id, 所以需要这个判断 */
+            if (card_id) {
+                this.updateInfo(card_id);
+            }
             return true;
         }
         if (this.status === 'wait_give') {

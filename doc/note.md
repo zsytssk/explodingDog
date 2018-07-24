@@ -1,6 +1,8 @@
 ## 2018-07-23 10:09:07
 * @note putCardBoxInWrap
 
+* @opt 抓牌 动画抖动
+
 * @bug 创建房间
 
 * @bug 其他人没有看到 偷牌增加减少
