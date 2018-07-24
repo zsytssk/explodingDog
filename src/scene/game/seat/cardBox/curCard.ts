@@ -20,8 +20,8 @@ export class CurCardCtrl extends CardCtrl {
     /** 是否被触摸 */
     public is_move = false;
     private start_pos = {} as Point;
-    constructor(model, wrap) {
-        super(model, wrap);
+    constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
+        super(model, wrap, is_insert);
     }
     protected initEvent() {
         super.initEvent();
