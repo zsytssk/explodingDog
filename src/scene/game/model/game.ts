@@ -63,7 +63,7 @@ export class GameModel extends BaseEvent {
         this.setRoundInfo(data.roundInfo);
     }
     /** 更新用户信息 */
-    public updatePlayers(players_data: UpdateUser['userList']) {
+    public updatePlayers(players_data: UpdateUserData['userList']) {
         const user_id_list = [];
         for (const player_data of players_data) {
             const user_id = player_data.userId;

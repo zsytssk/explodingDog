@@ -141,3 +141,17 @@ export function formatGameReplayData(data: GameReplayData) {
         user_list,
     };
 }
+export function formatUpdatePlayersData(data: UpdateUserData) {
+    const user_list = data.userList;
+    for (let i = 0; i < user_list.length; i++) {
+        const item = user_list[i];
+        if (isCurPlayer(item.userId)) {
+            user_list.splice(i, 1);
+            user_list.unshift(item);
+        }
+    }
+    return {
+        ...data,
+        user_list,
+    };
+}

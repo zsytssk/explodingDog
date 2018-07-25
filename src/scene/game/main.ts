@@ -2,7 +2,11 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
-import { isCurPlayer, formatGameReplayData } from '../../utils/tool';
+import {
+    isCurPlayer,
+    formatGameReplayData,
+    formatUpdatePlayersData,
+} from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { BillBoardCtrl } from './billboard';
 import { CardHeapCtrl } from './cardHeep';
@@ -268,10 +272,11 @@ export class GameCtrl extends BaseCtrl {
         this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
-    public onServerUpdateUser(data: UpdateUser) {
+    public onServerUpdateUser(data: UpdateUserData) {
         if (!this.is_ready) {
             return;
         }
+        data = formatUpdatePlayersData(data);
         /** 更新本地倒计时 */
         this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
         this.calcCurSeatId(data.userList);
@@ -469,7 +474,7 @@ export class GameCtrl extends BaseCtrl {
             slap_ctrl,
             card_heap_ctrl,
             discard_zone_ctrl,
-            docker_ctrl
+            docker_ctrl,
         } = this.link;
 
         alarm_ctrl.reset();

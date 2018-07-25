@@ -25,7 +25,7 @@ type UserData = {
     shou?: string[];
 };
 
-type UpdateUser = {
+type UpdateUserData = {
     roomInfo: RoomInfoData;
     userList: UserData[];
 };
