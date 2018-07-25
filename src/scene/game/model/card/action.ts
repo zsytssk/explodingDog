@@ -267,10 +267,9 @@ export class Slap extends Action {
     }
     public act(data: ActionDataInfo) {
         const { game, targetUserId } = data;
-        const { card_count } = this.card;
         const target = game.getPlayerById(targetUserId);
         data.target = target;
-        data.count = card_count;
+        data.count = data.slapCount;
         target
             .beActioned({
                 action: this.name,

@@ -3,6 +3,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { BaseEvent } from '../../../mcTree/event';
 import { CardModel } from './card/card';
 import { BeActionInfo } from './card/action';
+import { isCurPlayer } from '../../../utils/tool';
 
 export type PlayerStatus = 'speak' | 'wait_give' | 'die' | 'normal';
 export const cmd = {
@@ -32,11 +33,13 @@ export class PlayerModel extends BaseEvent {
     public card_list: CardModel[] = [];
     constructor(player_data: UserData, is_cur_player: boolean) {
         super();
-        this.is_cur_player = is_cur_player;
         this.updateInfo(player_data);
     }
     public updateInfo(player_data: UserData) {
         this.user_id = player_data.userId;
+        if (isCurPlayer(this.user_id)) {
+            this.is_cur_player = true;
+        }
         this.nickname = player_data.nickname;
         this.avatar = player_data.avatar;
         this.seat_id = Number(player_data.seatId);
@@ -54,6 +57,7 @@ export class PlayerModel extends BaseEvent {
         this.updateCards(shou);
     }
     public updateCards(cards_info: CardData[]) {
+        this.removeCards();
         if (!cards_info) {
             return;
         }
@@ -80,7 +84,7 @@ export class PlayerModel extends BaseEvent {
             }
         }
     }
-    private remvoeCards() {
+    private removeCards() {
         const { card_list } = this;
         for (let len = card_list.length, i = len - 1; i >= 0; i--) {
             card_list[i].destroy();
@@ -154,12 +158,12 @@ export class PlayerModel extends BaseEvent {
         return this.user_id === user_id + '';
     }
     public destroy() {
-        this.remvoeCards();
+        this.removeCards();
         super.destroy();
     }
     /** 玩家失败 清除所有牌 */
     public exploding() {
         this.setStatus('die');
-        this.remvoeCards();
+        this.removeCards();
     }
 }

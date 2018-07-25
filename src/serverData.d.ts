@@ -104,6 +104,7 @@ type HitData = {
         remainTime?: number;
         bombProb?: number;
         remainCard?: number;
+        slapCount?: number;
     };
 };
 type HitBackData = {

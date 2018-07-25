@@ -2,7 +2,7 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
-import { isCurPlayer } from '../../utils/tool';
+import { isCurPlayer, formatGameReplayData } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { BillBoardCtrl } from './billboard';
 import { CardHeapCtrl } from './cardHeep';
@@ -28,7 +28,6 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 import { ExplodePosCtrl } from './widget/explodePos';
 import { SlapCtrl } from './widget/slap';
-import { PopupTakeExplode } from '../popup/popupTakeExplode';
 import { PopupUserExploded } from '../popup/popupUserExploded';
 import { PopupGameOver } from '../popup/popupGameOver';
 import { PopupPrompt } from '../popup/popupPrompt';
@@ -203,7 +202,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
             [CMD.GAME_OVER]: this.onServerGameOver,
-            [CMD.JOIN_ROOM]: this.onServerJoinRoom
+            [CMD.JOIN_ROOM]: this.onServerJoinRoom,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -211,9 +210,11 @@ export class GameCtrl extends BaseCtrl {
         const { btn_back, btn_setting } = this.link;
 
         btn_back.on(Laya.Event.CLICK, this, () => {
-            Sail.director.popScene(new PopupPrompt('是否要退出游戏？', () => {
-                Sail.io.emit(CMD.OUT_ROOM);
-            }))
+            Sail.director.popScene(
+                new PopupPrompt('是否要退出游戏？', () => {
+                    Sail.io.emit(CMD.OUT_ROOM);
+                }),
+            );
         });
 
         btn_setting.on(Laya.Event.CLICK, this, () => {
@@ -250,6 +251,7 @@ export class GameCtrl extends BaseCtrl {
         const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
         this.is_ready = true;
         /** 更新本地倒计时 */
+        data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
         quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
 
@@ -445,7 +447,7 @@ export class GameCtrl extends BaseCtrl {
         //当前玩家爆炸延迟弹出结束
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(pop);
-        })
+        });
     }
     public onServerTurn(data: TurnsData) {
         const { speakerId: user_id } = data;
@@ -491,7 +493,7 @@ export class GameCtrl extends BaseCtrl {
 
     /**
      * @param data快速匹配再来一局
-     * @param code 
+     * @param code
      */
     public onServerJoinRoom(data, code) {
         if (code == 200) {
