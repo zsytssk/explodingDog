@@ -2,7 +2,7 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
-import { isCurPlayer } from '../../utils/tool';
+import { isCurPlayer, formatGameReplayData } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { BillBoardCtrl } from './billboard';
 import { CardHeapCtrl } from './cardHeep';
@@ -28,7 +28,6 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
 import { ExplodePosCtrl } from './widget/explodePos';
 import { SlapCtrl } from './widget/slap';
-import { PopupTakeExplode } from '../popup/popupTakeExplode';
 import { PopupUserExploded } from '../popup/popupUserExploded';
 import { PopupGameOver } from '../popup/popupGameOver';
 import { PopupPrompt } from '../popup/popupPrompt';
@@ -252,6 +251,7 @@ export class GameCtrl extends BaseCtrl {
         const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
         this.is_ready = true;
         /** 更新本地倒计时 */
+        data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
         quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
 

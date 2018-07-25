@@ -58,15 +58,7 @@ export class GameModel extends BaseEvent {
     private discard_card: CardModel;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
-        /** 还未加入房间, 要显示当前用户信息, 将当前用户添加到数组中... */
-        if (data.curUserInfo) {
-            this.addPlayer(data.curUserInfo, true);
-        }
-        if (!data.userList.length) {
-            data.userList.push(data.curUserInfo);
-        }
         this.updatePlayers(data.userList);
-
         this.setRoomInfo(data.roomInfo);
         this.setRoundInfo(data.roundInfo);
     }

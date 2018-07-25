@@ -125,3 +125,19 @@ export function getGrayFilter() {
     ];
     return new Laya.ColorFilter(data);
 }
+
+/** 整理gameReplay数据将当前用户的数据放到userList中， 且第一个 */
+export function formatGameReplayData(data: GameReplayData) {
+    const cur_user_info = data.curUserInfo;
+    const user_list = data.userList;
+    for (let i = 0; i < user_list.length; i++) {
+        if (user_list[i].userId === cur_user_info.userId) {
+            user_list.splice(i, 1);
+        }
+    }
+    user_list.unshift(cur_user_info);
+    return {
+        ...data,
+        user_list,
+    };
+}
