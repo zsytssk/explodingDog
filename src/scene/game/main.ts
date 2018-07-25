@@ -464,6 +464,7 @@ export class GameCtrl extends BaseCtrl {
             slap_ctrl,
             card_heap_ctrl,
             discard_zone_ctrl,
+            docker_ctrl
         } = this.link;
 
         alarm_ctrl.reset();
@@ -471,6 +472,7 @@ export class GameCtrl extends BaseCtrl {
         slap_ctrl.reset();
         card_heap_ctrl.reset();
         discard_zone_ctrl.reset();
+        docker_ctrl.reset();
         this.resetSeatPos();
     }
     public destroy() {

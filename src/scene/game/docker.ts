@@ -63,6 +63,7 @@ export class DockerCtrl extends BaseCtrl {
         const { wire, tip, arrow } = this.link;
         wire.visible = false;
         tip.visible = false;
+        this.setRate(0);
     }
     /**
      * 更新抓到炸弹比率
