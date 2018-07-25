@@ -1,6 +1,6 @@
 import { PlayerModel } from './model/player';
 import { getAvatar } from '../../utils/tool';
-import { CARD_DISCRIBE_MAP } from '../../data/card';
+import { CARD_DISCRIBE_MAP, TURN_CHANGE_ID } from '../../data/card';
 import { log } from '../../mcTree/utils/zutil';
 
 export class BillBoardCtrl {
@@ -43,6 +43,9 @@ export class BillBoardCtrl {
             period,
             null,
             new Laya.Handler(this, () => {
+                if (!this.msgList[0]) {
+                    return;
+                }
                 this.updateInfo(this.msgList[0]);
             }),
         );
@@ -75,6 +78,8 @@ export class BillBoardCtrl {
                 text += `对${toUser.nickname}`;
             }
             avatarTo.skin = getAvatar(toUser.avatar);
+        } else if (cardId == TURN_CHANGE_ID) {
+            avatarTo.skin = `images/game/card/icon_card.png`;
         } else {
             avatarTo.skin = `images/game/card/icon_unknow.png`;
         }

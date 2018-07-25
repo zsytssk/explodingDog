@@ -12,6 +12,8 @@ export class TurnArrowCtrl extends BaseCtrl {
     protected link = {} as Link;
     private currentArrowBox: Laya.Box;
     private currentTurn = '0';
+    private arrowIndex = 0;
+    private loop_time = 300;
     constructor(view) {
         super();
         this.link.view = view;
@@ -19,10 +21,16 @@ export class TurnArrowCtrl extends BaseCtrl {
     public init() {
         this.initLink();
         this.initEvent();
+        for (let i = 3; i < 6; i++) {
+            let arrowBox = this.link.view.getChildByName('arrow' + i);
+            getChildren(arrowBox).forEach(item => {
+                item.getChildAt(0).alpha = 0;
+            })
+        }
     }
-    protected initLink() {}
-    protected initEvent() {}
-    public loadModel() {}
+    protected initLink() { }
+    protected initEvent() { }
+    public loadModel() { }
 
     /**
      * 显示箭头
@@ -36,6 +44,7 @@ export class TurnArrowCtrl extends BaseCtrl {
             this.currentArrowBox = arrowBox;
             arrowBox.visible = true;
         }
+        Laya.timer.loop(this.loop_time, this, this.arrowBlink);
     }
 
     /**
@@ -47,15 +56,52 @@ export class TurnArrowCtrl extends BaseCtrl {
             return;
         }
         this.currentTurn = clockWise;
-        const arrows = getChildren(this.currentArrowBox);
-        arrows.forEach(arrow => {
-            let endRotation = (arrow.rotation += 180);
-            tween({
-                sprite: arrow,
-                start_props: { rotation: arrow.rotation },
-                end_props: { rotation: endRotation },
-                time: 1000,
+        Laya.timer.clear(this, this.arrowBlink);
+        Laya.timer.once(this.loop_time, this, () => {
+            let delay = 1000;
+            getChildren(this.currentArrowBox).forEach(item => {
+                let arrow = item.getChildAt(0);
+                arrow.alpha = 1;
+                let changeRotation = clockWise == '0' ? -180 : 180;
+                tween({
+                    sprite: arrow,
+                    end_props: { rotation: arrow.rotation + changeRotation },
+                    time: delay,
+                    ease_fn: Laya.Ease.backOut
+                });
             });
+            // Laya.timer.once(delay, tihs, )
         });
+
+
+
+        //////////////////////
+        // this.currentTurn = clockWise;
+        // const arrows = getChildren(this.currentArrowBox);
+        // arrows.forEach(arrow => {
+        //     let endRotation = (arrow.rotation += 180);
+        //     tween({
+        //         sprite: arrow,
+        //         start_props: { rotation: arrow.rotation },
+        //         end_props: { rotation: endRotation },
+        //         time: 1000,
+        //     });
+        // });
+    }
+
+    private arrowBlink() {
+        if (!this.currentArrowBox) {
+            return;
+        }
+        if (this.arrowIndex >= getChildren(this.currentArrowBox).length) {
+            this.arrowIndex = 0;
+        }
+        let arrow = this.currentArrowBox.getChildAt(this.arrowIndex++).getChildAt(0);
+        Laya.Tween.from(arrow, { alpha: 1 }, 400);
+    }
+
+    destroy() {
+        Laya.timer.clear(this, this.arrowBlink);
+        super.destroy();
     }
 }

@@ -412,7 +412,7 @@ export class GameCtrl extends BaseCtrl {
         popupUserExploded.updateData(data);
         if (isCurPlayer(explodeUserId)) {
             delay = 2000;
-            Sail.director.popScene(new PopupTakeExplode());
+            // Sail.director.popScene(new PopupTakeExplode());
         }
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(popupUserExploded);
@@ -424,7 +424,15 @@ export class GameCtrl extends BaseCtrl {
     public onServerGameOver(data) {
         const pop = new PopupGameOver(this);
         pop.updateView(data);
-        Sail.director.popScene(pop);
+        let delay = 0;
+        if (Sail.director.getDialogByName('popup_defuse')) {
+            Sail.director.closeByName('popup_defuse');
+            delay = 3000;
+        }
+        //当前玩家爆炸延迟弹出结束
+        Laya.timer.once(delay, this, () => {
+            Sail.director.popScene(pop);
+        })
     }
     public onServerTurn(data: TurnsData) {
         const { speakerId: user_id } = data;
@@ -460,5 +468,8 @@ export class GameCtrl extends BaseCtrl {
     public outRoom() {
         Sail.director.runScene(new Hall());
         this.destroy();
+    }
+    public getCardType() {
+        return this.model.card_type;
     }
 }

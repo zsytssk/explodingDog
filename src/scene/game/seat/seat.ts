@@ -218,7 +218,7 @@ export class SeatCtrl extends BaseCtrl {
             this.slap(data);
         }
         if (action === 'reverse_arrows') {
-            this.reverseArrows();
+            this.reverseArrows(data);
         }
     }
 
