@@ -66,8 +66,9 @@ export class HostZoneCtrl extends BaseCtrl {
 
         choose_card_btn.disabled = true;
         start_btn.disabled = true;
-        choose_card_btn.selected = true;
-        start_btn.selected = true;
+        [choose_card_btn, start_btn].forEach(item => {
+            (item.getChildAt(0) as Laya.Clip).index = 1;
+        });
     }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {
