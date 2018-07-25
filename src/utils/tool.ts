@@ -98,3 +98,30 @@ export function convertPos(
     ori_node.localToGlobal(pos);
     end_node.globalToLocal(pos);
 }
+
+/** 置灰的滤镜 */
+export function getGrayFilter() {
+    const data = [
+        0.3,
+        0.6094,
+        0.082,
+        0,
+        0,
+        0.3,
+        0.6094,
+        0.082,
+        0,
+        0,
+        0.3,
+        0.6094,
+        0.082,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+    ];
+    return new Laya.ColorFilter(data);
+}

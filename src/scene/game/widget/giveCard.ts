@@ -69,7 +69,7 @@ export class GiveCardCtrl extends BaseCtrl {
             }
         });
     }
-    public hide() {
+    private hide() {
         const { view: sprite } = this.link;
         const { card } = this;
         const start_props = {
@@ -80,7 +80,7 @@ export class GiveCardCtrl extends BaseCtrl {
             alpha: 0,
             ...hide_pos,
         };
-        tween({
+        return tween({
             end_props,
             sprite,
             start_props,
@@ -92,5 +92,8 @@ export class GiveCardCtrl extends BaseCtrl {
         });
 
         this.end_resolve = undefined;
+    }
+    public reset() {
+        this.hide();
     }
 }

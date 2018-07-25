@@ -80,6 +80,12 @@ export class PlayerModel extends BaseEvent {
             }
         }
     }
+    private remvoeCards() {
+        const { card_list } = this;
+        for (let len = card_list.length, i = len - 1; i >= 0; i--) {
+            card_list[i].destroy();
+        }
+    }
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public discardCard(card_id: string) {
         const card_list = this.card_list;
@@ -147,15 +153,13 @@ export class PlayerModel extends BaseEvent {
     public isMyId(user_id: string) {
         return this.user_id === user_id + '';
     }
-    public leave() {
-        this.destroy();
+    public destroy() {
+        this.remvoeCards();
+        super.destroy();
     }
     /** 玩家失败 清除所有牌 */
     public exploding() {
         this.setStatus('die');
-        const card_list = this.card_list;
-        for (let len = card_list.length, i = len - 1; i >= 0; i--) {
-            card_list[i].destroy();
-        }
+        this.remvoeCards();
     }
 }

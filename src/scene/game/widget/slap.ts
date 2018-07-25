@@ -122,7 +122,7 @@ export class SlapCtrl extends BaseCtrl {
             time: 200,
         });
     }
-    private reset() {
+    public reset() {
         const { ani, hand_back, hand_face, view, widget_box } = this.link;
         setStyle(ani, { scaleX: 1, scaleY: 1 });
         ani.stop();

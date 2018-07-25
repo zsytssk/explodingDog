@@ -14,6 +14,12 @@ export class CardBoxCtrl extends BaseCtrl {
         super();
         this.link.view = view;
     }
+    public setCanSort(status: boolean) {
+        if (status === this.can_sort) {
+            return;
+        }
+        this.can_sort = status;
+    }
     /** 牌的数目变化 重新排列牌发生b */
     public sortCard() {
         const { card_list } = this.link;
@@ -45,6 +51,12 @@ export class CardBoxCtrl extends BaseCtrl {
     /** 牌没有打出去， 回收牌 */
     public calcDrawCardIndex(card, x: number) {
         let { card_list } = this.link;
+        if (!this.can_sort) {
+            return card_list.findIndex(item => {
+                return item === card;
+            });
+            return;
+        }
         card_list = card_list.filter(item => {
             return item !== card;
         });

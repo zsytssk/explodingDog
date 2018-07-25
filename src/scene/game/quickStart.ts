@@ -72,4 +72,7 @@ export class QuickStartCtrl extends BaseCtrl {
 
         countdown_view.visible = true;
     }
+    public destroy() {
+        stopAni(this.link.scroll_rect);
+    }
 }

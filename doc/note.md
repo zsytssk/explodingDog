@@ -1,20 +1,93 @@
+## 2018-07-25 11:15:49
+* @todo @imp gameModel reset 时 discard_list 需要清除...
+    * discard_list
+
 ## 2018-07-23 10:09:07
-* @ques 初始化牌的时候牌的动画 加牌时牌的动画...
 
-* @opt 抓牌 动画抖动
+* @bug @测试
+    * 【炸弹】玩家摸到炸弹之后,无法打出“剪断引线”卡牌
+    * [炸弹狗]进入房间，牌面重叠，展示两次，图见附件
 
-* @bug 出牌后 原出牌区的牌被清楚了
+* @ques 要不要把game_ctrl 做成单例 好用来测试...
 
-* @note putCardBoxInWrap
+-   @ques @imp promise 的时候 destroy 了如何去处理
 
-* @bug 创建房间
+    -   animate tweenLoop + tween + countDown
 
-* @bug 其他人没有看到 偷牌增加减少
+    *   能不能先把这些动画全部停止了..
+    *  如果中间一个tween 停止 对tweenLoop有没有影响
+    * @ques promise 没有resolve 会导致性能问题吗
+    * 如何让这动画 能方便的清除掉
+    * promise 必须resolve reject
+    * waitChoose observer race 的其他人要不要 清除...
 
+* @ques waitChoose 的本质是玩家在几个人中选中一个人 而不是 许多人要被选中
 
-* @todo 炸弹 是移动牌  关闭之后 牌位置不对
+-   @bug 出牌时 把原来的牌清除了
 
-* @ques 其他用户的give card, card_ctrl如何销毁
+    -   要不要将所有打出的牌放到一起...
+    -   discard_card 这个还要吗
+    -   discard_card_list...
+
+-   @bug 出牌时 牌可能飞到屏幕的最上面
+
+-   @bug 创建房间按钮点击效果
+
+*   @todo actionManager
+
+-   @ques annoy blind 的样式 动画效果
+
+*   @todo 再来一局 reset
+
+*   @todo 音效 产品
+
+*   @ques the_the_future 点击查看牌
+    -   选择卡组没有显示当前卡组
+
+-   @todo 一个个小 ui 的出现动画
+
+-   @ques 自适应复盘如何处理
+
+    -   牌居中背景延伸
+
+-   @ques 创建房间其他人要将 开始游戏置灰
+
+    -   filter
+    -   置灰按钮
+
+-   @ques alarm [曾小平] 给所有人发 低于 12 秒我就显示
+    -   出牌[自己出了洗牌]
+    -   偷牌选人+给牌
+    -   alter-the-future
+    * 有没有可能 倒计时之后不需要继续倒计时
+
+*   @ques 是当前用户创建的房间 这个数据在哪放在哪
+
+    -   room_id create_user_id
+    -   这些数据我只有在 hostZone 才需要
+    -   我要其他用户置灰 hostZone
+
+*   @ques curCardBox cardBox addCard addCards 大量重复代码
+
+*   Sail socker 连接之后再发送命令...
+
+*   @ques 倒计时退出房间报错...
+
+-   @ques 初始化牌的时候牌的动画 加牌时牌的动画...
+
+-   @opt 抓牌 动画抖动
+
+-   @bug 出牌后 原出牌区的牌被清楚了
+
+-   @note putCardBoxInWrap
+
+-   @bug 创建房间
+
+-   @bug 其他人没有看到 偷牌增加减少
+
+*   @todo 炸弹 是移动牌 关闭之后 牌位置不对
+
+*   @ques 其他用户的 give card, card_ctrl 如何销毁
 
 -   @note
 
@@ -420,7 +493,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                           @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                 @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

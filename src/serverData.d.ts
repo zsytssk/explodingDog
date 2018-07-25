@@ -137,3 +137,6 @@ type UserExplodingData = {
     remainBomb: number;
     bombProb: number;
 };
+type AlarmData = {
+    speakerId: string;
+};

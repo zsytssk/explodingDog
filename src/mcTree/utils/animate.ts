@@ -285,7 +285,7 @@ export function tween(data: {
 
         time = time || 700;
 
-        ease_fn = ease_fn || Ease.cubicInOut;
+        ease_fn = ease_fn || Ease.linearNone;
         if (typeof ease_fn === 'string') {
             ease_fn = Ease[ease_fn];
         }
@@ -311,7 +311,11 @@ export function tween(data: {
             time,
             ease_fn as Func<number>,
             Laya.Handler.create(sprite, () => {
-                resolve();
+                if (!(sprite as Laya.Sprite).destroyed) {
+                    resolve();
+                } else {
+                    reject();
+                }
             }),
         );
     });
@@ -335,14 +339,22 @@ function jump(sprite, props, time_num) {
         }, time_num);
     });
 }
-export async function tweenLoop(data: {
+
+export async function tweenLoop({
+    sprite,
+    props_arr,
+    time,
+    ease_fn,
+    is_jump,
+    end_jump,
+}: {
     sprite;
     props_arr: any[];
     time?: number;
     ease_fn?: string | Func<number>;
     is_jump?: boolean;
+    end_jump?: boolean;
 }) {
-    const { sprite, props_arr, time, ease_fn, is_jump } = data;
     const len = props_arr.length;
     let i = 0;
     stopAni(sprite);
@@ -351,12 +363,21 @@ export async function tweenLoop(data: {
     setTimeout(async () => {
         sprite.is_stop = false;
         while (true) {
+            if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
+                break;
+            }
+
             if (is_jump) {
                 await jump(sprite, props_arr[i], time);
             } else {
                 let next = i + 1;
                 if (next >= len) {
-                    next = 0;
+                    if (end_jump) {
+                        i = 0;
+                        next = 1;
+                    } else {
+                        next = 0;
+                    }
                 }
                 const start_props = props_arr[i];
                 const end_props = props_arr[next];
@@ -371,9 +392,6 @@ export async function tweenLoop(data: {
             i++;
             if (i >= len) {
                 i = 0;
-            }
-            if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
-                break;
             }
         }
     });

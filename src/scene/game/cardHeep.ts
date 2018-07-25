@@ -1,5 +1,6 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { CMD } from '../../data/cmd';
+import { isNumber } from 'lodash';
 
 export interface Link {
     view: ui.game.cardHeapUI;
@@ -9,7 +10,7 @@ export interface Link {
 
 /**  */
 export class CardHeapCtrl extends BaseCtrl {
-    name = 'card_heap_ctrl';
+    public name = 'card_heap_ctrl';
     protected link = {} as Link;
     constructor(view: ui.game.cardHeapUI) {
         super();
@@ -36,11 +37,14 @@ export class CardHeapCtrl extends BaseCtrl {
             Sail.io.emit(CMD.TAKE);
         });
     }
-    public setRemainCard(num) {
-        if (!num) {
+    public setRemainCard(num: number) {
+        if (!isNumber(num)) {
             return;
         }
         const { remain_num } = this.link;
         remain_num.text = `剩余${num}张`;
+    }
+    public reset() {
+        this.setRemainCard(0);
     }
 }

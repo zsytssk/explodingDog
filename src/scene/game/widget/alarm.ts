@@ -42,29 +42,24 @@ export class AlarmCtrl extends BaseCtrl {
             view,
         };
     }
-    public preCountDown() {
-        this.count_timeout = setTimeout(() => {
-            this.show(12);
-        }, 8000);
-    }
-    public clear() {
+    public reset() {
         stopAni(this.count_ani);
         clearTimeout(this.count_timeout);
         this.hide();
     }
-    private show(count: number) {
+    private show() {
         const { view: sprite } = this.link;
+        sprite.visible = true;
         const end_props = {
             alpha: 1,
             ...show_pos,
         };
-        this.countDown(count);
         tween({
             end_props,
             sprite,
         });
     }
-    private countDown(count_num: number) {
+    public countDown(count_num: number) {
         count_num = count_num || 10;
         const { arrow, count } = this.link;
 
@@ -73,6 +68,9 @@ export class AlarmCtrl extends BaseCtrl {
             count,
             count_num,
             cur_count => {
+                if (cur_count <= 10) {
+                    this.show();
+                }
                 tween({
                     end_props: {
                         rotation:
@@ -99,10 +97,11 @@ export class AlarmCtrl extends BaseCtrl {
             end_props,
             sprite,
         }).then(() => {
+            sprite.visible = false;
             arrow.rotation = start_angle;
         });
     }
     public destroy() {
-        this.clear();
+        this.reset();
     }
 }

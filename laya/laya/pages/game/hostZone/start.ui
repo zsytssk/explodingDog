@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":4,
     "props":{"width":313,"sceneColor":"#000000","height":331},
     "nodeParent":-1,
     "label":"View",
@@ -28,13 +28,26 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":252,"x":156,"var":"start_btn","stateNum":"1","skin":"images/game/btn_start.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
+            "props":{"y":252,"x":156,"var":"start_btn","stateNum":"2","skin":"images/game/btn_start.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(start_btn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":151,"x":50,"skin":"images/game/host_start_txt.png"},
+            "nodeParent":1,
+            "label":"Image",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":4,
             "child":[
                 ]
         }],

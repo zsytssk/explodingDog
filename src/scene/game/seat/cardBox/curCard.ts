@@ -102,7 +102,6 @@ export class CurCardCtrl extends CardCtrl {
         };
         this.is_move = true;
         log('card:>move', move_delta);
-        event.stopPropagation();
         if (
             move_delta.y < -30 &&
             Math.abs(move_delta.x) < Math.abs(move_delta.y)

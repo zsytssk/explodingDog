@@ -70,9 +70,6 @@ export class CardCtrl extends BaseCtrl {
     }
     private initEvent() {
         const { card_box } = this.link;
-        if (!card_box.can_sort) {
-            return;
-        }
         const { view } = this.link;
         view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
     }

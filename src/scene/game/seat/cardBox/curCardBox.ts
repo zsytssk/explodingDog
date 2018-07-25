@@ -24,6 +24,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     private touch_info = {
         status: 'default',
     } as TouchInfo;
+    protected card_creator = CurCardCtrl;
     constructor(view: CurCardBoxUI) {
         super(view);
         this.link.view = view;
@@ -68,13 +69,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         }
         const { x, y } = touch_info.last_pos;
         const { view } = this.link;
-        const last_pos = {
-            x: event.stageX,
-            y: event.stageY,
-        };
         const delta = {
-            x: last_pos.x - x,
-            y: last_pos.y - y,
+            x: event.stageX - x,
+            y: event.stageY - y,
         };
         if (!this.isMove()) {
             if (Math.abs(delta.x) < 30) {
@@ -83,6 +80,10 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
                 delta.x = 0;
             }
         }
+        const last_pos = {
+            x: event.stageX,
+            y: event.stageY,
+        };
         this.touch_info = {
             ...touch_info,
             delta,
@@ -122,24 +123,6 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     public isMove() {
         return this.touch_info.status === 'move';
-    }
-    public addCard(card: CardModel, is_insert?: boolean) {
-        const { card_list, card_wrap } = this.link;
-        const card_ctrl = new CurCardCtrl(card, card_wrap, is_insert);
-        this.addChild(card_ctrl);
-        card_ctrl.init();
-        card_list.push(card_ctrl);
-        this.sortCard();
-    }
-    public addCards(cards: CardModel[]) {
-        const { card_list, card_wrap } = this.link;
-        for (const card of cards) {
-            const card_ctrl = new CurCardCtrl(card, card_wrap);
-            this.addChild(card_ctrl);
-            card_ctrl.init();
-            card_list.push(card_ctrl);
-        }
-        this.sortCard();
     }
     /** 牌没有打出去， 回收牌 */
     public withDrawCardIndex(card, index: number) {
