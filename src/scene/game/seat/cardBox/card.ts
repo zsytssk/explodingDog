@@ -21,7 +21,7 @@ export class CardCtrl extends BaseCtrl {
     protected link = {} as Link;
     protected is_insert: boolean;
     protected model: CardModel;
-    /** 是否被选中 */
+    /** 是否被选中, 用于处理card_box sort 要不要处理 */
     public is_selected = false;
     /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
     private scale: number;
@@ -126,6 +126,7 @@ export class CardCtrl extends BaseCtrl {
     }
     /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */
     public putCardInWrap(wrap: Laya.Sprite) {
+        this.is_selected = false;
         const { view, card_box } = this.link;
         const card_move_box = card_box.getCardMoveBox();
 

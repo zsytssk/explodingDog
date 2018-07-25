@@ -277,6 +277,10 @@ export function tween(data: {
 }) {
     return new Promise((resolve, reject) => {
         const { sprite, start_props, end_props } = data;
+        if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
+            return reject();
+        }
+
         let { ease_fn } = data;
 
         let { time } = data;

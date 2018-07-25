@@ -1,8 +1,17 @@
 ## 2018-07-25 11:15:49
+* @todo slap 次数
+
+* @ques annoy blind 牌的样式..
+    * 其他人也需要显示...
+
 * @todo @imp gameModel reset 时 discard_list 需要清除...
     * discard_list
 
 ## 2018-07-23 10:09:07
+
+-   @bug 出牌时 牌可能飞到屏幕的最上面
+
+-   @bug 创建房间按钮点击效果
 
 * @bug @测试
     * 【炸弹】玩家摸到炸弹之后,无法打出“剪断引线”卡牌
@@ -29,9 +38,7 @@
     -   discard_card 这个还要吗
     -   discard_card_list...
 
--   @bug 出牌时 牌可能飞到屏幕的最上面
 
--   @bug 创建房间按钮点击效果
 
 *   @todo actionManager
 
