@@ -138,7 +138,7 @@ export class SeatCtrl extends BaseCtrl {
         this.offOtherEvent(this.model);
     }
     protected setStatus(status: PlayerStatus) {
-        const {} = this.link;
+        const { } = this.link;
         const {
             empty_box,
             active_box,
@@ -207,7 +207,7 @@ export class SeatCtrl extends BaseCtrl {
             this.slap(data);
         }
         if (action === 'reverse_arrows') {
-            this.reverseArrows();
+            this.reverseArrows(data);
         }
     }
 
@@ -281,5 +281,5 @@ export class SeatCtrl extends BaseCtrl {
         });
     }
     /** 用户死亡处理 */
-    public die() {}
+    public die() { }
 }

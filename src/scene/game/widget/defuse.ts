@@ -1,10 +1,12 @@
 import { CardModel } from '../model/card/card';
 import { CurSeatCtrl } from '../seat/curSeat';
+import { PopupTakeExplode } from '../../popup/popupTakeExplode';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
     group = 'exploding';
     ani: Laya.Skeleton;
+    defuseSeccess = false;//弹出popup_take_explode弹层
     curSeatCtrl;
     constructor(remainTime) {
         super();
@@ -24,11 +26,6 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
                 this.addChild(this.ani);
             }),
         );
-        this.onClosed = () => {
-            if (this.curSeatCtrl) {
-                this.curSeatCtrl.putCardBoxBack();
-            }
-        };
         this.defuseCard.zOrder = 5;
         this.card_box_wrap.zOrder = 5;
     }
@@ -40,5 +37,15 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     defuseSuccess() {
         this.ani.paused();
         this.defuseCard.visible = true;
+        this.defuseSeccess = true;
     }
+    onClosed() {
+        if (this.curSeatCtrl) {
+            this.curSeatCtrl.putCardBoxBack();
+        }
+        if (!this.defuseSeccess) {
+            Sail.director.popScene(new PopupTakeExplode());
+        }
+    }
+
 }
