@@ -48,4 +48,7 @@ export class DiscardZoneCtrl extends BaseCtrl {
             this.is_borrowing = false;
         });
     }
+    public reset() {
+        this.is_borrowing = false;
+    }
 }

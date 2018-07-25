@@ -1,10 +1,27 @@
+## 2018-07-25 11:15:49
+* @todo @imp gameModel reset 时 discard_list 需要清除...
+    * discard_list
+
 ## 2018-07-23 10:09:07
 
--   @ques promise 的时候 destroy 了如何去处理
+* @bug @测试
+    * 【炸弹】玩家摸到炸弹之后,无法打出“剪断引线”卡牌
+    * [炸弹狗]进入房间，牌面重叠，展示两次，图见附件
+
+* @ques 要不要把game_ctrl 做成单例 好用来测试...
+
+-   @ques @imp promise 的时候 destroy 了如何去处理
 
     -   animate tweenLoop + tween + countDown
 
     *   能不能先把这些动画全部停止了..
+    *  如果中间一个tween 停止 对tweenLoop有没有影响
+    * @ques promise 没有resolve 会导致性能问题吗
+    * 如何让这动画 能方便的清除掉
+    * promise 必须resolve reject
+    * waitChoose observer race 的其他人要不要 清除...
+
+* @ques waitChoose 的本质是玩家在几个人中选中一个人 而不是 许多人要被选中
 
 -   @bug 出牌时 把原来的牌清除了
 
@@ -41,7 +58,8 @@
 -   @ques alarm [曾小平] 给所有人发 低于 12 秒我就显示
     -   出牌[自己出了洗牌]
     -   偷牌选人+给牌
-    -   alter——the——future
+    -   alter-the-future
+    * 有没有可能 倒计时之后不需要继续倒计时
 
 *   @ques 是当前用户创建的房间 这个数据在哪放在哪
 

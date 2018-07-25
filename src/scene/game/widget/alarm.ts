@@ -42,7 +42,7 @@ export class AlarmCtrl extends BaseCtrl {
             view,
         };
     }
-    public clear() {
+    public reset() {
         stopAni(this.count_ani);
         clearTimeout(this.count_timeout);
         this.hide();
@@ -102,6 +102,6 @@ export class AlarmCtrl extends BaseCtrl {
         });
     }
     public destroy() {
-        this.clear();
+        this.reset();
     }
 }

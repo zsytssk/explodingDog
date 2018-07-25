@@ -13,6 +13,8 @@ import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
 
+type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
+
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
     empty_box: Laya.Sprite;
@@ -30,7 +32,8 @@ export class SeatCtrl extends BaseCtrl {
     public name = 'seat';
     protected link = {} as Link;
     protected model: PlayerModel;
-    public loadedPlayer = false; // 是否加载了用户
+    /**  是否加载了用户 */
+    public loadedPlayer = false;
     private wait_choose_observer: Subscriber<string>;
     constructor(view: any) {
         super();
@@ -84,13 +87,8 @@ export class SeatCtrl extends BaseCtrl {
         });
     }
     public loadPlayer(player: PlayerModel) {
-        this.link.empty_box.visible = false;
-        this.link.active_box.visible = true;
-        this.link.avatar.skin = player.avatar;
-        this.link.nickname.text = player.nickname;
-        this.link.die_avatar.visible = false;
-
         /** 设置默认状态 */
+        this.setStatus('load_player');
         this.setStatus(player.status);
 
         this.model = player;
@@ -105,14 +103,11 @@ export class SeatCtrl extends BaseCtrl {
             nickname,
             die_avatar,
         } = this.link;
-        this.unBindModeEvent();
+
         this.model = undefined;
         this.loadedPlayer = false;
-        empty_box.visible = true;
-        active_box.visible = false;
-        avatar.skin = '';
-        nickname.text = '';
-        die_avatar.visible = false;
+        this.setStatus('clear');
+        this.unBindModeEvent();
     }
     private bindModel() {
         /** 渲染初始化的信息 */
@@ -137,41 +132,56 @@ export class SeatCtrl extends BaseCtrl {
     private unBindModeEvent() {
         this.offOtherEvent(this.model);
     }
-    protected setStatus(status: PlayerStatus) {
-        const {} = this.link;
+    protected setStatus(status: SeatStatus) {
         const {
             empty_box,
             active_box,
             avatar,
             die_avatar,
             highlight,
+            nickname,
         } = this.link;
-        if (status === 'speak') {
-            const start_props = {
-                alpha: 0.6,
-                scaleX: 0.8,
-                scaleY: 0.8,
-            };
-            const end_props = {
-                alpha: 0.5,
-                scaleX: 0.9,
-                scaleY: 0.9,
-            };
-            highlight.visible = true;
-            tweenLoop({
-                props_arr: [end_props, start_props],
-                sprite: highlight,
-                time: 1000,
-            });
-        } else if (status === 'die') {
-            empty_box.visible = false;
-            active_box.visible = true;
-            die_avatar.visible = true;
-            highlight.visible = false;
-            avatar.visible = false;
-        } else {
-            highlight.visible = false;
-            //
+        switch (status) {
+            case 'load_player':
+                empty_box.visible = false;
+                active_box.visible = true;
+                die_avatar.visible = false;
+                break;
+            case 'speak':
+                const start_props = {
+                    alpha: 0.6,
+                    scaleX: 0.8,
+                    scaleY: 0.8,
+                };
+                const end_props = {
+                    alpha: 0.5,
+                    scaleX: 0.9,
+                    scaleY: 0.9,
+                };
+                highlight.visible = true;
+                tweenLoop({
+                    props_arr: [end_props, start_props],
+                    sprite: highlight,
+                    time: 1000,
+                });
+                break;
+            case 'die':
+                empty_box.visible = true;
+                active_box.visible = true;
+                die_avatar.visible = true;
+                highlight.visible = false;
+                avatar.visible = false;
+                break;
+            case 'clear':
+                empty_box.visible = true;
+                active_box.visible = true;
+                highlight.visible = false;
+                avatar.skin = '';
+                nickname.text = '';
+                die_avatar.visible = false;
+                break;
+            default:
+                highlight.visible = false;
         }
     }
     /** 处理被action作用 */
@@ -280,6 +290,4 @@ export class SeatCtrl extends BaseCtrl {
             time: 500,
         });
     }
-    /** 用户死亡处理 */
-    public die() {}
 }

@@ -103,7 +103,9 @@ export class GameCtrl extends BaseCtrl {
             view.banner_match,
             view.banner_countdown,
         );
+        this.addChild(quick_start_ctrl);
         quick_start_ctrl.init();
+
         const host_zone_ctrl = new HostZoneCtrl(host_zone);
         this.addChild(host_zone_ctrl);
         host_zone_ctrl.init();
@@ -230,7 +232,7 @@ export class GameCtrl extends BaseCtrl {
             this.link.discard_zone_ctrl.discardCard(data.card);
         });
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
-            this.leave();
+            this.outRoom();
         });
         this.onModel(
             game_cmd.update_bill_board,
@@ -381,14 +383,6 @@ export class GameCtrl extends BaseCtrl {
         }
         game_zone.visible = true;
     }
-    private leave() {
-        this.destroy();
-        Sail.director.runScene(new Hall());
-    }
-    public destroy() {
-        super.destroy();
-        Sail.io.unregister(this.actions);
-    }
 
     /**
      * 刷新用户座位的显示和位置
@@ -438,9 +432,28 @@ export class GameCtrl extends BaseCtrl {
         if (isCurPlayer(user_id)) {
             alarm_ctrl.countDown(20);
         } else {
-            alarm_ctrl.clear();
+            alarm_ctrl.reset();
         }
         this.model.setSpeaker(data.speakerId);
+    }
+    public destroy() {
+        super.destroy();
+        Sail.io.unregister(this.actions);
+    }
+    public reset() {
+        const {
+            alarm_ctrl,
+            give_card_ctrl,
+            slap_ctrl,
+            card_heap_ctrl,
+            discard_zone_ctrl,
+        } = this.link;
+
+        alarm_ctrl.reset();
+        give_card_ctrl.reset();
+        slap_ctrl.reset();
+        card_heap_ctrl.reset();
+        discard_zone_ctrl.reset();
     }
     public outRoom() {
         this.destroy();
