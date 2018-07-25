@@ -54,6 +54,7 @@ export class PlayerModel extends BaseEvent {
         this.updateCards(shou);
     }
     public updateCards(cards_info: CardData[]) {
+        this.removeCards();
         if (!cards_info) {
             return;
         }
@@ -80,7 +81,7 @@ export class PlayerModel extends BaseEvent {
             }
         }
     }
-    private remvoeCards() {
+    private removeCards() {
         const { card_list } = this;
         for (let len = card_list.length, i = len - 1; i >= 0; i--) {
             card_list[i].destroy();
@@ -154,12 +155,12 @@ export class PlayerModel extends BaseEvent {
         return this.user_id === user_id + '';
     }
     public destroy() {
-        this.remvoeCards();
+        this.removeCards();
         super.destroy();
     }
     /** 玩家失败 清除所有牌 */
     public exploding() {
         this.setStatus('die');
-        this.remvoeCards();
+        this.removeCards();
     }
 }

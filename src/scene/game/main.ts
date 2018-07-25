@@ -203,7 +203,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
             [CMD.GAME_OVER]: this.onServerGameOver,
-            [CMD.JOIN_ROOM]: this.onServerJoinRoom
+            [CMD.JOIN_ROOM]: this.onServerJoinRoom,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -211,9 +211,11 @@ export class GameCtrl extends BaseCtrl {
         const { btn_back, btn_setting } = this.link;
 
         btn_back.on(Laya.Event.CLICK, this, () => {
-            Sail.director.popScene(new PopupPrompt('是否要退出游戏？', () => {
-                Sail.io.emit(CMD.OUT_ROOM);
-            }))
+            Sail.director.popScene(
+                new PopupPrompt('是否要退出游戏？', () => {
+                    Sail.io.emit(CMD.OUT_ROOM);
+                }),
+            );
         });
 
         btn_setting.on(Laya.Event.CLICK, this, () => {
@@ -445,7 +447,7 @@ export class GameCtrl extends BaseCtrl {
         //当前玩家爆炸延迟弹出结束
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(pop);
-        })
+        });
     }
     public onServerTurn(data: TurnsData) {
         const { speakerId: user_id } = data;
@@ -489,7 +491,7 @@ export class GameCtrl extends BaseCtrl {
 
     /**
      * @param data快速匹配再来一局
-     * @param code 
+     * @param code
      */
     public onServerJoinRoom(data, code) {
         if (code == 200) {

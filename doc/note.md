@@ -1,5 +1,7 @@
 ## 2018-07-25 11:15:49
-* @todo slap 次数
+* @todo slap 次数 + 倒计时
+
+*
 
 * @bug alarm bug
 
