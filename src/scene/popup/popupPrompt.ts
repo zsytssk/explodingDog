@@ -1,4 +1,4 @@
-export class PopuPrompt extends ui.popup.popupPromptUI {
+export class PopupPrompt extends ui.popup.popupPromptUI {
     constructor(text, callback) {
         super();
         this.init(text, callback)

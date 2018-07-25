@@ -29,6 +29,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         });
         this.btnAgain.on(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
+                this.close();
                 //重新开始匹配
                 Sail.io.emit(CMD.JOIN_ROOM, {
                     cardType: this.game_ctrl.getCardType(),

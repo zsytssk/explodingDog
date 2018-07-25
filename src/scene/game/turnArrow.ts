@@ -14,6 +14,7 @@ export class TurnArrowCtrl extends BaseCtrl {
     private currentTurn = '0';
     private arrowIndex = 0;
     private loop_time = 300;
+    private timer = new Laya.Node();
     constructor(view) {
         super();
         this.link.view = view;
@@ -55,38 +56,38 @@ export class TurnArrowCtrl extends BaseCtrl {
         if (!this.currentArrowBox || clockWise == this.currentTurn) {
             return;
         }
-        this.currentTurn = clockWise;
-        Laya.timer.clear(this, this.arrowBlink);
-        Laya.timer.once(this.loop_time, this, () => {
-            let delay = 1000;
-            getChildren(this.currentArrowBox).forEach(item => {
-                let arrow = item.getChildAt(0);
-                arrow.alpha = 1;
-                let changeRotation = clockWise == '0' ? -180 : 180;
-                tween({
-                    sprite: arrow,
-                    end_props: { rotation: arrow.rotation + changeRotation },
-                    time: delay,
-                    ease_fn: Laya.Ease.backOut
-                });
-            });
-            // Laya.timer.once(delay, tihs, )
-        });
+        // this.currentTurn = clockWise;
+        // Laya.timer.clear(this, this.arrowBlink);
+        // this.timer.timerOnce(this.loop_time, this, () => {
+        //     let delay = 1000;
+        //     getChildren(this.currentArrowBox).forEach(item => {
+        //         let arrow = item.getChildAt(0);
+        //         arrow.alpha = 1;
+        //         let changeRotation = clockWise == '0' ? -180 : 180;
+        //         tween({
+        //             sprite: arrow,
+        //             end_props: { rotation: arrow.rotation + changeRotation },
+        //             time: delay,
+        //             ease_fn: Laya.Ease.backOut
+        //         });
+        //     });
+        //    this.timer.timerOnce(delay, tihs, )
+        // });
 
 
 
         //////////////////////
-        // this.currentTurn = clockWise;
-        // const arrows = getChildren(this.currentArrowBox);
-        // arrows.forEach(arrow => {
-        //     let endRotation = (arrow.rotation += 180);
-        //     tween({
-        //         sprite: arrow,
-        //         start_props: { rotation: arrow.rotation },
-        //         end_props: { rotation: endRotation },
-        //         time: 1000,
-        //     });
-        // });
+        this.currentTurn = clockWise;
+        const arrows = getChildren(this.currentArrowBox);
+        arrows.forEach(arrow => {
+            let endRotation = (arrow.rotation += 180);
+            tween({
+                sprite: arrow,
+                start_props: { rotation: arrow.rotation },
+                end_props: { rotation: endRotation },
+                time: 1000,
+            });
+        });
     }
 
     private arrowBlink() {
@@ -102,6 +103,7 @@ export class TurnArrowCtrl extends BaseCtrl {
 
     destroy() {
         Laya.timer.clear(this, this.arrowBlink);
+        this.timer.destroy();
         super.destroy();
     }
 }

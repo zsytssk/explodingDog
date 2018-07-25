@@ -269,6 +269,9 @@ export class SeatCtrl extends BaseCtrl {
     public hideSeat() {
         this.link.view.visible = false;
     }
+    public showSeat(){
+        this.link.view.visible = true;
+    }
     /** 获得座位底部的坐标 用来slap */
     public getSeatPos() {
         const { view } = this.link;
