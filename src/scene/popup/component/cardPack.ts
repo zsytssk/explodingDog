@@ -14,7 +14,11 @@ export class CardPack extends ui.popup.component.cardPackUI {
             : `images/component/cards/btn_choose.png`;
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.iconI.visible = isLock;
-        this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
+        if (cardType == 'choose') {
+            this.staminaBox.visible = false;
+        } else {
+            this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
+        }
         this.initEvent(cardType);
     }
 
