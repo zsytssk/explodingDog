@@ -27,6 +27,12 @@ export class PopupJoinRoom extends ui.popup.popupJoinRoomUI {
                 type: 'fixed',
             });
         });
+        this.btnSure.on(Laya.Event.CLICK, this, () => {
+            Sail.io.emit(CMD.JOIN_ROOM, {
+                roomId: this.roomId,
+                type: 'fixed',
+            });
+        });
     }
 
     insertNum(num) {
