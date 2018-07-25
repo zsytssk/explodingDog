@@ -393,12 +393,19 @@ export class BaseCtrl extends BaseEvent {
         }
         this.hook_node_funs = [];
     }
+    protected offModel() {
+        if (this.model) {
+            return;
+        }
+        this.offOtherEvent(this.model);
+    }
     /**  取消所有的事件绑定 从父类Ctrl中删除自己 删除model 删除link */
     public destroy() {
         // 取消所有的事件绑定
         super.destroy();
         // 清除在所有node上绑定事件
         this.offAllNode();
+        this.offModel();
         this.model = undefined;
         // 删除所有的子类
         this.removeChildren();

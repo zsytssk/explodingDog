@@ -33,14 +33,22 @@ export class BillBoardCtrl {
         const { view } = this.link;
         const period = 200;
         let originX = view.x;
-        let localPoint = view.parent.globalToLocal(new Laya.Point(Laya.stage.width, 0));
-        log(localPoint)
-        Laya.Tween.to(view, { x: localPoint.x }, period, null, new Laya.Handler(this, () => {
-            if (!this.msgList[0]) {
-                return;
-            }
-            this.updateInfo(this.msgList[0]);
-        }));
+        let localPoint = view.parent.globalToLocal(
+            new Laya.Point(Laya.stage.width, 0),
+        );
+        log(localPoint);
+        Laya.Tween.to(
+            view,
+            { x: localPoint.x },
+            period,
+            null,
+            new Laya.Handler(this, () => {
+                if (!this.msgList[0]) {
+                    return;
+                }
+                this.updateInfo(this.msgList[0]);
+            }),
+        );
         Laya.Tween.to(view, { x: originX }, period, null, null, period);
 
         Laya.timer.once(1000, this, () => {
@@ -55,11 +63,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-            fromUser: PlayerModel;
-            toUser?: PlayerModel;
-            cardId: string;
-            step?: number;
-        }) {
+        fromUser: PlayerModel;
+        toUser?: PlayerModel;
+        cardId: string;
+        step?: number;
+    }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;

@@ -168,7 +168,6 @@ export class CurCardCtrl extends CardCtrl {
         const { wrap, view } = this.link;
         const pos = new Laya.Point(view.x, view.y);
 
-        this.is_selected = false;
         Laya.stage.off(Laya.Event.MOUSE_UP, this, this.unSelect);
         Laya.stage.off(Laya.Event.MOUSE_OVER, this, this.unSelect);
         view.stopDrag();
@@ -200,6 +199,7 @@ export class CurCardCtrl extends CardCtrl {
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...
      */
     private withDrawCard() {
+        this.is_selected = false;
         const { wrap, view, card_box } = this.link;
         const pos = new Laya.Point(view.x, view.y);
         wrap.globalToLocal(pos);

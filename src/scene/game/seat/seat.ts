@@ -88,10 +88,10 @@ export class SeatCtrl extends BaseCtrl {
     }
     public loadPlayer(player: PlayerModel) {
         /** 设置默认状态 */
+        this.model = player;
         this.setStatus('load_player');
         this.setStatus(player.status);
 
-        this.model = player;
         this.loadedPlayer = true;
         this.bindModel();
     }
@@ -104,10 +104,10 @@ export class SeatCtrl extends BaseCtrl {
             die_avatar,
         } = this.link;
 
-        this.model = undefined;
         this.loadedPlayer = false;
         this.setStatus('clear');
-        this.unBindModeEvent();
+        this.offModel();
+        this.model = undefined;
     }
     private bindModel() {
         /** 渲染初始化的信息 */
@@ -129,9 +129,7 @@ export class SeatCtrl extends BaseCtrl {
             this.beActioned(data);
         });
     }
-    private unBindModeEvent() {
-        this.offOtherEvent(this.model);
-    }
+
     protected setStatus(status: SeatStatus) {
         const {
             empty_box,
@@ -143,9 +141,12 @@ export class SeatCtrl extends BaseCtrl {
         } = this.link;
         switch (status) {
             case 'load_player':
+                const { model } = this;
                 empty_box.visible = false;
                 active_box.visible = true;
                 die_avatar.visible = false;
+                avatar.skin = model.avatar;
+                nickname.text = model.nickname;
                 break;
             case 'speak':
                 const start_props = {

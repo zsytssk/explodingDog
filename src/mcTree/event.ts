@@ -148,7 +148,7 @@ export abstract class BaseEvent {
         return bind_info;
     }
     /** 取消在其他的baseEvent绑定的事件处理 */
-    protected offOtherEvent(otherObj) {
+    protected offOtherEvent(otherObj: BaseEvent) {
         if (!otherObj) {
             return;
         }
@@ -159,7 +159,7 @@ export abstract class BaseEvent {
             const other_id = hook_item.other_id;
             const off = hook_item.off;
 
-            if (other_id !== otherObj._id) {
+            if (other_id !== otherObj.id) {
                 continue;
             }
 

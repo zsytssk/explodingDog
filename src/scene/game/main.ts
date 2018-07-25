@@ -302,7 +302,7 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 离开房间 */
     private onServerOutRoom() {
-        this.model.destroy();
+        this.outRoom();
     }
     /** 添加用户 */
     private addPlayer(player: PlayerModel) {
@@ -457,10 +457,6 @@ export class GameCtrl extends BaseCtrl {
         }
         this.model.setSpeaker(data.speakerId);
     }
-    public destroy() {
-        super.destroy();
-        Sail.io.unregister(this.actions);
-    }
     public reset() {
         const {
             alarm_ctrl,
@@ -477,9 +473,15 @@ export class GameCtrl extends BaseCtrl {
         discard_zone_ctrl.reset();
         this.resetSeatPos();
     }
+    public destroy() {
+        this.offModel();
+        this.model.destroy();
+        Sail.io.unregister(this.actions);
+        super.destroy();
+    }
     public outRoom() {
-        this.destroy();
         Sail.director.runScene(new Hall());
+        this.destroy();
     }
     public getCardType() {
         return this.model.card_type;
