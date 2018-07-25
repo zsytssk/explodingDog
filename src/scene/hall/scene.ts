@@ -70,7 +70,7 @@ export class Hall extends Sail.Scene {
         if (code == 200) {
             Sail.director.runScene(new GameWrap());
         } else {
-            alert(msg);
+            Sail.director.popScene(new PopuTip(msg));
         }
     }
 }

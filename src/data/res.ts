@@ -6,6 +6,11 @@ export const RES = {
             type: Laya.Loader.ATLAS,
             url: 'res/atlas/images/component/cards.atlas',
         },
+        { url: 'res/atlas/images/component/avatar.atlas', type: Laya.Loader.ATLAS },
+        {
+            type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/cards.atlas',
+        },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
         {
             url: 'res/atlas/images/component/cards.atlas',
