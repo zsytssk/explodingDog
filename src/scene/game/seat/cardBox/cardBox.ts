@@ -107,6 +107,13 @@ export class CardBoxCtrl extends BaseCtrl {
         }
         this.sortCard();
     }
+    public clearCards() {
+        const { card_list } = this.link;
+        for (let len = card_list.length, i = len - 1; i >= 0; i--) {
+            card_list.splice(i, 1);
+        }
+        this.link.card_list = [];
+    }
     public getCardNum() {
         return this.link.card_list.length;
     }

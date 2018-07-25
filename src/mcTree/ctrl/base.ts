@@ -394,7 +394,7 @@ export class BaseCtrl extends BaseEvent {
         this.hook_node_funs = [];
     }
     protected offModel() {
-        if (this.model) {
+        if (!this.model) {
             return;
         }
         this.offOtherEvent(this.model);

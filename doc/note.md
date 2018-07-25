@@ -1,6 +1,8 @@
 ## 2018-07-25 11:15:49
 * @todo slap 次数
 
+* @bug alarm bug
+
 * @ques annoy blind 牌的样式..
     * 其他人也需要显示...
 

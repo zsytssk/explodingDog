@@ -96,18 +96,13 @@ export class SeatCtrl extends BaseCtrl {
         this.bindModel();
     }
     private clearPlayer() {
-        const {
-            empty_box,
-            active_box,
-            avatar,
-            nickname,
-            die_avatar,
-        } = this.link;
+        const { card_box_ctrl } = this.link;
 
         this.loadedPlayer = false;
         this.setStatus('clear');
         this.offModel();
         this.model = undefined;
+        card_box_ctrl.clearCards();
     }
     private bindModel() {
         /** 渲染初始化的信息 */
@@ -218,7 +213,7 @@ export class SeatCtrl extends BaseCtrl {
             this.slap(data);
         }
         if (action === 'reverse_arrows') {
-            this.reverseArrows(data);
+            this.reverseArrows();
         }
     }
 
