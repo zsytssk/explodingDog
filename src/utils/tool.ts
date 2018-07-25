@@ -77,7 +77,7 @@ export function getCardInfo(card_id) {
 }
 
 export function getAvatar(avatar_id) {
-    return `images/component/${avatar_id}.png`;
+    return `images/component/avatar/${avatar_id}.png`;
 }
 
 export function isCurPlayer(user_id) {
