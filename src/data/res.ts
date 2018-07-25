@@ -59,6 +59,7 @@ export const RES = {
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
+        { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
     ],
 };

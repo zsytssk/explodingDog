@@ -160,16 +160,16 @@ export const CARD_DISCRIBE_MAP = {
         name: '跳过回合',
     },
     '3301': {
-        icon: 'alter',
-        name: '移花接木',
+        icon: 'slap',
+        name: '立即攻击',
     },
     '3321': {
-        icon: 'alter',
-        name: '移花接木X2',
+        icon: 'slap',
+        name: '立即攻击X2',
     },
     '3331': {
-        icon: 'alter',
-        name: '移花接木X3',
+        icon: 'slap',
+        name: '立即攻击X3',
     },
     '3401': {
         icon: 'steal',

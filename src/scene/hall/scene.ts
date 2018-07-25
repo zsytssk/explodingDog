@@ -33,17 +33,21 @@ export class Hall extends Sail.Scene {
 
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
+        Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
     }
     initEvent() { }
 
     onExit() {
+        Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }
 
     onResize(width, height) {
         this.bgImg.size(Laya.stage.width, Laya.stage.height);
     }
-
+    updateUserAmount() {
+        Sail.io.emit(CMD.GET_USER_AMOUNT);
+    }
     setUserInfo(data) {
         this.content.updateView(data);
     }

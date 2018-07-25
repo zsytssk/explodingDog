@@ -31,6 +31,7 @@ import { SlapCtrl } from './widget/slap';
 import { PopupTakeExplode } from '../popup/popupTakeExplode';
 import { PopupUserExploded } from '../popup/popupUserExploded';
 import { PopupGameOver } from '../popup/popupGameOver';
+import { PopupPrompt } from '../popup/popupPrompt';
 
 interface Link {
     view: ui.game.mainUI;
@@ -202,6 +203,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
             [CMD.GAME_OVER]: this.onServerGameOver,
+            [CMD.JOIN_ROOM]: this.onServerJoinRoom
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -209,7 +211,9 @@ export class GameCtrl extends BaseCtrl {
         const { btn_back, btn_setting } = this.link;
 
         btn_back.on(Laya.Event.CLICK, this, () => {
-            Sail.io.emit(CMD.OUT_ROOM);
+            Sail.director.popScene(new PopupPrompt('是否要退出游戏？', () => {
+                Sail.io.emit(CMD.OUT_ROOM);
+            }))
         });
 
         btn_setting.on(Laya.Event.CLICK, this, () => {
@@ -403,6 +407,15 @@ export class GameCtrl extends BaseCtrl {
         });
     }
     /**
+     * 重置用户座位的显示和位置
+     */
+    private resetSeatPos() {
+        this.link.seat_ctrl_list.slice(1).forEach((seatCtrl, index) => {
+            seatCtrl.showSeat();
+            seatCtrl.updatePos(seat_position[4][index]);
+        });
+    }
+    /**
      * 用户淘汰
      */
     public onServerUserExploding(data: UserExplodingData) {
@@ -462,6 +475,7 @@ export class GameCtrl extends BaseCtrl {
         slap_ctrl.reset();
         card_heap_ctrl.reset();
         discard_zone_ctrl.reset();
+        this.resetSeatPos();
     }
     public outRoom() {
         this.destroy();
@@ -469,5 +483,16 @@ export class GameCtrl extends BaseCtrl {
     }
     public getCardType() {
         return this.model.card_type;
+    }
+
+    /**
+     * @param data快速匹配再来一局
+     * @param code 
+     */
+    public onServerJoinRoom(data, code) {
+        if (code == 200) {
+            this.reset();
+            Sail.io.emit(CMD.GAME_REPLAY);
+        }
     }
 }
