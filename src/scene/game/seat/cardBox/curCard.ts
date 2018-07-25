@@ -3,10 +3,16 @@ import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CurCardBoxCtrl } from './curCardBox';
 import { CardCtrl, Link as BaseLink } from './card';
 import { tween } from '../../../../mcTree/utils/animate';
-import { log } from '../../../../mcTree/utils/zutil';
+import {
+    log,
+    queryClosest,
+    getChildrenByName,
+} from '../../../../mcTree/utils/zutil';
+import { GiveCardCtrl } from '../../widget/giveCard';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
+    give_card_ctrl: GiveCardCtrl;
 }
 
 /** 当前用户的牌 */
@@ -22,6 +28,13 @@ export class CurCardCtrl extends CardCtrl {
     private start_pos = {} as Point;
     constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
         super(model, wrap, is_insert);
+    }
+    protected initLink() {
+        super.initLink();
+        const game_ctrl = queryClosest(this, 'name:game');
+        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+
+        this.link.give_card_ctrl = give_card_ctrl;
     }
     protected initEvent() {
         super.initEvent();
@@ -53,9 +66,14 @@ export class CurCardCtrl extends CardCtrl {
         }
         return true;
     }
-    /** 当前用户牌再被给别人时直接放在give——card_ctrl上， 自己隐藏销毁， 这里覆盖父类的方法 */
+    /** 当前用户牌再被给别人时直接放在give_card_ctrl = give_card_ctrl;——card_ctrl上， 自己隐藏销毁， 这里覆盖父类的方法 */
     protected give() {
-        return;
+        if (this.is_selected) {
+            return;
+        }
+        const { card_box, give_card_ctrl } = this.link;
+        card_box.removeCard(this);
+        give_card_ctrl.getCard(this);
     }
     /** 显示牌的说明 */
     public toggleTip() {
@@ -180,7 +198,6 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 计算 各种出牌的类型 */
     private calcDiscard() {
-        const { card_box } = this.link;
         const card_status = this.model.preDiscard();
         /** 不是出牌状态 直接退回牌堆 */
         if (card_status === 'normal') {
@@ -188,12 +205,17 @@ export class CurCardCtrl extends CardCtrl {
             return;
         }
         if (card_status === 'wait_give') {
-            card_box.giveCard(this);
+            this.preGiveCard();
             return;
         }
         Sail.io.emit(CMD.HIT, {
             hitCard: this.model.card_id,
         });
+    }
+    private preGiveCard() {
+        const game_ctrl = queryClosest(this, 'name:game');
+        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+        give_card_ctrl.preGetCard(this);
     }
     /**  这个方法现在用到 card + cardBox， 这很恶心
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...

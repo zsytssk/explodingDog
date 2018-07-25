@@ -39,10 +39,14 @@ export class CurSeatCtrl extends SeatCtrl {
         this.link.player_box = player_box;
         this.link.btn_chat = btn_chat;
 
+        const game_ctrl = queryClosest(this, 'name:game');
+        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+
         this.link = {
             ...this.link,
             btn_chat,
             card_box_wrap,
+            give_card_ctrl,
             player_box,
         };
     }
@@ -63,7 +67,6 @@ export class CurSeatCtrl extends SeatCtrl {
     protected beActioned(data: ObserverActionInfo) {
         super.beActioned(data);
 
-        const { nickname: sprite } = this.link;
         const { status, action } = data;
 
         /** 处理动作的完成 */
@@ -94,20 +97,17 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     /** 等待给牌 */
     private waitGiveCard(action_data: ObserverActionInfo) {
-        let { give_card_ctrl } = this.link;
+        const { give_card_ctrl } = this.link;
         const { observer } = action_data;
-        if (!give_card_ctrl) {
-            const game_ctrl = queryClosest(this, 'name:game');
-            give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
-            this.link.give_card_ctrl = give_card_ctrl;
-        }
         give_card_ctrl.show().then(card_id => {
             observer.next(card_id);
         });
     }
     private waitGiveCardComplete() {
         const { give_card_ctrl } = this.link;
-        give_card_ctrl.hide();
+        if (give_card_ctrl) {
+            give_card_ctrl.reset();
+        }
     }
     private theFuture(action_data: ObserverActionInfo) {
         const { action, data, observer } = action_data;
@@ -139,10 +139,6 @@ export class CurSeatCtrl extends SeatCtrl {
         const game_ctrl = queryClosest(this, 'name:game') as GameCtrl;
         const widget_box = game_ctrl.getWidgetBox();
         return card_box_ctrl.putCardBoxInWrap(card_box_wrap, widget_box);
-    }
-    public giveCard(card: CardCtrl) {
-        const { give_card_ctrl } = this.link;
-        give_card_ctrl.getCard(card);
     }
     private showSetExplode() {
         const game_ctrl = queryClosest(this, 'name:game');

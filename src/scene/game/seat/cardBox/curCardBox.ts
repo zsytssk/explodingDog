@@ -139,16 +139,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
 
         return index;
     }
-    /** 给牌给别人 */
-    public giveCard(card: CardCtrl) {
-        const { seat, card_list } = this.link;
-        this.link.card_list = card_list.filter(item => {
-            return item !== card;
-        });
-        this.removeChild(card);
-        this.sortCard();
-        seat.giveCard(card);
-    }
+
     public unToggleExcept(card: CardCtrl) {
         const { card_list } = this.link;
         for (const card_item of card_list) {

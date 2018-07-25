@@ -60,19 +60,19 @@ export class GiveCardCtrl extends BaseCtrl {
             this.end_resolve = resolve;
         });
     }
+    /** 收到本地操作将命令发给服务器 */
+    public preGetCard(card: CardCtrl) {
+        if (this.end_resolve) {
+            this.end_resolve(card.getCardId());
+        }
+    }
+    /** 服务器收到命令后 cardCtrl会传给自己 */
     public getCard(card: CardCtrl) {
-        const { card_box } = this.link;
         this.addChild(card);
         this.card = card;
-        card.putCardInWrap(card_box).then(() => {
-            if (this.end_resolve) {
-                this.end_resolve(card.getCardId());
-            }
-        });
     }
     private hide() {
         const { view: sprite } = this.link;
-        const { card } = this;
         const start_props = {
             alpha: 1,
             ...show_pos,
@@ -87,15 +87,23 @@ export class GiveCardCtrl extends BaseCtrl {
             start_props,
         }).then(() => {
             sprite.visible = false;
-            if (card) {
-                card.destroy();
-                this.card = undefined;
-            }
         });
 
         this.end_resolve = undefined;
     }
+    /** seat action complete之后， 如果有牌 需要展示牌飞行动画 */
     public reset() {
-        this.hide();
+        if (!this.card) {
+            this.hide();
+            return;
+        }
+        const { card } = this;
+        const { card_box } = this.link;
+        card.putCardInWrap(card_box).then(() => {
+            this.hide().then(() => {
+                card.destroy();
+                this.card = undefined;
+            });
+        });
     }
 }

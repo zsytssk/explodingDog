@@ -259,7 +259,7 @@ export class GameModel extends BaseEvent {
             toUser: targetPlayer,
         });
     }
-    public unta(data: HitData) {
+    public unDiscardCard(data: HitData) {
         const player = this.getPlayerById(data.userId);
         player.unDiscardCard();
     }

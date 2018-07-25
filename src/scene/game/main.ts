@@ -114,21 +114,6 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(host_zone_ctrl);
         host_zone_ctrl.init();
 
-        /** 座位控制器 */
-        const seat_view_list = getChildren(seat_wrap);
-        const seat_ctrl_list = [];
-        for (let i = 0; i < seat_view_list.length; i++) {
-            let player_ctrl;
-            if (i === 0) {
-                player_ctrl = new CurSeatCtrl(seat_view_list[i]);
-            } else {
-                player_ctrl = new SeatCtrl(seat_view_list[i]);
-            }
-            this.addChild(player_ctrl);
-            player_ctrl.init();
-            seat_ctrl_list.push(player_ctrl);
-        }
-
         const docker_ctrl = new DockerCtrl(docker);
         this.addChild(docker_ctrl);
         docker_ctrl.init();
@@ -161,6 +146,21 @@ export class GameCtrl extends BaseCtrl {
 
         const explode_pos_ctrl = new ExplodePosCtrl(explode_pos);
         this.addChild(explode_pos_ctrl);
+
+        /** 座位控制器 */
+        const seat_view_list = getChildren(seat_wrap);
+        const seat_ctrl_list = [];
+        for (let i = 0; i < seat_view_list.length; i++) {
+            let player_ctrl;
+            if (i === 0) {
+                player_ctrl = new CurSeatCtrl(seat_view_list[i]);
+            } else {
+                player_ctrl = new SeatCtrl(seat_view_list[i]);
+            }
+            this.addChild(player_ctrl);
+            player_ctrl.init();
+            seat_ctrl_list.push(player_ctrl);
+        }
 
         this.link = {
             ...this.link,
@@ -512,7 +512,7 @@ export class GameCtrl extends BaseCtrl {
      * @param code
      */
     public onServerJoinRoom(data, code) {
-        if (code == 200) {
+        if (code === 200) {
             this.reset();
             Sail.io.emit(CMD.GAME_REPLAY);
         }
