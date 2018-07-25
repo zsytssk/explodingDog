@@ -111,6 +111,9 @@ export class SeatCtrl extends BaseCtrl {
         this.link.card_box_ctrl.addCards(card_list);
 
         this.onModel(base_cmd.destroy, this.clearPlayer.bind(this));
+        this.onModel(player_cmd.remove_cards, () => {
+            this.link.card_box_ctrl.clearCards();
+        });
         this.onModel(player_cmd.add_card, (data: { card: CardModel }) => {
             this.link.card_box_ctrl.addCard(data.card, true);
         });
@@ -269,7 +272,7 @@ export class SeatCtrl extends BaseCtrl {
     public hideSeat() {
         this.link.view.visible = false;
     }
-    public showSeat(){
+    public showSeat() {
         this.link.view.visible = true;
     }
     /** 获得座位底部的坐标 用来slap */

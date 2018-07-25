@@ -203,6 +203,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.USER_EXPLODING]: this.onServerUserExploding,
             [CMD.GAME_OVER]: this.onServerGameOver,
             [CMD.JOIN_ROOM]: this.onServerJoinRoom,
+            [CMD.ALARM]: this.onServerAlarm,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -444,20 +445,22 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.closeByName('popup_defuse');
             delay = 3000;
         }
-        //当前玩家爆炸延迟弹出结束
+        // 当前玩家爆炸延迟弹出结束
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(pop);
         });
     }
     public onServerTurn(data: TurnsData) {
-        const { speakerId: user_id } = data;
+        this.model.setSpeaker(data.speakerId);
+    }
+    public onServerAlarm(data: AlarmData) {
+        const { speakerId: user_id, remainTime } = data;
         const { alarm_ctrl } = this.link;
         if (isCurPlayer(user_id)) {
-            alarm_ctrl.countDown(20);
+            alarm_ctrl.countDown(remainTime);
         } else {
             alarm_ctrl.reset();
         }
-        this.model.setSpeaker(data.speakerId);
     }
     public reset() {
         const {
