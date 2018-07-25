@@ -140,4 +140,5 @@ type UserExplodingData = {
 };
 type AlarmData = {
     speakerId: string;
+    remainTime: number;
 };

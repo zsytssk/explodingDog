@@ -10,6 +10,7 @@ export const cmd = {
     /** 动作信息 */
     action: 'action',
     add_card: 'add_card',
+    remove_cards: 'remove_cards',
     status_change: 'status_change',
     wait_choose: 'wait_choose',
 };
@@ -89,6 +90,7 @@ export class PlayerModel extends BaseEvent {
         for (let len = card_list.length, i = len - 1; i >= 0; i--) {
             card_list[i].destroy();
         }
+        this.trigger(cmd.remove_cards);
     }
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public discardCard(card_id: string) {
