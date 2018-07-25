@@ -254,16 +254,21 @@ export class GameCtrl extends BaseCtrl {
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
         const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
+        const { roomInfo, roundInfo } = data;
         this.is_ready = true;
         /** 更新本地倒计时 */
         data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
-        quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
 
-        if (data.roundInfo) {
-            card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
-            docker_ctrl.setRate(data.roundInfo.bombProb);
-            const turnDirection = data.roundInfo.turnDirection;
+        if (roomInfo) {
+            quick_start_ctrl.countDown(roomInfo.remainTime);
+            this.onServerAlarm(roomInfo.alarm);
+        }
+
+        if (roundInfo) {
+            card_heap_ctrl.setRemainCard(roundInfo.remainCard);
+            docker_ctrl.setRate(roundInfo.bombProb);
+            const turnDirection = roundInfo.turnDirection;
             if (turnDirection) {
                 this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
@@ -459,6 +464,9 @@ export class GameCtrl extends BaseCtrl {
         this.model.setSpeaker(data.speakerId);
     }
     public onServerAlarm(data: AlarmData) {
+        if (!data) {
+            return;
+        }
         const { speakerId: user_id, remainTime } = data;
         const { alarm_ctrl } = this.link;
         if (isCurPlayer(user_id)) {

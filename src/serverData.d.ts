@@ -42,6 +42,7 @@ type RoomInfoData = {
     activeTime: string;
     danGrading: string;
     roundId: string;
+    alarm: AlarmData;
 };
 type ReplayHitData = {
     hitUserId: string;
@@ -140,5 +141,6 @@ type UserExplodingData = {
 };
 type AlarmData = {
     speakerId: string;
+    total: number;
     remainTime: number;
 };

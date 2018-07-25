@@ -43,6 +43,7 @@ export class GiveCardCtrl extends BaseCtrl {
     public show(): Promise<string> {
         return new Promise((resolve, reject) => {
             const { view: sprite } = this.link;
+            sprite.visible = true;
             const start_props = {
                 alpha: 0,
                 ...hide_pos,
@@ -85,6 +86,7 @@ export class GiveCardCtrl extends BaseCtrl {
             sprite,
             start_props,
         }).then(() => {
+            sprite.visible = false;
             if (card) {
                 card.destroy();
                 this.card = undefined;

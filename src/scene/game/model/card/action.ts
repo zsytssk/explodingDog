@@ -136,13 +136,7 @@ export class WaitGetCard extends Action implements IAction {
             return;
         }
 
-        const card_model = target.giveCard(card);
-        if (!card_model) {
-            logErr(
-                `cant find cardModel card=${card} in player${player.user_id}`,
-            );
-            return;
-        }
+        const card_model = target.takeCardByStatus(card, 'wait_give');
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
