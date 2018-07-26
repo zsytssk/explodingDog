@@ -12,6 +12,7 @@ import {
 import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
+import { getAvatar } from '../../../utils/tool';
 
 type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
 
@@ -143,7 +144,7 @@ export class SeatCtrl extends BaseCtrl {
                 empty_box.visible = false;
                 active_box.visible = true;
                 die_avatar.visible = false;
-                avatar.skin = model.avatar;
+                avatar.skin = getAvatar(model.avatar);
                 nickname.text = model.nickname;
                 break;
             case 'speak':

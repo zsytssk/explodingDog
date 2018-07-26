@@ -1,7 +1,7 @@
 import { Avatar } from './component/avatar';
 import { isCurPlayer } from '../../utils/tool';
 import { tween } from '../../mcTree/utils/animate';
-import { log } from '../../mcTree/utils/zutil';
+import { log, getChildren } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
 
@@ -79,6 +79,27 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         }
         this.isUserCreate = data.isUserCreate;
     }
+
+    public showInviteIcon(data) {
+        getChildren(this.avatarBox).forEach(avatar => {
+            avatar.showInviteIcon();
+            if (data.inviteInfo.userId == avatar.getUserId()) {
+                avatar.setInviteStatus(1);
+            }
+        });
+    }
+
+    public updateInviteIcon(data) {
+        getChildren(this.avatarBox).forEach(avatar => {
+            data.list.forEach(item => {
+                log(item)
+                if (item.userId == avatar.getUserId() && item.status != 0) {
+                    avatar.setInviteStatus(item.status);
+                }
+            })
+        });
+    }
+
 }
 
 class MaxInfo extends ui.popup.component.maxInfoUI {

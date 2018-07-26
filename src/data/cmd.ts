@@ -34,4 +34,8 @@ export const CMD = {
     PLAY_INVITE: 'playInvite',
     /** 倒计时 */
     ALARM: 'alarm',
+    /**再来一局 */
+    PLAY_AGAIN: 'playAgain',
+    /**同意/拒绝再来一局 */
+    UPDATE_INVITE: 'updateInvite',
 };

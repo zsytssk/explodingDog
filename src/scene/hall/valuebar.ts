@@ -15,7 +15,7 @@ export class ValueBar extends ui.hall.valuebarUI {
     }
     setType(type) {
         this.type = type;
-        this.icon.skin = `images/hall/icon_${type}.png`;
+        this.icon.skin = `images/component/icon_${type}.png`;
     }
     setValue(data) {
         if (!Array.isArray(data)) {
@@ -27,7 +27,7 @@ export class ValueBar extends ui.hall.valuebarUI {
             let fontcolor = data[0] > data[1] ? 'red' : 'white';
             this.richText.innerHTML = `<span color="${fontcolor}">${
                 data[0]
-            }</span><span color="white">/${data[1]}</span>`;
+                }</span><span color="white">/${data[1]}</span>`;
         }
     }
 }

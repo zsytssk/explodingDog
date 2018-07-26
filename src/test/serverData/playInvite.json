@@ -1,0 +1,26 @@
+{
+    "cmd": "playInvite",
+    "code": 200,
+    "res": {
+        "list": [
+            {
+                "userId": 3002,
+                "nickname": "3002",
+                "status": 1,
+                "isInviteUser": 1
+            },
+            {
+                "userId": "3003",
+                "nickname": "3003",
+                "status": 0,
+                "isInviteUser": 0
+            }
+        ],
+        "inviteUser": 3002,
+        "remainTime": 10,
+        "inviteInfo": {
+            "userId": 3002,
+            "nickname": "3002name"
+        }
+    }
+}

@@ -76,15 +76,15 @@ export class DockerCtrl extends BaseCtrl {
         const { rateLabel, arrow, wire } = this.link;
         const lastRate = parseInt(rateLabel.text);
         wire.parent && wire.play(0, false);
-        // 大于20概率触发震动效果
-        if (rate > 20 && !this.isShaking) {
+        // 大于25概率触发震动效果
+        if (rate > 25 && !this.isShaking) {
             this.shake();
-        } else if (rate <= 20 && this.isShaking) {
+        } else if (rate <= 25 && this.isShaking) {
             this.stopShake();
         }
-        //大于40概率显示烟雾
+        //大于50概率显示烟雾
         setTimeout(() => {
-            if (rate > 40) {
+            if (rate > 50) {
                 this.link.smoke.visible = true;
             } else {
                 this.link.smoke.visible = false;

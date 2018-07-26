@@ -35,6 +35,8 @@ import { SlapCtrl } from './widget/slap';
 import { PopupUserExploded } from '../popup/popupUserExploded';
 import { PopupGameOver } from '../popup/popupGameOver';
 import { PopupPrompt } from '../popup/popupPrompt';
+import { PopupTip } from '../popup/popupTip';
+import { PopUpInvite } from '../popup/popupInvite';
 
 interface Link {
     view: ui.game.mainUI;
@@ -208,6 +210,9 @@ export class GameCtrl extends BaseCtrl {
             [CMD.GAME_OVER]: this.onServerGameOver,
             [CMD.JOIN_ROOM]: this.onServerJoinRoom,
             [CMD.ALARM]: this.onServerAlarm,
+            [CMD.PLAY_INVITE]: this.onServerPlayInvite,
+            [CMD.UPDATE_INVITE]: this.onServerUpdateInvite,
+            [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -295,7 +300,7 @@ export class GameCtrl extends BaseCtrl {
     /** 游戏开始 */
     public onServerGameStart(data: GameStartData, code?: string, msg?: string) {
         if (Number(code) !== 200) {
-            logErr(msg);
+            Sail.director.popScene(new PopupTip(msg));
             return;
         }
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
@@ -492,6 +497,7 @@ export class GameCtrl extends BaseCtrl {
         super.destroy();
     }
     public outRoom() {
+        Sail.director.closeAll();
         Sail.director.runScene(new Hall());
         this.destroy();
     }
@@ -508,5 +514,31 @@ export class GameCtrl extends BaseCtrl {
             this.reset();
             Sail.io.emit(CMD.GAME_REPLAY);
         }
+    }
+    /**邀请再来一局 */
+    public onServerPlayInvite(data, code) {
+        if (code != 200) {
+            return;
+        }
+        if (!isCurPlayer(data.inviteInfo.userId)) {
+            Sail.director.popScene(new PopUpInvite(data.inviteInfo.nickname, data.remainTime));
+        }
+        let gameOver = Sail.director.getDialogByName('game_over');
+        gameOver && gameOver.showInviteIcon(data);
+    }
+
+    public onServerUpdateInvite(data, code, msg) {
+        if (code != 200) {
+            Sail.director.popScene(new PopupTip(msg));
+            return;
+        }
+        let gameOver = Sail.director.getDialogByName('game_over');
+        gameOver && gameOver.updateInviteIcon(data);
+    }
+
+    public onServerPlayAgain() {
+        Sail.io.emit(CMD.GAME_REPLAY);
+        Sail.director.closeByName('game_over');
+        this.reset();
     }
 }

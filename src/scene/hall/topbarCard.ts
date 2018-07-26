@@ -18,6 +18,7 @@ export class TopBar extends ui.hall.topbarCardUI {
     }
 
     setTitle(text) {
-        this.title.skin = `images/cards/text_${text}.png`;
+        this.title.skin = `images/component/cards/text_${text}.png`;
+
     }
 }

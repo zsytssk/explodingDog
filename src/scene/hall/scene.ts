@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { GameWrap } from '../game/sceneWrap';
 import { loadAssets } from '../loaing/main';
-import { PopuTip } from '../popup/popupTip';
+import { PopupTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
@@ -61,7 +61,7 @@ export class Hall extends Sail.Scene {
         if (code == 200) {
             Sail.director.runScene(new GameWrap());
         } else {
-            Sail.director.popScene(new PopuTip(msg));
+            Sail.director.popScene(new PopupTip(msg));
         }
     }
 
@@ -70,7 +70,7 @@ export class Hall extends Sail.Scene {
         if (code == 200) {
             Sail.director.runScene(new GameWrap());
         } else {
-            Sail.director.popScene(new PopuTip(msg));
+            Sail.director.popScene(new PopupTip(msg));
         }
     }
 }
