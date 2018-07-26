@@ -532,7 +532,8 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(new PopUpInvite(data.inviteInfo.nickname, data.remainTime));
         }
         let gameOver = Sail.director.getDialogByName('game_over');
-        gameOver && gameOver.showInviteIcon(data);
+        gameOver.btnAgain.visible = false;
+        gameOver.showInviteIcon(data);
     }
 
     public onServerUpdateInvite(data, code, msg) {
