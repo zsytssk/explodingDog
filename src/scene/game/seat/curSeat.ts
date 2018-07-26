@@ -172,4 +172,14 @@ export class CurSeatCtrl extends SeatCtrl {
         )[0];
         explode_pos_ctrl.hideView();
     }
+    /**手牌中是否有某张牌 */
+    public haveCard(cardId: string): boolean {
+        let result = false;
+        this.model.card_list.forEach(item => {
+            if (item.card_id == cardId) {
+                result = true;
+            }
+        });
+        return result;
+    }
 }

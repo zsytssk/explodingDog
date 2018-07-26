@@ -1,10 +1,13 @@
 import { CardModel } from '../model/card/card';
 import { CurSeatCtrl } from '../seat/curSeat';
 import { PopupTakeExplode } from '../../popup/popupTakeExplode';
+import { CMD } from '../../../data/cmd';
+import { log } from '../../../mcTree/utils/zutil';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
     group = 'exploding';
+    remainTime: number;//倒计时 s
     ani: Laya.Skeleton;
     defuseSeccess = false;//弹出popup_take_explode弹层
     curSeatCtrl;
@@ -28,6 +31,30 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         );
         this.defuseCard.zOrder = 5;
         this.card_box_wrap.zOrder = 5;
+        this.remainTime = remainTime;
+    }
+    onOpened() {
+        if (!this.curSeatCtrl.haveCard('3101')) {
+            this.timerLoop(1000, this, this.countdown);
+            Laya.stage.on(Laya.Event.CLICK, this, () => {
+                if (this.remainTime <= 0) {
+                    return;
+                }
+                this.ani.playbackRate(this.ani.player.playbackRate * this.remainTime / (this.remainTime - 2))
+                this.remainTime -= 2;
+                // this.ani.
+            });
+        }
+    }
+    countdown() {
+        if (this.remainTime <= 0) {
+            this.clearTimer(this, this.countdown);
+            Sail.io.emit(CMD.HIT, {
+                hitCard: 3001,
+            });
+            return;
+        }
+        this.remainTime--;
     }
     setCards(cards: CardModel[], cur_seat_ctrl: CurSeatCtrl) {
         const { card_box_wrap, ani } = this;
