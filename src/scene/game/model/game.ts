@@ -211,7 +211,7 @@ export class GameModel extends BaseEvent {
 
         let card;
         if (need_discard) {
-            card = player.discardCard(hit_card);
+            card = player.takeCardByStatus(hit_card, 'discard');
         }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {
@@ -233,7 +233,7 @@ export class GameModel extends BaseEvent {
         });
         this.discard_card = card;
     }
-    private updateBillboard(data) {
+    private updateBillboard(data: HitData) {
         const hit_info = data.hitInfo;
         const player = this.getPlayerById(data.hitUserId);
         // 更新billboard

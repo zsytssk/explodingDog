@@ -1,10 +1,10 @@
 // tslint:disable:max-classes-per-file
 
 import { race } from 'rxjs';
-import { log, logErr } from '../../../../mcTree/utils/zutil';
+import { log } from '../../../../mcTree/utils/zutil';
 import { GameModel } from '../game';
 import { PlayerModel } from '../player';
-import { CardModel } from './card';
+import { ActionManager } from './actionManager';
 
 type Data = {
     count: number;
@@ -41,24 +41,27 @@ export interface IAction {
     /** 动作完成 */
     complete?(data: ActionDataInfo);
 }
-export abstract class Action {
-    public card: CardModel;
+export class Action implements IAction {
+    public manager: ActionManager;
     /** 动作的作用 */
     /** 动作完成 */
-    constructor(card: CardModel) {
-        this.card = card;
+    constructor(manager: ActionManager) {
+        this.manager = manager;
+    }
+    public act(data?) {
+        //
     }
 }
 
-export class ChooseTarget extends Action implements IAction {
+export class ChooseTarget extends Action {
     private name = 'choose_target' as ActionType;
     private choose_list: PlayerModel[] = [];
-    constructor(card: CardModel) {
-        super(card);
+    constructor(manager: ActionManager) {
+        super(manager);
     }
     public act(data: ActionDataInfo) {
         const { game, canChooseUserIds, player } = data;
-        const { card } = this;
+        const { manager } = this;
         const wait_arr = [];
         const { is_cur_player } = player;
         /** 非当前用户不需要选择 */
@@ -75,7 +78,7 @@ export class ChooseTarget extends Action implements IAction {
             this.choose_list.push(choose_player);
         }
         race(wait_arr).subscribe((user_id: string) => {
-            card.action({
+            manager.sendAction({
                 targetUserId: user_id,
             });
         });
@@ -100,15 +103,14 @@ export class ChooseTarget extends Action implements IAction {
     }
 }
 
-export class WaitGetCard extends Action implements IAction {
+export class WaitGetCard extends Action {
     private name = 'wait_get_card' as ActionType;
-    private target: PlayerModel;
-    constructor(card: CardModel) {
-        super(card);
+    constructor(manager: ActionManager) {
+        super(manager);
     }
     public act(data: ActionDataInfo) {
         const { game, targetUserId } = data;
-        const { card } = this;
+        const { manager } = this;
         const target = game.getPlayerById(targetUserId);
         const { is_cur_player } = target;
         /** 非当前用户不需要选择 */
@@ -122,7 +124,7 @@ export class WaitGetCard extends Action implements IAction {
                 status: 'act',
             })
             .subscribe((card_id: string) => {
-                card.action({
+                manager.sendAction({
                     card: card_id,
                 });
             });
@@ -136,13 +138,7 @@ export class WaitGetCard extends Action implements IAction {
             return;
         }
 
-        const card_model = target.giveCard(card);
-        if (!card_model) {
-            logErr(
-                `cant find cardModel card=${card} in player${player.user_id}`,
-            );
-            return;
-        }
+        const card_model = target.takeCardByStatus(card, 'wait_give');
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
@@ -156,7 +152,7 @@ export class WaitGetCard extends Action implements IAction {
         log('complete', data);
     }
 }
-export class ShowDefuse extends Action implements IAction {
+export class ShowDefuse extends Action {
     public name = 'show_defuse' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
@@ -175,10 +171,10 @@ export class ShowDefuse extends Action implements IAction {
     }
 }
 
-export class SeeTheFuture extends Action implements IAction {
+export class SeeTheFuture extends Action {
     private name = 'see_the_future' as ActionType;
-    constructor(card: CardModel) {
-        super(card);
+    constructor(manager: ActionManager) {
+        super(manager);
     }
     public act(data: ActionDataInfo) {
         const { player } = data;
@@ -216,14 +212,14 @@ export class SeeTheFuture extends Action implements IAction {
     }
 }
 
-export class AlterTheFuture extends Action implements IAction {
+export class AlterTheFuture extends Action {
     private name = 'alter_the_future' as ActionType;
-    constructor(card: CardModel) {
-        super(card);
+    constructor(manager: ActionManager) {
+        super(manager);
     }
     public act(data: ActionDataInfo) {
         const { player } = data;
-        const { card } = this;
+        const { manager } = this;
         const { is_cur_player } = player;
         /** 非当前用户不需要选择 */
         if (!is_cur_player) {
@@ -237,14 +233,14 @@ export class AlterTheFuture extends Action implements IAction {
                 status: 'act',
             })
             .subscribe((newSortCards: string[]) => {
-                card.action({
+                manager.sendAction({
                     newSortCards,
                 });
             });
         log('act', data);
     }
     public complete(data: ActionDataInfo) {
-        const { player, card } = data;
+        const { player } = data;
         const { is_cur_player } = player;
         /** 非当前用户不需要选择 */
         if (!is_cur_player) {
@@ -262,8 +258,8 @@ export class AlterTheFuture extends Action implements IAction {
 }
 export class Slap extends Action {
     private name = 'slap' as ActionType;
-    constructor(card: CardModel) {
-        super(card);
+    constructor(manager: ActionManager) {
+        super(manager);
     }
     public act(data: ActionDataInfo) {
         const { game, targetUserId } = data;

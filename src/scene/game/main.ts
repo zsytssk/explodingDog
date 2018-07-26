@@ -116,21 +116,6 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(host_zone_ctrl);
         host_zone_ctrl.init();
 
-        /** 座位控制器 */
-        const seat_view_list = getChildren(seat_wrap);
-        const seat_ctrl_list = [];
-        for (let i = 0; i < seat_view_list.length; i++) {
-            let player_ctrl;
-            if (i === 0) {
-                player_ctrl = new CurSeatCtrl(seat_view_list[i]);
-            } else {
-                player_ctrl = new SeatCtrl(seat_view_list[i]);
-            }
-            this.addChild(player_ctrl);
-            player_ctrl.init();
-            seat_ctrl_list.push(player_ctrl);
-        }
-
         const docker_ctrl = new DockerCtrl(docker);
         this.addChild(docker_ctrl);
         docker_ctrl.init();
@@ -164,6 +149,21 @@ export class GameCtrl extends BaseCtrl {
         const explode_pos_ctrl = new ExplodePosCtrl(explode_pos);
         this.addChild(explode_pos_ctrl);
 
+        /** 座位控制器 */
+        const seat_view_list = getChildren(seat_wrap);
+        const seat_ctrl_list = [];
+        for (let i = 0; i < seat_view_list.length; i++) {
+            let player_ctrl;
+            if (i === 0) {
+                player_ctrl = new CurSeatCtrl(seat_view_list[i]);
+            } else {
+                player_ctrl = new SeatCtrl(seat_view_list[i]);
+            }
+            this.addChild(player_ctrl);
+            player_ctrl.init();
+            seat_ctrl_list.push(player_ctrl);
+        }
+
         this.link = {
             ...this.link,
             alarm_ctrl,
@@ -193,9 +193,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.GAME_REPLAY]: this.onServerGameReplay,
             [CMD.UPDATE_USER]: this.onServerUpdateUser,
             [CMD.GAME_START]: this.onServerGameStart,
-            [CMD.OUT_ROOM]: () => {
-                this.onServerOutRoom();
-            },
+            [CMD.OUT_ROOM]: this.onServerOutRoom,
             [CMD.HIT]: (data: HitData, code) => {
                 if (code !== 200) {
                     this.model.unDiscardCard(data);
@@ -259,16 +257,21 @@ export class GameCtrl extends BaseCtrl {
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
         const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
+        const { roomInfo, roundInfo } = data;
         this.is_ready = true;
         /** 更新本地倒计时 */
         data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
-        quick_start_ctrl.countDown(data.roomInfo && data.roomInfo.remainTime);
 
-        if (data.roundInfo) {
-            card_heap_ctrl.setRemainCard(data.roundInfo.remainCard);
-            docker_ctrl.setRate(data.roundInfo.bombProb);
-            const turnDirection = data.roundInfo.turnDirection;
+        if (roomInfo) {
+            quick_start_ctrl.countDown(roomInfo.remainTime);
+            this.onServerAlarm(roomInfo.alarm);
+        }
+
+        if (roundInfo) {
+            card_heap_ctrl.setRemainCard(roundInfo.remainCard);
+            docker_ctrl.setRate(roundInfo.bombProb);
+            const turnDirection = roundInfo.turnDirection;
             if (turnDirection) {
                 this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
@@ -314,8 +317,10 @@ export class GameCtrl extends BaseCtrl {
         card_heap_ctrl.setRemainCard(data.remainCard);
     }
     /** 离开房间 */
-    private onServerOutRoom() {
-        this.outRoom();
+    private onServerOutRoom(data: OutRoomData) {
+        if (isCurPlayer(data.userId)) {
+            this.outRoom();
+        }
     }
     /** 添加用户 */
     private addPlayer(player: PlayerModel) {
@@ -464,6 +469,9 @@ export class GameCtrl extends BaseCtrl {
         this.model.setSpeaker(data.speakerId);
     }
     public onServerAlarm(data: AlarmData) {
+        if (!data) {
+            return;
+        }
         const { speakerId: user_id, remainTime } = data;
         const { alarm_ctrl } = this.link;
         if (isCurPlayer(user_id)) {
@@ -510,7 +518,7 @@ export class GameCtrl extends BaseCtrl {
      * @param code
      */
     public onServerJoinRoom(data, code) {
-        if (code == 200) {
+        if (code === 200) {
             this.reset();
             Sail.io.emit(CMD.GAME_REPLAY);
         }

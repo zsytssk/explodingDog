@@ -46,10 +46,11 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     private initEvent() {
         const { view } = this.link;
-        view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
-        view.on(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
-        view.on(Laya.Event.MOUSE_UP, this, this.mouseEnd);
-        view.on(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
+
+        this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_UP, this.mouseEnd);
+        this.onNode(view, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
     private mouseDown(event: Laya.Event) {
         const { touch_info } = this;
@@ -139,16 +140,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
 
         return index;
     }
-    /** 给牌给别人 */
-    public giveCard(card: CardCtrl) {
-        const { seat, card_list } = this.link;
-        this.link.card_list = card_list.filter(item => {
-            return item !== card;
-        });
-        this.removeChild(card);
-        this.sortCard();
-        seat.giveCard(card);
-    }
+
     public unToggleExcept(card: CardCtrl) {
         const { card_list } = this.link;
         for (const card_item of card_list) {

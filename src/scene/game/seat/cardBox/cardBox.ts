@@ -65,15 +65,10 @@ export class CardBoxCtrl extends BaseCtrl {
     }
     /** 出牌 将牌从列表中清除 */
     public discardCard(card: CardCtrl) {
-        const { card_list } = this.link;
-        this.link.card_list = card_list.filter(item => {
-            return item !== card;
-        });
-        this.removeChild(card);
-        this.sortCard();
+        this.removeCard(card);
         this.report(cmd.discard, 'game', { card });
     }
-    public giveCard(card: CardCtrl) {
+    public removeCard(card: CardCtrl) {
         const { card_list } = this.link;
         this.link.card_list = card_list.filter(item => {
             return item !== card;

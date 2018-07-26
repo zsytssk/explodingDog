@@ -71,7 +71,8 @@ export class CardCtrl extends BaseCtrl {
     private initEvent() {
         const { card_box } = this.link;
         const { view } = this.link;
-        view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
+
+        this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
     }
     private mouseDown(event: Laya.Event) {
         const { view } = this.link;
@@ -82,8 +83,8 @@ export class CardCtrl extends BaseCtrl {
         view.pos(pos.x, pos.y);
         view.startDrag();
 
-        Laya.stage.on(Laya.Event.MOUSE_UP, this, this.unSelect);
-        Laya.stage.on(Laya.Event.MOUSE_OVER, this, this.unSelect);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
     }
     /** 取消选中 */
     private unSelect() {
@@ -92,8 +93,8 @@ export class CardCtrl extends BaseCtrl {
         }
         const { view } = this.link;
         this.is_touched = false;
-        Laya.stage.off(Laya.Event.MOUSE_UP, this, this.unSelect);
-        Laya.stage.off(Laya.Event.MOUSE_OVER, this, this.unSelect);
+
+        this.offNode(Laya.stage);
         view.stopDrag();
         this.withDrawCard();
     }

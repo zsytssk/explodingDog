@@ -1,9 +1,10 @@
 import { fill } from 'lodash';
 import { Observable, Subscriber } from 'rxjs';
 import { BaseEvent } from '../../../mcTree/event';
-import { CardModel } from './card/card';
+import { CardModel, CardStatus } from './card/card';
 import { BeActionInfo } from './card/action';
 import { isCurPlayer } from '../../../utils/tool';
+import { logErr } from '../../../mcTree/utils/zutil';
 
 export type PlayerStatus = 'speak' | 'wait_give' | 'die' | 'normal';
 export const cmd = {
@@ -92,34 +93,42 @@ export class PlayerModel extends BaseEvent {
         }
         this.trigger(cmd.remove_cards);
     }
-    /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
-    public discardCard(card_id: string) {
-        const card_list = this.card_list;
-        let discard_card: CardModel;
-
-        for (let i = 0; i < card_list.length; i++) {
-            const card = card_list[i];
-            if (card.canDiscard(card_id)) {
-                discard_card = card;
-                card_list.splice(i, 1);
-                discard_card.discard();
-                return discard_card;
+    private findCardByStatus(status: CardStatus) {
+        const { card_list } = this;
+        for (const card of card_list) {
+            if (card.status === status) {
+                return card;
             }
         }
     }
-    public giveCard(card_id: string) {
+    /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
+    public takeCardByStatus(card_id: string, status: CardStatus) {
         const card_list = this.card_list;
-        let give_card: CardModel;
-
-        for (let i = 0; i < card_list.length; i++) {
-            const card = card_list[i];
-            if (card.canGive(card_id)) {
-                give_card = card;
-                card.give();
-                card_list.splice(i, 1);
-                return give_card;
+        let take_card = this.findCardByStatus(status);
+        if (!take_card) {
+            for (const card of card_list) {
+                if (card.card_id === '*') {
+                    card.updateInfo(card_id);
+                    take_card = card;
+                    break;
+                }
+                if (card.card_id === card_id) {
+                    take_card = card;
+                    break;
+                }
             }
         }
+        if (!take_card) {
+            logErr(`cant find card_id=${card_id}|status=${status}`);
+            return;
+        }
+        this.removeCard(take_card);
+        if (status === 'discard') {
+            take_card.discard();
+        } else {
+            take_card.give();
+        }
+        return take_card;
     }
     /** 取消出牌 */
     public unDiscardCard() {

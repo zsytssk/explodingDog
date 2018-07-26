@@ -2,14 +2,15 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": "3002",
+        "userId": "4001",
         "hitCard": "3401",
-        "hitUserId": "3002",
+        "hitUserId": "4001",
         "hitInfo": {
             "type": "steal",
             "step": 2,
-            "targetUserId": "3001",
-            "canChooseUserIds": ["3001", "3003"]
+            "card": "3101",
+            "targetUserId": "4002",
+            "canChooseUserIds": ["4001", "4002"]
         }
     }
 }

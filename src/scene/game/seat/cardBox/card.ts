@@ -121,7 +121,7 @@ export class CardCtrl extends BaseCtrl {
     /** 其他用户的牌在被给出时直接销毁 */
     protected give() {
         const { card_box } = this.link;
-        card_box.giveCard(this);
+        card_box.removeCard(this);
         this.destroy();
     }
     /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */

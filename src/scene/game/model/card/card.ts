@@ -1,8 +1,8 @@
 import { BaseEvent } from '../../../../mcTree/event';
 import { PlayerModel } from '../player';
 import { getCardInfo } from '../../../../utils/tool';
-import { IAction, ActionDataInfo, ActionSendData } from './action';
-import { action_map } from './actionMap';
+import { ActionDataInfo, ActionSendData } from './action';
+import { ActionManager } from './actionManager';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
 export type CardStatus = 'normal' | 'discard' | 'wait_give' | 'exploding';
@@ -23,9 +23,8 @@ export class CardModel extends BaseEvent {
     public card_count: number;
     /** 所属者 */
     public owner: PlayerModel;
+    private action_manager: ActionManager;
     public status: CardStatus = 'normal';
-    /** 动作列表 */
-    public actions: IAction[];
     constructor(card_id: string) {
         super();
         this.updateInfo(card_id);
@@ -41,41 +40,15 @@ export class CardModel extends BaseEvent {
         this.card_type = type;
         this.card_count = count;
 
-        this.initAction();
+        this.action_manager = new ActionManager(this);
         this.trigger(cmd.update_info);
     }
     public setOwner(owner: PlayerModel) {
         this.owner = owner;
     }
-    private initAction() {
-        const { card_type } = this;
-        const actions_ori = action_map[card_type];
-        if (!actions_ori) {
-            return;
-        }
-        const actions = [] as IAction[];
-        // tslint:disable-next-line:variable-name
-        for (const ActionCreate of actions_ori) {
-            actions.push(new ActionCreate(this));
-        }
-        this.actions = actions;
-    }
     /** 更新技能信息 */
     public updateAction(action_info: ActionDataInfo) {
-        const { actions } = this;
-        if (!actions) {
-            return;
-        }
-        const step = action_info.step - 1;
-        const pre_action = actions[step - 1];
-        const cur_action = actions[step];
-        /** 前一个结束 */
-        if (pre_action && pre_action.complete) {
-            pre_action.complete(action_info);
-        }
-        if (cur_action) {
-            cur_action.act(action_info);
-        }
+        this.action_manager.update(action_info);
     }
     /** 真正的出牌前 需要记录状态 */
     public preDiscard(): CardStatus {
@@ -135,7 +108,7 @@ export class CardModel extends BaseEvent {
         }
         return false;
     }
-    public action(data: ActionSendData) {
+    public sendAction(data: ActionSendData) {
         this.trigger(cmd.action_send, { ...data });
     }
     /** 取消出牌， 服务器返回数据错误 */
