@@ -1,4 +1,5 @@
 import { CMD } from '../../../data/cmd';
+import { log } from '../../../mcTree/utils/zutil';
 export class CardPack extends ui.popup.component.cardPackUI {
     /**choose,play,create */
     private type: string;
@@ -14,9 +15,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
             : `images/component/cards/btn_choose.png`;
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.iconI.visible = isLock;
-        if (cardType != 'play') {
-            this.staminaBox.visible = false;
-        } else {
+        if (staminaCost) {
             this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
         }
         this.initEvent(cardType);
@@ -54,7 +53,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
      */
     setType(type) {
         this.type = type;
-        if (type == 'choose') {
+        if (type != 'play') {
             this.staminaBox.visible = false;
         }
     }

@@ -78,6 +78,10 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             }
         }
         this.isUserCreate = data.isUserCreate;
+        this.timerOnce(3000, this, () => {
+            Laya.Tween.to(this.btnAgain, { alpha: 1 }, 1000);
+            Laya.Tween.to(this.btnBack, { alpha: 1 }, 1000)
+        });
     }
 
     public showInviteIcon(data) {
