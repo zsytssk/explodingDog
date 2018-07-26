@@ -1,6 +1,11 @@
 import { cmd as base_cmd } from '../../../../mcTree/event';
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
-import { CardModel, cmd as card_cmd } from '../../model/card/card';
+import {
+    CardModel,
+    cmd as card_cmd,
+    BlindStatus,
+    AnnoyStatus,
+} from '../../model/card/card';
 import { ActionSendData } from '../../model/card/action';
 import { getCardInfo, convertPos } from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
@@ -12,6 +17,8 @@ export interface Link {
     card_box: CardBoxCtrl;
     view: CardView;
     wrap: Laya.Sprite;
+    blind: Laya.Sprite;
+    annoy: Laya.Sprite;
 }
 
 const card_height = 238;
@@ -56,6 +63,7 @@ export class CardCtrl extends BaseCtrl {
     private initUI() {
         const { wrap } = this.link;
         const view = new ui.game.seat.cardBox.cardUI();
+        const { blind, annoy } = view;
         const scale = wrap.height / view.height;
 
         if (this.is_insert) {
@@ -64,6 +72,8 @@ export class CardCtrl extends BaseCtrl {
         wrap.addChild(view);
         setStyle(view, { scaleX: scale, scaleY: scale });
         this.link = {
+            annoy,
+            blind,
             card_box: this.parent,
             view,
             ...this.link,
@@ -72,14 +82,20 @@ export class CardCtrl extends BaseCtrl {
         this.setStyle();
     }
     protected initEvent() {
+        this.onModel(base_cmd.destroy, () => {
+            this.destroy();
+        });
         this.onModel(card_cmd.discard, () => {
             this.discard();
         });
+        this.onModel(card_cmd.blind_status, (data: BlindStatus) => {
+            this.setBlindStatus(data);
+        });
+        this.onModel(card_cmd.annoy_status, (data: AnnoyStatus) => {
+            this.setAnnoyStatus(data);
+        });
         this.onModel(card_cmd.give, () => {
             this.give();
-        });
-        this.onModel(base_cmd.destroy, () => {
-            this.destroy();
         });
         this.onModel(card_cmd.action_send, (data: ActionSendData) => {
             Sail.io.emit(CMD.HIT, {
@@ -93,26 +109,30 @@ export class CardCtrl extends BaseCtrl {
     }
     /** 设置牌的样式 */
     public setStyle() {
-        const { card_id } = this.model;
+        const { card_id, is_blind, is_beannoyed } = this.model;
         const { view } = this.link;
         const card_info = getCardInfo(card_id);
-        const {
-            card_id: view_card_id,
-            card_count,
-            card_face,
-            card_back,
-        } = view;
+        const { card_id: view_card_id, card_face, card_back } = view;
         if (card_info) {
             card_face.skin = card_info.url;
-            if (card_info.show_count) {
-                card_count.visible = true;
-                card_count.text = card_info.count;
-            }
             view_card_id.text = `id:${card_id}`;
             card_back.visible = false;
         } else {
             card_back.visible = true;
         }
+
+        this.setBlindStatus({ is_blind });
+        this.setAnnoyStatus({ is_beannoyed });
+    }
+    private setBlindStatus(data: BlindStatus) {
+        const { is_blind } = data;
+        const { blind } = this.link;
+        blind.visible = is_blind;
+    }
+    private setAnnoyStatus(data: AnnoyStatus) {
+        const { is_beannoyed } = data;
+        const { annoy } = this.link;
+        annoy.visible = is_beannoyed;
     }
     protected discard() {
         const { card_box } = this.link;
@@ -169,6 +189,7 @@ export class CardCtrl extends BaseCtrl {
             view.visible = true;
             this.is_insert = false;
         }
+        view.zOrder = index;
         tween({
             end_props,
             sprite: view,

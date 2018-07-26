@@ -21,6 +21,8 @@ export type ActionType =
     | 'show_defuse'
     | 'reverse_arrows'
     | 'show_set_explode'
+    | 'annoy'
+    | 'blind'
     | 'slap';
 export type ActionStatus = 'act' | 'complete';
 export type BeActionInfo = {
@@ -41,16 +43,14 @@ export interface IAction {
     /** 动作完成 */
     complete?(data: ActionDataInfo);
 }
-export class Action implements IAction {
+export abstract class Action implements IAction {
     public manager: ActionManager;
     /** 动作的作用 */
     /** 动作完成 */
     constructor(manager: ActionManager) {
         this.manager = manager;
     }
-    public act(data?) {
-        //
-    }
+    public abstract act(data: ActionDataInfo): void;
 }
 
 export class ChooseTarget extends Action {
@@ -307,6 +307,37 @@ export class ReverseArrows extends Action {
         data.player
             .beActioned({
                 action: this.name,
+                status: 'act',
+            })
+            .subscribe();
+    }
+}
+
+export class Annoy extends Action {
+    private name = 'annoy' as ActionType;
+    public act(data: ActionDataInfo) {
+        const { targetUserId, game } = data;
+        const target = game.getPlayerById(targetUserId);
+        target
+            .beActioned({
+                action: this.name,
+                data,
+                status: 'act',
+            })
+            .subscribe();
+    }
+}
+
+/** 致盲 */
+export class Blind extends Action {
+    private name = 'blind' as ActionType;
+    public act(data: ActionDataInfo) {
+        const { targetUserId, game } = data;
+        const target = game.getPlayerById(targetUserId);
+        target
+            .beActioned({
+                action: this.name,
+                data,
                 status: 'act',
             })
             .subscribe();

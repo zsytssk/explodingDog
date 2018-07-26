@@ -1,4 +1,10 @@
-import { IAction, ActionDataInfo, Action, ActionSendData } from './action';
+import {
+    IAction,
+    ActionDataInfo,
+    Action,
+    ActionSendData,
+    WaitGetCard,
+} from './action';
 import { action_map } from './actionMap';
 import { CardModel } from './card';
 
@@ -12,7 +18,9 @@ export class ActionManager {
     }
     private init() {
         const { card_type } = this.card;
-        const actions_ori = action_map[card_type] as Array<typeof Action>;
+        const actions_ori = action_map[card_type] as Array<
+            new (man: ActionManager) => Action
+        >;
         if (!actions_ori) {
             return;
         }

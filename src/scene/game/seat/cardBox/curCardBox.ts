@@ -1,5 +1,5 @@
+import { shuffle } from 'lodash';
 import { CurCardCtrl } from './curCard';
-import { CardModel } from '../../model/card/card';
 import { CardBoxCtrl, Link as BaseLink } from './cardBox';
 import { CardCtrl } from './card';
 import { CurSeatCtrl } from '../curSeat';
@@ -48,7 +48,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         const { view } = this.link;
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
-        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseMove);
         this.onNode(view, Laya.Event.MOUSE_UP, this.mouseEnd);
         this.onNode(view, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
@@ -150,6 +150,15 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             if (card_item.show_tip) {
                 card_item.toggleTip();
             }
+        }
+    }
+    public shuffle() {
+        const { card_list } = this.link;
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                this.link.card_list = shuffle(card_list);
+                this.sortCard();
+            }, 500 * i);
         }
     }
     /** 将本身放到另外的上面去， 炸弹弹出层里面 */

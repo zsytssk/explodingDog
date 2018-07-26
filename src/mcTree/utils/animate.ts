@@ -523,9 +523,9 @@ export const tweenProps = (() => {
         function moveLoop(times) {
             /** 如果node已经被清除, 直接注销绑定 */
             if (caller.destroyed || caller.is_stop) {
-                completeNodeListener(caller);
+                return completeNodeListener(caller);
             } else if (cur_step >= total_step) {
-                completeNodeListener(caller, true);
+                return completeNodeListener(caller, true);
             }
 
             const temp_obj = {};

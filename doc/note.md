@@ -1,9 +1,39 @@
 
+## 2018-07-26 15:35:10
+* ? player beActioned 有哪些需要 trigger action
+    * annoy 不需要
+    * blind 可以在blind的时候处理可以action处理...
+
+* @ques 创建房间 再来一局
+    * reset
+
+* @note @项目总结
+    * 我做什么章旸都不知道.. 如何沟通这些数据
+
+* @note steal 动画慢
+
 ## 2018-07-26 10:54:26
 * ? 要拍有问题
+* status 最好能区分牌的状态
+
+* ? player status wait_give 和其他的状态不统一
 
 * @ques card `view.on(Laya.Event.MOUSE_DOWN`
 
+* infer func param ; infer new (..params)
+* annoy blind 的结束效果 要等到他自己摸牌之后自动解除
+    * 这不算技能的结束效果 而是牌自己的效果
+    * 如果他自己摸牌就解除
+
+* card status == beAnnoyed
+
+* player blinded
+
+* 解除状态包括两部 -->
+    * 插入钥匙 :> 等到他出牌
+    * 解锁 :> 任何一个回合结束
+
+* ? action 的act 和complete的格式完全不一样
 
 ## 2018-07-26 09:46:26
 * @note new typeof abstract || interface

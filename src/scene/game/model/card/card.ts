@@ -8,12 +8,16 @@ import { logErr } from '../../../../mcTree/utils/zutil';
 export type CardStatus = 'normal' | 'discard' | 'wait_give' | 'exploding';
 export const cmd = {
     action_send: 'action_send',
+    annoy_status: 'annoy_status',
+    blind_status: 'blind_status',
     discard: 'discard',
     give: 'give',
     un_discard: 'un_discard',
     update_info: 'update_info',
 };
 
+export type AnnoyStatus = { is_beannoyed: boolean };
+export type BlindStatus = { is_blind: boolean };
 export class CardModel extends BaseEvent {
     /** 牌的id */
     public card_id: string;
@@ -21,6 +25,8 @@ export class CardModel extends BaseEvent {
     public card_type: string;
     /** 牌的执行数目 */
     public card_count: number;
+    public is_blind = false;
+    public is_beannoyed = false;
     /** 所属者 */
     public owner: PlayerModel;
     private action_manager: ActionManager;
@@ -110,6 +116,26 @@ export class CardModel extends BaseEvent {
     }
     public sendAction(data: ActionSendData) {
         this.trigger(cmd.action_send, { ...data });
+    }
+    public setBlindStatus(status: boolean, is_trigger = true) {
+        if (status === this.is_blind) {
+            return;
+        }
+        this.is_blind = status;
+        if (is_trigger) {
+            this.trigger(cmd.blind_status, { is_blind: status } as BlindStatus);
+        }
+    }
+    public setAnnoyStatus(status: boolean, is_trigger = true) {
+        if (status === this.is_beannoyed) {
+            return;
+        }
+        this.is_beannoyed = status;
+        if (is_trigger) {
+            this.trigger(cmd.blind_status, {
+                is_beannoyed: status,
+            } as AnnoyStatus);
+        }
     }
     /** 取消出牌， 服务器返回数据错误 */
     public unDiscard() {

@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
-    "props":{"width":230,"sceneColor":"#000000","height":238},
+    "selecteID":9,
+    "props":{"width":230,"sceneColor":"#000000","height":262},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,26 +15,13 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/game/card/annoy.png","height":238},
+            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/game/card/annoy1.png","height":262},
             "nodeParent":1,
             "label":"Image(card_face)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":2,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Text",
-            "props":{"y":64,"x":6,"width":29,"var":"card_count","valign":"middle","text":"40","height":25,"fontSize":20,"color":"#ffffff","bold":true,"align":"center"},
-            "nodeParent":1,
-            "label":"Text(card_count)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":4,
             "child":[
                 ]
         },
@@ -54,7 +41,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"var":"card_back","skin":"images/game/card_back.png"},
+            "props":{"y":0,"x":0,"width":230,"var":"card_back","skin":"images/game/card_back.png","height":262},
             "nodeParent":1,
             "label":"Image(card_back)",
             "isDirectory":false,
@@ -64,6 +51,32 @@
             "child":[
                 ],
             "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":0,"x":0,"width":230,"var":"blind","skin":"images/game/effect_blind.png","height":262},
+            "nodeParent":1,
+            "label":"Image(blind)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":-7,"x":31,"width":168,"var":"annoy","skin":"images/game/effect_annoy.png","height":186},
+            "nodeParent":1,
+            "label":"Image(annoy)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
+            "child":[
+                ]
         }],
     "animations":[
         {
