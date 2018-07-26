@@ -44,10 +44,10 @@ export class CurCardCtrl extends CardCtrl {
             this.withDrawCard();
         });
 
-        view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
-        view.on(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
-        view.on(Laya.Event.MOUSE_UP, this, this.mouseEnd);
-        view.on(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
+        this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseMove);
+        this.onNode(view, Laya.Event.MOUSE_UP, this.mouseEnd);
+        this.onNode(view, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
     /** 牌可以被选中 */
     private canSelect() {
@@ -166,8 +166,8 @@ export class CurCardCtrl extends CardCtrl {
         view.pos(pos.x, pos.y);
         view.startDrag();
 
-        Laya.stage.on(Laya.Event.MOUSE_UP, this, this.unSelect);
-        Laya.stage.on(Laya.Event.MOUSE_OVER, this, this.unSelect);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
     }
     /** 取消选中 */
     private unSelect() {
@@ -177,8 +177,7 @@ export class CurCardCtrl extends CardCtrl {
         const { wrap, view } = this.link;
         const pos = new Laya.Point(view.x, view.y);
 
-        Laya.stage.off(Laya.Event.MOUSE_UP, this, this.unSelect);
-        Laya.stage.off(Laya.Event.MOUSE_OVER, this, this.unSelect);
+        this.offNode(Laya.stage);
         view.stopDrag();
         wrap.globalToLocal(pos);
         if (pos.y < -100) {
@@ -232,10 +231,7 @@ export class CurCardCtrl extends CardCtrl {
     public putCardInWrap(wrap: Laya.Sprite) {
         this.is_selected = false;
         const { view } = this.link;
-        view.off(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
-        view.off(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
-        view.off(Laya.Event.MOUSE_UP, this, this.mouseEnd);
-        view.off(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
+        this.offNode(view);
         return super.putCardInWrap(wrap);
     }
 }

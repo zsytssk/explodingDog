@@ -46,10 +46,11 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     private initEvent() {
         const { view } = this.link;
-        view.on(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
-        view.on(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
-        view.on(Laya.Event.MOUSE_UP, this, this.mouseEnd);
-        view.on(Laya.Event.MOUSE_OVER, this, this.mouseEnd);
+
+        this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseDown);
+        this.onNode(view, Laya.Event.MOUSE_UP, this.mouseEnd);
+        this.onNode(view, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
     private mouseDown(event: Laya.Event) {
         const { touch_info } = this;
