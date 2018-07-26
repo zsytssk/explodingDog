@@ -74,12 +74,13 @@ export class PlayerModel extends BaseEvent {
         } else {
             this.setStatus('normal');
         }
-        if (annoyCards) {
+        this.updateCards(shou);
+
+        if (this.is_cur_player) {
             this.beAnnoyCardsById(annoyCards);
-        } else if (annoyCardsIdx) {
+        } else {
             this.beAnnoyCardsByIndex(annoyCardsIdx);
         }
-        this.updateCards(shou);
     }
     public updateCards(cards_info: CardData[]) {
         this.removeCards();
@@ -125,6 +126,9 @@ export class PlayerModel extends BaseEvent {
         }
     }
     public beAnnoyCardsById(card_id_list: string[]) {
+        if (!card_id_list || !card_id_list.length) {
+            return;
+        }
         const { card_list } = this;
         for (const card_id of card_id_list) {
             for (const card of card_list) {
@@ -139,6 +143,9 @@ export class PlayerModel extends BaseEvent {
         }
     }
     public beAnnoyCardsByIndex(card_index_list: number[]) {
+        if (!card_index_list || !card_index_list.length) {
+            return;
+        }
         const { card_list } = this;
         for (const card_index of card_index_list) {
             card_list[card_index].setAnnoyStatus(true);

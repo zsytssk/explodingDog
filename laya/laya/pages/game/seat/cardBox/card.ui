@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":9,
-    "props":{"width":230,"sceneColor":"#000000","height":262},
+    "selecteID":6,
+    "props":{"width":230,"sceneColor":"#000000","height":238},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/game/card/annoy1.png","height":262},
+            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/game/card/annoy1.png","height":238},
             "nodeParent":1,
             "label":"Image(card_face)",
             "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"card_back","skin":"images/game/card_back.png","height":262},
+            "props":{"y":0,"x":0,"width":230,"var":"card_back","skin":"images/game/card_back.png","height":238},
             "nodeParent":1,
             "label":"Image(card_back)",
             "isDirectory":false,
@@ -50,12 +50,12 @@
             "compId":6,
             "child":[
                 ],
-            "$HIDDEN":true
+            "$HIDDEN":false
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"blind","skin":"images/game/effect_blind.png","height":262},
+            "props":{"y":0,"x":0,"width":230,"visible":false,"var":"blind","skin":"images/game/effect_blind.png","height":238},
             "nodeParent":1,
             "label":"Image(blind)",
             "isDirectory":false,
@@ -68,7 +68,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":-7,"x":31,"width":168,"var":"annoy","skin":"images/game/effect_annoy.png","height":186},
+            "props":{"y":-7,"x":31,"width":168,"visible":false,"var":"annoy","skin":"images/game/effect_annoy.png","height":186},
             "nodeParent":1,
             "label":"Image(annoy)",
             "isDirectory":false,
@@ -76,7 +76,8 @@
             "hasChild":false,
             "compId":8,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         }],
     "animations":[
         {

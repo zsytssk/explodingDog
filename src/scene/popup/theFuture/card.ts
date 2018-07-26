@@ -52,16 +52,11 @@ export class CardCtrl extends BaseCtrl {
         const card_info = getCardInfo(card_id);
         const {
             card_id: view_card_id,
-            card_count,
             card_face,
             card_back,
         } = view;
         if (card_info) {
             card_face.skin = card_info.url;
-            if (card_info.show_count) {
-                card_count.visible = true;
-                card_count.text = card_info.count;
-            }
             view_card_id.text = `id:${card_id}`;
             card_back.visible = false;
         } else {

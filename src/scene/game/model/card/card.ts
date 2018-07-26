@@ -132,7 +132,7 @@ export class CardModel extends BaseEvent {
         }
         this.is_beannoyed = status;
         if (is_trigger) {
-            this.trigger(cmd.blind_status, {
+            this.trigger(cmd.annoy_status, {
                 is_beannoyed: status,
             } as AnnoyStatus);
         }
