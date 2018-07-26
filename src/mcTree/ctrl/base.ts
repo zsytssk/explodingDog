@@ -66,7 +66,7 @@ export class BaseCtrl extends BaseEvent {
         // ctrl_path是baseCtrl, 而不是字符串
         if (destination instanceof BaseCtrl) {
             destination.callBindFunc(event_name, data, false);
-            return true;
+            return;
         }
         /**  消息传给ctrl */
         this.passReportEvent(event_name, destination, data);
@@ -88,7 +88,7 @@ export class BaseCtrl extends BaseEvent {
             if (!this.is_top) {
                 this.parent.passReportEvent(event_name, ctrl_path, data);
             }
-            return true;
+            return;
         }
 
         // 目的地是字符串
