@@ -144,3 +144,6 @@ type AlarmData = {
     total: number;
     remainTime: number;
 };
+type OutRoomData = {
+    userId: string;
+};

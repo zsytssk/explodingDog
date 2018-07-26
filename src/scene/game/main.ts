@@ -191,9 +191,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.GAME_REPLAY]: this.onServerGameReplay,
             [CMD.UPDATE_USER]: this.onServerUpdateUser,
             [CMD.GAME_START]: this.onServerGameStart,
-            [CMD.OUT_ROOM]: () => {
-                this.onServerOutRoom();
-            },
+            [CMD.OUT_ROOM]: this.onServerOutRoom,
             [CMD.HIT]: (data: HitData, code) => {
                 if (code !== 200) {
                     this.model.unDiscardCard(data);
@@ -314,8 +312,10 @@ export class GameCtrl extends BaseCtrl {
         card_heap_ctrl.setRemainCard(data.remainCard);
     }
     /** 离开房间 */
-    private onServerOutRoom() {
-        this.outRoom();
+    private onServerOutRoom(data: OutRoomData) {
+        if (isCurPlayer(data.userId)) {
+            this.outRoom();
+        }
     }
     /** 添加用户 */
     private addPlayer(player: PlayerModel) {
