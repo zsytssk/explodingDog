@@ -11,9 +11,13 @@ export const cmd = {
     /** 动作信息 */
     action: 'action',
     add_card: 'add_card',
+    blind_status: 'blind_status',
     remove_cards: 'remove_cards',
     status_change: 'status_change',
     wait_choose: 'wait_choose',
+};
+export type BlindStatus = {
+    is_blind: boolean;
 };
 /** 动作的信息 */
 export type ObserverActionInfo = PartialAll<
@@ -38,23 +42,42 @@ export class PlayerModel extends BaseEvent {
         this.updateInfo(player_data);
     }
     public updateInfo(player_data: UserData) {
-        this.user_id = player_data.userId;
+        const {
+            userId,
+            nickname,
+            avatar,
+            seatId,
+            userStatus,
+            shouLen,
+            annoyCards,
+            annoyCardsIdx,
+        } = player_data;
+        let { shou } = player_data;
+
+        this.user_id = userId;
         if (isCurPlayer(this.user_id)) {
             this.is_cur_player = true;
         }
-        this.nickname = player_data.nickname;
-        this.avatar = player_data.avatar;
-        this.seat_id = Number(player_data.seatId);
+        this.nickname = nickname;
+        this.avatar = avatar;
+        this.seat_id = Number(seatId);
 
-        let shou = player_data.shou;
-        const user_status = player_data.userStatus;
-        const shouLen = player_data.shouLen;
         if (!this.is_cur_player && shouLen) {
-            shou = fill(Array(player_data.shouLen), '*');
+            shou = fill(Array(shouLen), '*');
         }
         /** UserStatusData */
-        if (user_status + '' === '6') {
+        const user_status = userStatus + '';
+        if (user_status === '4') {
+            this.setStatus('speak');
+        } else if (user_status === '6') {
             this.setStatus('die');
+        } else {
+            this.setStatus('normal');
+        }
+        if (annoyCards) {
+            this.beAnnoyCardsById(annoyCards);
+        } else if (annoyCardsIdx) {
+            this.beAnnoyCardsByIndex(annoyCardsIdx);
         }
         this.updateCards(shou);
     }
@@ -98,6 +121,42 @@ export class PlayerModel extends BaseEvent {
         for (const card of card_list) {
             if (card.status === status) {
                 return card;
+            }
+        }
+    }
+    public beAnnoyCardsById(card_id_list: string[]) {
+        const { card_list } = this;
+        for (const card_id of card_id_list) {
+            for (const card of card_list) {
+                if (card.is_beannoyed) {
+                    continue;
+                }
+                if (card.card_id !== card_id + '') {
+                    continue;
+                }
+                card.setAnnoyStatus(true);
+            }
+        }
+    }
+    public beAnnoyCardsByIndex(card_index_list: number[]) {
+        const { card_list } = this;
+        for (const card_index of card_index_list) {
+            card_list[card_index].setAnnoyStatus(true);
+        }
+    }
+    public setBlindStatus(status: boolean) {
+        const { card_list } = this;
+        for (const card of card_list) {
+            card.setBlindStatus(status);
+        }
+        this.trigger(cmd.blind_status, { blind: status });
+    }
+    public clearBlindAndAnnoy() {
+        const { card_list } = this;
+        this.setBlindStatus(false);
+        for (const card of card_list) {
+            if (card.is_beannoyed === true) {
+                card.setAnnoyStatus(false);
             }
         }
     }
@@ -158,6 +217,14 @@ export class PlayerModel extends BaseEvent {
                 } else {
                     this.setStatus('normal');
                 }
+            } else if (action === 'annoy') {
+                if (this.is_cur_player) {
+                    this.beAnnoyCardsById(data.data.newAnnoyCards);
+                } else {
+                    this.beAnnoyCardsByIndex(data.data.annoyCardsIdx);
+                }
+            } else if (action === 'blind') {
+                this.setBlindStatus(true);
             }
             this.trigger(cmd.action, {
                 observer,

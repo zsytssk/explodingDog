@@ -5,10 +5,13 @@ import {
 } from '../../../mcTree/utils/zutil';
 import { Type } from '../../popup/theFuture/popup';
 import { theFuture } from '../../popup/theFuture/theFuture';
-import { CardModel } from '../model/card/card';
-import { ObserverActionInfo, PlayerModel } from '../model/player';
+import {
+    ObserverActionInfo,
+    PlayerModel,
+    cmd as player_cmd,
+    BlindStatus,
+} from '../model/player';
 import { PopupDefuse } from '../widget/defuse';
-import { CardCtrl } from './cardBox/card';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
 import { Link as BaseLink, SeatCtrl } from './seat';
 import { GiveCardCtrl } from '../widget/giveCard';
@@ -55,6 +58,12 @@ export class CurSeatCtrl extends SeatCtrl {
         const btn_chat = this.link.btn_chat;
         btn_chat.on(Laya.Event.CLICK, this, () => {
             log('chat');
+        });
+    }
+    protected bindModel() {
+        super.bindModel();
+        this.onModel(player_cmd.blind_status, (data: BlindStatus) => {
+            this.link.card_box_ctrl.shuffle();
         });
     }
     protected createCardBox(card_box: CurCardBoxUI) {

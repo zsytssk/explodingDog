@@ -64,6 +64,9 @@ export class AlarmCtrl extends BaseCtrl {
         const { arrow, count } = this.link;
 
         stopAni(this.count_ani);
+        /** 初始设置，防止show的时候才慢慢变过去  */
+        arrow.rotation = start_angle - (360 * count_num) / count_num;
+        count.text = count_num + '';
         this.count_ani = countDown(
             count,
             count_num,

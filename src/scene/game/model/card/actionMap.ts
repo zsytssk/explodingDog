@@ -7,10 +7,14 @@ import {
     ShowSetExplode,
     Slap,
     ReverseArrows,
+    Annoy,
+    Blind,
 } from './action';
 
 export const action_map = {
     alter_the_future: [AlterTheFuture],
+    annoy: [ChooseTarget, Annoy],
+    blind: [ChooseTarget, Blind],
     defuse: [ShowSetExplode],
     exploding: [ShowDefuse],
     reverse: [ReverseArrows],

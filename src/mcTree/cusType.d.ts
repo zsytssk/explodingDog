@@ -12,4 +12,3 @@ declare module '*.json' {
     const value: any;
     export default value;
 }
-// type ValOfObj<T> = P extends keyof T ? T[P] : never;

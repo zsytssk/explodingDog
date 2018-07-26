@@ -23,6 +23,9 @@ type UserData = {
     /** 手牌可数 */
     shouLen?: number;
     shou?: string[];
+    annoyCards?: string[];
+    newAnnoyCards?: string[];
+    annoyCardsIdx?: number[];
 };
 
 type UpdateUserData = {
@@ -106,6 +109,10 @@ type HitData = {
         bombProb?: number;
         remainCard?: number;
         slapCount?: number;
+        annoyCards?: string[];
+        newAnnoyCards?: string[];
+        annoyCardsIdx?: number[];
+        hasBlindEffect?: string;
     };
 };
 type HitBackData = {

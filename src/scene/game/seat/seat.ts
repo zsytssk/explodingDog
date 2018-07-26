@@ -2,7 +2,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../../mcTree/event';
 import { stopAni, tween, tweenLoop } from '../../../mcTree/utils/animate';
-import { CardModel } from '../model/card/card';
+import { CardModel, BlindStatus } from '../model/card/card';
 import {
     cmd as player_cmd,
     ObserverActionInfo,
@@ -105,7 +105,7 @@ export class SeatCtrl extends BaseCtrl {
         this.model = undefined;
         card_box_ctrl.clearCards();
     }
-    private bindModel() {
+    protected bindModel() {
         /** 渲染初始化的信息 */
         const player = this.model;
         const card_list = player.card_list;
