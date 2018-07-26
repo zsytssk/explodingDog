@@ -2,6 +2,8 @@
 ## 2018-07-26 10:54:26
 * ? 要拍有问题
 
+* @ques card `view.on(Laya.Event.MOUSE_DOWN`
+
 
 ## 2018-07-26 09:46:26
 * @note new typeof abstract || interface

@@ -66,15 +66,6 @@ export class CurCardCtrl extends CardCtrl {
         }
         return true;
     }
-    /** 当前用户牌再被给别人时直接放在give_card_ctrl = give_card_ctrl;——card_ctrl上， 自己隐藏销毁， 这里覆盖父类的方法 */
-    protected give() {
-        if (this.is_selected) {
-            return;
-        }
-        const { card_box, give_card_ctrl } = this.link;
-        card_box.removeCard(this);
-        give_card_ctrl.getCard(this);
-    }
     /** 显示牌的说明 */
     public toggleTip() {
         const { view: sprite, card_box } = this.link;
@@ -217,6 +208,12 @@ export class CurCardCtrl extends CardCtrl {
         const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
         give_card_ctrl.preGetCard(this);
     }
+    /** 当前用户牌再被给别人时直接放在give_card_ctrl上 */
+    protected give() {
+        const { card_box, give_card_ctrl } = this.link;
+        card_box.removeCard(this);
+        give_card_ctrl.getCard(this);
+    }
     /**  这个方法现在用到 card + cardBox， 这很恶心
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...
      */
@@ -233,6 +230,7 @@ export class CurCardCtrl extends CardCtrl {
         card_box.sortCard();
     }
     public putCardInWrap(wrap: Laya.Sprite) {
+        this.is_selected = false;
         const { view } = this.link;
         view.off(Laya.Event.MOUSE_DOWN, this, this.mouseDown);
         view.off(Laya.Event.MOUSE_MOVE, this, this.mouseMove);
