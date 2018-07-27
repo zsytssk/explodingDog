@@ -37,6 +37,8 @@ import { PopupGameOver } from '../popup/popupGameOver';
 import { PopupPrompt } from '../popup/popupPrompt';
 import { PopupTip } from '../popup/popupTip';
 import { PopUpInvite } from '../popup/popupInvite';
+import { PopupTakeExplode } from '../popup/popupTakeExplode';
+import { ChatCtrl } from './widget/chat';
 
 interface Link {
     view: ui.game.mainUI;
@@ -55,6 +57,7 @@ interface Link {
     slap_ctrl: SlapCtrl;
     game_zone: Laya.Sprite;
     explode_pos_ctrl: ExplodePosCtrl;
+    chat_ctrl: ChatCtrl;
 }
 
 const max_user_count: number = 5;
@@ -104,6 +107,7 @@ export class GameCtrl extends BaseCtrl {
             seat_wrap,
             turn_arrow,
             explode_pos,
+            chatview
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -148,6 +152,9 @@ export class GameCtrl extends BaseCtrl {
 
         const explode_pos_ctrl = new ExplodePosCtrl(explode_pos);
         this.addChild(explode_pos_ctrl);
+
+        const chat_ctrl = new ChatCtrl(chatview);
+        this.link.chat_ctrl = chat_ctrl;
 
         /** 座位控制器 */
         const seat_view_list = getChildren(seat_wrap);
@@ -211,6 +218,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.PLAY_INVITE]: this.onServerPlayInvite,
             [CMD.UPDATE_INVITE]: this.onServerUpdateInvite,
             [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
+            [CMD.GET_CHAT_LIST]: this.OnServerGetChatList
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -449,8 +457,8 @@ export class GameCtrl extends BaseCtrl {
         const popupUserExploded = new PopupUserExploded();
         popupUserExploded.updateData(data);
         if (isCurPlayer(explodeUserId)) {
-            delay = 2000;
-            // Sail.director.popScene(new PopupTakeExplode());
+            delay = 3000;
+            Sail.director.popScene(new PopupTakeExplode());
         }
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(popupUserExploded);
@@ -458,7 +466,9 @@ export class GameCtrl extends BaseCtrl {
             this.model.playerExploding(data);
         });
     }
-
+    OnServerGetChatList(data) {
+        this.link.chat_ctrl.loadMsg(data.list);
+    }
     public onServerGameOver(data) {
         const pop = new PopupGameOver(this);
         pop.updateView(data);
@@ -492,6 +502,7 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl,
             discard_zone_ctrl,
             docker_ctrl,
+            turn_arrow_ctrl
         } = this.link;
 
         alarm_ctrl.reset();
@@ -500,6 +511,7 @@ export class GameCtrl extends BaseCtrl {
         card_heap_ctrl.reset();
         discard_zone_ctrl.reset();
         docker_ctrl.reset();
+        turn_arrow_ctrl.reset();
         this.resetSeatPos();
     }
     public destroy() {
@@ -557,5 +569,9 @@ export class GameCtrl extends BaseCtrl {
         Sail.io.emit(CMD.GAME_REPLAY);
         Sail.director.closeByName('game_over');
         this.reset();
+    }
+
+    public popChat() {
+        this.link.chat_ctrl.show();
     }
 }

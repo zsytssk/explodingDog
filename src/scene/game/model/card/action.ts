@@ -309,6 +309,7 @@ export class ReverseArrows extends Action {
             .beActioned({
                 action: this.name,
                 status: 'act',
+                data
             })
             .subscribe();
     }

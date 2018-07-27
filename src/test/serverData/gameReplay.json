@@ -3,18 +3,18 @@
     "code": 200,
     "res": {
         "curUserInfo": {
-            "userId": "4001",
-            "nickname": "哈尔滨test",
-            "danGrading": "13",
-            "score": "1316",
-            "level": "3",
-            "exp": "644",
-            "currentExp": "24",
-            "totalPlayCount": "60",
-            "winPlayCount": "32",
-            "avatar": "101",
-            "ownAvatars": "101,102,103",
-            "ownCardTypes": "1,2",
+            "userId": "2038979479",
+            "nickname": "te*****03",
+            "danGrading": "10",
+            "score": "1000",
+            "level": "1",
+            "exp": "0",
+            "currentExp": "0",
+            "totalPlayCount": "0",
+            "winPlayCount": "0",
+            "avatar": "104",
+            "ownAvatars": "101,102,103,104,105,106,107,108",
+            "ownCardTypes": "1",
             "isRobot": 0,
             "takeCount": "4",
             "defuseCount": "1",
@@ -26,15 +26,31 @@
             "roundId": "15326622274184579126721",
             "lastAttackMe": "4002",
             "annoyEffect": "3521",
-            "annoyCardsIdx": [2],
+            "annoyCardsIdx": [
+                2
+            ],
             "hasShuffleEffect": "",
             "hasSlapEffect": "",
             "hasBlindEffect": "",
             "remainTurn": "1",
-            "annoyCards": ["3521"],
-            "shou": ["3201", "3501", "3521", "3521", "3801"]
+            "annoyCards": [
+                "3521"
+            ],
+            "shou": [
+                "3201",
+                "3501",
+                "3521",
+                "3521",
+                "3801"
+            ]
         },
-        "shou": ["3201", "3501", "3521", "3521", "3801"],
+        "shou": [
+            "3201",
+            "3501",
+            "3521",
+            "3521",
+            "3801"
+        ],
         "userList": [
             {
                 "userId": "4002",
@@ -90,12 +106,16 @@
                 "roundId": "15326622274184579126721",
                 "lastAttackMe": "4002",
                 "annoyEffect": "3521",
-                "annoyCardsIdx": [2],
+                "annoyCardsIdx": [
+                    2
+                ],
                 "hasShuffleEffect": "",
                 "hasSlapEffect": "",
                 "hasBlindEffect": "",
                 "remainTurn": "1",
-                "annoyCards": ["3521"],
+                "annoyCards": [
+                    "3521"
+                ],
                 "shouLen": 5
             }
         ],
@@ -103,7 +123,7 @@
             "cardType": "2",
             "roomId": "15326622274184579",
             "roomStatus": "3",
-            "userCount": "2",
+            "userCount": "3",
             "createUser": "",
             "createTime": "1532662227",
             "activeTime": "1532662757",
