@@ -6,7 +6,10 @@ export const RES = {
             type: Laya.Loader.ATLAS,
             url: 'res/atlas/images/component/cards.atlas',
         },
-        { url: 'res/atlas/images/component/avatar.atlas', type: Laya.Loader.ATLAS },
+        {
+            url: 'res/atlas/images/component/avatar.atlas',
+            type: Laya.Loader.ATLAS,
+        },
         {
             type: Laya.Loader.ATLAS,
             url: 'res/atlas/images/component/cards.atlas',
@@ -46,13 +49,17 @@ export const RES = {
         { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/game/card.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/game/card.png', type: Laya.Loader.IMAGE },
-        { url: 'res/atlas/images/game/img_take_explode1.png', type: Laya.Loader.IMAGE },
+        {
+            url: 'res/atlas/images/game/img_take_explode1.png',
+            type: Laya.Loader.IMAGE,
+        },
         { url: 'images/bg/bg2.jpg', type: Laya.Loader.IMAGE },
         { type: Laya.Loader.BUFFER, url: 'animation/slap.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/chaidan.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/zhadanjiqi_mopai.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/zhadanjiqi_jingbao.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/exploding.sk' },
+        { type: Laya.Loader.BUFFER, url: 'animation/card_light.sk' },
     ],
     LOADING: [
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },

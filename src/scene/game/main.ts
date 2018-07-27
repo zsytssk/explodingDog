@@ -9,7 +9,7 @@ import {
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { BillBoardCtrl } from './billboard';
-import { CardHeapCtrl } from './cardHeep';
+import { CardHeapCtrl } from './cardHeep/main';
 import { DiscardZoneCtrl } from './discardZone';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
@@ -310,11 +310,18 @@ export class GameCtrl extends BaseCtrl {
         this.model.updatePlayersCards(data);
     }
     /** 拿牌 */
-    private onServerTake(data: TakeData) {
+    private onServerTake(data: TakeData, code?: string) {
         const { docker_ctrl, card_heap_ctrl } = this.link;
+        if (Number(code) !== 200) {
+            card_heap_ctrl.withDrawTake();
+            return;
+        }
         this.model.addPlayerCard(data);
         docker_ctrl.setRate(data.bombProb);
         card_heap_ctrl.setRemainCard(data.remainCard);
+    }
+    public onServerTurn(data: TurnsData) {
+        this.model.setSpeaker(data.speakerId);
     }
     /** 离开房间 */
     private onServerOutRoom(data: OutRoomData) {
@@ -465,9 +472,6 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(pop);
         });
     }
-    public onServerTurn(data: TurnsData) {
-        this.model.setSpeaker(data.speakerId);
-    }
     public onServerAlarm(data: AlarmData) {
         if (!data) {
             return;
@@ -523,26 +527,30 @@ export class GameCtrl extends BaseCtrl {
             Sail.io.emit(CMD.GAME_REPLAY);
         }
     }
-    /**邀请再来一局 */
+    /** 邀请再来一局 */
     public onServerPlayInvite(data, code) {
-        if (code != 200) {
+        if (code !== 200) {
             return;
         }
         if (!isCurPlayer(data.inviteInfo.userId)) {
-            Sail.director.popScene(new PopUpInvite(data.inviteInfo.nickname, data.remainTime));
+            Sail.director.popScene(
+                new PopUpInvite(data.inviteInfo.nickname, data.remainTime),
+            );
         }
-        let gameOver = Sail.director.getDialogByName('game_over');
+        const gameOver = Sail.director.getDialogByName('game_over');
         gameOver.btnAgain.visible = false;
         gameOver.showInviteIcon(data);
     }
 
     public onServerUpdateInvite(data, code, msg) {
-        if (code != 200) {
+        if (code !== 200) {
             Sail.director.popScene(new PopupTip(msg));
             return;
         }
-        let gameOver = Sail.director.getDialogByName('game_over');
-        gameOver && gameOver.updateInviteIcon(data);
+        const gameOver = Sail.director.getDialogByName('game_over');
+        if (gameOver) {
+            gameOver.updateInviteIcon(data);
+        }
     }
 
     public onServerPlayAgain() {

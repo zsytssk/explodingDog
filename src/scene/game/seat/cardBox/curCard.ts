@@ -1,19 +1,25 @@
 import { CMD } from '../../../../data/cmd';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CurCardBoxCtrl } from './curCardBox';
-import { CardCtrl, Link as BaseLink } from './card';
-import { tween } from '../../../../mcTree/utils/animate';
+import { CardCtrl, Link as BaseLink, space_scale } from './card';
+import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import {
     log,
     queryClosest,
     getChildrenByName,
 } from '../../../../mcTree/utils/zutil';
 import { GiveCardCtrl } from '../../widget/giveCard';
+import { convertPos, playSkeleton } from '../../../../utils/tool';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
     give_card_ctrl: GiveCardCtrl;
 }
+
+type FaceProps = {
+    scale: number;
+    pos: Laya.Point;
+};
 
 /** 当前用户的牌 */
 export class CurCardCtrl extends CardCtrl {
@@ -69,10 +75,12 @@ export class CurCardCtrl extends CardCtrl {
     /** 显示牌的说明 */
     public toggleTip() {
         const { view: sprite, card_box } = this.link;
+        const { scale } = this;
         const show_tip = !this.show_tip;
 
-        const y1 = 0;
-        const y2 = -250;
+        const center_y = (sprite.height * scale) / 2;
+        const y1 = center_y;
+        const y2 = -250 + center_y;
         let start_props;
         let end_props;
         if (show_tip) {
@@ -134,13 +142,15 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 选中某张牌吧 */
     public select() {
+        const { scale } = this;
+        const { view: sprite, card_box } = this.link;
         this.is_selected = true;
         this.is_touched = false;
         this.is_move = false;
-        const { view: sprite, card_box } = this.link;
 
-        const y1 = 0;
-        const y2 = -100;
+        const center_y = (sprite.height * scale) / 2;
+        const y1 = 0 + center_y;
+        const y2 = -100 + center_y;
         const start_props = { y: y1 };
         const end_props = { y: y2 };
 
@@ -156,12 +166,15 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 处理选中之后的事件 */
     private handleSelectedEvent() {
+        const { scale } = this;
         const { view, card_box } = this.link;
         const card_move_box = card_box.getCardMoveBox();
 
-        const pos = new Laya.Point(0, 0);
-        view.localToGlobal(pos);
-        card_move_box.globalToLocal(pos);
+        const pos = new Laya.Point(
+            (view.width * scale) / 2,
+            (view.height * scale) / 2,
+        );
+        convertPos(pos, view, card_move_box);
         card_move_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
@@ -224,10 +237,7 @@ export class CurCardCtrl extends CardCtrl {
         const pos = new Laya.Point(view.x, view.y);
         wrap.globalToLocal(pos);
         view.pos(pos.x, pos.y);
-        const space = (view.width * wrap.height) / (view.height * 2);
-        let index = Math.ceil(pos.x / space);
-        index = card_box.withDrawCardIndex(this, index);
-        wrap.addChildAt(view, index);
+        this.putInBoxByPos(pos);
         card_box.sortCard();
     }
     public putCardInWrap(wrap: Laya.Sprite) {
@@ -235,5 +245,32 @@ export class CurCardCtrl extends CardCtrl {
         const { view } = this.link;
         this.offNode(view);
         return super.putCardInWrap(wrap);
+    }
+    /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
+    public setFace(props: FaceProps) {
+        const { view, wrap, card_light } = this.link;
+        const { scale, pos } = props;
+        wrap.globalToLocal(pos);
+        card_light.visible = true;
+        playSkeleton(card_light, 0, true);
+        this.is_copy_face = true;
+        setStyle(view, {
+            scaleX: scale,
+            scaleY: scale,
+            x: pos.x,
+            y: pos.y,
+        });
+        this.putInBoxByPos(pos);
+        // this.withDrawCard();
+    }
+    /** 通过牌的x位置设置 */
+    private putInBoxByPos(pos: Laya.Point) {
+        const { scale } = this;
+        const { wrap, view, card_box } = this.link;
+        const space = view.width * scale * space_scale;
+        const center_x = (view.width * scale) / 2;
+        let index = Math.ceil((pos.x - center_x) / space);
+        index = card_box.withDrawCardIndex(this, index);
+        wrap.addChildAt(view, index);
     }
 }

@@ -175,7 +175,7 @@ export class GameModel extends BaseEvent {
     }
     public addPlayerCard(data: TakeData) {
         const player = this.getPlayerById(data.userId);
-        player.addCard(data.takeCard);
+        player.addCard(data.takeCard, true);
         if (data.clearEffect) {
             player.clearBlindAndAnnoy();
         }

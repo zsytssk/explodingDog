@@ -7,7 +7,7 @@ import {
     AnnoyStatus,
 } from '../../model/card/card';
 import { ActionSendData } from '../../model/card/action';
-import { getCardInfo, convertPos } from '../../../../utils/tool';
+import { getCardInfo, convertPos, stopSkeleton } from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import { CMD } from '../../../../data/cmd';
 import { CardBoxCtrl } from './cardBox';
@@ -19,19 +19,21 @@ export interface Link {
     wrap: Laya.Sprite;
     blind: Laya.Sprite;
     annoy: Laya.Sprite;
+    card_light: Laya.Skeleton;
 }
 
 const card_height = 238;
-const space_scale = 1 / 2;
+export const space_scale = 1 / 2;
 export class CardCtrl extends BaseCtrl {
     public name = 'card';
     protected link = {} as Link;
     protected is_insert: boolean;
+    protected is_copy_face: boolean;
     protected model: CardModel;
     /** 是否被选中, 用于处理card_box sort 要不要处理 */
     public is_selected = false;
     /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
-    private scale: number;
+    protected scale: number;
     constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
         super();
         this.model = model;
@@ -44,19 +46,15 @@ export class CardCtrl extends BaseCtrl {
     }
     protected initLink() {
         this.initUI();
-    }
-    public getCardId() {
-        return this.model.card_id;
-    }
-    /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
-    public getCardBound() {
-        const { view } = this.link;
-        const { scale } = this;
-        const width = view.width * scale;
-        const space = width * space_scale;
-        return {
-            space,
-            width,
+
+        const { view, wrap } = this.link;
+        const { card_light } = view;
+
+        stopSkeleton(card_light);
+        this.link = {
+            ...this.link,
+            card_box: this.parent as CardBoxCtrl,
+            card_light,
         };
     }
     /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
@@ -70,16 +68,37 @@ export class CardCtrl extends BaseCtrl {
             view.visible = false;
         }
         wrap.addChild(view);
-        setStyle(view, { scaleX: scale, scaleY: scale });
+        setStyle(view, {
+            anchorX: 0.5,
+            anchorY: 0.5,
+            scaleX: scale,
+            scaleY: scale,
+        });
         this.link = {
             annoy,
             blind,
-            card_box: this.parent,
             view,
             ...this.link,
         };
         this.scale = scale;
         this.setStyle();
+    }
+    /** 设置牌的样式 */
+    public setStyle() {
+        const { card_id, is_blind, is_beannoyed } = this.model;
+        const { view } = this.link;
+        const card_info = getCardInfo(card_id);
+        const { card_id: view_card_id, card_face, card_back } = view;
+        if (card_info) {
+            card_face.skin = card_info.url;
+            view_card_id.text = `id:${card_id}`;
+            card_back.visible = false;
+        } else {
+            card_back.visible = true;
+        }
+
+        this.setBlindStatus({ is_blind });
+        this.setAnnoyStatus({ is_beannoyed });
     }
     protected initEvent() {
         this.onModel(base_cmd.destroy, () => {
@@ -107,23 +126,6 @@ export class CardCtrl extends BaseCtrl {
             this.setStyle();
         });
     }
-    /** 设置牌的样式 */
-    public setStyle() {
-        const { card_id, is_blind, is_beannoyed } = this.model;
-        const { view } = this.link;
-        const card_info = getCardInfo(card_id);
-        const { card_id: view_card_id, card_face, card_back } = view;
-        if (card_info) {
-            card_face.skin = card_info.url;
-            view_card_id.text = `id:${card_id}`;
-            card_back.visible = false;
-        } else {
-            card_back.visible = true;
-        }
-
-        this.setBlindStatus({ is_blind });
-        this.setAnnoyStatus({ is_beannoyed });
-    }
     private setBlindStatus(data: BlindStatus) {
         const { is_blind } = data;
         const { blind } = this.link;
@@ -133,6 +135,20 @@ export class CardCtrl extends BaseCtrl {
         const { is_beannoyed } = data;
         const { annoy } = this.link;
         annoy.visible = is_beannoyed;
+    }
+    public getCardId() {
+        return this.model.card_id;
+    }
+    /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
+    public getCardBound() {
+        const { view } = this.link;
+        const { scale } = this;
+        const width = view.width * scale;
+        const space = width * space_scale;
+        return {
+            space,
+            width,
+        };
     }
     protected discard() {
         const { card_box } = this.link;
@@ -151,8 +167,8 @@ export class CardCtrl extends BaseCtrl {
         const card_move_box = card_box.getCardMoveBox();
 
         const scale = wrap.height / card_height;
-        const card_pos = new Laya.Point(0, 0);
-        const wrap_pos = new Laya.Point(0, 0);
+        const card_pos = new Laya.Point(view.width / 2, view.height / 2);
+        const wrap_pos = new Laya.Point(wrap.width / 2, wrap.height / 2);
         convertPos(card_pos, view, card_move_box);
         convertPos(wrap_pos, wrap, card_move_box);
 
@@ -173,19 +189,34 @@ export class CardCtrl extends BaseCtrl {
         }).then(() => {
             this.scale = scale;
             wrap.addChild(view);
-            view.pos(0, 0);
+            view.pos(wrap.width / 2, wrap.height / 2);
         });
     }
     /** 移动位置 */
     public tweenMove(index: number) {
-        const { view } = this.link;
-        const { scale } = this;
+        const { view, card_light } = this.link;
+        const { scale, is_copy_face } = this;
         const space = view.width * scale * space_scale;
-        const y = 0;
-        const x = space * index;
-        const end_props = { y, x };
+        let time = 200;
+        const { x, y } = {
+            x: (view.width * scale) / 2 + space * index,
+            y: (view.height * scale) / 2,
+        };
+
+        let end_props = { y, x } as AnyObj;
+
         if (this.is_insert) {
-            view.x = x;
+            if (!is_copy_face) {
+                view.x = x;
+            } else {
+                time = 700;
+            }
+            end_props = {
+                ...end_props,
+                scaleX: scale,
+                scaleY: scale,
+            };
+            this.is_copy_face = false;
             view.visible = true;
             this.is_insert = false;
         }
@@ -193,7 +224,10 @@ export class CardCtrl extends BaseCtrl {
         tween({
             end_props,
             sprite: view,
-            time: 100,
+            time,
+        }).then(() => {
+            stopSkeleton(card_light);
+            card_light.visible = false;
         });
     }
     public destroy() {

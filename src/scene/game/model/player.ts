@@ -28,6 +28,12 @@ export type ObserverActionInfo = PartialAll<
     }
 >;
 
+/** 拿牌的信息 */
+export type AddInfo = {
+    card: CardModel;
+    is_take: boolean;
+};
+
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;
     public seat_id: number;
@@ -94,7 +100,7 @@ export class PlayerModel extends BaseEvent {
             this.addCard(card_info + '');
         }
     }
-    public addCard(card: string | CardModel) {
+    public addCard(card: string | CardModel, is_take = false) {
         if (!card) {
             return;
         }
@@ -103,7 +109,7 @@ export class PlayerModel extends BaseEvent {
         }
         card.setOwner(this);
         this.card_list.push(card);
-        this.trigger(cmd.add_card, { card });
+        this.trigger(cmd.add_card, { card, is_take } as AddInfo);
     }
     public removeCard(card: CardModel) {
         const card_list = this.card_list;

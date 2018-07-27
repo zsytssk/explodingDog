@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":6,
+    "selecteID":10,
     "props":{"width":230,"sceneColor":"#000000","height":238},
     "nodeParent":-1,
     "label":"View",
@@ -12,6 +12,20 @@
     "hasChild":true,
     "compId":1,
     "child":[
+        {
+            "x":15,
+            "type":"SkeletonPlayer",
+            "props":{"y":119,"x":115,"width":0,"visible":false,"var":"card_light","url":"animation/card_light.sk","scaleY":0.97,"scaleX":1.01,"height":0},
+            "nodeParent":1,
+            "label":"SkeletonPlayer(card_light)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":10,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
         {
             "x":15,
             "type":"Image",
@@ -63,7 +77,8 @@
             "hasChild":false,
             "compId":9,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         },
         {
             "x":15,

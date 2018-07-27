@@ -7,6 +7,7 @@ interface Link {
     view: ui.game.seat.cardBox.cardUI;
     wrap: Laya.Sprite;
     card_box: CardBoxCtrl;
+    card_light: Laya.Skeleton;
 }
 export class CardCtrl extends BaseCtrl {
     private is_touched = false;
@@ -24,6 +25,15 @@ export class CardCtrl extends BaseCtrl {
     }
     protected initLink() {
         this.initUI();
+        const { view } = this.link;
+        const { card_light } = view;
+
+        card_light.stop();
+        this.link = {
+            ...this.link,
+            card_box: this.parent as CardBoxCtrl,
+            card_light,
+        };
     }
     /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
     private initUI() {
@@ -39,22 +49,17 @@ export class CardCtrl extends BaseCtrl {
         view.anchorX = 0.5;
         view.anchorY = 0.5;
         this.link = {
-            card_box: this.parent,
-            view,
             ...this.link,
+            view,
         };
-        this.setStyle();
+        this.drawCard();
     }
-    /** 设置牌的样式 */
-    public setStyle() {
+    /** 绘制牌面 */
+    public drawCard() {
         const { card_id } = this;
         const { view } = this.link;
         const card_info = getCardInfo(card_id);
-        const {
-            card_id: view_card_id,
-            card_face,
-            card_back,
-        } = view;
+        const { card_id: view_card_id, card_face, card_back } = view;
         if (card_info) {
             card_face.skin = card_info.url;
             view_card_id.text = `id:${card_id}`;

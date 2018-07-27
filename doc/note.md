@@ -1,78 +1,103 @@
-
 ## 2018-07-27 10:34:22
-* ? annoy + blind的结束状态可以在牌act 监听target 的status发生改变
-    * 但是如果是复盘 我就无法触发action的act, 也无法执行绑定了 fuck
-    * 其实我可以把 player be_action做成一个数组， 如果他被作用了， 我就创建一个action放到数组里
-    * 结束直接清除就可以了
+* @bug 抽出的牌没有打出 反而重新创建牌
+    * 和牌没有关系
 
+-   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
+    -   但是如果是复盘 我就无法触发 action 的 act, 也无法执行绑定了 fuck
+    -   其实我可以把 player be_action 做成一个数组， 如果他被作用了， 我就创建一个 action 放到数组里
+    -   结束直接清除就可以了
 
-* ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
-    * card status 用来 服务器hit时候判断 能不能出 能不能give
-    * 这还是需要的
+*   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+    -   card status 用来 服务器 hit 时候判断 能不能出 能不能 give
+    -   这还是需要的
+
+* @note theFuture card 移动放到LayaStage中
+    * drawCard
+
+* @ques 牌如何从牌堆 飞到用户手上
+    * seat 和 cardHeap 如何相互引用
+    * 如何开启
+    * 如何关闭
 
 ? annoy 状态清除
-    * 打出的那张牌
-    * 状态清除
+_ 打出的那张牌
+_ 状态清除
 
 ? hitTake
 
-* ! bug 出牌的时候出问题了
-   * ? 的斯蒂芬斯蒂芬斯蒂芬
+-   ! bug 出牌的时候出问题了
 
+    -   ? 的斯蒂芬斯蒂芬斯蒂芬
+
+-  @todo 拿牌动画 + 牌光效果 + 解除炸弹之后 牌位置 + 解除炸弹 时 牌飞行的问题
+
+* @bug 人爆炸了 默认头像显示
+
+* @ques 相互引用 CurSeat 引用一大堆 外界的类 如何处理
+
+* @ques 骨骼动画默认不播放
+
+* @ques ts ...param 数组大于两个
 
 ## 2018-07-26 15:35:10
-* ? player status wait_give 和其他的状态不统一
 
-* ? player beActioned 有哪些需要 trigger action
-    * annoy 不需要
-    * blind 可以在blind的时候处理可以action处理...
+-   ? player status wait_give 和其他的状态不统一
 
-* @ques 创建房间 再来一局
-    * reset
+-   ? player beActioned 有哪些需要 trigger action
 
-* @note @项目总结
-    * 我做什么章旸都不知道.. 如何沟通这些数据
+    -   annoy 不需要
+    -   blind 可以在 blind 的时候处理可以 action 处理...
 
-* @note steal 动画慢 @zy
+-   @ques 创建房间 再来一局
 
+    -   reset
 
+-   @note @项目总结
+
+    -   我做什么章旸都不知道.. 如何沟通这些数据
+
+-   @note steal 动画慢 @zy
 
 ## 2018-07-26 10:54:26
-* ? 要拍有问题
-* status 最好能区分牌的状态
 
-* @ques card `view.on(Laya.Event.MOUSE_DOWN`
+-   ? 要拍有问题
+-   status 最好能区分牌的状态
 
-* infer func param ; infer new (..params)
-* annoy blind 的结束效果 要等到他自己摸牌之后自动解除
-    * 这不算技能的结束效果 而是牌自己的效果
-    * 如果他自己摸牌就解除
+-   @ques card `view.on(Laya.Event.MOUSE_DOWN`
 
-* card status == beAnnoyed
+-   infer func param ; infer new (..params)
+-   annoy blind 的结束效果 要等到他自己摸牌之后自动解除
 
-* player blinded
+    -   这不算技能的结束效果 而是牌自己的效果
+    -   如果他自己摸牌就解除
 
-* 解除状态包括两部 -->
-    * 插入钥匙 :> 等到他出牌
-    * 解锁 :> 任何一个回合结束
+-   card status == beAnnoyed
 
-* ? action 的act 和complete的格式完全不一样
+-   player blinded
+
+-   解除状态包括两部 -->
+
+    -   插入钥匙 :> 等到他出牌
+    -   解锁 :> 任何一个回合结束
+
+-   ? action 的 act 和 complete 的格式完全不一样
 
 ## 2018-07-26 09:46:26
-* @note new typeof abstract || interface
 
--   @todo actionManager
+-   @note new typeof abstract || interface
 
--   @note 动画
+*   @todo actionManager
+
+*   @note 动画
 
     -   偷看需要
     -   背景滚动
     -   卡牌获得星光 是什么
     -   其他用户摸到炸弹 爆炸
 
--   @ques 要不要把 game_ctrl 做成单例 好用来测试...
+*   @ques 要不要把 game_ctrl 做成单例 好用来测试...
 
-*   @ques @imp promise 的时候 destroy 了如何去处理
+-   @ques @imp promise 的时候 destroy 了如何去处理
 
     -   animate tweenLoop + tween + countDown
 
@@ -83,23 +108,23 @@
     *   promise 必须 resolve reject
     *   waitChoose observer race 的其他人要不要 清除...
 
-*   @bug 出牌时 把原来的牌清除了
+-   @bug 出牌时 把原来的牌清除了
 
     -   要不要将所有打出的牌放到一起...
     -   discard_card 这个还要吗
     -   discard_card_list...
 
-*   @ques annoy blind 的样式 动画效果
+-   @ques annoy blind 的样式 动画效果
 
--   @todo 炸弹 是移动牌 关闭之后 牌位置不对
+*   @todo 炸弹 是移动牌 关闭之后 牌位置不对
 
-*   @ques tweenLoop 如果有一样的属性的就会奔溃
+-   @ques tweenLoop 如果有一样的属性的就会奔溃
 
-*   @note alarm 已经 show， 正在 show 这如何处理
+-   @note alarm 已经 show， 正在 show 这如何处理
 
     -   想要的效果是 不改变位置 但是功能正常
 
--   聊天+屏蔽其他玩家聊天文字…
+*   聊天+屏蔽其他玩家聊天文字…
 
 `this.broadcast(CMD.global_show, 'app::pop_wrap::fishTicket');`
 `zutil.queryElements(<BaseCtrl>app, 'name:sidebar name:upgrade_gun')[0]`
@@ -593,7 +618,7 @@
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                           @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 
