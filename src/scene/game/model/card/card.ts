@@ -147,7 +147,7 @@ export class CardModel extends BaseEvent {
     }
     /** 取消出牌， 服务器返回数据错误 */
     public unDiscard() {
-        if (this.status !== 'discard') {
+        if (this.status !== 'wait_discard') {
             return;
         }
         this.status = 'normal';
