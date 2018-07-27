@@ -6,4 +6,5 @@
    <item name="animation/loading.png" type="Image" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
    <item name="animation" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
    <item name="font" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="images/game/chat_other.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=43,34,24,47" picType="0" scale="0"/>
 </res>

@@ -57,7 +57,8 @@ export class CurSeatCtrl extends SeatCtrl {
         super.initEvent();
         const btn_chat = this.link.btn_chat;
         btn_chat.on(Laya.Event.CLICK, this, () => {
-            log('chat');
+            const game_ctrl = queryClosest(this, 'name:game');
+            game_ctrl.popChat();
         });
     }
     protected bindModel() {
