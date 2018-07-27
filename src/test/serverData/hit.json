@@ -3,13 +3,16 @@
     "code": 200,
     "res": {
         "userId": 4002,
-        "hitCard": "4001",
+        "hitCard": "3901",
         "hitUserId": 4002,
         "hitInfo": {
-            "type": "blind",
+            "type": "annoy",
             "step": 2,
             "targetUserId": "4001",
-            "discard": 1
+            "discard": 1,
+            "annoyCardsIdx": [2],
+            "annoyCards": ["3521"],
+            "newAnnoyCards": ["3521"]
         }
     }
 }

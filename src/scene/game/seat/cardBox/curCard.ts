@@ -190,17 +190,19 @@ export class CurCardCtrl extends CardCtrl {
     private calcDiscard() {
         const card_status = this.model.preDiscard();
         /** 不是出牌状态 直接退回牌堆 */
-        if (card_status === 'normal') {
-            this.withDrawCard();
-            return;
+        switch (card_status) {
+            case 'normal':
+                this.withDrawCard();
+                break;
+            case 'wait_give':
+                this.preGiveCard();
+                break;
+            case 'wait_discard':
+                Sail.io.emit(CMD.HIT, {
+                    hitCard: this.model.card_id,
+                });
+                break;
         }
-        if (card_status === 'wait_give') {
-            this.preGiveCard();
-            return;
-        }
-        Sail.io.emit(CMD.HIT, {
-            hitCard: this.model.card_id,
-        });
     }
     private preGiveCard() {
         const game_ctrl = queryClosest(this, 'name:game');

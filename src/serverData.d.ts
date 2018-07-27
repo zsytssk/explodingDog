@@ -26,6 +26,7 @@ type UserData = {
     annoyCards?: string[];
     newAnnoyCards?: string[];
     annoyCardsIdx?: number[];
+    hasBlindEffect?: string;
 };
 
 type UpdateUserData = {
@@ -93,6 +94,7 @@ type TakeData = {
     takeCard: string;
     bombProb: number;
     remainCard: number;
+    clearEffect: 1;
 };
 type HitData = {
     userId?: string;
@@ -113,6 +115,7 @@ type HitData = {
         newAnnoyCards?: string[];
         annoyCardsIdx?: number[];
         hasBlindEffect?: string;
+        clearEffect: 1;
     };
 };
 type HitBackData = {

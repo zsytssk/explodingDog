@@ -6,7 +6,7 @@ import { BeActionInfo } from './card/action';
 import { isCurPlayer } from '../../../utils/tool';
 import { logErr } from '../../../mcTree/utils/zutil';
 
-export type PlayerStatus = 'speak' | 'wait_give' | 'die' | 'normal';
+export type PlayerStatus = 'speak' | 'die' | 'normal';
 export const cmd = {
     /** 动作信息 */
     action: 'action',
@@ -36,8 +36,9 @@ export class PlayerModel extends BaseEvent {
     public avatar: string;
     /** 正在出牌 */
     public status: PlayerStatus;
+    public is_wait_give = false;
     public card_list: CardModel[] = [];
-    constructor(player_data: UserData, is_cur_player: boolean) {
+    constructor(player_data: UserData) {
         super();
         this.updateInfo(player_data);
     }
@@ -51,13 +52,12 @@ export class PlayerModel extends BaseEvent {
             shouLen,
             annoyCards,
             annoyCardsIdx,
+            hasBlindEffect,
         } = player_data;
         let { shou } = player_data;
 
         this.user_id = userId;
-        if (isCurPlayer(this.user_id)) {
-            this.is_cur_player = true;
-        }
+        this.is_cur_player = isCurPlayer(this.user_id);
         this.nickname = nickname;
         this.avatar = avatar;
         this.seat_id = Number(seatId);
@@ -80,6 +80,9 @@ export class PlayerModel extends BaseEvent {
             this.beAnnoyCardsById(annoyCards);
         } else {
             this.beAnnoyCardsByIndex(annoyCardsIdx);
+        }
+        if (hasBlindEffect) {
+            this.setBlindStatus(true);
         }
     }
     public updateCards(cards_info: CardData[]) {
@@ -139,6 +142,7 @@ export class PlayerModel extends BaseEvent {
                     continue;
                 }
                 card.setAnnoyStatus(true);
+                break;
             }
         }
     }
@@ -217,22 +221,6 @@ export class PlayerModel extends BaseEvent {
     }
     public beActioned(data: BeActionInfo): Observable<string | string[]> {
         return new Observable(observer => {
-            const { status, action } = data;
-            if (action === 'wait_get_card') {
-                if (status === 'act') {
-                    this.setStatus('wait_give');
-                } else {
-                    this.setStatus('normal');
-                }
-            } else if (action === 'annoy') {
-                if (this.is_cur_player) {
-                    this.beAnnoyCardsById(data.data.newAnnoyCards);
-                } else {
-                    this.beAnnoyCardsByIndex(data.data.annoyCardsIdx);
-                }
-            } else if (action === 'blind') {
-                this.setBlindStatus(true);
-            }
             this.trigger(cmd.action, {
                 observer,
                 ...data,
@@ -241,6 +229,14 @@ export class PlayerModel extends BaseEvent {
     }
     public isMyId(user_id: string) {
         return this.user_id === user_id + '';
+    }
+    /** 设置是否需要等待给牌 */
+    public setWaitGiveStatus(status: boolean) {
+        const { is_wait_give } = this;
+        if (is_wait_give === status) {
+            return;
+        }
+        this.is_wait_give = status;
     }
     public destroy() {
         this.removeCards();

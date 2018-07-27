@@ -5,7 +5,12 @@ import { ActionDataInfo, ActionSendData } from './action';
 import { ActionManager } from './actionManager';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
-export type CardStatus = 'normal' | 'discard' | 'wait_give' | 'exploding';
+export type CardStatus =
+    | 'normal'
+    | 'wait_discard'
+    | 'discard'
+    | 'wait_give'
+    | 'exploding';
 export const cmd = {
     action_send: 'action_send',
     annoy_status: 'annoy_status',
@@ -58,26 +63,29 @@ export class CardModel extends BaseEvent {
     }
     /** 真正的出牌前 需要记录状态 */
     public preDiscard(): CardStatus {
-        const { status: owner_status } = this.owner;
+        const { status: owner_status, is_wait_give } = this.owner;
         let status = 'normal' as CardStatus;
         /** 偷牌 */
-        if (owner_status === 'wait_give') {
+        if (is_wait_give) {
             status = 'wait_give';
         }
         /** 出牌 */
         if (owner_status === 'speak') {
-            status = 'discard';
+            status = 'wait_discard';
         }
         this.status = status;
         return status;
     }
     /** 真正的出牌 */
     public discard() {
+        this.status = 'discard';
+        this.setBlindStatus(false);
         this.trigger(cmd.discard);
     }
     /** 真正的出牌 */
     public give() {
         this.trigger(cmd.give);
+        this.status = 'normal';
     }
     /** 能够被打出
      * ! 1. 其他玩家的都牌可以打出
