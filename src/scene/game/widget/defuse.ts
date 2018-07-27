@@ -42,7 +42,6 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
                 }
                 this.ani.playbackRate(this.ani.player.playbackRate * this.remainTime / (this.remainTime - 2))
                 this.remainTime -= 2;
-                // this.ani.
             });
         }
     }
