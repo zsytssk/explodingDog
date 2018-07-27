@@ -81,10 +81,16 @@ export class CardCtrl extends BaseCtrl {
             ...this.link,
         };
         this.scale = scale;
-        this.setStyle();
+        this.drawCard();
+    }
+    public setStyle(props: AnyObj) {
+        const { view } = this.link;
+        setStyle(view, {
+            ...props,
+        });
     }
     /** 设置牌的样式 */
-    public setStyle() {
+    public drawCard() {
         const { card_id, is_blind, is_beannoyed } = this.model;
         const { view } = this.link;
         const card_info = getCardInfo(card_id);
@@ -123,7 +129,7 @@ export class CardCtrl extends BaseCtrl {
             } as HitBackData);
         });
         this.onModel(card_cmd.update_info, () => {
-            this.setStyle();
+            this.drawCard();
         });
     }
     private setBlindStatus(data: BlindStatus) {

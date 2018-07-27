@@ -214,7 +214,7 @@ export class GameModel extends BaseEvent {
 
         let card;
         if (need_discard) {
-            card = player.takeCardByStatus(hit_card, 'discard');
+            card = player.takeCardByStatus(hit_card, 'wait_discard');
         }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {

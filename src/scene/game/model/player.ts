@@ -199,7 +199,7 @@ export class PlayerModel extends BaseEvent {
             return;
         }
         this.removeCard(take_card);
-        if (status === 'discard') {
+        if (status === 'wait_discard') {
             take_card.discard();
         } else {
             take_card.give();

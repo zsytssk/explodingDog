@@ -33,9 +33,15 @@ export class DiscardZoneCtrl extends BaseCtrl {
             return;
         }
         const { card_box } = this.link;
+        const { view } = this.link;
         const card_ctrl = new CardCtrl(card, card_box);
+
         this.addChild(card_ctrl);
         card_ctrl.init();
+        card_ctrl.setStyle({
+            x: view.width / 2,
+            y: view.width / 2,
+        });
     }
     public borrowCard(card: CardCtrl) {
         if (!(card instanceof CardCtrl)) {
