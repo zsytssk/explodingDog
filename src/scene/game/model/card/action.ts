@@ -117,7 +117,7 @@ export class WaitGetCard extends Action {
         if (!is_cur_player) {
             return;
         }
-
+        target.setWaitGiveStatus(true);
         target
             .beActioned({
                 action: this.name,
@@ -137,12 +137,13 @@ export class WaitGetCard extends Action {
         if (!target) {
             return;
         }
-
         const card_model = target.takeCardByStatus(card, 'wait_give');
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
         player.addCard(card_model);
+
+        target.setWaitGiveStatus(false);
         target
             .beActioned({
                 action: this.name,
@@ -318,13 +319,12 @@ export class Annoy extends Action {
     public act(data: ActionDataInfo) {
         const { targetUserId, game } = data;
         const target = game.getPlayerById(targetUserId);
-        target
-            .beActioned({
-                action: this.name,
-                data,
-                status: 'act',
-            })
-            .subscribe();
+
+        if (target.is_cur_player) {
+            target.beAnnoyCardsById(data.newAnnoyCards);
+        } else {
+            target.beAnnoyCardsByIndex(data.annoyCardsIdx);
+        }
     }
 }
 
@@ -334,12 +334,6 @@ export class Blind extends Action {
     public act(data: ActionDataInfo) {
         const { targetUserId, game } = data;
         const target = game.getPlayerById(targetUserId);
-        target
-            .beActioned({
-                action: this.name,
-                data,
-                status: 'act',
-            })
-            .subscribe();
+        target.setBlindStatus(true);
     }
 }

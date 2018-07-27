@@ -84,8 +84,8 @@ export class GameModel extends BaseEvent {
             this.removePlayer(player_model);
         }
     }
-    private addPlayer(player_data: UserData, is_cur = false) {
-        const player = new PlayerModel(player_data, is_cur);
+    private addPlayer(player_data: UserData) {
+        const player = new PlayerModel(player_data);
         this.player_list.push(player);
         /** 保证在所有用户的信息都完成之后再去执行 */
         this.trigger(cmd.add_player, { player });
@@ -176,6 +176,9 @@ export class GameModel extends BaseEvent {
     public addPlayerCard(data: TakeData) {
         const player = this.getPlayerById(data.userId);
         player.addCard(data.takeCard);
+        if (data.clearEffect) {
+            player.clearBlindAndAnnoy();
+        }
     }
     public getPlayerById(id: string) {
         const player_list = this.player_list;
@@ -232,6 +235,10 @@ export class GameModel extends BaseEvent {
             player,
         });
         this.discard_card = card;
+
+        if (hit_info.clearEffect) {
+            player.clearBlindAndAnnoy();
+        }
     }
     private updateBillboard(data: HitData) {
         const hit_info = data.hitInfo;

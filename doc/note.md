@@ -1,5 +1,28 @@
 
+## 2018-07-27 10:34:22
+* ? annoy + blind的结束状态可以在牌act 监听target 的status发生改变
+    * 但是如果是复盘 我就无法触发action的act, 也无法执行绑定了 fuck
+    * 其实我可以把 player be_action做成一个数组， 如果他被作用了， 我就创建一个action放到数组里
+    * 结束直接清除就可以了
+
+
+* ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+    * card status 用来 服务器hit时候判断 能不能出 能不能give
+    * 这还是需要的
+
+? annoy 状态清除
+    * 打出的那张牌
+    * 状态清除
+
+? hitTake
+
+* ! bug 出牌的时候出问题了
+   * ? 的斯蒂芬斯蒂芬斯蒂芬
+
+
 ## 2018-07-26 15:35:10
+* ? player status wait_give 和其他的状态不统一
+
 * ? player beActioned 有哪些需要 trigger action
     * annoy 不需要
     * blind 可以在blind的时候处理可以action处理...
@@ -10,13 +33,13 @@
 * @note @项目总结
     * 我做什么章旸都不知道.. 如何沟通这些数据
 
-* @note steal 动画慢
+* @note steal 动画慢 @zy
+
+
 
 ## 2018-07-26 10:54:26
 * ? 要拍有问题
 * status 最好能区分牌的状态
-
-* ? player status wait_give 和其他的状态不统一
 
 * @ques card `view.on(Laya.Event.MOUSE_DOWN`
 

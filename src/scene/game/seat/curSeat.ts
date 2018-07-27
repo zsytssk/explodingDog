@@ -63,7 +63,9 @@ export class CurSeatCtrl extends SeatCtrl {
     protected bindModel() {
         super.bindModel();
         this.onModel(player_cmd.blind_status, (data: BlindStatus) => {
-            this.link.card_box_ctrl.shuffle();
+            if (data.is_blind) {
+                this.link.card_box_ctrl.shuffle();
+            }
         });
     }
     protected createCardBox(card_box: CurCardBoxUI) {
@@ -172,7 +174,7 @@ export class CurSeatCtrl extends SeatCtrl {
         )[0];
         explode_pos_ctrl.hideView();
     }
-    /**手牌中是否有某张牌 */
+    /** 手牌中是否有某张牌 */
     public haveCard(cardId: string): boolean {
         let result = false;
         this.model.card_list.forEach(item => {

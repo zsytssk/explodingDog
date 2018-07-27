@@ -2,9 +2,10 @@
     "cmd": "take",
     "code": 200,
     "res": {
-        "userId": "3001",
-        "remainCard": 24,
-        "bombProb": 8,
-        "takeCard": "*"
+        "userId": 4002,
+        "takeCard": 3801,
+        "remainCard": 15,
+        "bombProb": 7,
+        "clearEffect": 1
     }
 }
