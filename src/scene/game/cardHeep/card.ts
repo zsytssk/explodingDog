@@ -151,9 +151,13 @@ export class CardCtrl extends BaseCtrl {
     /** 设置当前用户牌的样式 */
     public putFaceToCard(card: CurCardCtrl) {
         const { scale } = this;
-        const { view, card_move_box } = this.link;
+        const { wrap, view, card_move_box } = this.link;
         const pos = new Laya.Point(view.x, view.y);
-        card_move_box.localToGlobal(pos);
+        if (view.parent === card_move_box) {
+            card_move_box.localToGlobal(pos);
+        } else {
+            wrap.localToGlobal(pos);
+        }
         card.setFace({
             pos,
             scale,
