@@ -106,6 +106,16 @@ export class TurnArrowCtrl extends BaseCtrl {
         }
     }
 
+    public reset() {
+        if (this.currentArrowBox) {
+            this.currentArrowBox.visible = false;
+            this.currentArrowBox = null;
+        }
+        Laya.timer.clear(this, this.arrowBlink);
+        this.timer.destroy();
+        this.timer = new Laya.Node();
+    }
+
     destroy() {
         Laya.timer.clear(this, this.arrowBlink);
         this.timer.destroy();

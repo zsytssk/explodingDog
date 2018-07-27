@@ -69,7 +69,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         if (this.curSeatCtrl) {
             this.curSeatCtrl.putCardBoxBack();
         }
-        if (!this.defuseSeccess) {
+        if (!this.defuseSeccess && !Sail.director.getDialogByName('popup_take_explode')) {
             Sail.director.popScene(new PopupTakeExplode());
         }
     }

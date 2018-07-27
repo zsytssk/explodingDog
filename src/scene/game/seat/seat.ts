@@ -217,13 +217,13 @@ export class SeatCtrl extends BaseCtrl {
             this.slap(data);
         }
         if (action === 'reverse_arrows') {
-            this.reverseArrows();
+            this.reverseArrows(data);
         }
     }
 
-    private reverseArrows() {
+    private reverseArrows(action_data) {
         const game_ctrl = queryClosest(this, 'name:game');
-        game_ctrl.getChildByName('turn_arrow_ctrl').rotate();
+        game_ctrl.getChildByName('turn_arrow_ctrl').rotate(action_data.data.turnDirection);
     }
     /** 等待被选择 */
     private waitBeChoose(action_data: ObserverActionInfo) {

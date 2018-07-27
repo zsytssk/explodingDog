@@ -37,6 +37,7 @@ import { PopupGameOver } from '../popup/popupGameOver';
 import { PopupPrompt } from '../popup/popupPrompt';
 import { PopupTip } from '../popup/popupTip';
 import { PopUpInvite } from '../popup/popupInvite';
+import { PopupTakeExplode } from '../popup/popupTakeExplode';
 
 interface Link {
     view: ui.game.mainUI;
@@ -442,8 +443,8 @@ export class GameCtrl extends BaseCtrl {
         const popupUserExploded = new PopupUserExploded();
         popupUserExploded.updateData(data);
         if (isCurPlayer(explodeUserId)) {
-            delay = 2000;
-            // Sail.director.popScene(new PopupTakeExplode());
+            delay = 3000;
+            Sail.director.popScene(new PopupTakeExplode());
         }
         Laya.timer.once(delay, this, () => {
             Sail.director.popScene(popupUserExploded);
@@ -488,6 +489,7 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl,
             discard_zone_ctrl,
             docker_ctrl,
+            turn_arrow_ctrl
         } = this.link;
 
         alarm_ctrl.reset();
@@ -496,6 +498,7 @@ export class GameCtrl extends BaseCtrl {
         card_heap_ctrl.reset();
         discard_zone_ctrl.reset();
         docker_ctrl.reset();
+        turn_arrow_ctrl.reset();
         this.resetSeatPos();
     }
     public destroy() {
