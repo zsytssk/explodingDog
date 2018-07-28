@@ -1,10 +1,10 @@
-import { CMD } from '../../data/cmd';
-import { zutil } from '../utils/zutil';
-import { Notify } from '../../utils/notify';
-import { NodeCtrl } from '../component/node';
+import * as zutil from '../utils/zutil';
+import { Notify } from '../utils/notify';
+import { NodeCtrl } from './node';
 
-interface i_fishnotice_link {
+interface Link {
     text: Laya.Label;
+    view: Laya.Sprite;
     notify: Notify;
 }
 
@@ -20,45 +20,32 @@ const tpl = `
 
 /** 跑马灯的控制器 */
 export class MarqueeCtrl extends NodeCtrl {
-    name = 'marquee';
-    link: i_fishnotice_link;
-    config: t_any_obj;
+    public name = 'marquee';
+    protected link: Link;
+    protected config: AnyObj;
     constructor(view) {
         super(view);
+        this.link = {
+            view,
+        } as Link;
     }
-    init() {
+    public init() {
         this.initLink();
-        this.onPrimusRecieve(CMD.noticeInTable, data => {
-            this.addNotice(data);
-        });
-
-        //跑马灯
-        this.onPrimusRecieve(CMD.noticeMain, data => {
-            if (!data) {
-                return;
-            }
-            this.addNotice(data);
-        });
-
-        /**poseidon信息展示 */
-        this.on(CMD.noticeInTable, data => {
-            this.addNotice(data);
-        });
     }
-    initLink() {
-        let view = this.view;
-        let notify_box = zutil.getElementsByName(
+    private initLink() {
+        const { view } = this.link;
+        const notify_box = zutil.getElementsByName(
             view,
             'notify_box',
         )[0] as Laya.Label;
-        let notify = new Notify({
-            width: 641,
-            fontSize: 20,
-            margin: 0,
-            tpl: tpl,
+        const notify = new Notify({
             complete: () => {
                 this.hide();
             },
+            fontSize: 20,
+            margin: 0,
+            tpl,
+            width: 641,
         });
 
         notify.centerY = 0;
@@ -66,19 +53,15 @@ export class MarqueeCtrl extends NodeCtrl {
         this.link.notify = notify;
     }
 
-    addNotice(data) {
+    public addNotice(data) {
         if (!data) {
             return;
         }
         this.show();
-        let notify = this.link.notify;
+        const notify = this.link.notify;
 
-        let checkRepeat = true;
-        let count = data.count || 1;
-        if (data.count) {
-            checkRepeat = false;
-        }
-        let list = [];
+        const count = data.count || 1;
+        const list = [];
         for (let i = 0; i < count; i++) {
             list.push(data);
         }

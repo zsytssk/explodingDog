@@ -537,7 +537,7 @@ export function compareObj(x, y) {
     }
     return true;
 }
-export function extend(sub_class, super_class, name_sapce) {
+export function extend(sub_class, super_class, name_sapce?) {
     for (const p in super_class) {
         if (!super_class.hasOwnProperty(p)) {
             continue;
