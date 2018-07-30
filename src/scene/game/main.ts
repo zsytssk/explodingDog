@@ -219,6 +219,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.UPDATE_INVITE]: this.onServerUpdateInvite,
             [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
             [CMD.GET_CHAT_LIST]: this.OnServerGetChatList,
+            [CMD.SEND_CHAT]: this.onServerSendChat,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -514,6 +515,7 @@ export class GameCtrl extends BaseCtrl {
         discard_zone_ctrl.reset();
         docker_ctrl.reset();
         turn_arrow_ctrl.reset();
+        this.cur_seat_id = undefined;
         this.resetSeatPos();
     }
     public destroy() {
@@ -575,5 +577,14 @@ export class GameCtrl extends BaseCtrl {
 
     public popChat() {
         this.link.chat_ctrl.show();
+    }
+
+    public onServerSendChat(data) {
+        let seatId = this.model.getServerSeatIdByUserId(data.userId);
+        const seat = this.link.seat_ctrl_list[this.serverIdToLocal(seatId)];
+        log(data.userId);
+        log(seatId, this.serverIdToLocal(seatId));
+        log(seat);
+        seat && seat.showChat(data.content);
     }
 }

@@ -1,10 +1,10 @@
 import { Observable, Subscriber } from 'rxjs';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../../mcTree/event';
-import { stopAni, tween, tweenLoop } from '../../../mcTree/utils/animate';
+import { stopAni, tween, tweenLoop, scale_in, scale_out } from '../../../mcTree/utils/animate';
+import { CardModel, BlindStatus } from '../model/card/card';
 import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
-import { CardModel } from '../model/card/card';
 import {
     cmd as player_cmd,
     ObserverActionInfo,
@@ -29,6 +29,8 @@ export interface Link {
     slap_ctrl: SlapCtrl; // 是否加载了用户
     player_box: Laya.Sprite;
     highlight: Laya.Sprite;
+    chat_box: Laya.Sprite;
+    chat_label: Laya.Label;
     card_heap_ctrl: CardHeapCtrl;
 }
 
@@ -57,6 +59,8 @@ export class SeatCtrl extends BaseCtrl {
         const die_avatar = player_box.die_avatar;
         const nickname = player_box.nickname;
         const card_box = view.card_box;
+        const chat_box = view.chatBox;
+        const chat_label = view.chatLabel;
         const card_box_ctrl = this.createCardBox(card_box);
 
         const game_ctrl = queryClosest(this, 'name:game');
@@ -73,6 +77,8 @@ export class SeatCtrl extends BaseCtrl {
             highlight,
             nickname,
             player_box,
+            chat_box,
+            chat_label,
             view,
         };
     }
@@ -151,6 +157,7 @@ export class SeatCtrl extends BaseCtrl {
                 empty_box.visible = false;
                 active_box.visible = true;
                 die_avatar.visible = false;
+                avatar.visible = true;
                 avatar.skin = getAvatar(model.avatar);
                 nickname.text = model.nickname;
                 break;
@@ -173,7 +180,7 @@ export class SeatCtrl extends BaseCtrl {
                 });
                 break;
             case 'die':
-                empty_box.visible = true;
+                empty_box.visible = false;
                 active_box.visible = true;
                 die_avatar.visible = true;
                 highlight.visible = false;
@@ -298,6 +305,18 @@ export class SeatCtrl extends BaseCtrl {
             time: 500,
         });
     }
+
+    public showChat(msg) {
+        const { chat_box, chat_label } = this.link;
+        chat_box.clearTimer(this, hide);
+        chat_label.text = msg;
+        chat_box.width = 100 + chat_label.width;
+        chat_box.visible = true;
+        scale_in(chat_box, 100, 'backOut');
+        chat_box.timerOnce(3000, this, hide);
+        function hide() {
+            scale_out(chat_box, 100);
+        }
     protected addCard(data: AddInfo) {
         return this.link.card_box_ctrl.addCard(data.card, true);
     }
