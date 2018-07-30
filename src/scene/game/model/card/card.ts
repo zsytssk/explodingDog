@@ -87,41 +87,6 @@ export class CardModel extends BaseEvent {
         this.trigger(cmd.give);
         this.status = 'normal';
     }
-    /** 能够被打出
-     * ! 1. 其他玩家的都牌可以打出
-     * ! 2. 炸弹可以打出
-     *   当前玩家炸弹 服务器自动打出 不需要前端的动作
-     * ! 3. 在本地已经打出的牌
-     */
-    public canDiscard(card_id: string) {
-        if (this.card_id === '*') {
-            this.updateInfo(card_id);
-            return true;
-        }
-        if (this.status === 'discard') {
-            if (this.card_id !== card_id + '') {
-                logErr(`card card_id not equal ${card_id}`);
-            }
-            return true;
-        }
-        if (this.card_type === 'exploding') {
-            return true;
-        }
-        return false;
-    }
-    public canGive(card_id: string) {
-        if (this.card_id === '*') {
-            /** 如果是其他人偷到牌 服务器不会给card_id, 所以需要这个判断 */
-            if (card_id) {
-                this.updateInfo(card_id);
-            }
-            return true;
-        }
-        if (this.status === 'wait_give') {
-            return true;
-        }
-        return false;
-    }
     public sendAction(data: ActionSendData) {
         this.trigger(cmd.action_send, { ...data });
     }

@@ -1,6 +1,6 @@
 import { setStyle, tween } from '../../../mcTree/utils/animate';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
-import { getCardInfo } from '../../../utils/tool';
+import { getCardInfo, convertPos } from '../../../utils/tool';
 import { CardBoxCtrl } from './cardBox';
 
 interface Link {
@@ -129,16 +129,17 @@ export class CardCtrl extends BaseCtrl {
         const space = (view.width * scale) / 2;
         const x = wrap_w / 2 + space * (index - (card_num - 1) / 2);
         const end_props = { y, x, rotation };
-        tween({
+        return tween({
             end_props,
             sprite: view,
-            time: 100,
+            time: 50,
+        }).then(() => {
+            const pos = convertPos(new Laya.Point(0, -50), view, wrap);
+            return {
+                rotation,
+                x: pos.x,
+                y: pos.y,
+            };
         });
-        view.zOrder = all - index;
-        return {
-            rotation,
-            x: x - (view.width * scale) / 2,
-            y,
-        };
     }
 }

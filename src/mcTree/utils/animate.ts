@@ -287,7 +287,7 @@ export function tween(data: {
         const laya_Tween = new Laya.Tween();
         const Ease = Laya.Ease;
 
-        time = time || 700;
+        time = time || 300;
 
         ease_fn = ease_fn || Ease.linearNone;
         if (typeof ease_fn === 'string') {

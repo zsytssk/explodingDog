@@ -186,6 +186,7 @@ export class CardCtrl extends BaseCtrl {
 
         return tween({
             end_props: {
+                rotation: 0,
                 scaleX: scale,
                 scaleY: scale,
                 x: wrap_pos.x,

@@ -60,8 +60,6 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         } else {
             card_box_ctrl.setCanSort(false);
         }
-        for (const card of data) {
-            card_box_ctrl.addCard(card);
-        }
+        card_box_ctrl.addCards(data);
     }
 }
