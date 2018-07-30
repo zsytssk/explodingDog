@@ -175,7 +175,7 @@ export class GameModel extends BaseEvent {
     }
     public addPlayerCard(data: TakeData) {
         const player = this.getPlayerById(data.userId);
-        player.addCard(data.takeCard);
+        player.addCard(data.takeCard, true);
         if (data.clearEffect) {
             player.clearBlindAndAnnoy();
         }
@@ -214,7 +214,7 @@ export class GameModel extends BaseEvent {
 
         let card;
         if (need_discard) {
-            card = player.takeCardByStatus(hit_card, 'discard');
+            card = player.takeCardByStatus(hit_card, 'wait_discard');
         }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {

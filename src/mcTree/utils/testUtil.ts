@@ -84,8 +84,8 @@ class TestNode {
 
         log_fun(
             `total:${test_list.length}; sucess:${this.sucess_num}, fail:${
-            this.fail_num
-            }`
+                this.fail_num
+            }`,
         );
 
         groupEnd();

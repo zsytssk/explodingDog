@@ -3,18 +3,20 @@ import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../../mcTree/event';
 import { stopAni, tween, tweenLoop, scale_in, scale_out } from '../../../mcTree/utils/animate';
 import { CardModel, BlindStatus } from '../model/card/card';
+import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
+import { getAvatar } from '../../../utils/tool';
 import {
     cmd as player_cmd,
     ObserverActionInfo,
     PlayerModel,
     PlayerStatus,
+    AddInfo,
 } from '../model/player';
-import { CardBoxCtrl } from './cardBox/cardBox';
 import { SlapCtrl, SlapType } from '../widget/slap';
-import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
-import { getAvatar } from '../../../utils/tool';
+import { CardBoxCtrl } from './cardBox/cardBox';
+import { CardHeapCtrl } from '../cardHeep/main';
 
-type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
+export type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -29,6 +31,7 @@ export interface Link {
     highlight: Laya.Sprite;
     chat_box: Laya.Sprite;
     chat_label: Laya.Label;
+    card_heap_ctrl: CardHeapCtrl;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -60,11 +63,15 @@ export class SeatCtrl extends BaseCtrl {
         const chat_label = view.chatLabel;
         const card_box_ctrl = this.createCardBox(card_box);
 
+        const game_ctrl = queryClosest(this, 'name:game');
+        const card_heap_ctrl = getChildrenByName(game_ctrl, 'card_heap')[0];
+
         this.link = {
             ...this.link,
             active_box,
             avatar,
             card_box_ctrl,
+            card_heap_ctrl,
             die_avatar,
             empty_box,
             highlight,
@@ -121,8 +128,8 @@ export class SeatCtrl extends BaseCtrl {
         this.onModel(player_cmd.remove_cards, () => {
             this.link.card_box_ctrl.clearCards();
         });
-        this.onModel(player_cmd.add_card, (data: { card: CardModel }) => {
-            this.link.card_box_ctrl.addCard(data.card, true);
+        this.onModel(player_cmd.add_card, (data: AddInfo) => {
+            this.addCard(data);
         });
         this.onModel(
             player_cmd.status_change,
@@ -193,7 +200,7 @@ export class SeatCtrl extends BaseCtrl {
     }
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
-        const { nickname: sprite } = this.link;
+        const { nickname: sprite, card_heap_ctrl } = this.link;
         const { status, action } = data;
 
         /** 处理动作的完成 */
@@ -205,9 +212,7 @@ export class SeatCtrl extends BaseCtrl {
                 game_ctrl
                     .getChildByName('docker_ctrl')
                     .setRate(data.data.bombProb);
-                game_ctrl
-                    .getChildByName('card_heap_ctrl')
-                    .setRemainCard(data.data.remainCard);
+                card_heap_ctrl.setRemainCard(data.data.remainCard);
             }
             if (action === 'choose_target') {
                 this.beChoosed();
@@ -312,5 +317,7 @@ export class SeatCtrl extends BaseCtrl {
         function hide() {
             scale_out(chat_box, 100);
         }
+    protected addCard(data: AddInfo) {
+        return this.link.card_box_ctrl.addCard(data.card, true);
     }
 }

@@ -129,25 +129,25 @@ export class ZsyDirector {
         let change_info = {} as Director_Change_Info;
         if (change_item.key === 'path') {
             change_info = {
-                type: 'path',
-                ori_val: change_item.ori_val,
                 end_val: change_item.end_val,
+                ori_val: change_item.ori_val,
+                type: 'path',
             };
         }
         if (change_item.key.indexOf('outset') !== -1) {
             change_info = {
-                type: 'outset',
+                end_val: change_item.end_val,
                 key: change_item.key.replace(/outset(:)*/g, ''),
                 ori_val: change_item.ori_val,
-                end_val: change_item.end_val,
+                type: 'outset',
             };
         }
         if (change_item.key.indexOf('param') !== -1) {
             change_info = {
-                type: 'param',
+                end_val: change_item.end_val,
                 key: change_item.key.replace(/param(:)*/g, ''),
                 ori_val: change_item.ori_val,
-                end_val: change_item.end_val,
+                type: 'param',
             };
         }
         fun(change_info);

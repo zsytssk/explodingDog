@@ -87,7 +87,11 @@ export class CardBoxCtrl extends BaseCtrl {
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
-        this.sortCard();
+        /** 当前用户需要先设置牌到牌堆拿出牌的位置,所以需要异步重组  */
+        setTimeout(() => {
+            this.sortCard();
+        });
+        return card_ctrl;
     }
     /**
      * 初始化牌时需要处理多张的牌

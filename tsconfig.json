@@ -11,7 +11,7 @@
         "outDir": "dist",
         "watch": true
     },
-    "exclude": ["src/test", "src/mcTree"],
+    "exclude": ["src/test"],
     "include": ["src", "typings", "laya/libs", "laya/src/ui"],
     "files": ["src/mcTree/cusType.d.ts"]
 }

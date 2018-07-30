@@ -13,7 +13,7 @@ export class NodeCtrl extends BaseCtrl {
     protected view_class: any;
     public view: Laya.Sprite;
     /** view 不在addChild进入其他的ctrl时改变位置 */
-    public fixed_view = false;
+    protected fixed_view = true;
     /** 父ctrl */
     protected parent: NodeCtrl = null;
     /** 子ctrl */
@@ -91,13 +91,8 @@ export class NodeCtrl extends BaseCtrl {
             return;
         }
         // fixed_view 专门钉死view的位置
-        if (childCtrl.fixed_view) {
+        if (this.fixed_view) {
             return;
-        }
-        if (!(childCtrl as PopCtrl).noOrder) {
-            (childCtrl.view as Laya.Sprite).zOrder = index;
-        } else {
-            (childCtrl.view as Laya.Sprite).zOrder = null;
         }
         this.view.addChild(childCtrl.view);
         this.refreshChildViewOrder();
@@ -123,10 +118,10 @@ export class NodeCtrl extends BaseCtrl {
     }
     /** 删除View, 从父类Ctrl中删除自己 删除model 删除link */
     public destroy() {
-        super.destroy();
         if (this.view) {
             this.view.destroy(true);
             this.view = null;
         }
+        super.destroy();
     }
 }

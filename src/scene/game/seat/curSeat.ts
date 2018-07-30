@@ -10,12 +10,14 @@ import {
     PlayerModel,
     cmd as player_cmd,
     BlindStatus,
+    AddInfo,
 } from '../model/player';
 import { PopupDefuse } from '../widget/defuse';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
-import { Link as BaseLink, SeatCtrl } from './seat';
+import { Link as BaseLink, SeatCtrl, SeatStatus } from './seat';
 import { GiveCardCtrl } from '../widget/giveCard';
 import { GameCtrl } from '../main';
+import { CurCardCtrl } from './cardBox/curCard';
 
 export interface Link extends BaseLink {
     view: ui.game.seat.curSeatUI;
@@ -175,14 +177,35 @@ export class CurSeatCtrl extends SeatCtrl {
         )[0];
         explode_pos_ctrl.hideView();
     }
+    /** 当前用户说话时 需要将牌堆激活, 可以拿牌 */
+    protected setStatus(status: SeatStatus) {
+        const { card_heap_ctrl } = this.link;
+        if (status === 'speak') {
+            card_heap_ctrl.activeTake();
+        } else {
+            card_heap_ctrl.disableTake();
+        }
+        super.setStatus(status);
+    }
     /** 手牌中是否有某张牌 */
-    public haveCard(cardId: string): boolean {
+    public haveCard(card_id: string): boolean {
         let result = false;
         this.model.card_list.forEach(item => {
-            if (item.card_id == cardId) {
+            if (item.card_id === card_id + '') {
                 result = true;
             }
         });
         return result;
+    }
+    /** 添加牌, 当前用户多一个牌从CardHeep飞到用户身上的动画 */
+    protected addCard(data: AddInfo) {
+        const { is_take } = data;
+        const { card_heap_ctrl } = this.link;
+        const card = super.addCard(data) as CurCardCtrl;
+        if (!is_take) {
+            return;
+        }
+        card_heap_ctrl.setCardFace(card);
+        return card;
     }
 }

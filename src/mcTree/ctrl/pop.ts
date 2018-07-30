@@ -1,66 +1,60 @@
 import { maxBy } from 'lodash';
 
-import { animate } from '../utils/animate';
+import * as animate from '../utils/animate';
 import {
     getElementsByName,
     isClosest,
     log,
-    queryClosest,
     querySiblings,
 } from '../utils/zutil';
-import { AppCtrl, cmd as AppCmd } from '../app';
-import { BaseCtrl } from '../component/base';
-import { FullScreenBgCtrl } from '../component/bg';
-import { DisplayStyle, NodeCtrl } from '../component/node';
-import { RouterCtrl } from '../network/router';
+import { FullScreenBgCtrl } from './bg';
+import { DisplayStyle, NodeCtrl } from './node';
 
 /** 弹出层的状态 正在显示 | 显示 | 正在关闭 | 关闭   */
-type t_pop_status = 'showing' | 'shown' | 'hiding' | 'hidden';
+type Status = 'showing' | 'shown' | 'hiding' | 'hidden';
 export interface Link {
     /** 用来做切换页面关闭弹出层  */
-    router?: RouterCtrl;
     pop_view: Laya.Sprite;
     bg_ctrl: FullScreenBgCtrl;
     btn_confirms?: Laya.Button[];
     btn_cancel?: Laya.Button;
     close_list?: Laya.Node[];
 }
-export type t_hide_trigger = 'close' | 'confirm' | 'bg';
-export type t_show_animate = '' | 'fade_in' | 'scale_in' | 'slide_up_in'; // 显示的动画
-export type t_hide_animate = '' | 'fade_out' | 'scale_out' | 'slide_down_out'; // 隐藏的动画
-export type t_position = '' | 'middle' | 'bottom'; //
+export type HideTrigger = 'close' | 'confirm' | 'bg';
+export type ShowAni = '' | 'fade_in' | 'scale_in' | 'slide_up_in'; // 显示的动画
+export type HideAni = '' | 'fade_out' | 'scale_out' | 'slide_down_out'; // 隐藏的动画
+export type Pos = '' | 'middle' | 'bottom'; //
 
-export type t_hide_data = { trigger: t_hide_trigger };
+export type HideData = { trigger: HideTrigger };
 
 export const cmd = {
+    /**  已经隐藏 */
+    hidden: 'hidden',
+    /**  开始隐藏 */
+    hide: 'hide',
+    /**  开始隐藏 */
+    hiding: 'hiding',
     /** 显示 */
     show: 'show',
     /**  开始显示 */
     showing: 'showing',
     /**  已经显示 */
     shown: 'shown',
-    /**  开始隐藏 */
-    hide: 'hide',
-    /**  开始隐藏 */
-    hiding: 'hiding',
-    /**  已经隐藏 */
-    hidden: 'hidden',
 };
 
 const bg_alpha = 0.7;
 
 /** 弹层公共类  */
 export abstract class PopCtrl extends NodeCtrl {
-    public status: t_pop_status = 'hidden';
+    public status: Status = 'hidden';
     protected is_initiated: boolean = false;
     protected show_bg: boolean = true;
     protected display_style = 'on_box' as DisplayStyle;
-    public noOrder: boolean = true;
-    protected show_animate: t_show_animate = 'scale_in';
+    protected show_animate: ShowAni = 'scale_in';
     protected show_time: number = 0.5;
-    protected hide_animate: t_hide_animate = 'scale_out';
+    protected hide_animate: HideAni = 'scale_out';
     protected hide_time: number = 0.5;
-    protected position: t_position = 'middle';
+    protected position: Pos = 'middle';
     protected link = {} as Link;
     protected hit_bg_close: boolean = true;
     protected bg_color = '#000';
@@ -75,17 +69,12 @@ export abstract class PopCtrl extends NodeCtrl {
     // tslint:disable-next-line:no-empty
     protected preInit() {}
     public preparePop() {
-        return new Promise((resolve, reject) => {
-            this.loadRes().then(() => {
-                if (!this.is_initiated) {
-                    this.initView();
-                    this.initLink();
-                    this.initEvent();
-                    this.is_initiated = true;
-                }
-                resolve();
-            });
-        });
+        if (!this.is_initiated) {
+            this.initView();
+            this.initLink();
+            this.initEvent();
+            this.is_initiated = true;
+        }
     }
     public enter() {
         return this.show();
@@ -128,11 +117,6 @@ export abstract class PopCtrl extends NodeCtrl {
     protected initLink() {
         const view = this.view;
 
-        const app = queryClosest(this as BaseCtrl, 'name:app') as AppCtrl;
-        const router = getElementsByName(
-            app as BaseCtrl,
-            'router',
-        )[0] as RouterCtrl;
         const btn_cancel = getElementsByName(
             view,
             'btn_cancel',
@@ -146,17 +130,12 @@ export abstract class PopCtrl extends NodeCtrl {
         close_list.push(btn_cancel);
         close_list = close_list.concat(btn_confirms);
 
-        this.link.router = router;
         this.link.btn_cancel = btn_cancel;
         this.link.btn_confirms = btn_confirms;
         this.link.close_list = close_list;
     }
     /**  初始化事件   */
     protected initEvent() {
-        this.on(AppCmd.resize, () => {
-            this.resize();
-        });
-
         const close_list = this.link.close_list;
         close_list.forEach((close_item, index) => {
             if (!close_item) {
@@ -164,7 +143,7 @@ export abstract class PopCtrl extends NodeCtrl {
             }
 
             close_item.on(Laya.Event.CLICK, this, () => {
-                let trigger: t_hide_trigger = 'close';
+                let trigger: HideTrigger = 'close';
                 // 确定按钮的处理
                 if (
                     this.link.btn_confirms.indexOf(
@@ -246,7 +225,6 @@ export abstract class PopCtrl extends NodeCtrl {
             }
             this.status = 'showing';
             this.resize();
-            this.report(AppCmd.play_audio, 'app', { audio: 'pop_show' });
             this.trigger(cmd.showing);
             super.show();
             (view as Laya.Sprite).visible = true;
@@ -259,7 +237,7 @@ export abstract class PopCtrl extends NodeCtrl {
     }
 
     /**  隐藏  */
-    public hide(trigger?: t_hide_trigger) {
+    public hide(trigger?: HideTrigger) {
         return new Promise((resolve, reject) => {
             const view = this.view;
             const pop_view = this.link.pop_view;

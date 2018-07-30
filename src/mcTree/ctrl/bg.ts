@@ -1,25 +1,32 @@
 import { NodeCtrl } from './node';
+interface BgConfig {
+    color: string;
+    width: number;
+    height: number;
+    alpha: number;
+}
+
 /**
  * 黑色背景的控制器
  */
 export class BgCtrl extends NodeCtrl {
-    view: Laya.Sprite;
-    config: i_bgctrl_config;
+    public view: Laya.Sprite;
+    protected config: BgConfig;
     constructor(color, width, height, alpha) {
         super(new Laya.Sprite());
         this.config = {
-            color: color,
-            width: width,
-            height: height,
-            alpha: alpha,
+            alpha,
+            color,
+            height,
+            width,
         };
     }
     public init() {
-        let view = this.view;
-        let graphics = view.graphics;
-        let width = this.config.width;
-        let height = this.config.height;
-        let color = this.config.color;
+        const view = this.view;
+        const graphics = view.graphics;
+        const width = this.config.width;
+        const height = this.config.height;
+        const color = this.config.color;
         view.alpha = this.config.alpha;
 
         view.width = width;
@@ -39,14 +46,14 @@ export class BgCtrl extends NodeCtrl {
 /** 场景的黑色背景的控制器 */
 export class FullScreenBgCtrl extends BgCtrl {
     constructor(color: string, alpha: number) {
-        let width = Laya.stage.width;
-        let height = Laya.stage.height;
+        const width = Laya.stage.width;
+        const height = Laya.stage.height;
         super(color, width, height, alpha);
     }
     public update(width, height) {
-        let view = this.view;
-        let graphics = view.graphics;
-        let color = this.config.color;
+        const view = this.view;
+        const graphics = view.graphics;
+        const color = this.config.color;
 
         this.config.width = width;
         this.config.height = height;
@@ -60,8 +67,8 @@ export class FullScreenBgCtrl extends BgCtrl {
         this.updatePos();
     }
     public updatePos() {
-        let view = this.view;
-        var point = new Laya.Point(0, 0);
+        const view = this.view;
+        const point = new Laya.Point(0, 0);
         view.localToGlobal(point);
         if (!point || (point.x === 0 && point.y === 0)) {
             return true;
@@ -69,7 +76,7 @@ export class FullScreenBgCtrl extends BgCtrl {
         view.pos(view.x - point.x, view.y - point.y);
     }
     public setPos(pos: Laya.Point) {
-        let view = this.view;
+        const view = this.view;
         view.x = pos.x;
         view.y = pos.y;
     }
