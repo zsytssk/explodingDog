@@ -273,4 +273,13 @@ export class GameModel extends BaseEvent {
     public getPlayerNum() {
         return this.player_list.length;
     }
+    getServerSeatIdByUserId(userId: string) {
+        let result = null;
+        this.player_list.forEach(player => {
+            if (player.user_id == userId) {
+                result = player.seat_id;
+            }
+        });
+        return result;
+    }
 }

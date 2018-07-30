@@ -13,9 +13,10 @@ export class ChatCtrl {
             scale_out(this.view, 100);
         });
         let chatList = this.view.chatList;
-        chatList.selectEnable = true;
-        chatList.selectHandler = new Laya.Handler(this, (index) => {
-            Sail.io.emit(CMD.SEND_CHAT, { id: chatList.array[index].id })
+        chatList.cells.forEach((cell, index) => {
+            cell.on(Laya.Event.CLICK, this, () => {
+                Sail.io.emit(CMD.SEND_CHAT, { id: chatList.array[index].id });
+            });
         });
     }
     public loadMsg(list) {
