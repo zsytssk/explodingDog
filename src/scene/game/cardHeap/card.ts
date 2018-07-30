@@ -7,6 +7,7 @@ import { GameCtrl } from '../main';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
 import { CardHeapCtrl } from './main';
 
+type Status = 'disabled' | 'actived';
 type CardUI = ui.game.seat.cardBox.cardUI;
 interface Link {
     view: CardUI;
@@ -20,7 +21,8 @@ export class CardCtrl extends BaseCtrl {
     private is_touched = false;
     public scale: number;
     public link = {} as Link;
-    private can_take = false;
+    private status: Status;
+    private is_move = false;
     constructor(view: CardUI, wrap: Laya.Sprite) {
         super();
 
@@ -56,8 +58,8 @@ export class CardCtrl extends BaseCtrl {
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
     }
     private mouseDown(event: Laya.Event) {
-        const { can_take } = this;
-        if (!can_take) {
+        const { status, is_move } = this;
+        if (status === 'disabled' || is_move) {
             return;
         }
         const { view, card_move_box } = this.link;
@@ -72,6 +74,7 @@ export class CardCtrl extends BaseCtrl {
         card_move_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
+        this.is_move = true;
 
         this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
         this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
@@ -120,23 +123,28 @@ export class CardCtrl extends BaseCtrl {
             sprite: view,
         }).then(() => {
             wrap.addChild(view);
+            this.is_move = false;
             view.pos(x, y);
         });
     }
-    public activeTake() {
-        if (this.can_take) {
+    public setStatus(status: Status) {
+        const { card_light } = this.link;
+        if (this.status === status) {
             return;
         }
-        const { card_light } = this.link;
-        card_light.visible = true;
-
-        /** 直接播放会报错 */
-        playSkeleton(card_light, 0, true);
-        this.can_take = true;
+        if (status === 'actived') {
+            /** 直接播放会报错 */
+            card_light.visible = true;
+            playSkeleton(card_light, 0, true);
+        } else {
+            card_light.visible = false;
+            stopSkeleton(card_light);
+        }
+        this.status = status;
     }
-    public reset() {
+    public withDrawCardNoTime() {
         const { scale } = this;
-        const { wrap, view, card_light } = this.link;
+        const { wrap, view } = this.link;
         const { x, y } = {
             x: (view.width * scale) / 2,
             y: (view.height * scale) / 2,
@@ -144,9 +152,11 @@ export class CardCtrl extends BaseCtrl {
 
         wrap.addChild(view);
         view.pos(x, y);
-        stopSkeleton(card_light);
-        card_light.visible = false;
-        this.can_take = false;
+        this.is_move = false;
+    }
+    public reset() {
+        this.withDrawCardNoTime();
+        this.setStatus('disabled');
     }
     /** 设置当前用户牌的样式 */
     public putFaceToCard(card: CurCardCtrl) {
@@ -162,6 +172,6 @@ export class CardCtrl extends BaseCtrl {
             pos,
             scale,
         });
-        this.reset();
+        this.withDrawCardNoTime();
     }
 }

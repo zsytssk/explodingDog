@@ -59,7 +59,7 @@ export class CardBoxCtrl extends BaseCtrl {
             if (!card_bound) {
                 card_bound = card.getCardBound();
             }
-            card.tweenMove(i);
+            card.tweenMove(i, unslt_card_list.length);
         }
         card_wrap.width = card_bound.width + card_bound.space * (len - 1);
     }

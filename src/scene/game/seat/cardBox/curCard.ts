@@ -9,7 +9,7 @@ import {
     getChildrenByName,
 } from '../../../../mcTree/utils/zutil';
 import { GiveCardCtrl } from '../../widget/giveCard';
-import { convertPos, playSkeleton } from '../../../../utils/tool';
+import { convertPos, playSkeleton, stopSkeleton } from '../../../../utils/tool';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
@@ -118,7 +118,6 @@ export class CurCardCtrl extends CardCtrl {
             y: stageY - y,
         };
         this.is_move = true;
-        log('card:>move', move_delta);
         if (
             move_delta.y < -30 &&
             Math.abs(move_delta.x) < Math.abs(move_delta.y)
@@ -272,5 +271,45 @@ export class CurCardCtrl extends CardCtrl {
         let index = Math.ceil((pos.x - center_x) / space);
         index = card_box.withDrawCardIndex(this, index);
         wrap.addChildAt(view, index);
+    }
+    /** 移动位置 */
+    public tweenMove(index: number) {
+        const { view, card_light } = this.link;
+        const { scale, is_copy_face } = this;
+        const space = view.width * scale * space_scale;
+        let time = 200;
+        const x = (view.width * scale) / 2 + space * index;
+        let y = (view.height * scale) / 2;
+
+        if (index % 2 === 1) {
+            y = y + 15;
+        }
+
+        let end_props = { y, x } as AnyObj;
+
+        if (this.is_insert) {
+            if (!is_copy_face) {
+                view.x = x;
+            } else {
+                time = 700;
+            }
+            end_props = {
+                ...end_props,
+                scaleX: scale,
+                scaleY: scale,
+            };
+            this.is_copy_face = false;
+            view.visible = true;
+            this.is_insert = false;
+        }
+        view.zOrder = index;
+        tween({
+            end_props,
+            sprite: view,
+            time,
+        }).then(() => {
+            stopSkeleton(card_light);
+            card_light.visible = false;
+        });
     }
 }

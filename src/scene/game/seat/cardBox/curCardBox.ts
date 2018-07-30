@@ -75,7 +75,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             y: event.stageY - y,
         };
         if (!this.isMove()) {
-            if (Math.abs(delta.x) < 30) {
+            if (Math.abs(delta.x) < 150) {
                 return;
             } else {
                 delta.x = 0;

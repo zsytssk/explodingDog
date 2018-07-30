@@ -9,7 +9,7 @@ import {
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { BillBoardCtrl } from './billboard';
-import { CardHeapCtrl } from './cardHeep/main';
+import { CardHeapCtrl } from './cardHeap/main';
 import { DiscardZoneCtrl } from './discardZone';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
@@ -218,7 +218,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.PLAY_INVITE]: this.onServerPlayInvite,
             [CMD.UPDATE_INVITE]: this.onServerUpdateInvite,
             [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
-            [CMD.GET_CHAT_LIST]: this.OnServerGetChatList,
+            [CMD.GET_CHAT_LIST]: this.onServerGetChatList,
             [CMD.SEND_CHAT]: this.onServerSendChat,
         };
         Sail.io.register(this.actions, this);
@@ -467,16 +467,16 @@ export class GameCtrl extends BaseCtrl {
             this.model.playerExploding(data);
         });
     }
-    OnServerGetChatList(data) {
+    public onServerGetChatList(data) {
         this.link.chat_ctrl.loadMsg(data.list);
     }
     public onServerGameOver(data) {
         const pop = new PopupGameOver(this);
         pop.updateView(data);
         let delay = 0;
-        const popupDefuse = Sail.director.getDialogByName('popup_defuse');
-        if (popupDefuse) {
-            popupDefuse.close();
+        const popup_defuse = Sail.director.getDialogByName('popup_defuse');
+        if (popup_defuse) {
+            popup_defuse.close();
             Sail.director.closeByName('popup_defuse');
             delay = 3000;
         }

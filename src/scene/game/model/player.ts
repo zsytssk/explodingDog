@@ -184,7 +184,9 @@ export class PlayerModel extends BaseEvent {
         if (!take_card) {
             for (const card of card_list) {
                 if (card.card_id === '*') {
-                    card.updateInfo(card_id);
+                    if (card_id) {
+                        card.updateInfo(card_id);
+                    }
                     take_card = card;
                     break;
                 }

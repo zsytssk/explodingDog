@@ -1,4 +1,13 @@
 ## 2018-07-27 10:34:22
+* @bug 连续两次turn2 无法摸牌
+-   @note 优化
+    -   当前牌上下错位
+    -   其他人牌的扇形
+    -   theFuture 中的位置...
+
+* @bug 再来一局原来的牌没有销毁
+
+* @note 聊天能不能放在另外一个类中...
 *  @bug cardHeep 乱拖动会错位...
 
 -   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
@@ -16,7 +25,6 @@
 *   @note dialog 有没有关闭之前
 
 
-* @bug 连续两次turn2 无法摸牌
 
 -   @todo
 
@@ -36,8 +44,6 @@
 -   @note 优化
 
     -   当前牌上下错位
-    -   其他人牌的扇形
-    -   theFuture 中的位置...
 
 -   login :union 这是什么意思
 

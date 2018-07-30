@@ -39,7 +39,7 @@ export class CardHeapCtrl extends BaseCtrl {
     /** 激活拿牌 */
     public activeTake() {
         const { card_ctrl } = this.link;
-        card_ctrl.activeTake();
+        card_ctrl.setStatus('actived');
     }
     /** 拿牌失败, 牌飞到牌堆 */
     public withDrawTake() {
@@ -49,7 +49,7 @@ export class CardHeapCtrl extends BaseCtrl {
     /** 非当前用户 禁用拿牌 */
     public disableTake() {
         const { card_ctrl } = this.link;
-        card_ctrl.reset();
+        card_ctrl.setStatus('disabled');
     }
     public setRemainCard(num: number) {
         if (!isNumber(num)) {

@@ -2,9 +2,9 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": 3001,
+        "userId": 4001,
         "hitCard": "3521",
-        "hitUserId": 3001,
+        "hitUserId": 4001,
         "hitInfo": {
             "type": "seeFuture",
             "step": 1,

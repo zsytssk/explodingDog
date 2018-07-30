@@ -1,7 +1,13 @@
 import { Observable, Subscriber } from 'rxjs';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../../mcTree/event';
-import { stopAni, tween, tweenLoop, scale_in, scale_out } from '../../../mcTree/utils/animate';
+import {
+    stopAni,
+    tween,
+    tweenLoop,
+    scale_in,
+    scale_out,
+} from '../../../mcTree/utils/animate';
 import { CardModel, BlindStatus } from '../model/card/card';
 import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
@@ -14,7 +20,7 @@ import {
 } from '../model/player';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { CardBoxCtrl } from './cardBox/cardBox';
-import { CardHeapCtrl } from '../cardHeep/main';
+import { CardHeapCtrl } from '../cardHeap/main';
 
 export type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
 
@@ -235,7 +241,9 @@ export class SeatCtrl extends BaseCtrl {
 
     private reverseArrows(action_data) {
         const game_ctrl = queryClosest(this, 'name:game');
-        game_ctrl.getChildByName('turn_arrow_ctrl').rotate(action_data.data.turnDirection);
+        game_ctrl
+            .getChildByName('turn_arrow_ctrl')
+            .rotate(action_data.data.turnDirection);
     }
     /** 等待被选择 */
     private waitBeChoose(action_data: ObserverActionInfo) {
@@ -314,9 +322,11 @@ export class SeatCtrl extends BaseCtrl {
         chat_box.visible = true;
         scale_in(chat_box, 100, 'backOut');
         chat_box.timerOnce(3000, this, hide);
+
         function hide() {
             scale_out(chat_box, 100);
         }
+    }
     protected addCard(data: AddInfo) {
         return this.link.card_box_ctrl.addCard(data.card, true);
     }

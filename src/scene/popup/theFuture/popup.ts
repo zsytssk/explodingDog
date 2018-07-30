@@ -20,8 +20,8 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         this.initEvent();
     }
     private initLink() {
-        const { card_box } = this;
-        const card_box_ctrl = new CardBoxCtrl(card_box);
+        const { card_box, first_sign } = this;
+        const card_box_ctrl = new CardBoxCtrl(card_box, first_sign);
         this.link = {
             ...this.link,
             card_box_ctrl,

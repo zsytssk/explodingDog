@@ -115,19 +115,30 @@ export class CardCtrl extends BaseCtrl {
         return view.x < x;
     }
     /** 移动位置 */
-    public tweenMove(index: number) {
+    public tweenMove(index: number, all: number) {
         const { scale } = this;
         const { wrap, view, card_box } = this.link;
         const card_num = card_box.getCardNum();
         const wrap_w = wrap.width;
-        const y = 175;
+        let y = 175;
+
+        const rel_hal = index - (all - 1) / 2;
+        y += Math.abs(rel_hal) * Math.abs(rel_hal) * 10;
+        const rotation = rel_hal * 10;
+
         const space = (view.width * scale) / 2;
         const x = wrap_w / 2 + space * (index - (card_num - 1) / 2);
-        const end_props = { y, x };
+        const end_props = { y, x, rotation };
         tween({
             end_props,
             sprite: view,
             time: 100,
         });
+        view.zOrder = all - index;
+        return {
+            rotation,
+            x: x - (view.width * scale) / 2,
+            y,
+        };
     }
 }

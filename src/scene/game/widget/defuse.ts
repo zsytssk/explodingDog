@@ -69,7 +69,9 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         this.defuseSeccess = true;
     }
     close() {
-        i;
+        if (this.curSeatCtrl) {
+            this.curSeatCtrl.putCardBoxBack();
+        }
         super.close();
     }
     onClosed() {

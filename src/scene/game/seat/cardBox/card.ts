@@ -199,17 +199,18 @@ export class CardCtrl extends BaseCtrl {
         });
     }
     /** 移动位置 */
-    public tweenMove(index: number) {
+    public tweenMove(index: number, all: number) {
         const { view, card_light } = this.link;
         const { scale, is_copy_face } = this;
         const space = view.width * scale * space_scale;
         let time = 200;
-        const { x, y } = {
-            x: (view.width * scale) / 2 + space * index,
-            y: (view.height * scale) / 2,
-        };
+        const x = (view.width * scale) / 2 + space * index;
+        let y = (view.height * scale) / 2;
 
-        let end_props = { y, x } as AnyObj;
+        const rel_hal = index - (all - 1) / 2;
+        y += Math.abs(rel_hal) * 3;
+        const rotation = rel_hal * 10;
+        let end_props = { y, x, rotation } as AnyObj;
 
         if (this.is_insert) {
             if (!is_copy_face) {

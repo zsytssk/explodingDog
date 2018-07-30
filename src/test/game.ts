@@ -41,9 +41,9 @@ export function gameSteal() {
     });
 }
 
-export function testSeeTheFuture() {
+export function testSeeTheFuture(data) {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
-    game_ctrl.model.discardCard(SeeTheFutureData.res);
+    game_ctrl.model.discardCard(data || SeeTheFutureData.res);
 }
 
 export function testAlterTheFuture() {

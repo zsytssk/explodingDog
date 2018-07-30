@@ -156,12 +156,13 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     private showSetExplode() {
         const game_ctrl = queryClosest(this, 'name:game');
-        const popupDefuse = Sail.director.getDialogByName('popup_defuse');
-        if (popupDefuse) {
-            popupDefuse.defuseSuccess();
+        const popup_defuse = Sail.director.getDialogByName('popup_defuse');
+        if (!popup_defuse) {
+            return;
         }
+        popup_defuse.defuseSuccess();
         Laya.timer.once(1000, this, () => {
-            popupDefuse.close();
+            popup_defuse.close();
             const explode_pos_ctrl = getChildrenByName(
                 game_ctrl,
                 'explode_pos_ctrl',
