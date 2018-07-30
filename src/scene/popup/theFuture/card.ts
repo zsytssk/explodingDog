@@ -12,7 +12,7 @@ interface Link {
 export class CardCtrl extends BaseCtrl {
     private is_touched = false;
     public card_id: string;
-    private space: number;
+    private scale: number;
     public link = {} as Link;
     constructor(card_id, wrap: Laya.Sprite) {
         super();
@@ -40,10 +40,9 @@ export class CardCtrl extends BaseCtrl {
         const { wrap } = this.link;
         const view = new ui.game.seat.cardBox.cardUI();
         const scale = wrap.height / view.height;
-        const space = (view.width * scale) / 2;
         wrap.addChild(view);
         setStyle(view, { scaleX: scale, scaleY: scale });
-        this.space = space;
+        this.scale = scale;
 
         wrap.addChild(view);
         view.anchorX = 0.5;
@@ -69,7 +68,6 @@ export class CardCtrl extends BaseCtrl {
         }
     }
     private initEvent() {
-        const { card_box } = this.link;
         const { view } = this.link;
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
@@ -118,11 +116,12 @@ export class CardCtrl extends BaseCtrl {
     }
     /** 移动位置 */
     public tweenMove(index: number) {
-        const { space } = this;
+        const { scale } = this;
         const { wrap, view, card_box } = this.link;
         const card_num = card_box.getCardNum();
         const wrap_w = wrap.width;
         const y = 175;
+        const space = (view.width * scale) / 2;
         const x = wrap_w / 2 + space * (index - (card_num - 1) / 2);
         const end_props = { y, x };
         tween({

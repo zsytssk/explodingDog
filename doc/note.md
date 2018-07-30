@@ -1,23 +1,69 @@
 ## 2018-07-27 10:34:22
-* @bug 抽出的牌没有打出 反而重新创建牌
-    * 和牌没有关系
+*  @bug cardHeep 乱拖动会错位...
 
--   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
+-   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
+
+    -   this.space
+
+-   @note
+
+    -   公共资源
+    -   牌的名称需要做成图片吗 图片就是很多图片
+    -   牌上的阴影 如何处理
+
+-   @bug 机器人要牌 give_Card 不消失
+
+*   @note dialog 有没有关闭之前
+
+
+* @bug 连续两次turn2 无法摸牌
+
+-   @todo
+
+    -   自适应 + 音效 + ...
+    -   牌的说明
+    -   排行版 + 设置 + 领取狗粮 + 购买卡组 + 帮助
+    -   ***
+    -   偷看动画
+    -   @bug 打出 defuse CardBox 飞回时位置有问题...
+
+-   缺失弹出层
+
+    -   充值弹出层
+    -   头像购买弹框
+    -   商城弹出层
+
+-   @note 优化
+
+    -   当前牌上下错位
+    -   其他人牌的扇形
+    -   theFuture 中的位置...
+
+-   login :union 这是什么意思
+
+-   neovim lua
+
+-   @bug 抽出的牌没有打出 反而重新创建牌
+    -   和牌没有关系
+
+*   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
     -   但是如果是复盘 我就无法触发 action 的 act, 也无法执行绑定了 fuck
     -   其实我可以把 player be_action 做成一个数组， 如果他被作用了， 我就创建一个 action 放到数组里
     -   结束直接清除就可以了
 
-*   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+-   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+
     -   card status 用来 服务器 hit 时候判断 能不能出 能不能 give
     -   这还是需要的
 
-* @note theFuture card 移动放到LayaStage中
-    * drawCard
+-   @note theFuture card 移动放到 LayaStage 中
 
-* @ques 牌如何从牌堆 飞到用户手上
-    * seat 和 cardHeap 如何相互引用
-    * 如何开启
-    * 如何关闭
+    -   drawCard
+
+-   @ques 牌如何从牌堆 飞到用户手上
+    -   seat 和 cardHeap 如何相互引用
+    -   如何开启
+    -   如何关闭
 
 ? annoy 状态清除
 _ 打出的那张牌
@@ -29,15 +75,15 @@ _ 状态清除
 
     -   ? 的斯蒂芬斯蒂芬斯蒂芬
 
--  @todo 拿牌动画 + 牌光效果 + 解除炸弹之后 牌位置 + 解除炸弹 时 牌飞行的问题
+-   @todo 拿牌动画 + 牌光效果 + 解除炸弹之后 牌位置 + 解除炸弹 时 牌飞行的问题
 
-* @bug 人爆炸了 默认头像显示
+*   @bug 人爆炸了 默认头像显示
 
-* @ques 相互引用 CurSeat 引用一大堆 外界的类 如何处理
+*   @ques 相互引用 CurSeat 引用一大堆 外界的类 如何处理
 
-* @ques 骨骼动画默认不播放
+*   @ques 骨骼动画默认不播放
 
-* @ques ts ...param 数组大于两个
+*   @ques ts ...param 数组大于两个
 
 ## 2018-07-26 15:35:10
 
@@ -618,7 +664,7 @@ _ 状态清除
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                                 @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

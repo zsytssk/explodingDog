@@ -7,9 +7,9 @@ import { log } from '../../../mcTree/utils/zutil';
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
     group = 'exploding';
-    remainTime: number;//倒计时 s
+    remainTime: number; //倒计时 s
     ani: Laya.Skeleton;
-    defuseSeccess = false;//弹出popup_take_explode弹层
+    defuseSeccess = false; //弹出popup_take_explode弹层
     curSeatCtrl;
     constructor(remainTime) {
         super();
@@ -40,7 +40,10 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
                 if (this.remainTime <= 0) {
                     return;
                 }
-                this.ani.playbackRate(this.ani.player.playbackRate * this.remainTime / (this.remainTime - 2))
+                this.ani.playbackRate(
+                    (this.ani.player.playbackRate * this.remainTime) /
+                        (this.remainTime - 2),
+                );
                 this.remainTime -= 2;
             });
         }
@@ -65,13 +68,16 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         this.defuseCard.visible = true;
         this.defuseSeccess = true;
     }
+    close() {
+        i;
+        super.close();
+    }
     onClosed() {
-        if (this.curSeatCtrl) {
-            this.curSeatCtrl.putCardBoxBack();
-        }
-        if (!this.defuseSeccess && !Sail.director.getDialogByName('popup_take_explode')) {
+        if (
+            !this.defuseSeccess &&
+            !Sail.director.getDialogByName('popup_take_explode')
+        ) {
             Sail.director.popScene(new PopupTakeExplode());
         }
     }
-
 }

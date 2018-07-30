@@ -107,7 +107,7 @@ export class GameCtrl extends BaseCtrl {
             seat_wrap,
             turn_arrow,
             explode_pos,
-            chatview
+            chatview,
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -218,7 +218,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.PLAY_INVITE]: this.onServerPlayInvite,
             [CMD.UPDATE_INVITE]: this.onServerUpdateInvite,
             [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
-            [CMD.GET_CHAT_LIST]: this.OnServerGetChatList
+            [CMD.GET_CHAT_LIST]: this.OnServerGetChatList,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -473,7 +473,9 @@ export class GameCtrl extends BaseCtrl {
         const pop = new PopupGameOver(this);
         pop.updateView(data);
         let delay = 0;
-        if (Sail.director.getDialogByName('popup_defuse')) {
+        const popupDefuse = Sail.director.getDialogByName('popup_defuse');
+        if (popupDefuse) {
+            popupDefuse.close();
             Sail.director.closeByName('popup_defuse');
             delay = 3000;
         }
@@ -502,7 +504,7 @@ export class GameCtrl extends BaseCtrl {
             card_heap_ctrl,
             discard_zone_ctrl,
             docker_ctrl,
-            turn_arrow_ctrl
+            turn_arrow_ctrl,
         } = this.link;
 
         alarm_ctrl.reset();

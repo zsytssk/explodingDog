@@ -47,7 +47,7 @@ export class CardCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
 
-        const { view, wrap } = this.link;
+        const { view } = this.link;
         const { card_light } = view;
 
         stopSkeleton(card_light);

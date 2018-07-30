@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":2,
     "props":{"width":267,"sceneColor":"#ffffff","height":276},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":267,"skin":"images/component/rgba1.png","sizeGrid":"25, 25, 25, 25","height":276},
+            "props":{"y":0,"x":0,"width":267,"skin":"images/component/bg_radius1.png","sizeGrid":"25, 25, 25, 25","height":276},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
