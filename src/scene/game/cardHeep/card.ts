@@ -2,10 +2,10 @@ import { CMD } from '../../../data/cmd';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tween } from '../../../mcTree/utils/animate';
 import { queryClosest } from '../../../mcTree/utils/zutil';
-import { convertPos, stopSkeleton, playSkeleton } from '../../../utils/tool';
+import { convertPos, playSkeleton, stopSkeleton } from '../../../utils/tool';
 import { GameCtrl } from '../main';
-import { CardHeapCtrl } from './main';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
+import { CardHeapCtrl } from './main';
 
 type CardUI = ui.game.seat.cardBox.cardUI;
 interface Link {

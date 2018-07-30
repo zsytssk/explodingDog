@@ -1,7 +1,6 @@
-import { callFunc } from '../utils/tool';
 import { createRandomString, log, logAll } from './utils/zutil';
 
-type HooOtherEvent = {
+type HookOtherEvent = {
     /** 绑定对象id, 用于在清除的时候进行对比 */
     other_id: string;
     /** 绑定对象name, 用于展示 */
@@ -35,7 +34,7 @@ export abstract class BaseEvent {
     public is_destroyed: boolean = false;
     protected hook_funs: HookFunS = {};
     /** 绑定在别人身上的事件, 保存在这里用于销毁时 找到绑定的目标 去取消这些事件的绑定 */
-    protected hook_other_funs = [] as HooOtherEvent[];
+    protected hook_other_funs = [] as HookOtherEvent[];
     /** 储存所有的timetimeout interval 在destroy的时候清除 */
     protected timeout_list: number[] = [];
     protected interval_list: number[] = [];

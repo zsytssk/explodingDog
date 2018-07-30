@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"skin":"images/component/rgba2.png","sizeGrid":"20,20,20,20"},
+            "props":{"skin":"images/component/bg_radius2.png","sizeGrid":"20,20,20,20"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,

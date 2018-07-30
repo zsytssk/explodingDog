@@ -3,11 +3,11 @@
     "code": 200,
     "res": {
         "userId": 4002,
-        "hitCard": "3201",
+        "hitCard": "3001",
         "hitUserId": 4002,
         "hitInfo": {
             "type": "annoy",
-            "step": 2,
+            "step": 1,
             "targetUserId": "4001",
             "discard": 1,
             "annoyCardsIdx": [2],

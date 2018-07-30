@@ -161,7 +161,7 @@ export class CurSeatCtrl extends SeatCtrl {
             popupDefuse.defuseSuccess();
         }
         Laya.timer.once(1000, this, () => {
-            Sail.director.closeByName('popup_defuse');
+            popupDefuse.close();
             const explode_pos_ctrl = getChildrenByName(
                 game_ctrl,
                 'explode_pos_ctrl',
