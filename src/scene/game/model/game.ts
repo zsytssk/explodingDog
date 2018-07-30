@@ -56,6 +56,8 @@ export class GameModel extends BaseEvent {
     private player_list: PlayerModel[] = [];
     /** 正在出的牌 */
     private discard_card: CardModel;
+    /**剩余牌数 */
+    public remainCard: number;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
         this.updatePlayers(data.userList);

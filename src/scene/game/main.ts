@@ -278,6 +278,7 @@ export class GameCtrl extends BaseCtrl {
         }
 
         if (roundInfo) {
+            this.model.remainCard = roundInfo.remainCard;
             card_heap_ctrl.setRemainCard(roundInfo.remainCard);
             docker_ctrl.setRate(roundInfo.bombProb);
             const turnDirection = roundInfo.turnDirection;
@@ -327,6 +328,7 @@ export class GameCtrl extends BaseCtrl {
         }
         this.model.addPlayerCard(data);
         docker_ctrl.setRate(data.bombProb);
+        this.model.remainCard = data.remainCard;
         card_heap_ctrl.setRemainCard(data.remainCard);
     }
     public onServerTurn(data: TurnsData) {
@@ -584,5 +586,9 @@ export class GameCtrl extends BaseCtrl {
         log(seatId, this.serverIdToLocal(seatId))
         log(seat);
         seat && seat.showChat(data.content);
+    }
+    /**剩余张数 */
+    public getRemainCardNum() {
+        return this.model.remainCard;
     }
 }

@@ -317,6 +317,7 @@ export class SeatCtrl extends BaseCtrl {
         function hide() {
             scale_out(chat_box, 100);
         }
+    }
     protected addCard(data: AddInfo) {
         return this.link.card_box_ctrl.addCard(data.card, true);
     }
