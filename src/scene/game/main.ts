@@ -262,10 +262,16 @@ export class GameCtrl extends BaseCtrl {
                 this.link.bill_board_ctrl.addMsg(data);
             },
         );
+        this.onModel(
+            game_cmd.remain_card_change,
+            (data: { remain_card: number }) => {
+                this.link.card_heap_ctrl.setRemainCard(data.remain_card);
+            },
+        );
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
-        const { quick_start_ctrl, card_heap_ctrl, docker_ctrl } = this.link;
+        const { quick_start_ctrl, docker_ctrl } = this.link;
         const { roomInfo, roundInfo } = data;
         this.is_ready = true;
         /** 更新本地倒计时 */
@@ -278,8 +284,6 @@ export class GameCtrl extends BaseCtrl {
         }
 
         if (roundInfo) {
-            this.model.remainCard = roundInfo.remainCard;
-            card_heap_ctrl.setRemainCard(roundInfo.remainCard);
             docker_ctrl.setRate(roundInfo.bombProb);
             const turnDirection = roundInfo.turnDirection;
             if (turnDirection) {
@@ -329,8 +333,6 @@ export class GameCtrl extends BaseCtrl {
         }
         this.model.addPlayerCard(data);
         docker_ctrl.setRate(data.bombProb);
-        this.model.remainCard = data.remainCard;
-        card_heap_ctrl.setRemainCard(data.remainCard);
     }
     public onServerTurn(data: TurnsData) {
         this.model.setSpeaker(data.speakerId);
@@ -520,6 +522,7 @@ export class GameCtrl extends BaseCtrl {
         turn_arrow_ctrl.reset();
         this.cur_seat_id = undefined;
         this.resetSeatPos();
+        this.model.reset();
     }
     public destroy() {
         this.offModel();
@@ -583,15 +586,17 @@ export class GameCtrl extends BaseCtrl {
     }
 
     public onServerSendChat(data) {
-        let seatId = this.model.getServerSeatIdByUserId(data.userId);
-        const seat = this.link.seat_ctrl_list[this.serverIdToLocal(seatId)];
+        const seat_id = this.model.getServerSeatIdByUserId(data.userId);
+        const seat = this.link.seat_ctrl_list[this.serverIdToLocal(seat_id)];
         log(data.userId);
-        log(seatId, this.serverIdToLocal(seatId));
+        log(seat_id, this.serverIdToLocal(seat_id));
         log(seat);
-        seat && seat.showChat(data.content);
+        if (seat) {
+            seat.showChat(data.content);
+        }
     }
-    /**剩余张数 */
+    /** 剩余张数 */
     public getRemainCardNum() {
-        return this.model.remainCard;
+        return this.model.remain_card;
     }
 }

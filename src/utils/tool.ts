@@ -97,6 +97,7 @@ export function convertPos(
 ) {
     ori_node.localToGlobal(pos);
     end_node.globalToLocal(pos);
+    return pos;
 }
 
 /** 置灰的滤镜 */

@@ -9,6 +9,7 @@ export const cmd = {
     add_player: 'add_player',
     card_type_change: 'card_type_change',
     discard_card: 'discard_card',
+    remain_card_change: 'remain_card_change',
     status_change: 'status_change',
     update_bill_board: 'update_bill_board',
     update_turn_arrows: 'update_turn_arrows',
@@ -55,9 +56,9 @@ export class GameModel extends BaseEvent {
     public create_user_id: string;
     private player_list: PlayerModel[] = [];
     /** 正在出的牌 */
-    private discard_card: CardModel;
-    /**剩余牌数 */
-    public remainCard: number;
+    private discard_cards = [] as CardModel[];
+    /** 剩余牌数 */
+    public remain_card: number;
     /** 游戏复盘 */
     public gameReplay(data: GameReplayData) {
         this.updatePlayers(data.userList);
@@ -135,7 +136,9 @@ export class GameModel extends BaseEvent {
         if (!data) {
             return;
         }
-        this.setSpeaker(data.speakerId);
+        const { speakerId, remainCard } = data;
+        this.setSpeaker(speakerId);
+        this.setRemainCard(remainCard);
         const hit_data = data.hitData;
         if (hit_data) {
             const { hitCard, hitInfo, hitUserId } = hit_data;
@@ -176,11 +179,17 @@ export class GameModel extends BaseEvent {
         }
     }
     public addPlayerCard(data: TakeData) {
-        const player = this.getPlayerById(data.userId);
-        player.addCard(data.takeCard, true);
-        if (data.clearEffect) {
+        const { userId, takeCard, clearEffect, remainCard } = data;
+        const player = this.getPlayerById(userId);
+        player.addCard(takeCard, true);
+        if (clearEffect) {
             player.clearBlindAndAnnoy();
         }
+        this.setRemainCard(remainCard);
+    }
+    private setRemainCard(num: number) {
+        this.remain_card = num;
+        this.trigger(cmd.remain_card_change, { remain_card: num });
     }
     public getPlayerById(id: string) {
         const player_list = this.player_list;
@@ -200,7 +209,9 @@ export class GameModel extends BaseEvent {
         /** 清理原来出的牌 */
 
         this.updateBillboard(data);
-        const { discard_card } = this;
+        const last_discard_card = this.discard_cards[
+            this.discard_cards.length - 1
+        ];
         const player = this.getPlayerById(data.hitUserId);
         const hit_info = data.hitInfo;
         const hit_card = data.hitCard + '';
@@ -220,15 +231,12 @@ export class GameModel extends BaseEvent {
         }
         /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
         if (!card) {
-            if (!discard_card || discard_card.card_id !== hit_card) {
+            if (!last_discard_card || last_discard_card.card_id !== hit_card) {
                 card = new CardModel(hit_card);
                 this.trigger(cmd.discard_card, { card });
             } else {
-                card = discard_card;
+                card = last_discard_card;
             }
-        } else if (this.discard_card) {
-            this.discard_card.destroy();
-            this.discard_card = undefined;
         }
         /** 更新action */
         card.updateAction({
@@ -236,7 +244,9 @@ export class GameModel extends BaseEvent {
             game: this,
             player,
         });
-        this.discard_card = card;
+        if (last_discard_card !== card) {
+            this.discard_cards.push(card);
+        }
 
         if (hit_info.clearEffect) {
             player.clearBlindAndAnnoy();
@@ -275,13 +285,22 @@ export class GameModel extends BaseEvent {
     public getPlayerNum() {
         return this.player_list.length;
     }
-    getServerSeatIdByUserId(userId: string) {
+    public getServerSeatIdByUserId(userId: string) {
         let result = null;
+        const user_id = userId + '';
         this.player_list.forEach(player => {
-            if (player.user_id == userId) {
+            if (player.user_id === user_id) {
                 result = player.seat_id;
             }
         });
         return result;
+    }
+    public reset() {
+        const { discard_cards } = this;
+        for (let len = discard_cards.length, i = len - 1; i >= 0; i--) {
+            discard_cards[i].destroy();
+            discard_cards.splice(i, 1);
+        }
+        this.discard_cards = [];
     }
 }

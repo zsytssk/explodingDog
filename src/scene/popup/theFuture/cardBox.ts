@@ -1,6 +1,7 @@
 import { CardCtrl } from './card';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { setStyle } from '../../../mcTree/utils/animate';
+import { log } from '../../../mcTree/utils/zutil';
 
 interface Link {
     card_list: CardCtrl[];
@@ -32,22 +33,23 @@ export class CardBoxCtrl extends BaseCtrl {
         const { card_list, first_sign } = this.link;
         /** 排列未选择的牌 */
         const len = card_list.length;
-        let first_pos;
         for (let i = 0; i < len; i++) {
-            const props = card_list[i].tweenMove(i, len);
             if (i === 0) {
-                first_pos = props;
+                card_list[i].tweenMove(i, len).then(props => {
+                    if (len === 1) {
+                        first_sign.visible = false;
+                    } else {
+                        first_sign.visible = true;
+                        setStyle(first_sign, {
+                            rotation: props.rotation,
+                            x: props.x + first_sign.width / 2,
+                            y: props.y,
+                        });
+                    }
+                });
+            } else {
+                card_list[i].tweenMove(i, len);
             }
-        }
-        if (len === 1) {
-            first_sign.visible = false;
-        } else {
-            first_sign.visible = true;
-            setStyle(first_sign, {
-                rotation: first_pos.rotation,
-                x: first_pos.x,
-                y: first_sign.y - 10,
-            });
         }
     }
     public addCard(card: string) {
@@ -56,6 +58,11 @@ export class CardBoxCtrl extends BaseCtrl {
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
+    }
+    public addCards(cards: string[]) {
+        for (const card of cards) {
+            this.addCard(card);
+        }
         this.sortCard();
     }
     public getCardNum() {

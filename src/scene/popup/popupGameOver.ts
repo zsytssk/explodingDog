@@ -10,8 +10,8 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     name = 'game_over';
     group = 'exploding';
     CONFIG = {
-        closeByGroup: true
-    }
+        closeByGroup: true,
+    };
     game_ctrl;
     constructor(game_ctrl) {
         super();
@@ -30,10 +30,10 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         this.btnAgain.on(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
                 this.close();
-                //重新开始匹配
+                // 重新开始匹配
                 Sail.io.emit(CMD.JOIN_ROOM, {
                     cardType: this.game_ctrl.getCardType(),
-                    type: 'quick'
+                    type: 'quick',
                 });
             } else {
                 Sail.io.emit(CMD.PLAY_INVITE);
@@ -42,7 +42,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     }
     updateView(data) {
         const { avatarBox } = this;
-        //添加用户头像
+        // 添加用户头像
         data.list.forEach((user, index) => {
             let avatar = new Avatar(user);
             avatar.left =
@@ -80,7 +80,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         this.isUserCreate = data.isUserCreate;
         this.timerOnce(3000, this, () => {
             Laya.Tween.to(this.btnAgain, { alpha: 1 }, 1000);
-            Laya.Tween.to(this.btnBack, { alpha: 1 }, 1000)
+            Laya.Tween.to(this.btnBack, { alpha: 1 }, 1000);
         });
     }
 
@@ -96,14 +96,13 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     public updateInviteIcon(data) {
         getChildren(this.avatarBox).forEach(avatar => {
             data.list.forEach(item => {
-                log(item)
+                log(item);
                 if (item.userId == avatar.getUserId() && item.status != 0) {
                     avatar.setInviteStatus(item.status);
                 }
-            })
+            });
         });
     }
-
 }
 
 class MaxInfo extends ui.popup.component.maxInfoUI {

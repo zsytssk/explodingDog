@@ -157,8 +157,9 @@ export class CardCtrl extends BaseCtrl {
         };
     }
     protected discard() {
-        const { card_box } = this.link;
+        const { card_box, view } = this.link;
         card_box.discardCard(this);
+        view.zOrder = 0;
     }
     /** 其他用户的牌在被给出时直接销毁 */
     protected give() {
@@ -186,6 +187,7 @@ export class CardCtrl extends BaseCtrl {
 
         return tween({
             end_props: {
+                rotation: 0,
                 scaleX: scale,
                 scaleY: scale,
                 x: wrap_pos.x,
