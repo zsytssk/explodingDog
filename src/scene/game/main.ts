@@ -322,6 +322,7 @@ export class GameCtrl extends BaseCtrl {
         }
         this.link.docker_ctrl.setRate(data.bombProb);
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
+        this.model.setRemainCard(data.remainCard);
         this.model.updatePlayersCards(data);
     }
     /** 拿牌 */

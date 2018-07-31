@@ -4,15 +4,15 @@ export const RES = {
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
         {
             type: Laya.Loader.ATLAS,
-            url: 'res/atlas/images/component/cards.atlas',
+            url: 'res/atlas/images/component/card.atlas',
+        },
+        {
+            type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/cardType.atlas',
         },
         {
             url: 'res/atlas/images/component/avatar.atlas',
             type: Laya.Loader.ATLAS,
-        },
-        {
-            type: Laya.Loader.ATLAS,
-            url: 'res/atlas/images/component/cards.atlas',
         },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
         {
