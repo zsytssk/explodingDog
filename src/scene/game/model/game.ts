@@ -302,5 +302,7 @@ export class GameModel extends BaseEvent {
             discard_cards.splice(i, 1);
         }
         this.discard_cards = [];
+        //重置用户
+        this.updatePlayers([]);
     }
 }

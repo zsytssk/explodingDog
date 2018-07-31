@@ -481,7 +481,6 @@ export class GameCtrl extends BaseCtrl {
         let delay = 0;
         const popup_defuse = Sail.director.getDialogByName('popup_defuse');
         if (popup_defuse) {
-            popup_defuse.close();
             Sail.director.closeByName('popup_defuse');
             delay = 3000;
         }
