@@ -187,7 +187,7 @@ export class GameModel extends BaseEvent {
         }
         this.setRemainCard(remainCard);
     }
-    private setRemainCard(num: number) {
+    public setRemainCard(num: number) {
         this.remain_card = num;
         this.trigger(cmd.remain_card_change, { remain_card: num });
     }

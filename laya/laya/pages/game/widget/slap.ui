@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":94,"x":46,"width":597,"visible":false,"var":"hand_back","skin":"images/game/hand_back.png","scaleY":0.3,"scaleX":0.3,"rotation":-30,"height":738,"anchorY":1,"anchorX":0},
+            "props":{"y":94,"x":46,"width":597,"visible":false,"var":"hand_back","skin":"images/game/give_card_hand.png","scaleY":0.3,"scaleX":0.3,"rotation":-30,"height":738,"anchorY":1,"anchorX":0},
             "nodeParent":1,
             "label":"Image(hand_back)",
             "isDirectory":false,

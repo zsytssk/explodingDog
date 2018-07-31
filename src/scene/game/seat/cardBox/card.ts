@@ -7,10 +7,16 @@ import {
     AnnoyStatus,
 } from '../../model/card/card';
 import { ActionSendData } from '../../model/card/action';
-import { getCardInfo, convertPos, stopSkeleton } from '../../../../utils/tool';
+import {
+    getCardInfo,
+    convertPos,
+    stopSkeleton,
+    degreeToAngle,
+} from '../../../../utils/tool';
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import { CMD } from '../../../../data/cmd';
 import { CardBoxCtrl } from './cardBox';
+import { log } from '../../../../mcTree/utils/zutil';
 
 type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
@@ -210,8 +216,11 @@ export class CardCtrl extends BaseCtrl {
         let y = (view.height * scale) / 2;
 
         const rel_hal = index - (all - 1) / 2;
-        y += Math.abs(rel_hal) * 3;
-        const rotation = rel_hal * 10;
+        let rotation = rel_hal * 10;
+        if (all + 1 > 10) {
+            rotation = (rel_hal * 80) / all;
+        }
+        y += rel_hal * Math.tan(degreeToAngle(rotation)) * 5;
         let end_props = { y, x, rotation } as AnyObj;
 
         if (this.is_insert) {

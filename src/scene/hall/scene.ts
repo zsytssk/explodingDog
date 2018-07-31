@@ -22,7 +22,7 @@ export class Hall extends Sail.Scene {
             [CMD.CREATE_ROOM]: this.createRoom,
         };
         Sail.io.register(this.ACTIONS, this);
-        this.bgImg = new Laya.Image('images/bg/bg.jpg');
+        this.bgImg = new Laya.Image('images/component/bg.jpg');
         this.bgImg.size(Laya.stage.width, Laya.stage.height);
         this.topbar = new TopBar();
         this.topbar.top = 20;

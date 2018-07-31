@@ -4,40 +4,33 @@ export const RES = {
         { url: 'res/atlas/images/component.atlas', type: Laya.Loader.ATLAS },
         {
             type: Laya.Loader.ATLAS,
-            url: 'res/atlas/images/component/cards.atlas',
+            url: 'res/atlas/images/component/card.atlas',
+        },
+        {
+            type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/cardType.atlas',
         },
         {
             url: 'res/atlas/images/component/avatar.atlas',
             type: Laya.Loader.ATLAS,
         },
-        {
-            type: Laya.Loader.ATLAS,
-            url: 'res/atlas/images/component/cards.atlas',
-        },
         { url: 'res/atlas/images/component.png', type: Laya.Loader.IMAGE },
+
         {
-            url: 'res/atlas/images/component/cards.atlas',
-            type: Laya.Loader.ATLAS,
-        },
-        {
-            url: 'res/atlas/images/component/cards.png',
+            url: 'images/component/cardType/icon_card1.png',
             type: Laya.Loader.IMAGE,
         },
         {
-            url: 'images/component/cards/icon_card1.png',
+            url: 'images/component/cardType/icon_card2.png',
             type: Laya.Loader.IMAGE,
         },
         {
-            url: 'images/component/cards/icon_card2.png',
-            type: Laya.Loader.IMAGE,
-        },
-        {
-            url: 'images/component/cards/icon_card3.png',
+            url: 'images/component/cardType/icon_card3.png',
             type: Laya.Loader.IMAGE,
         },
     ],
     HALL: [
-        { url: 'images/bg/bg.jpg', type: Laya.Loader.IMAGE },
+        { url: 'images/component/bg.jpg', type: Laya.Loader.IMAGE },
         { url: 'res/atlas/images/hall.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/rank.atlas', type: Laya.Loader.ATLAS },
         { url: 'images/hall/btn_bg.png', type: Laya.Loader.IMAGE },
@@ -50,10 +43,10 @@ export const RES = {
         { url: 'res/atlas/images/game/card.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/game/card.png', type: Laya.Loader.IMAGE },
         {
-            url: 'res/atlas/images/game/img_take_explode1.png',
+            url: 'images/game/img_take_explode1.png',
             type: Laya.Loader.IMAGE,
         },
-        { url: 'images/bg/bg2.jpg', type: Laya.Loader.IMAGE },
+        { url: 'images/component/bg2.jpg', type: Laya.Loader.IMAGE },
         { type: Laya.Loader.BUFFER, url: 'animation/slap.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/chaidan.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/zhadanjiqi_mopai.sk' },

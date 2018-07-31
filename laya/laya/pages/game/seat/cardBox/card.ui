@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/game/card/annoy1.png","height":238},
+            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/component/card/annoy1.png","height":238},
             "nodeParent":1,
             "label":"Image(card_face)",
             "isDirectory":false,
