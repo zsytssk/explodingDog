@@ -42,7 +42,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
                 }
                 this.ani.playbackRate(
                     (this.ani.player.playbackRate * this.remainTime) /
-                        (this.remainTime - 2),
+                    (this.remainTime - 2),
                 );
                 this.remainTime -= 2;
             });
@@ -68,12 +68,12 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         this.defuseCard.visible = true;
         this.defuseSeccess = true;
     }
-    close() {
+    closeEffect = new Laya.Handler(this, () => {
         if (this.curSeatCtrl) {
             this.curSeatCtrl.putCardBoxBack();
         }
-        super.close();
-    }
+        Sail.director.dialog.closeEffect.runWith(this);
+    });
     onClosed() {
         if (
             !this.defuseSeccess &&

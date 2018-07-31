@@ -320,6 +320,7 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(new PopupTip(msg));
             return;
         }
+        this.link.docker_ctrl.setRate(data.bombProb);
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
         this.model.updatePlayersCards(data);
     }
@@ -480,7 +481,7 @@ export class GameCtrl extends BaseCtrl {
         let delay = 0;
         const popup_defuse = Sail.director.getDialogByName('popup_defuse');
         if (popup_defuse) {
-            popup_defuse.close();
+            Sail.director.closeByName('popup_defuse');
             delay = 3000;
         }
         // 当前玩家爆炸延迟弹出结束
