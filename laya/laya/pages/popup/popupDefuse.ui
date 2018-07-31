@@ -55,7 +55,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":252,"x":774,"visible":false,"var":"defuseCard","skin":"images/game/card/defuse.png"},
+            "props":{"y":252,"x":774,"visible":false,"var":"defuseCard","skin":"images/component/card/defuse.png"},
             "nodeParent":1,
             "label":"Image(defuseCard)",
             "isDirectory":false,

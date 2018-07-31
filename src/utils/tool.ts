@@ -66,13 +66,13 @@ export function getCardInfo(card_id) {
     }
     if (typeof card_data === 'string') {
         return {
-            url: `images/game/card/${card_data}.png`,
+            url: `images/component/card/${card_data}.png`,
         };
     }
     const name = card_data.name;
     return {
         ...card_data,
-        url: `images/game/card/${name}.png`,
+        url: `images/component/card/${name}.png`,
     };
 }
 
@@ -183,4 +183,13 @@ export function playSkeleton(ani: Laya.Skeleton, ...params) {
             ani.play(...params);
         });
     });
+}
+
+/** 角度转化为弧度 */
+export function degreeToAngle(degrees) {
+    return (degrees * Math.PI) / 180;
+}
+/** 弧度转化为角度 */
+export function angleTodegree(angle) {
+    return (angle * 180) / Math.PI;
 }
