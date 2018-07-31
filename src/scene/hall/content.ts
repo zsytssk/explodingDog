@@ -1,8 +1,10 @@
 import { PopupCards } from '../popup/popupCards';
 import { checkLogin } from '../../utils/tool';
 import { PopupJoinRoom } from '../popup/popupJoinRoom';
+import { rankIcon } from './rankIcon';
 
 export class HallContent extends ui.hall.hallcontentUI {
+    rank: Laya.Box;//段位
     constructor() {
         super();
         this.init();
@@ -47,5 +49,8 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.winrate.changeText(`胜率:${(data.winRate * 100).toFixed(2)}%`);
         this.score.changeText(`积分:${data.score}`);
         this.expBar.value = data.currentExp / data.nextLevelExp;
+        this.rank = new rankIcon(data.danGrading);
+        this.rank.pos(35, 395);
+        this.userInfoBox.addChild(this.rank);
     }
 }
