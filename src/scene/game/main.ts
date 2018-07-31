@@ -316,6 +316,7 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(new PopupTip(msg));
             return;
         }
+        this.link.docker_ctrl.setRate(data.bombProb);
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
         this.model.updatePlayersCards(data);
     }
