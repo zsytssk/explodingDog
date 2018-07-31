@@ -9,10 +9,10 @@ export class CardPack extends ui.popup.component.cardPackUI {
     }
 
     init({ isLock, cardType, staminaCost }) {
-        this.bg.skin = `images/component/cards/icon_card${cardType}.png`;
+        this.bg.skin = `images/component/cardType/icon_card${cardType}.png`;
         (this.chooseBtn as Laya.Image).skin = isLock
-            ? `images/component/cards/btn_lock.png`
-            : `images/component/cards/btn_choose.png`;
+            ? `images/component/cardType/btn_lock.png`
+            : `images/component/cardType/btn_choose.png`;
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.iconI.visible = isLock;
         if (staminaCost) {
