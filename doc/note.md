@@ -1,4 +1,7 @@
 ## 2018-07-27 10:34:22
+
+* bugAvatar Avatar 是不是要做成动态的
+
 * remain_card_change 这每添加一个就注册一个事件方法有没有太麻烦
     * 有没有更简单的方式...
     * decorator watch...
