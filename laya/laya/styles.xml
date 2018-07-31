@@ -8,4 +8,5 @@
    <item name="font" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
    <item name="images/game/chat_other.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=43,98,24,47" picType="0" scale="0"/>
    <item name="images/game/chat_self.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=20,40,47,93" picType="0" scale="0"/>
+   <item name="images/pop/charge/tag_bg.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=19,24,46,29" picType="0" scale="0"/>
 </res>
