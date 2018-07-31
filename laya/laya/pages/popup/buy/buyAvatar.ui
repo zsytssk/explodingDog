@@ -16,7 +16,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"skin":"images/pop/buyCardType/bg.png"},
+            "props":{"y":0,"x":0,"skin":"images/pop/buy/bg.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":16,"x":12,"skin":"images/pop/buyCardType/shadow.png"},
+            "props":{"y":16,"x":12,"skin":"images/pop/buy/shadow.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -54,7 +54,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"skin":"images/pop/buyCardType/inner_bg.png","name":"bg"},
+                    "props":{"skin":"images/pop/buy/inner_bg.png","name":"bg"},
                     "nodeParent":27,
                     "label":"Image(bg)",
                     "isDirectory":false,
@@ -67,7 +67,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"skin":"images/pop/buyCardType/avatar_list.png"},
+                    "props":{"skin":"images/pop/buy/avatar_list.png"},
                     "nodeParent":27,
                     "label":"Image",
                     "isDirectory":false,
@@ -93,7 +93,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"skin":"images/pop/buyCardType/title_bg.png"},
+                    "props":{"skin":"images/pop/buy/title_bg.png"},
                     "nodeParent":9,
                     "label":"Image",
                     "isDirectory":false,
@@ -106,7 +106,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":40,"x":82,"skin":"images/pop/buyCardType/avatar_group1_title.png"},
+                    "props":{"y":40,"x":82,"skin":"images/pop/buy/avatar_group1_title.png"},
                     "nodeParent":9,
                     "label":"Image",
                     "isDirectory":false,

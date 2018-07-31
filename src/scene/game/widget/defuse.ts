@@ -36,17 +36,18 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     onOpened() {
         if (!this.curSeatCtrl.haveCard('3101')) {
             this.timerLoop(1000, this, this.countdown);
-            Laya.stage.on(Laya.Event.CLICK, this, () => {
-                if (this.remainTime <= 0) {
-                    return;
-                }
-                this.ani.playbackRate(
-                    (this.ani.player.playbackRate * this.remainTime) /
-                    (this.remainTime - 2),
-                );
-                this.remainTime -= 2;
-            });
+            Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
         }
+    }
+    onClickAction() {
+        if (this.remainTime <= 0) {
+            return;
+        }
+        this.ani.playbackRate(
+            (this.ani.player.playbackRate * this.remainTime) /
+            (this.remainTime - 2),
+        );
+        this.remainTime -= 2;
     }
     countdown() {
         if (this.remainTime <= 0) {
@@ -75,6 +76,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         Sail.director.dialog.closeEffect.runWith(this);
     });
     onClosed() {
+        Laya.stage.off(Laya.Event.CLICK, this, this.onClickAction);
         if (
             !this.defuseSeccess &&
             !Sail.director.getDialogByName('popup_take_explode')
