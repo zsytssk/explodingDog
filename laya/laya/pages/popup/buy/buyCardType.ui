@@ -16,7 +16,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"skin":"images/pop/buyCardType/bg.png"},
+            "props":{"y":0,"x":0,"skin":"images/pop/buy/bg.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":16,"x":12,"skin":"images/pop/buyCardType/shadow.png"},
+            "props":{"y":16,"x":12,"skin":"images/pop/buy/shadow.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -42,7 +42,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":523,"x":-35,"skin":"images/pop/buyCardType/bottom_tag.png"},
+            "props":{"y":523,"x":-35,"skin":"images/pop/buy/bottom_tag.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -67,7 +67,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"skin":"images/pop/buyCardType/inner_bg.png","name":"bg"},
+                    "props":{"skin":"images/pop/buy/inner_bg.png","name":"bg"},
                     "nodeParent":27,
                     "label":"Image(bg)",
                     "isDirectory":false,
@@ -116,7 +116,7 @@
                                         {
                                             "x":75,
                                             "type":"Image",
-                                            "props":{"y":50,"x":3,"skin":"images/pop/buyCardType/icon_shadow.png"},
+                                            "props":{"y":50,"x":3,"skin":"images/pop/buy/icon_shadow.png"},
                                             "nodeParent":21,
                                             "label":"Image",
                                             "isDirectory":false,
@@ -143,7 +143,7 @@
                                 {
                                     "x":60,
                                     "type":"Image",
-                                    "props":{"y":-1,"x":83,"width":93,"skin":"images/pop/buyCardType/inner_title_bg.png","sizeGrid":"20, 25, 20, 25","name":"name_bg","height":40},
+                                    "props":{"y":-1,"x":83,"width":93,"skin":"images/pop/buy/inner_title_bg.png","sizeGrid":"20, 25, 20, 25","name":"name_bg","height":40},
                                     "nodeParent":28,
                                     "label":"Image(name_bg)",
                                     "isOpen":true,
@@ -197,7 +197,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"skin":"images/pop/buyCardType/title_bg.png"},
+                    "props":{"skin":"images/pop/buy/title_bg.png"},
                     "nodeParent":9,
                     "label":"Image",
                     "isDirectory":false,
@@ -210,7 +210,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":40,"x":117,"skin":"images/pop/buyCardType/crazy_title.png"},
+                    "props":{"y":40,"x":117,"skin":"images/pop/buy/crazy_title.png"},
                     "nodeParent":9,
                     "label":"Image",
                     "isDirectory":false,
@@ -224,7 +224,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":533,"x":316,"stateNum":1,"skin":"images/pop/buyCardType/btn_green.png"},
+            "props":{"y":533,"x":316,"stateNum":1,"skin":"images/pop/buy/btn_green.png"},
             "nodeParent":1,
             "label":"Button",
             "isOpen":true,
