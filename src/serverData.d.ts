@@ -172,5 +172,11 @@ type GetMAllData = {
             perPrice: 50;
             purchased: 1;
         }[];
+        stamina: {
+            itemId: number;
+            itemList: number;
+            perPrice: 50;
+            purchased: 1;
+        }[];
     };
 };

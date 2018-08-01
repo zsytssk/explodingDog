@@ -5,12 +5,7 @@ import { ActionDataInfo, ActionSendData } from './action';
 import { ActionManager } from './actionManager';
 import { logErr } from '../../../../mcTree/utils/zutil';
 
-export type CardStatus =
-    | 'normal'
-    | 'wait_discard'
-    | 'discard'
-    | 'wait_give'
-    | 'exploding';
+export type CardStatus = 'normal' | 'wait_discard' | 'discard' | 'wait_give';
 export const cmd = {
     action_send: 'action_send',
     annoy_status: 'annoy_status',
