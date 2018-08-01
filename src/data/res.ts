@@ -40,8 +40,6 @@ export const RES = {
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
-        { url: 'res/atlas/images/game/card.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/game/card.png', type: Laya.Loader.IMAGE },
         {
             url: 'images/game/img_take_explode1.png',
             type: Laya.Loader.IMAGE,
@@ -63,9 +61,10 @@ export const RES = {
     POP: [
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/buy.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
         { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
-    ]
+    ],
 };

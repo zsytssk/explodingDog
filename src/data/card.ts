@@ -89,12 +89,6 @@ export const CARD_MAP = {
         show_count: true,
         type: 'annoy',
     },
-    '3931': {
-        count: 3,
-        name: 'annoy3',
-        show_count: true,
-        type: 'annoy',
-    },
     '4001': {
         count: 1,
         name: 'blind',
