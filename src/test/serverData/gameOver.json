@@ -46,7 +46,7 @@
                 }
             },
             {
-                "userId": "3004",
+                "userId": "3001",
                 "nickname": "blue",
                 "avatar": "101",
                 "isWinUser": 0,
@@ -62,7 +62,7 @@
                         "isChange": 0
                     },
                     "level": {
-                        "isChange": 0
+                        "isChange": 1
                     }
                 }
             },

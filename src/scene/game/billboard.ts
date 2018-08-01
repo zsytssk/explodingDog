@@ -63,11 +63,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-        fromUser: PlayerModel;
-        toUser?: PlayerModel;
-        cardId: string;
-        step?: number;
-    }) {
+            fromUser: PlayerModel;
+            toUser?: PlayerModel;
+            cardId: string;
+            step?: number;
+        }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
@@ -79,9 +79,9 @@ export class BillBoardCtrl {
             }
             avatarTo.skin = getAvatar(toUser.avatar);
         } else if (cardId == TURN_CHANGE_ID) {
-            avatarTo.skin = `images/game/card/icon_card.png`;
+            avatarTo.skin = `images/component/card/icon_card.png`;
         } else {
-            avatarTo.skin = `images/game/card/icon_unknow.png`;
+            avatarTo.skin = `images/component/card/icon_unknow.png`;
         }
         text += '\n';
         const cardDescribe = CARD_DISCRIBE_MAP[cardId];
@@ -95,7 +95,7 @@ export class BillBoardCtrl {
             if (!cardIcon.visible) {
                 cardIcon.visible = true;
             }
-            cardIcon.skin = `images/game/card/icon_${cardDescribe.icon}.png`;
+            cardIcon.skin = `images/component/card/icon_${cardDescribe.icon}.png`;
         } else {
             cardIcon.visible = false;
         }

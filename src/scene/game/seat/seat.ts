@@ -22,7 +22,7 @@ import { SlapCtrl, SlapType } from '../widget/slap';
 import { CardBoxCtrl } from './cardBox/cardBox';
 import { CardHeapCtrl } from '../cardHeap/main';
 
-export type SeatStatus = 'load_player' | 'clear' | PlayerStatus;
+export type SeatStatus = 'exploding' | 'load_player' | 'clear' | PlayerStatus;
 
 export interface Link {
     view: ui.game.seat.curSeatUI | ui.game.seat.otherSeatUI;
@@ -184,6 +184,7 @@ export class SeatCtrl extends BaseCtrl {
                     sprite: highlight,
                     time: 1000,
                 });
+                this.hideExplode();
                 break;
             case 'die':
                 empty_box.visible = false;
@@ -191,6 +192,7 @@ export class SeatCtrl extends BaseCtrl {
                 die_avatar.visible = true;
                 highlight.visible = false;
                 avatar.visible = false;
+                this.hideExplode();
                 break;
             case 'clear':
                 empty_box.visible = true;
@@ -199,7 +201,12 @@ export class SeatCtrl extends BaseCtrl {
                 avatar.skin = '';
                 nickname.text = '';
                 die_avatar.visible = false;
+                this.hideExplode();
                 break;
+            case 'exploding':
+                this.showExplode();
+                break;
+
             default:
                 highlight.visible = false;
         }
@@ -213,7 +220,6 @@ export class SeatCtrl extends BaseCtrl {
         if (status === 'complete') {
             stopAni(sprite);
             if (action === 'show_set_explode') {
-                // data.data.
                 const game_ctrl = queryClosest(this, 'name:game');
                 game_ctrl
                     .getChildByName('docker_ctrl')
@@ -237,6 +243,28 @@ export class SeatCtrl extends BaseCtrl {
         if (action === 'reverse_arrows') {
             this.reverseArrows(data);
         }
+        if (action === 'show_defuse') {
+            this.setStatus('exploding');
+        }
+        if (action === 'show_set_explode') {
+            this.setStatus('speak');
+        }
+    }
+
+    //显示头像炸弹
+    private showExplode() {
+        let ani = new Laya.Skeleton();
+        ani.load('animation/touxiangzhadan.sk', new Laya.Handler(this, () => {
+            ani.name = 'ani_explode';
+            ani.pos(75, 75);
+            ani.play(0, true);
+            this.link.player_box.addChild(ani);
+        }));
+    }
+    //销毁头像炸弹
+    private hideExplode() {
+        let ani = this.link.player_box.getChildByName('ani_explode');
+        ani && ani.destroy();
     }
 
     private reverseArrows(action_data) {

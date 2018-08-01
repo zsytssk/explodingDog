@@ -3,7 +3,7 @@
 import { race } from 'rxjs';
 import { log } from '../../../../mcTree/utils/zutil';
 import { GameModel } from '../game';
-import { PlayerModel } from '../player';
+import { PlayerModel, cmd } from '../player';
 import { ActionManager } from './actionManager';
 
 type Data = {
@@ -157,10 +157,6 @@ export class ShowDefuse extends Action {
     public name = 'show_defuse' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
-        if (!player.is_cur_player) {
-            // todo 面板显示
-            return;
-        }
         player
             .beActioned({
                 action: this.name,
@@ -170,6 +166,7 @@ export class ShowDefuse extends Action {
             .subscribe();
         log('act', data);
     }
+
 }
 
 export class SeeTheFuture extends Action {
@@ -281,14 +278,12 @@ export class ShowSetExplode extends Action {
     private name = 'show_set_explode' as ActionType;
     public act(data: ActionDataInfo) {
         const { player } = data;
-        if (player.is_cur_player) {
-            player
-                .beActioned({
-                    action: this.name,
-                    status: 'act',
-                })
-                .subscribe();
-        }
+        player
+            .beActioned({
+                action: this.name,
+                status: 'act',
+            })
+            .subscribe();
     }
     public complete(data: ActionDataInfo) {
         const { player } = data;
