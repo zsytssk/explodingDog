@@ -10,13 +10,22 @@ export class CardPack extends ui.popup.component.cardPackUI {
 
     init({ isLock, cardType, staminaCost }) {
         this.bg.skin = `images/component/cardType/icon_card${cardType}.png`;
+        this.describe.skin = `images/component/cardType/text_des${cardType}.png`;
         (this.chooseBtn as Laya.Image).skin = isLock
             ? `images/component/cardType/btn_lock.png`
             : `images/component/cardType/btn_choose.png`;
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.iconI.visible = isLock;
         if (staminaCost) {
-            this.staminaLabel.changeText(`(         - ${Math.abs(staminaCost)} ) `);
+            this.staminaLabel.text = `${Math.abs((staminaCost))}`;
+        }
+        if (cardType > 1) {
+            let ani = new Laya.Skeleton();
+            ani.pos(0.5 * this.width, 0.4 * this.height);
+            this.addChild(ani);
+            ani.load(`animation/cardpack${cardType}.sk`, new Laya.Handler(this, () => {
+                ani.play(0, false);
+            }));
         }
         this.initEvent(cardType);
     }

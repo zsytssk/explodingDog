@@ -10,6 +10,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     remainTime: number; //倒计时 s
     ani: Laya.Skeleton;
     defuseSeccess = false; //弹出popup_take_explode弹层
+    private clickTimes = 0;//点击3次爆炸
     curSeatCtrl;
     constructor(remainTime) {
         super();
@@ -41,6 +42,14 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     }
     onClickAction() {
         if (this.remainTime <= 0) {
+            return;
+        }
+        if(this.clickTimes++ == 2){
+            Laya.stage.off(Laya.Event.CLICK, this, this.onClickAction);
+            this.clearTimer(this, this.countdown);
+            Sail.io.emit(CMD.HIT, {
+                hitCard: 3001,
+            });
             return;
         }
         this.ani.playbackRate(
