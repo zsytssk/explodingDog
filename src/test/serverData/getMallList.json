@@ -1,0 +1,101 @@
+{
+    "cmd": "getMallList",
+    "code": 200,
+    "res": {
+        "userId": 4001,
+        "data": {
+            "avatar": [
+                {
+                    "itemId": 1003,
+                    "itemList": [109, 110, 111, 112, 113, 114],
+                    "perPrice": 60,
+                    "purchased": 0
+                },
+                {
+                    "itemId": 1004,
+                    "itemList": [115, 116, 117, 118, 119, 120, 121],
+                    "perPrice": 80,
+                    "purchased": 0
+                },
+                {
+                    "itemId": 1005,
+                    "itemList": [122, 123, 124, 125, 126],
+                    "perPrice": 100,
+                    "purchased": 0
+                }
+            ],
+            "cards": [
+                {
+                    "itemId": 2002,
+                    "itemList": 2,
+                    "perPrice": 50,
+                    "purchased": 1
+                }
+            ],
+            "stamina": [
+                {
+                    "itemId": 3010,
+                    "itemList": 10,
+                    "perPrice": 5,
+                    "purchased": 0
+                },
+                {
+                    "itemId": 3030,
+                    "itemList": 30,
+                    "perPrice": 10,
+                    "purchased": 0
+                },
+                {
+                    "itemId": 3050,
+                    "itemList": 50,
+                    "perPrice": 20,
+                    "purchased": 0
+                },
+                {
+                    "itemId": 3100,
+                    "itemList": 100,
+                    "perPrice": 40,
+                    "purchased": 0
+                }
+            ],
+            "bone": [
+                {
+                    "rmb": 6,
+                    "buy_bone": 60,
+                    "first_present_bone": 60,
+                    "present_bone": 3
+                },
+                {
+                    "rmb": 30,
+                    "buy_bone": 300,
+                    "first_present_bone": 300,
+                    "present_bone": 18
+                },
+                {
+                    "rmb": 98,
+                    "buy_bone": 980,
+                    "first_present_bone": 980,
+                    "present_bone": 80
+                },
+                {
+                    "rmb": 198,
+                    "buy_bone": 1980,
+                    "first_present_bone": 1980,
+                    "present_bone": 240
+                },
+                {
+                    "rmb": 328,
+                    "buy_bone": 3280,
+                    "first_present_bone": 3280,
+                    "present_bone": 730
+                },
+                {
+                    "rmb": 648,
+                    "buy_bone": 6480,
+                    "first_present_bone": 6480,
+                    "present_bone": 2280
+                }
+            ]
+        }
+    }
+}

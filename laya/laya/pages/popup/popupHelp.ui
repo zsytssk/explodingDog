@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":1,
-    "selecteID":30,
+    "selectedBox":33,
+    "selecteID":42,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -119,7 +119,7 @@
                 {
                     "x":30,
                     "type":"List",
-                    "props":{"y":24,"x":19,"width":716,"var":"list","vScrollBarSkin":"''","height":560},
+                    "props":{"y":24,"x":19,"width":716,"var":"list","vScrollBarSkin":"''","height":579},
                     "nodeParent":33,
                     "label":"List(list)",
                     "isOpen":true,
@@ -167,6 +167,19 @@
                                         ]
                                 }]
                         }]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":548,"x":5,"width":738,"skin":"images/pop/help/gradient.png","sizeGrid":"0, 1, 0, 0","name":"gradient","height":56},
+                    "nodeParent":33,
+                    "label":"Image(gradient)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":42,
+                    "child":[
+                        ]
                 }]
         }],
     "animations":[

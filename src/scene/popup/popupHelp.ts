@@ -13,16 +13,19 @@ type DataItem = {
 };
 export class PopupHelp extends ui.popup.popupHelpUI {
     public name = 'help';
+    private top_bar: TopBar;
     constructor() {
         super();
         this.init();
     }
     private init() {
-        const topbar = new TopBar();
-        topbar.top = 20;
+        const top_bar = new TopBar();
+        top_bar.top = 20;
 
-        this.addChild(topbar);
-        topbar.setTitle('help');
+        this.addChild(top_bar);
+        top_bar.setTitle('help');
+        this.top_bar = top_bar;
+
         this.initData();
         this.initEvent();
     }
@@ -49,7 +52,8 @@ export class PopupHelp extends ui.popup.popupHelpUI {
     }
 
     private initEvent() {
-        const { list } = this;
+        const { list, top_bar } = this;
+        const { btnBack } = top_bar;
         list.selectEnable = true;
         list.selectHandler = new Laya.Handler(this, index => {
             const data = list.dataSource;
@@ -64,6 +68,10 @@ export class PopupHelp extends ui.popup.popupHelpUI {
             list.refresh();
         });
         list.selectedIndex = 0;
+
+        btnBack.on(Laya.Event.CLICK, this, () => {
+            Sail.director.closeByName(this.name);
+        });
     }
     private renderSider(data: DataItem) {
         const { sider_intro, sider_card } = this;
