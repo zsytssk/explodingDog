@@ -2,9 +2,10 @@ import { PopupCards } from '../popup/popupCards';
 import { checkLogin } from '../../utils/tool';
 import { PopupJoinRoom } from '../popup/popupJoinRoom';
 import { rankIcon } from './rankIcon';
+import { PopupHelp } from '../popup/popupHelp';
 
 export class HallContent extends ui.hall.hallcontentUI {
-    rank: Laya.Box;//段位
+    rank: Laya.Box; //段位
     constructor() {
         super();
         this.init();
@@ -14,7 +15,8 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.initEvent();
     }
     initEvent() {
-        this.btnPlay.on(Laya.Event.CLICK, this, () => {
+        const { btnPlay, btnCreate, btnJoin, btn_help } = this;
+        btnPlay.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
             }
@@ -24,7 +26,7 @@ export class HallContent extends ui.hall.hallcontentUI {
             popupCards.closeEffect = null;
             Sail.director.popScene(popupCards);
         });
-        this.btnCreate.on(Laya.Event.CLICK, this, () => {
+        btnCreate.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
             }
@@ -34,13 +36,15 @@ export class HallContent extends ui.hall.hallcontentUI {
             popupCards.closeEffect = null;
             Sail.director.popScene(popupCards);
         });
-        this.btnJoin.on(Laya.Event.CLICK, this, () => {
+        btnJoin.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
             }
             Sail.director.popScene(new PopupJoinRoom());
-        })
-
+        });
+        btn_help.on(Laya.Event.CLICK, this, () => {
+            Sail.director.popScene(new PopupHelp());
+        });
     }
     updateView(data) {
         this.userName.changeText(data.nickname);
