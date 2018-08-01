@@ -543,10 +543,12 @@ export class GameCtrl extends BaseCtrl {
      * @param data快速匹配再来一局
      * @param code
      */
-    public onServerJoinRoom(data, code) {
+    public onServerJoinRoom(data, code, msg) {
         if (code === 200) {
             this.reset();
             Sail.io.emit(CMD.GAME_REPLAY);
+        } else {
+            Sail.director.popScene(new PopupTip(msg));
         }
     }
     /** 邀请再来一局 */

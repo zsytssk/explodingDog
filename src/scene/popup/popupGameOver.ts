@@ -9,6 +9,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     private isUserCreate; // 是否为用户创建的房间
     name = 'game_over';
     group = 'exploding';
+    private onOpenFuns = [];//弹出后播放动画
     CONFIG = {
         closeByGroup: true,
     };
@@ -40,6 +41,9 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             }
         });
     }
+    onOpened() {
+        this.onOpenFuns.forEach(fun => fun());
+    }
     updateView(data) {
         const { avatarBox } = this;
         // 添加用户头像
@@ -51,9 +55,14 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             this.avatarBox.addChild(avatar);
             if (user.isWinUser) {
                 this.winUserNamme.text = user.nickname;
+                this.onOpenFuns.push(
+                    avatar.showCrown.bind(avatar)
+                );
             }
             if (isCurPlayer(user.userId)) {
-                log(user.userId);
+                if (user.updateInfo.level.isChange) {
+                    this.onOpenFuns.push(avatar.levelUp.bind(avatar));
+                }
                 this.levLabel.text = `Lv:${user.level}`;
                 tween({
                     sprite: this.progressBar,

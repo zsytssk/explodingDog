@@ -2,17 +2,14 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": 4002,
-        "hitCard": "3001",
-        "hitUserId": 4002,
+        "userId": 3002,
+        "hitCard": 3001,
+        "hitUserId": 3002,
         "hitInfo": {
-            "type": "annoy",
+            "type": "exploding",
             "step": 1,
-            "targetUserId": "4001",
             "discard": 1,
-            "annoyCardsIdx": [2],
-            "annoyCards": ["3521"],
-            "newAnnoyCards": ["3521"]
+            "remainTime": 6
         }
     }
 }
