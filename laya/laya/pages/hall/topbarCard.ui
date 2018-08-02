@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":10,"x":10,"var":"btnSetting","top":0,"skin":"images/component/btn_setting.png","right":20,"pivotY":40,"pivotX":45},
+            "props":{"y":40,"x":1270,"var":"btnSetting","skin":"images/component/btn_setting.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btnSetting)",
             "isDirectory":false,

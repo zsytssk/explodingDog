@@ -157,3 +157,26 @@ type AlarmData = {
 type OutRoomData = {
     userId: string;
 };
+
+type GetMAllData = {
+    userId: string;
+    data: {
+        avatar: {
+            itemId: number;
+            itemList: number[];
+            perPrice: number;
+        }[];
+        cards: {
+            itemId: number;
+            itemList: number;
+            perPrice: 50;
+            purchased: 1;
+        }[];
+        stamina: {
+            itemId: number;
+            itemList: number;
+            perPrice: 50;
+            purchased: 1;
+        }[];
+    };
+};

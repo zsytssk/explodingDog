@@ -61,7 +61,13 @@ export const RES = {
     POP: [
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/buy.atlas', type: Laya.Loader.ATLAS },
+        {
+            url: 'res/atlas/images/pop/component.atlas',
+            type: Laya.Loader.ATLAS,
+        },
         { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/setting.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/shop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
         { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },

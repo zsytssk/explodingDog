@@ -2,10 +2,14 @@
 export const CMD = {
     /** 卡包列表  */
     CARD_TYPE_LIST: 'cardTypeList',
+    /** 购买商城  */
+    EXCHANGE_GOODS: 'exchangeGoods',
     /** 游戏复盘 */
     GAME_REPLAY: 'gameReplay',
     /** 游戏开始 */
     GAME_START: 'gameStart',
+    /** 商城列表  */
+    GET_MALL_LIST: 'getMallList',
     /**  体力和骨头  */
     GET_USER_AMOUNT: 'getUserAmount',
     /** 用户信息 */
@@ -41,5 +45,5 @@ export const CMD = {
     /** 获取聊天列表 */
     GET_CHAT_LIST: 'getChatList',
     /** 发送聊天 */
-    SEND_CHAT: 'sendChat'
+    SEND_CHAT: 'sendChat',
 };
