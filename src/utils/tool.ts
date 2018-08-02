@@ -1,4 +1,4 @@
-import { CARD_MAP } from '../data/card';
+import { CARD_MAP, CARD_TYPE } from '../data/card';
 import { CONFIG } from '../data/config';
 import { logErr } from '../mcTree/utils/zutil';
 
@@ -241,4 +241,37 @@ export function popupFadeOutEffect(dialog) {
             ),
         );
     });
+}
+/** 将一个长字符串换行 */
+export function splitStr(str: string, line_char_num: number) {
+    const char2_reg = new RegExp(/[^\x00-\xff]/);
+    let result = '';
+    let num = 0;
+    for (const char of str) {
+        result += char;
+        if (char === '\n') {
+            num = 0;
+            continue;
+        }
+        if (char2_reg.test(char)) {
+            num += 2;
+        } else {
+            num++;
+        }
+        if (num >= line_char_num) {
+            num = 0;
+            result += '\n';
+        }
+    }
+    return result;
+}
+
+/** 获取牌所属卡包字符串 */
+export function getBlongStr(belong: number[]) {
+    let result = '';
+    for (const type of belong) {
+        result += CARD_TYPE[type].name + ' ';
+    }
+    result += '\n中出现.';
+    return result;
 }

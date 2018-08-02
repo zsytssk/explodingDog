@@ -45,6 +45,7 @@ export class DiscardZoneCtrl extends BaseCtrl {
 
         card_ctrl.init();
         card_ctrl.setStyle({
+            rotation: random(-2, 2),
             x: view.width / 2,
             y: view.height / 2 - card_list.length,
         });

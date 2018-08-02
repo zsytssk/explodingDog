@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":33,
-    "selecteID":42,
+    "selectedBox":49,
+    "selecteID":47,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -57,6 +57,7 @@
                     "props":{"y":25,"x":46,"width":274,"var":"sider_card","skin":"images/component/card/alter_the_future2.png","height":284},
                     "nodeParent":32,
                     "label":"Image(sider_card)",
+                    "isOpen":true,
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
@@ -66,30 +67,109 @@
                 },
                 {
                     "x":30,
-                    "type":"Image",
-                    "props":{"y":253,"x":-3,"skin":"images/pop/help/help_sider_line.png"},
+                    "type":"Box",
+                    "props":{"y":253,"x":-3,"width":397,"height":60},
                     "nodeParent":32,
-                    "label":"Image",
-                    "isDirectory":false,
+                    "label":"Box",
+                    "isOpen":true,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
-                    "compId":29,
+                    "hasChild":true,
+                    "compId":45,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"skin":"images/pop/help/help_sider_line.png"},
+                            "nodeParent":45,
+                            "label":"Image",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":29,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"var":"sider_title","skin":"images/pop/help/cardTitle/alter_the_future2.png","centerY":0,"centerX":0},
+                            "nodeParent":45,
+                            "label":"Image(sider_title)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":43,
+                            "child":[
+                                ]
+                        }]
                 },
                 {
                     "x":30,
-                    "type":"Label",
-                    "props":{"y":324,"x":41,"width":293.625,"var":"sider_intro","text":"普通模式，疯狂模式，乱舞\\n模式中出现\\n\\n不拿牌，结束本轮回合。","leading":5,"height":58,"fontSize":24,"color":"#ffffff","bold":true},
+                    "type":"Box",
+                    "props":{"y":311,"x":37,"width":320,"height":122},
                     "nodeParent":32,
-                    "label":"Label(sider_intro)",
-                    "isDirectory":false,
+                    "label":"Box",
+                    "isOpen":false,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
-                    "compId":40,
+                    "hasChild":true,
+                    "compId":48,
                     "child":[
-                        ]
-                }]
+                        {
+                            "type":"Label",
+                            "props":{"x":0,"width":320,"var":"sider_intro","leading":5,"fontSize":22,"font":"SimHei","color":"#ffffff","centerY":0,"bold":false},
+                            "nodeParent":48,
+                            "label":"Label(sider_intro)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":40,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "x":30,
+                    "type":"Box",
+                    "props":{"y":441,"x":37},
+                    "nodeParent":32,
+                    "label":"Box",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":49,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Label",
+                            "props":{"y":0,"x":19,"width":281,"var":"belong","leading":5,"height":38,"fontSize":18,"font":"SimHei","color":"#ffffff","bold":false},
+                            "nodeParent":49,
+                            "label":"Label(belong)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":47,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":0,"x":0,"skin":"images/pop/help/cardTitle/cross.png"},
+                            "nodeParent":49,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":46,
+                            "child":[
+                                ]
+                        }]
+                }],
+            "$HIDDEN":false
         },
         {
             "x":15,

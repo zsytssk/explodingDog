@@ -10,3 +10,4 @@ laya/bin/*
 !laya/bin/*.html
 monitor
 dist
+Thumbs.db

@@ -729,30 +729,6 @@ export function addPressEvent(sprite) {
     });
 }
 
-export function extendUtil(sub_class, super_class, name_space) {
-    for (const p in super_class) {
-        if (!super_class.hasOwnProperty(p)) {
-            continue;
-        }
-        sub_class[p] = super_class[p];
-    }
-    if (typeof sub_class === 'function' && typeof super_class === 'function') {
-        function __() {
-            this.constructor = sub_class;
-        }
-        sub_class.prototype =
-            super_class === null
-                ? Object.create(super_class)
-                : ((__.prototype = super_class.prototype), new __());
-    }
-
-    if (name_space) {
-        const arr_space = name_space.split('.');
-        nameMap(arr_space, null, sub_class);
-    }
-    return sub_class;
-}
-
 export const log = createLog();
 export const logAll = createLogAll();
 export const group = createLog('groupCollapsed');

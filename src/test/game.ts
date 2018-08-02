@@ -10,6 +10,8 @@ import { default as SeeTheFutureData } from './serverData/seeTheFuture.json';
 import { default as userExplodingData } from './serverData/userExploding.json';
 import { default as gameOverData } from './serverData/gameOver.json';
 import { describe, assert } from '../mcTree/utils/testUtil';
+import { CardModel } from '../scene/game/model/card/card';
+import { CARD_MAP } from '../data/card';
 
 export function gameReplay() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
@@ -30,6 +32,15 @@ export function gameHit() {
 export function gameTake() {
     const game_ctrl = (window as any).game_ctrl as GameCtrl;
     game_ctrl.model.addPlayerCard(TakeData.res);
+}
+export function discardCards() {
+    for (const key in CARD_MAP) {
+        if (!CARD_MAP.hasOwnProperty(key)) {
+            continue;
+        }
+        const game_ctrl = (window as any).game_ctrl as GameCtrl;
+        game_ctrl.link.discard_zone_ctrl.discardCard(new CardModel(key));
+    }
 }
 export function gameSteal() {
     describe('game steal', it => {
