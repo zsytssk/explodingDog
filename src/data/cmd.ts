@@ -10,6 +10,8 @@ export const CMD = {
     GAME_START: 'gameStart',
     /** 商城列表  */
     GET_MALL_LIST: 'getMallList',
+    /**  获取排行版  */
+    GET_RANK_LIST: 'getRankList',
     /**  体力和骨头  */
     GET_USER_AMOUNT: 'getUserAmount',
     /** 用户信息 */

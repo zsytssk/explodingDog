@@ -105,6 +105,8 @@ export class AlarmCtrl extends BaseCtrl {
         });
     }
     public destroy() {
-        this.reset();
+        stopAni(this.count_ani);
+        clearTimeout(this.count_timeout);
+        super.destroy();
     }
 }

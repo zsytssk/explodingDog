@@ -1,57 +1,81 @@
 ## 2018-07-27 10:34:22
-* @bug 用户牌拖动最前面 报错
 
-* @note 全屏弹出层 显示应该是fadeIn
+* @ques 拖动出屏幕外的处理 + starDrag取消父类的处理
+* ? @todo 换房主 命令
+* ? 开局复盘时打出一张牌 出错??
+    * ...
 
-* @note 充值有首冲优惠没有做
+* ? list item 中的按钮点击效果怎么没有??
 
-* bugAvatar Avatar 是不是要做成动态的
+* @ 关闭按钮点击效果
 
-* remain_card_change 这每添加一个就注册一个事件方法有没有太麻烦
-    * 有没有更简单的方式...
-    * decorator watch...
-    * ---
-    * 如果card_heap需要根据需要创建 那么就必须放在这里..
-    * 这是比较合理的方式
+* @bug qpby
 
-* @bug 角度太大 其他人的牌 就 跑掉了
-    * 如何形成一个完美的圆弧
 
-* @ques 马一帆 dialog 关闭之前..
 
-* @ques 弹出层的自适应如何去做 @zy
+-   => todo
+    -   排行榜弹出层
+    -   领取狗粮弹出层
+    -   充值弹出层
+    -   头像购买弹框 + 更换头像界面
 
-* @优化
-    * 抓到炸弹 炸弹牌的出牌动画有问题
+-   ? dialog close effect 是默认的吗
 
-* @bug 连续两次turn2 无法摸牌
--   @note 优化
+-   @bug 用户牌拖动最前面 报错
+
+-   @note 全屏弹出层 显示应该是 fadeIn
+
+-   @note 充值有首冲优惠没有做
+
+-   bugAvatar Avatar 是不是要做成动态的
+
+-   remain_card_change 这每添加一个就注册一个事件方法有没有太麻烦
+
+    -   有没有更简单的方式...
+    -   decorator watch...
+    -   ***
+    -   如果 card_heap 需要根据需要创建 那么就必须放在这里..
+    -   这是比较合理的方式
+
+-   @bug 角度太大 其他人的牌 就 跑掉了
+
+    -   如何形成一个完美的圆弧
+
+-   @ques 马一帆 dialog 关闭之前..
+
+-   @ques 弹出层的自适应如何去做 @zy
+
+-   @优化
+
+    -   抓到炸弹 炸弹牌的出牌动画有问题
+
+-   @bug 连续两次 turn2 无法摸牌
+
+*   @note 优化
     -   当前牌上下错位
     -   其他人牌的扇形
     -   theFuture 中的位置...
 
-* @bug 再来一局原来的牌没有销毁
+-   @bug 再来一局原来的牌没有销毁
 
-* @note 聊天能不能放在另外一个类中...
-*  @bug cardHeep 乱拖动会错位...
+-   @note 聊天能不能放在另外一个类中...
+-   @bug cardHeep 乱拖动会错位...
 
--   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
+*   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
 
     -   this.space
 
--   @note
+*   @note
 
     -   公共资源
     -   牌的名称需要做成图片吗 图片就是很多图片
     -   牌上的阴影 如何处理
 
--   @bug 机器人要牌 give_Card 不消失
+*   @bug 机器人要牌 give_Card 不消失
 
-*   @note dialog 有没有关闭之前
+-   @note dialog 有没有关闭之前
 
-
-
--   @todo
+*   @todo
 
     -   自适应 + 音效 + ...
     -   牌的说明
@@ -60,38 +84,38 @@
     -   偷看动画
     -   @bug 打出 defuse CardBox 飞回时位置有问题...
 
--   缺失弹出层
+*   缺失弹出层
 
     -   充值弹出层
     -   头像购买弹框
     -   商城弹出层
 
--   @note 优化
+*   @note 优化
 
     -   当前牌上下错位
 
--   login :union 这是什么意思
+*   login :union 这是什么意思
 
--   neovim lua
+*   neovim lua
 
--   @bug 抽出的牌没有打出 反而重新创建牌
+*   @bug 抽出的牌没有打出 反而重新创建牌
     -   和牌没有关系
 
-*   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
+-   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
     -   但是如果是复盘 我就无法触发 action 的 act, 也无法执行绑定了 fuck
     -   其实我可以把 player be_action 做成一个数组， 如果他被作用了， 我就创建一个 action 放到数组里
     -   结束直接清除就可以了
 
--   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+*   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
 
     -   card status 用来 服务器 hit 时候判断 能不能出 能不能 give
     -   这还是需要的
 
--   @note theFuture card 移动放到 LayaStage 中
+*   @note theFuture card 移动放到 LayaStage 中
 
     -   drawCard
 
--   @ques 牌如何从牌堆 飞到用户手上
+*   @ques 牌如何从牌堆 飞到用户手上
     -   seat 和 cardHeap 如何相互引用
     -   如何开启
     -   如何关闭
@@ -695,7 +719,7 @@ _ 状态清除
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                                 @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                                   @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

@@ -1,0 +1,241 @@
+{
+    "cmd": "getRankList",
+    "code": 200,
+    "res": {
+        "userId": 4001,
+        "list": [
+            {
+                "userId": 2038441339,
+                "rank": 1,
+                "avatar": "102",
+                "score": 1800,
+                "winRate": 0.8889
+            },
+            {
+                "userId": 2037595352,
+                "rank": 2,
+                "avatar": "103",
+                "score": 1700,
+                "winRate": 0.5
+            },
+            {
+                "userId": 4004,
+                "rank": 3,
+                "avatar": "101",
+                "score": 1600,
+                "winRate": 0.625
+            },
+            {
+                "userId": 20063223,
+                "rank": 4,
+                "avatar": "101",
+                "score": 1500,
+                "winRate": 0.3333
+            },
+            {
+                "userId": 4002,
+                "rank": 5,
+                "avatar": "101",
+                "score": 1412,
+                "winRate": 0.4953
+            },
+            {
+                "userId": 4001,
+                "rank": 6,
+                "avatar": "101",
+                "score": 1313,
+                "winRate": 0.5063
+            },
+            {
+                "userId": 3005,
+                "rank": 7,
+                "avatar": "101",
+                "score": 1231,
+                "winRate": 0.7229
+            },
+            {
+                "userId": 3004,
+                "rank": 8,
+                "avatar": "101",
+                "score": 1080,
+                "winRate": 0.369
+            },
+            {
+                "userId": 2038409396,
+                "rank": 9,
+                "avatar": "101",
+                "score": 1008,
+                "winRate": 0.625
+            },
+            {
+                "userId": 2038409390,
+                "rank": 10,
+                "avatar": "101",
+                "score": 1003,
+                "winRate": 0.625
+            },
+            {
+                "userId": 2038409394,
+                "rank": 11,
+                "avatar": "101",
+                "score": 1003,
+                "winRate": 0.5
+            },
+            {
+                "userId": 2038409398,
+                "rank": 12,
+                "avatar": "101",
+                "score": 1002,
+                "winRate": 0.3333
+            },
+            {
+                "userId": 2037593064,
+                "rank": 13,
+                "avatar": "104",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 3302,
+                "rank": 14,
+                "avatar": "102",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 272409793,
+                "rank": 15,
+                "avatar": "108",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038409392,
+                "rank": 16,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 272411063,
+                "rank": 17,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 125,
+                "rank": 18,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 123,
+                "rank": 19,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 124,
+                "rank": 20,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038414252,
+                "rank": 21,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038414324,
+                "rank": 22,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038414250,
+                "rank": 23,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038409400,
+                "rank": 24,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038414254,
+                "rank": 25,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038414256,
+                "rank": 26,
+                "avatar": "101",
+                "score": 1000,
+                "winRate": 0
+            },
+            {
+                "userId": 2038409384,
+                "rank": 27,
+                "avatar": "101",
+                "score": 999,
+                "winRate": 0
+            },
+            {
+                "userId": 3001,
+                "rank": 28,
+                "avatar": "101",
+                "score": 999,
+                "winRate": 0.4681
+            },
+            {
+                "userId": 4003,
+                "rank": 29,
+                "avatar": "104",
+                "score": 996,
+                "winRate": 0.1667
+            },
+            {
+                "userId": 2038409382,
+                "rank": 30,
+                "avatar": "101",
+                "score": 994,
+                "winRate": 0.125
+            },
+            {
+                "userId": 3003,
+                "rank": 31,
+                "avatar": "101",
+                "score": 994,
+                "winRate": 0.4342
+            },
+            {
+                "userId": 3002,
+                "rank": 32,
+                "avatar": "102",
+                "score": 989,
+                "winRate": 0.4545
+            }
+        ],
+        "myRankInfo": {
+            "userId": 4001,
+            "rank": 6,
+            "nickname": "哈尔滨test",
+            "avatar": "101",
+            "score": "1313",
+            "winRate": 0.5063291139240507
+        }
+    }
+}

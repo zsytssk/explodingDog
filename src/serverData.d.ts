@@ -180,3 +180,23 @@ type GetMAllData = {
         }[];
     };
 };
+
+type GetRankListData = {
+    userId: string;
+    list: {
+        userId: string;
+        rank: number;
+        nickname: string;
+        avatar: string;
+        score: number;
+        winRate: number;
+    }[];
+    myRankInfo: {
+        userId: string;
+        rank: number;
+        nickname: string;
+        avatar: string;
+        score: number;
+        winRate: number;
+    };
+};

@@ -42,7 +42,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":-8,"x":531,"var":"btnClose","stateNum":1,"skin":"images/component/btn_close.png","name":"close"},
+            "props":{"y":38,"x":581,"var":"btnClose","stateNum":1,"skin":"images/component/btn_close.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btnClose)",
             "isDirectory":false,

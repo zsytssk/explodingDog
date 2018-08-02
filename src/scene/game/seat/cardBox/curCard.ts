@@ -177,6 +177,7 @@ export class CurCardCtrl extends CardCtrl {
         card_move_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
+        card_box.has_card_drag = true;
 
         this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
         this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
@@ -186,8 +187,9 @@ export class CurCardCtrl extends CardCtrl {
         if (!this.is_selected) {
             return;
         }
-        const { wrap, view } = this.link;
+        const { wrap, view, card_box } = this.link;
         const pos = new Laya.Point(view.x, view.y);
+        card_box.has_card_drag = false;
 
         this.offNode(Laya.stage);
         view.stopDrag();

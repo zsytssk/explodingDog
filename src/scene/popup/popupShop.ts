@@ -2,6 +2,7 @@ import { TopBar } from '../hall/topbarCard';
 import { log, getElementsByName } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { CardPackShop } from './component/cardPackBaseShop';
+import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
 type Link = {
     tab: Laya.Tab;
     main_stack: Laya.ViewStack;
@@ -40,6 +41,8 @@ export class PopupShop extends ui.popup.popupShopUI {
     constructor() {
         super();
         this.init();
+        this.popupEffect = popupFadeInEffect(this);
+        this.closeEffect = popupFadeOutEffect(this);
     }
     private init() {
         this.initLink();

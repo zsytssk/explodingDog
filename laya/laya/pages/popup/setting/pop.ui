@@ -194,7 +194,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":-30,"x":732,"stateNum":1,"skin":"images/component/btn_close.png","name":"close"},
+            "props":{"y":16,"x":782,"stateNum":1,"skin":"images/component/btn_close.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(close)",
             "isDirectory":false,

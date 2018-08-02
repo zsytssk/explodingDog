@@ -21,6 +21,7 @@ type TouchInfo = {
 
 export class CurCardBoxCtrl extends CardBoxCtrl {
     protected link: Link;
+    public has_card_drag = false;
     private touch_info = {
         status: 'default',
     } as TouchInfo;
@@ -48,9 +49,6 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         const { view } = this.link;
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
-        this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseMove);
-        this.onNode(view, Laya.Event.MOUSE_UP, this.mouseEnd);
-        this.onNode(view, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
     private mouseDown(event: Laya.Event) {
         const { touch_info } = this;
@@ -62,9 +60,16 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             },
             status: 'start',
         };
+        this.onNode(Laya.stage, Laya.Event.MOUSE_MOVE, this.mouseMove);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.mouseEnd);
+        this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.mouseEnd);
     }
     private mouseMove(event: Laya.Event) {
         const { touch_info } = this;
+        if (this.has_card_drag) {
+            this.mouseEnd();
+            return;
+        }
         if (touch_info.status === 'default') {
             return;
         }
@@ -94,8 +99,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         view.x += delta.x;
         log('cardBox move', delta);
     }
-    private mouseEnd(event: Laya.Event) {
+    private mouseEnd() {
         const { touch_info } = this;
+        this.offNode(Laya.stage);
         if (touch_info.status !== 'move') {
             return;
         }
@@ -130,6 +136,8 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         let { card_list } = this.link;
         if (index > card_list.length - 1) {
             index = card_list.length - 1;
+        } else if (index < 0) {
+            index = 0;
         }
         card_list = card_list.filter(item => {
             return item !== card;

@@ -1,6 +1,10 @@
 import { TopBar } from '../hall/topbarCard';
 import { CARD_MAP } from '../../data/card';
-import { getCardInfo } from '../../utils/tool';
+import {
+    getCardInfo,
+    popupFadeOutEffect,
+    popupFadeInEffect,
+} from '../../utils/tool';
 
 type DataItem = {
     card: {
@@ -17,6 +21,8 @@ export class PopupHelp extends ui.popup.popupHelpUI {
     constructor() {
         super();
         this.init();
+        this.popupEffect = popupFadeInEffect(this);
+        this.closeEffect = popupFadeOutEffect(this);
     }
     private init() {
         const top_bar = new TopBar();

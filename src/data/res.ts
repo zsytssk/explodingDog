@@ -66,6 +66,7 @@ export const RES = {
             type: Laya.Loader.ATLAS,
         },
         { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/rank.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/setting.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/shop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },

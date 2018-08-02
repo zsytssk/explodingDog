@@ -193,3 +193,41 @@ export function degreeToAngle(degrees) {
 export function angleTodegree(angle) {
     return (angle * 180) / Math.PI;
 }
+
+export function popupFadeInEffect(dialog) {
+    return new Laya.Handler(dialog, () => {
+        dialog.scale(1, 1);
+        dialog.alpha = 0;
+        Laya.Tween.to(
+            dialog,
+            {
+                alpha: 1,
+            },
+            150,
+            Laya.Ease.linearNone,
+            Laya.Handler.create(
+                this,
+                Sail.director.dialog.doOpen.bind(Sail.director.dialog),
+                [dialog],
+            ),
+        );
+    });
+}
+export function popupFadeOutEffect(dialog) {
+    return new Laya.Handler(dialog, () => {
+        dialog.alpha = 1;
+        Laya.Tween.to(
+            dialog,
+            {
+                alpha: 0,
+            },
+            150,
+            Laya.Ease.linearNone,
+            Laya.Handler.create(
+                this,
+                Sail.director.dialog.doClose.bind(Sail.director.dialog),
+                [dialog],
+            ),
+        );
+    });
+}

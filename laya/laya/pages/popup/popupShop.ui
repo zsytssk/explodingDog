@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":78,
-    "selecteID":131,
+    "selectedBox":55,
+    "selecteID":94,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":0,"x":-4,"stateNum":"1","skin":"images/pop/shop/icon_bd_strength.png","name":"item0"},
+                    "props":{"y":91,"x":101,"stateNum":"1","skin":"images/pop/shop/icon_bd_strength.png","name":"item0","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":55,
                     "label":"Button(item0)",
                     "isOpen":true,
@@ -67,7 +67,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":203,"x":-4,"stateNum":"1","skin":"images/pop/shop/icon_bd_cardtype.png","name":"item1"},
+                    "props":{"y":293,"x":101,"stateNum":"1","skin":"images/pop/shop/icon_bd_cardtype.png","name":"item1","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":55,
                     "label":"Button(item1)",
                     "isOpen":true,
@@ -93,7 +93,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":406,"x":-4,"stateNum":"1","skin":"images/pop/shop/icon_bd_avatar.png","name":"item2"},
+                    "props":{"y":496,"x":101,"stateNum":"1","skin":"images/pop/shop/icon_bd_avatar.png","name":"item2","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":55,
                     "label":"Button(item2)",
                     "isOpen":false,
@@ -206,7 +206,7 @@
                                         {
                                             "x":75,
                                             "type":"Button",
-                                            "props":{"y":239,"x":59,"stateNum":1,"skin":"images/pop/component/btn_green.png","name":"btn_buy"},
+                                            "props":{"y":239,"x":59,"stateNum":1,"skin":"images/pop/component/btn_green.png","name":"btn_buy","appendProps":"laya/pages/effect/scaleBtn.prop"},
                                             "nodeParent":68,
                                             "label":"Button(btn_buy)",
                                             "isOpen":true,
