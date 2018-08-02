@@ -117,7 +117,7 @@ export class SeatCtrl extends BaseCtrl {
     }
     private clearPlayer() {
         const { card_box_ctrl } = this.link;
-
+        this.hideExplode();
         this.loadedPlayer = false;
         this.setStatus('clear');
         this.offModel();
