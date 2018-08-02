@@ -10,6 +10,8 @@ export class PopupCards extends ui.popup.popupCardsUI {
     private topbar: TopBar;
     private actions: SailIoAction;
     private type: 'play' | 'create';
+    popupEffect = null;
+    closeEffect = null;
     constructor() {
         super();
         this.init();

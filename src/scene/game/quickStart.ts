@@ -36,6 +36,9 @@ export class QuickStartCtrl extends BaseCtrl {
         stopAni(light);
         stopAni(scroll_rect);
     }
+    public hideCountDown(){
+        this.link.countdown_view.visible = false;
+    }
     public show() {
         const { match_view, light, scroll_rect } = this.link;
         match_view.visible = true;

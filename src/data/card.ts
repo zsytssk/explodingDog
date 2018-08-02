@@ -147,7 +147,7 @@ export const CARD_DISCRIBE_MAP = {
     },
     '3101': {
         icon: 'defuse',
-        name: '剪断引线',
+        info: ['使用了剪断引线\n正在布置炸弹', '布置了炸弹']
     },
     '3201': {
         icon: 'skip',

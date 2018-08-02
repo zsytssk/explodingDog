@@ -339,9 +339,15 @@ export class GameCtrl extends BaseCtrl {
         this.model.setSpeaker(data.speakerId);
     }
     /** 离开房间 */
-    private onServerOutRoom(data: OutRoomData) {
+    private onServerOutRoom(data: OutRoomData, code?: number, msg?: string) {
+        if (code != 200) {
+            Sail.director.popScene(new PopupTip(msg));
+            return;
+        }
         if (isCurPlayer(data.userId)) {
             this.outRoom();
+        } else {
+            this.model.removePlayer(data.userId);
         }
     }
     /** 添加用户 */
@@ -511,6 +517,7 @@ export class GameCtrl extends BaseCtrl {
             discard_zone_ctrl,
             docker_ctrl,
             turn_arrow_ctrl,
+            quick_start_ctrl
         } = this.link;
 
         alarm_ctrl.reset();
@@ -520,6 +527,7 @@ export class GameCtrl extends BaseCtrl {
         discard_zone_ctrl.reset();
         docker_ctrl.reset();
         turn_arrow_ctrl.reset();
+        quick_start_ctrl.hideCountDown();
         this.cur_seat_id = undefined;
         this.resetSeatPos();
         this.model.reset();
@@ -578,6 +586,7 @@ export class GameCtrl extends BaseCtrl {
     }
 
     public onServerPlayAgain() {
+        this.reset();
         Sail.io.emit(CMD.GAME_REPLAY);
         Sail.director.closeByName('game_over');
         this.reset();
