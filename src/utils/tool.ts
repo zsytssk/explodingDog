@@ -129,34 +129,45 @@ export function getGrayFilter() {
 
 /** 整理gameReplay数据将当前用户的数据放到userList中， 且第一个 */
 export function formatGameReplayData(data: GameReplayData) {
-    const cur_user_info = data.curUserInfo;
-    let user_list = data.userList;
-    if (!user_list) {
+    let user_list = [];
+    const { userList, ...other } = data;
+    if (!userList) {
         user_list = [];
     }
-    for (let i = 0; i < user_list.length; i++) {
-        if (user_list[i].userId === cur_user_info.userId) {
-            user_list.splice(i, 1);
+    for (const key in userList) {
+        if (!userList.hasOwnProperty(key)) {
+            continue;
+        }
+        if (isCurPlayer(key)) {
+            user_list.unshift(userList[key]);
+        } else {
+            user_list.push(userList[key]);
         }
     }
-    user_list.unshift(cur_user_info);
     return {
-        ...data,
+        ...other,
         userList: user_list,
     };
 }
 export function formatUpdatePlayersData(data: UpdateUserData) {
-    const user_list = data.userList;
-    for (let i = 0; i < user_list.length; i++) {
-        const item = user_list[i];
-        if (isCurPlayer(item.userId)) {
-            user_list.splice(i, 1);
-            user_list.unshift(item);
+    let user_list = [];
+    const { userList, ...other } = data;
+    if (!userList) {
+        user_list = [];
+    }
+    for (const key in userList) {
+        if (!userList.hasOwnProperty(key)) {
+            continue;
+        }
+        if (isCurPlayer(key)) {
+            user_list.unshift(userList[key]);
+        } else {
+            user_list.push(userList[key]);
         }
     }
     return {
-        ...data,
-        user_list,
+        ...other,
+        userList: user_list,
     };
 }
 

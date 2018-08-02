@@ -63,7 +63,6 @@ type RoundInfoData = {
     bombProb: number;
 };
 type GameReplayData = {
-    curUserInfo: UserData;
     userList: UserData[];
     roomInfo: RoomInfoData;
     roundInfo: RoundInfoData;

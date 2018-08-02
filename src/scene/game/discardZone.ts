@@ -1,3 +1,4 @@
+import { random } from 'lodash';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { CardModel } from './model/card/card';
 import { CardCtrl } from './seat/cardBox/card';
@@ -5,12 +6,15 @@ import { CardCtrl } from './seat/cardBox/card';
 export interface Link {
     view: ui.game.discardZoneUI;
     card_box: Laya.Box;
+    card_list: CardCtrl[];
 }
 
 /** 出牌区域控制器 */
 export class DiscardZoneCtrl extends BaseCtrl {
     public name = 'discard_zone';
-    protected link = {} as Link;
+    protected link = {
+        card_list: [],
+    } as Link;
     /** 是否是由cardBox直接借过来， 就不需要自己自取创建了 */
     private is_borrowing = false;
     constructor(view: ui.game.discardZoneUI) {
@@ -32,26 +36,32 @@ export class DiscardZoneCtrl extends BaseCtrl {
         if (this.is_borrowing) {
             return;
         }
-        const { card_box } = this.link;
+        const { card_box, card_list } = this.link;
         const { view } = this.link;
         const card_ctrl = new CardCtrl(card, card_box);
+        card_list.push(card_ctrl);
 
         this.addChild(card_ctrl);
+
         card_ctrl.init();
         card_ctrl.setStyle({
             x: view.width / 2,
-            y: view.width / 2,
+            y: view.height / 2 - card_list.length,
         });
     }
-    public borrowCard(card: CardCtrl) {
-        if (!(card instanceof CardCtrl)) {
+    public borrowCard(card_ctrl: CardCtrl) {
+        if (!(card_ctrl instanceof CardCtrl)) {
             return;
         }
         this.is_borrowing = true;
-        const { card_box } = this.link;
-        this.addChild(card);
-        card.putCardInWrap(card_box).then(() => {
-            this.is_borrowing = false;
+        const { card_box, card_list, view } = this.link;
+        this.addChild(card_ctrl);
+        card_list.push(card_ctrl);
+        card_ctrl.putCardInWrap(card_box).then(() => {
+            card_ctrl.setStyle({
+                rotation: random(-2, 2),
+                y: view.height / 2 - card_list.length,
+            });
         });
     }
     public reset() {
