@@ -599,9 +599,6 @@ export class GameCtrl extends BaseCtrl {
     public onServerSendChat(data) {
         const seat_id = this.model.getServerSeatIdByUserId(data.userId);
         const seat = this.link.seat_ctrl_list[this.serverIdToLocal(seat_id)];
-        log(data.userId);
-        log(seat_id, this.serverIdToLocal(seat_id));
-        log(seat);
         if (seat) {
             seat.showChat(data.content);
         }

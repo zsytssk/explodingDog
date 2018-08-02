@@ -43,7 +43,7 @@ export class Hall extends Sail.Scene {
     }
 
     onResize(width, height) {
-        this.bgImg.size(Laya.stage.width, Laya.stage.height);
+        this.bgImg && this.bgImg.size(Laya.stage.width, Laya.stage.height);
     }
     updateUserAmount() {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
