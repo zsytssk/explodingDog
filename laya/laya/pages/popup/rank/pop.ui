@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":53,
-    "selecteID":66,
+    "selectedBox":73,
+    "selecteID":69,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -23,19 +23,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":2,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Image",
-            "props":{"y":23,"x":123,"skin":"images/pop/rank/title.png"},
-            "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":30,
             "child":[
                 ]
         },
@@ -67,7 +54,7 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":-37,"x":0,"width":1256,"var":"title_box","height":79},
+                    "props":{"y":-37,"x":-7,"width":1256,"var":"title_box","height":79},
                     "nodeParent":55,
                     "label":"Box(title_box)",
                     "isOpen":false,
@@ -129,7 +116,7 @@
                             "props":{"y":0,"x":746,"width":297,"skin":"images/pop/rank/bg_title.png"},
                             "nodeParent":57,
                             "label":"Image",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
@@ -137,7 +124,7 @@
                             "child":[
                                 {
                                     "type":"Image",
-                                    "props":{"y":15,"x":55,"skin":"images/pop/rank/txt_score.png"},
+                                    "props":{"y":15,"x":101,"skin":"images/pop/rank/txt_score.png"},
                                     "nodeParent":60,
                                     "label":"Image",
                                     "isDirectory":false,
@@ -153,7 +140,7 @@
                             "props":{"y":0,"x":1053,"skin":"images/pop/rank/bg_title.png"},
                             "nodeParent":57,
                             "label":"Image",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
@@ -161,7 +148,7 @@
                             "child":[
                                 {
                                     "type":"Image",
-                                    "props":{"y":15,"x":55,"skin":"images/pop/rank/txt_winrate.png"},
+                                    "props":{"y":15,"x":54,"skin":"images/pop/rank/txt_winrate.png"},
                                     "nodeParent":64,
                                     "label":"Image",
                                     "isDirectory":false,
@@ -177,9 +164,9 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":218,"x":50,"width":1207,"height":461},
+            "props":{"y":218,"x":50,"width":1207,"var":"list","vScrollBarSkin":"\"\"","height":350},
             "nodeParent":1,
-            "label":"List",
+            "label":"List(list)",
             "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
@@ -188,17 +175,110 @@
             "child":[
                 {
                     "x":30,
-                    "type":"UIView",
-                    "source":"popup/rank/item.ui",
-                    "props":{"name":"item"},
+                    "type":"Box",
+                    "props":{"y":0,"x":0,"width":1212,"renderType":"render","height":100},
                     "nodeParent":53,
-                    "label":"UIView(item)",
-                    "isDirectory":false,
+                    "label":"Box",
+                    "isOpen":true,
+                    "isDirectory":true,
                     "isAniNode":false,
-                    "hasChild":false,
-                    "compId":66,
+                    "hasChild":true,
+                    "compId":67,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"popup/rank/item.ui",
+                            "props":{"y":0,"x":0,"name":"item"},
+                            "nodeParent":67,
+                            "label":"UIView(item)",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":66,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "x":30,
+                    "type":"Box",
+                    "props":{"y":360,"x":-3},
+                    "nodeParent":53,
+                    "label":"Box",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":false,
+                    "hasChild":true,
+                    "compId":73,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":-13,"x":3,"width":1210,"skin":"images/pop/rank/bottom_bg.png","sizeGrid":"20,17,13,14","height":114},
+                            "nodeParent":73,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":68,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"popup/rank/curItem.ui",
+                            "props":{"y":6,"x":0,"var":"my_rank"},
+                            "nodeParent":73,
+                            "label":"UIView(my_rank)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":69,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":4,"x":200,"skin":"images/pop/rank/bottom_arrow.png"},
+                            "nodeParent":73,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":70,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":4,"x":703,"skin":"images/pop/rank/bottom_arrow.png"},
+                            "nodeParent":73,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":71,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"x":976,"skin":"images/pop/rank/bottom_arrow.png"},
+                            "nodeParent":73,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":72,
+                            "child":[
+                                ]
+                        }]
                 }]
         }],
     "animations":[

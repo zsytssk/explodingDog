@@ -1,6 +1,8 @@
 {
+    "x":0,
     "type":"Dialog",
     "selectedBox":1,
+    "selecteID":6,
     "referenceLines":null,
     "props":{"width":689,"sceneColor":"#ffffff","height":504},
     "nodeParent":-1,
@@ -12,6 +14,7 @@
     "compId":1,
     "child":[
         {
+            "x":15,
             "type":"Image",
             "props":{"y":0,"x":0,"skin":"images/hall/pop/bg_join.png"},
             "nodeParent":1,
@@ -24,6 +27,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"Image",
             "props":{"y":11,"x":68,"skin":"images/hall/pop/text_join.png"},
             "nodeParent":1,
@@ -36,6 +40,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"Image",
             "props":{"y":104,"x":102,"skin":"images/hall/pop/bg_num.png"},
             "nodeParent":1,
@@ -48,8 +53,9 @@
                 ]
         },
         {
+            "x":15,
             "type":"Button",
-            "props":{"y":4,"x":574,"stateNum":1,"skin":"images/component/btn_close.png","name":"close"},
+            "props":{"y":50,"x":624,"stateNum":1,"skin":"images/component/btn_close.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(close)",
             "isDirectory":false,
@@ -60,6 +66,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"Image",
             "props":{"y":148,"x":492,"var":"btnJoin","skin":"images/hall/pop/btn_join.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
@@ -72,6 +79,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"Box",
             "props":{"y":214,"x":54},
             "nodeParent":1,
@@ -83,6 +91,7 @@
             "compId":9,
             "child":[
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":35,"x":68,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"1","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -96,6 +105,7 @@
                     "$HIDDEN":false
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":35,"x":213,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"2","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -108,6 +118,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":35,"x":358,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"3","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -120,6 +131,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":35,"x":503,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"0","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -132,6 +144,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":120,"x":68,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"4","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -144,6 +157,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":120,"x":213,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"5","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -156,6 +170,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":120,"x":358,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"6","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -168,6 +183,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":120,"x":503,"var":"btnDelete","stateNum":"1","skin":"images/hall/pop/btn_num.png","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -192,6 +208,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":205,"x":68,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"7","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -204,6 +221,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":205,"x":213,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"8","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -216,6 +234,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":205,"x":358,"stateNum":"1","skin":"images/hall/pop/btn_num.png","name":"btnNum","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","label":"9","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -228,6 +247,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":205,"x":503,"var":"btnSure","stateNum":"1","skin":"images/hall/pop/btn_num.png","labelStrokeColor":"#7d1614","labelStroke":1,"labelFont":"join_room","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":9,
@@ -253,6 +273,7 @@
                 }]
         },
         {
+            "x":15,
             "type":"Label",
             "props":{"y":111,"x":134,"width":210,"var":"inputLabel","valign":"middle","height":60,"fontSize":60,"font":"Impact","color":"#000000","bold":true,"align":"left"},
             "nodeParent":1,

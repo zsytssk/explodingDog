@@ -16,7 +16,9 @@ export class CardPack extends ui.popup.component.cardPackUI {
         card_pack_ctrl.setType(cardType);
 
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
+        this.chooseBtn.visible = !isLock;
         this.iconI.visible = isLock;
+        this.btnLock.visible = isLock;
         if (staminaCost) {
             this.staminaLabel.text = `${Math.abs(staminaCost)}`;
         }
@@ -24,7 +26,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
     }
 
     private initEvent(cardType) {
-        (this.chooseBtn as Laya.Image).on(Laya.Event.CLICK, this, () => {
+        this.chooseBtn.on(Laya.Event.CLICK, this, () => {
             switch (this.type) {
                 case 'play':
                     Sail.io.emit(CMD.JOIN_ROOM, {
