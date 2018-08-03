@@ -157,14 +157,16 @@ type OutRoomData = {
     userId: string;
 };
 
+type MallAvatarData = {
+    itemId: number;
+    itemList: number[];
+    perPrice: number;
+};
+
 type GetMAllData = {
     userId: string;
     data: {
-        avatar: {
-            itemId: number;
-            itemList: number[];
-            perPrice: number;
-        }[];
+        avatar: MallAvatarData[];
         cards: {
             itemId: number;
             itemList: number;
@@ -215,4 +217,14 @@ type GetDogFoodData = {
     newStamina: number;
     getCount: number;
     totalCount: number;
+};
+
+type GetAvatarListData = {
+    userId: string;
+    curAvatar: string;
+    list: {
+        avatar: string;
+        isLock: number;
+    }[];
+    mallAvatar: MallAvatarData[];
 };

@@ -52,4 +52,8 @@ export const CMD = {
     GET_DOG_FOOD: 'getDogFood',
     /** 获取狗粮配置 */
     DOG_FOOD_CONFIG: 'dogFoodConfig',
+    /** 获取头像列表 */
+    GET_AVATAR_LIST: 'getAvatarList',
+    /** 获取头像列表 */
+    CHANGE_AVATAR: 'changeAvatar',
 };
