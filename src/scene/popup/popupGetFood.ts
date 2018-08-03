@@ -40,7 +40,6 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
 
         const { btn_get } = this.link;
         btn_get.on(Laya.Event.CLICK, this, () => {
-            // TODO: 判断时间是否符合, 置灰按钮
             Sail.io.emit(CMD.GET_DOG_FOOD);
         });
     }
@@ -58,15 +57,21 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         }
         txt_time.text = timeStr;
         txt_stamina.text = stamina;
-        txt_count.text = `(${getCount}/${totalCount})`;
+        this.updateCountStatus({ getCount, totalCount });
     }
 
     private getDogFood(data: GetDogFoodData) {
-        console.log('---getDogFood: ', data);
         // TODO: 领取后更新大厅的体力值数据
-        const { txt_count } = this.link;
         const { newStamina, getCount, totalCount } = data;
+        this.updateCountStatus({ getCount, totalCount });
+    }
+
+    private updateCountStatus({ getCount, totalCount }) {
+        const { txt_count, btn_get } = this.link;
         txt_count.text = `(${getCount}/${totalCount})`;
+        if (!totalCount || getCount >= totalCount) {
+            btn_get.disabled = true;
+        }
     }
 
     destroy() {
