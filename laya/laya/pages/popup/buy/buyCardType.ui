@@ -1,7 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":1,
+    "selectedBox":4,
+    "selecteID":11,
     "referenceLines":null,
     "props":{"width":884,"sceneColor":"#ffffff","height":636,"appendProps":"laya/pages/effect/scaleBtn.prop"},
     "nodeParent":-1,
@@ -248,7 +249,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":20,"x":17,"skin":"images/component/icon_diamond.png"},
+                    "props":{"y":30,"x":31,"skin":"images/component/icon_diamond.png"},
                     "nodeParent":4,
                     "label":"Image",
                     "isDirectory":false,

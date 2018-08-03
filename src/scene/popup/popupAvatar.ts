@@ -2,10 +2,17 @@ import { TopBar } from '../hall/topbarCard';
 import { CMD } from '../../data/cmd';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
 import { log, getElementsByName } from '../../mcTree/utils/zutil';
+import { PopupBuyAvatar } from './popupBuyAvatar';
 
+type Link = {
+    list: Laya.List;
+    btn_back: Laya.Sprite;
+    top_bar: TopBar;
+};
 export class PopupAvatar extends ui.popup.popupAvatarUI {
     public name = 'avatar';
-    private top_bar: TopBar;
+    private link = {} as Link;
+    private actions: SailIoAction;
     private mall_avatar: MallAvatarData[];
     constructor() {
         super();
@@ -23,18 +30,15 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
 
         this.addChild(top_bar);
         top_bar.setTitle('avatar');
-        this.top_bar = top_bar;
 
         const { btnBack: btn_back } = top_bar;
 
-        const {
-            list,
-        } = this;
+        const { list } = this;
 
         this.link = {
             ...this.link,
-            list,
             btn_back,
+            list,
             top_bar,
         };
     }
@@ -53,38 +57,29 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
             Sail.director.closeByName(this.name);
         });
 
-        list.renderHandler = new Laya.Handler(
-            this,
-            (box: Laya.Box, index) => {
-                const data_item = this.list.dataSource[index];
-                const { is_cur, is_lock, id } = data_item;
-                const avatar = getElementsByName(
-                    box,
-                    'avatar',
-                )[0] as Laya.Image;
-                const lock = getElementsByName(
-                    box,
-                    'lock',
-                )[0] as Laya.Image;
-                const is_cur_node = getElementsByName(
-                    box,
-                    'is_cur',
-                )[0] as Laya.Image;
+        list.renderHandler = new Laya.Handler(this, (box: Laya.Box, index) => {
+            const data_item = this.list.dataSource[index];
+            const { is_cur, is_lock, id } = data_item;
+            const avatar = getElementsByName(box, 'avatar')[0] as Laya.Image;
+            const lock = getElementsByName(box, 'lock')[0] as Laya.Image;
+            const is_cur_node = getElementsByName(
+                box,
+                'is_cur',
+            )[0] as Laya.Image;
 
-                lock.visible = is_lock;
-                is_cur_node.visible = is_cur;
-                avatar.skin = `images/component/avatar/${id}.png`;
+            lock.visible = is_lock;
+            is_cur_node.visible = is_cur;
+            avatar.skin = `images/component/avatar/${id}.png`;
 
-                avatar.offAll();
-                avatar.on(Laya.Event.CLICK, this, () => {
-                    this.onClickAction(data_item);
-                });
-            },
-        );
+            avatar.offAll();
+            avatar.on(Laya.Event.CLICK, this, () => {
+                this.onClickAction(data_item);
+            });
+        });
     }
 
     private onClickAction(data_item) {
-        console.log(data_item, this.mall_avatar);
+        log(data_item, this.mall_avatar);
         const { is_cur, is_lock, id } = data_item;
         if (is_cur) {
             return;
@@ -93,32 +88,36 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
             Sail.io.emit(CMD.CHANGE_AVATAR, { avatar: id });
             return;
         }
-        console.log('----buy');
+        log('----buy');
         let cur_mall_item;
-        for (let item of this.mall_avatar) {
-            if (item.itemList.indexOf(parseInt(id))) {
+        for (const item of this.mall_avatar) {
+            if (item.itemList.indexOf(parseInt(id, 10)) !== -1) {
                 cur_mall_item = item;
                 break;
             }
         }
-        console.log('----------cur_mall_item: ', cur_mall_item, id);
-
+        log('----------cur_mall_item: ', cur_mall_item, id);
+        Sail.director.popScene(
+            new PopupBuyAvatar(cur_mall_item, () => {
+                Sail.io.emit(CMD.GET_AVATAR_LIST);
+            }),
+        );
     }
 
     private changeAvatar(data, code) {
-        if (code != '200') {
+        if (code !== 200) {
             return;
         }
         const { list } = this.link;
         const data_source = [];
-        for (let item of list.dataSource) {
-            let { is_lock, id } = item;
-            const is_cur = id == data.newAvatar;
+        for (const item of list.dataSource) {
+            const { is_lock, id } = item;
+            const is_cur = id + '' === data.newAvatar + '';
             data_source.push({
-                is_lock,
-                is_cur,
                 id,
-            })
+                is_cur,
+                is_lock,
+            });
         }
 
         list.dataSource = data_source;
@@ -129,14 +128,14 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
         const { list } = this.link;
         const { list: avatarList, curAvatar, mallAvatar } = data;
         const data_source = [];
-        for (let item of avatarList) {
-            let { isLock, avatar } = item;
-            const is_cur = avatar == curAvatar;
+        for (const item of avatarList) {
+            const { isLock, avatar } = item;
+            const is_cur = avatar + '' === curAvatar + '';
             data_source.push({
-                is_lock: isLock,
-                is_cur,
                 id: avatar,
-            })
+                is_cur,
+                is_lock: isLock,
+            });
         }
         list.dataSource = data_source;
         this.mall_avatar = mallAvatar;

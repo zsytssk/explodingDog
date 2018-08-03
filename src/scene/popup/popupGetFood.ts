@@ -14,12 +14,7 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
     }
 
     private initLink() {
-        const {
-            txt_stamina,
-            txt_time,
-            txt_count,
-            btn_get,
-        } = this;
+        const { txt_stamina, txt_time, txt_count, btn_get } = this;
 
         this.link = {
             ...this.link,
@@ -74,7 +69,7 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         }
     }
 
-    destroy() {
+    public destroy() {
         super.destroy();
         Sail.io.unregister(this.actions);
     }

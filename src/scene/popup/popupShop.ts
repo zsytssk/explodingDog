@@ -9,15 +9,22 @@ type Link = {
     topbar: TopBar;
     btn_back: Laya.Sprite;
     stamina_list: Laya.List;
+    avatar_list: Laya.List;
     card_type_box: Laya.Box;
     avatar_box: Laya.Box;
 };
 
 type StaminaData = {
-    buy_num: number;
+    buy_num?: number;
     cost: number;
     id: number;
 };
+type AvatarData = PartialAll<
+    StaminaData,
+    {
+        item_list: number[];
+    }
+>;
 
 const card_type_pos = [
     {
@@ -34,7 +41,6 @@ export class PopupShop extends ui.popup.popupShopUI {
     public name = 'shop';
     private link = {} as Link;
     private actions: SailIoAction;
-    private stamina_data: StaminaData[];
     public CONFIG = {
         closeOnSide: true,
     };
@@ -63,11 +69,13 @@ export class PopupShop extends ui.popup.popupShopUI {
             stamina_list,
             card_type_box,
             avatar_box,
+            avatar_list,
         } = this;
 
         this.link = {
             ...this.link,
             avatar_box,
+            avatar_list,
             btn_back,
             card_type_box,
             main_stack,
@@ -83,7 +91,13 @@ export class PopupShop extends ui.popup.popupShopUI {
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GET_MALL_LIST);
 
-        const { tab, main_stack, btn_back, stamina_list } = this.link;
+        const {
+            tab,
+            main_stack,
+            btn_back,
+            stamina_list,
+            avatar_list,
+        } = this.link;
         tab.selectHandler = new Laya.Handler(this, index => {
             for (let i = 0; i < tab.numChildren; i++) {
                 const tab_item = tab.getChildAt(i);
@@ -95,7 +109,6 @@ export class PopupShop extends ui.popup.popupShopUI {
                 }
             }
             main_stack.selectedIndex = index;
-            log(index);
         });
         tab.selectedIndex = 0;
 
@@ -106,7 +119,7 @@ export class PopupShop extends ui.popup.popupShopUI {
         stamina_list.renderHandler = new Laya.Handler(
             this,
             (box: Laya.Box, index) => {
-                const data_item = this.stamina_data[index];
+                const data_item = stamina_list.dataSource[index];
                 const buy_num = getElementsByName(
                     box,
                     'buy_num',
@@ -124,9 +137,31 @@ export class PopupShop extends ui.popup.popupShopUI {
                 });
             },
         );
+        avatar_list.renderHandler = new Laya.Handler(
+            this,
+            (box: Laya.Box, index) => {
+                const data_item = avatar_list.dataSource[index];
+                const avatar_img = getElementsByName(
+                    box,
+                    'avatar_img',
+                )[0] as Laya.Image;
+                const btn_buy = getElementsByName(
+                    box,
+                    'btn_buy',
+                )[0] as Laya.Text;
+                const cost = getElementsByName(box, 'cost')[0] as Laya.Text;
+                cost.text = '￥' + data_item.cost;
+                avatar_img.skin = `images/pop/component/avatar_${
+                    data_item.id
+                }.png`;
+                btn_buy.on(Laya.Event.CLICK, this, () => {
+                    log(data_item);
+                });
+            },
+        );
     }
     private renderData(data: GetMAllData) {
-        const { stamina_list, card_type_box, avatar_box } = this.link;
+        const { stamina_list, card_type_box, avatar_list } = this.link;
         const { stamina, cards, avatar } = data.data;
         const stamina_data = [] as StaminaData[];
         for (const stamina_item of stamina) {
@@ -137,7 +172,16 @@ export class PopupShop extends ui.popup.popupShopUI {
             });
         }
         stamina_list.dataSource = stamina_data;
-        this.stamina_data = stamina_data;
+
+        const avatar_data = [] as AvatarData[];
+        for (const avatar_item of avatar) {
+            avatar_data.push({
+                cost: avatar_item.perPrice,
+                id: avatar_item.itemId,
+                item_list: avatar_item.itemList,
+            });
+        }
+        avatar_list.dataSource = avatar_data;
 
         card_type_box.removeChildren();
         for (const card_data of cards) {
@@ -155,5 +199,9 @@ export class PopupShop extends ui.popup.popupShopUI {
             const pos = card_type_pos[type - 2];
             card_type_item.pos(pos.x, pos.y);
         }
+    }
+    public destroy() {
+        super.destroy();
+        Sail.io.unregister(this.actions);
     }
 }
