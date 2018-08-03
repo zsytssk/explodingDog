@@ -63,4 +63,9 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         // TODO: 领取后更新按钮数字和状态
 
     }
+
+    destroy() {
+        super.destroy();
+        Sail.io.unregister(this.actions);
+    }
 }

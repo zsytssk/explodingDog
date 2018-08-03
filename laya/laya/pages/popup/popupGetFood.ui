@@ -67,7 +67,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":391,"x":199,"width":256,"var":"btn_get","stateNum":1,"skin":"images/pop/component/btn_green.png","height":82},
+            "props":{"y":388,"x":199,"width":256,"var":"btn_get","stateNum":1,"skin":"images/pop/component/btn_green.png","height":82},
             "nodeParent":1,
             "label":"Button(btn_get)",
             "isOpen":true,
@@ -157,7 +157,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":4,"x":18,"width":469,"var":"txt_time","text":"12:00-14:00、18:00-20:00","height":40,"fontSize":36,"font":"SimHei","color":"#ffde00"},
+                    "props":{"y":2,"x":35,"width":435,"var":"txt_time","text":"12:00-14:00、18:00-20:00","height":42,"fontSize":36,"font":"SimHei","color":"#ffde00"},
                     "nodeParent":15,
                     "label":"Label(txt_time)",
                     "isDirectory":false,
