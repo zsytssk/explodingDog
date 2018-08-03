@@ -17,6 +17,7 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         const {
             txt_stamina,
             txt_time,
+            txt_count,
             btn_get,
         } = this;
 
@@ -24,6 +25,7 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
             ...this.link,
             txt_stamina,
             txt_time,
+            txt_count,
             btn_get,
         };
     }
@@ -38,13 +40,13 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
 
         const { btn_get } = this.link;
         btn_get.on(Laya.Event.CLICK, this, () => {
-            // TODO: 判断时间是否符合
+            // TODO: 判断时间是否符合, 置灰按钮
             Sail.io.emit(CMD.GET_DOG_FOOD);
         });
     }
 
     private renderData(data: DogConfigData) {
-        const { txt_time, txt_stamina } = this.link;
+        const { txt_time, txt_stamina, txt_count } = this.link;
         const { time, stamina, getCount, totalCount } = data;
         let timeStr = '';
         for (let arr of time) {
@@ -56,12 +58,15 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         }
         txt_time.text = timeStr;
         txt_stamina.text = stamina;
+        txt_count.text = `(${getCount}/${totalCount})`;
     }
 
     private getDogFood(data: GetDogFoodData) {
         console.log('---getDogFood: ', data);
-        // TODO: 领取后更新按钮数字和状态
-
+        // TODO: 领取后更新大厅的体力值数据
+        const { txt_count } = this.link;
+        const { newStamina, getCount, totalCount } = data;
+        txt_count.text = `(${getCount}/${totalCount})`;
     }
 
     destroy() {

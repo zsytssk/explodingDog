@@ -78,5 +78,6 @@ export const RES = {
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
         { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
+        { url: 'font/getFood.fnt', type: Laya.Loader.FONT },
     ],
 };
