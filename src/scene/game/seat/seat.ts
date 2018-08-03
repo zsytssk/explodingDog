@@ -8,7 +8,6 @@ import {
     scale_in,
     scale_out,
 } from '../../../mcTree/utils/animate';
-import { CardModel, BlindStatus } from '../model/card/card';
 import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
 import {
@@ -20,7 +19,7 @@ import {
 } from '../model/player';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { CardBoxCtrl } from './cardBox/cardBox';
-import { CardHeapCtrl } from '../cardHeap/main';
+import { CardModel } from '../model/card/card';
 
 export type SeatStatus = 'exploding' | 'load_player' | 'clear' | PlayerStatus;
 
@@ -37,7 +36,6 @@ export interface Link {
     highlight: Laya.Sprite;
     chat_box: Laya.Sprite;
     chat_label: Laya.Label;
-    card_heap_ctrl: CardHeapCtrl;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -69,22 +67,18 @@ export class SeatCtrl extends BaseCtrl {
         const chat_label = view.chatLabel;
         const card_box_ctrl = this.createCardBox(card_box);
 
-        const game_ctrl = queryClosest(this, 'name:game');
-        const card_heap_ctrl = getChildrenByName(game_ctrl, 'card_heap')[0];
-
         this.link = {
             ...this.link,
             active_box,
             avatar,
             card_box_ctrl,
-            card_heap_ctrl,
+            chat_box,
+            chat_label,
             die_avatar,
             empty_box,
             highlight,
             nickname,
             player_box,
-            chat_box,
-            chat_label,
             view,
         };
     }
@@ -206,26 +200,16 @@ export class SeatCtrl extends BaseCtrl {
             case 'exploding':
                 this.showExplode();
                 break;
-
             default:
                 highlight.visible = false;
         }
     }
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
-        const { nickname: sprite, card_heap_ctrl } = this.link;
         const { status, action } = data;
 
         /** 处理动作的完成 */
         if (status === 'complete') {
-            stopAni(sprite);
-            if (action === 'show_set_explode') {
-                const game_ctrl = queryClosest(this, 'name:game');
-                game_ctrl
-                    .getChildByName('docker_ctrl')
-                    .setRate(data.data.bombProb);
-                card_heap_ctrl.setRemainCard(data.data.remainCard);
-            }
             if (action === 'choose_target') {
                 this.beChoosed();
             }
@@ -251,20 +235,25 @@ export class SeatCtrl extends BaseCtrl {
         }
     }
 
-    //显示头像炸弹
+    // 显示头像炸弹
     private showExplode() {
-        let ani = new Laya.Skeleton();
-        ani.load('animation/touxiangzhadan.sk', new Laya.Handler(this, () => {
-            ani.name = 'ani_explode';
-            ani.pos(75, 75);
-            ani.play(0, true);
-            this.link.player_box.addChild(ani);
-        }));
+        const ani = new Laya.Skeleton();
+        ani.load(
+            'animation/touxiangzhadan.sk',
+            new Laya.Handler(this, () => {
+                ani.name = 'ani_explode';
+                ani.pos(75, 75);
+                ani.play(0, true);
+                this.link.player_box.addChild(ani);
+            }),
+        );
     }
-    //销毁头像炸弹
+    // 销毁头像炸弹
     private hideExplode() {
-        let ani = this.link.player_box.getChildByName('ani_explode');
-        ani && ani.destroy();
+        const ani = this.link.player_box.getChildByName('ani_explode');
+        if (ani) {
+            ani.destroy();
+        }
     }
 
     private reverseArrows(action_data) {
@@ -357,5 +346,9 @@ export class SeatCtrl extends BaseCtrl {
     }
     protected addCard(data: AddInfo) {
         return this.link.card_box_ctrl.addCard(data.card, true);
+    }
+    public discardByModel(card_model: CardModel) {
+        const { card_box_ctrl } = this.link;
+        return card_box_ctrl.discardByModel(card_model);
     }
 }

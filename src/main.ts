@@ -1,5 +1,4 @@
 import './sailImport';
-import '../laya/src/ui/layaUI.max.all.js';
 import { CONFIG } from './data/config';
 import { RESMAP } from './data/resMap';
 import { load_util } from './mcTree/utils/load';

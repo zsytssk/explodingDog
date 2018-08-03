@@ -2,12 +2,16 @@ import { isNumber } from 'lodash';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
 import { CardCtrl } from './card';
+import { CurSeatCtrl, cmd as seat_cmd } from '../seat/curSeat';
+import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
+import { SeatStatus } from '../seat/seat';
 
 export interface Link {
     view: ui.game.cardHeapUI;
     heap: Laya.Box;
     remain_num: Laya.Text;
     card_ctrl: CardCtrl;
+    cur_seat: CurSeatCtrl;
 }
 
 /** 牌堆控制器 */
@@ -20,6 +24,7 @@ export class CardHeapCtrl extends BaseCtrl {
     }
     public init() {
         this.initLink();
+        this.initEvent();
     }
     // tslint:disable-next-line:no-empty
     protected initLink() {
@@ -29,12 +34,39 @@ export class CardHeapCtrl extends BaseCtrl {
         this.addChild(card_ctrl);
         card_ctrl.init();
 
+        const game_ctrl = queryClosest(this, 'name:game');
+        const cur_seat = getChildrenByName(game_ctrl, 'seat')[0];
+
         this.link = {
             ...this.link,
             card_ctrl,
+            cur_seat,
             heap,
             remain_num,
         };
+    }
+    private initEvent() {
+        const { cur_seat } = this.link;
+        this.bindOtherEvent(
+            cur_seat,
+            seat_cmd.status_change,
+            (data: { status: SeatStatus }) => {
+                const { status } = data;
+                if (status === 'speak') {
+                    this.activeTake();
+                } else {
+                    this.disableTake();
+                }
+            },
+        );
+        this.bindOtherEvent(
+            cur_seat,
+            seat_cmd.add_card,
+            (data: { card: CurCardCtrl }) => {
+                const { card } = data;
+                this.setCardFace(card);
+            },
+        );
     }
     /** 激活拿牌 */
     public activeTake() {

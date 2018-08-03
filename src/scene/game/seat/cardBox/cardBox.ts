@@ -1,7 +1,7 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
 import { CardModel } from '../../model/card/card';
 import { CardCtrl } from './card';
-import { cmd, GameCtrl } from '../../main';
+import { GameCtrl } from '../../main';
 import { queryClosest } from '../../../../mcTree/utils/zutil';
 
 export interface Link {
@@ -63,11 +63,6 @@ export class CardBoxCtrl extends BaseCtrl {
         }
         card_wrap.width = card_bound.width + card_bound.space * (len - 1);
     }
-    /** 出牌 将牌从列表中清除 */
-    public discardCard(card: CardCtrl) {
-        this.removeCard(card);
-        this.report(cmd.discard, 'game', { card });
-    }
     public removeCard(card: CardCtrl) {
         const { card_list } = this.link;
         this.link.card_list = card_list.filter(item => {
@@ -115,5 +110,15 @@ export class CardBoxCtrl extends BaseCtrl {
     }
     public getCardNum() {
         return this.link.card_list.length;
+    }
+    public discardByModel(card_model: CardModel) {
+        const { card_list } = this.link;
+        for (const card_item of card_list) {
+            if (card_item.isCardModel(card_model)) {
+                this.removeCard(card_item);
+                card_item.discard();
+                return card_item;
+            }
+        }
     }
 }

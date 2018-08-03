@@ -1,5 +1,5 @@
 import { default as JSEncrypt } from 'jsencrypt';
-import { detectModel, extendUtil, log } from '../utils/zutil';
+import { detectModel, extend, log } from '../utils/zutil';
 import { BaseEvent } from '../event';
 
 type PrimusStatus = 'disconnected' | 'connected';
@@ -57,7 +57,7 @@ export class PrimusCtrl extends BaseEvent {
     private event_handler_list: t_primus_event_handler_item[] = [];
     constructor(config: PrimusConfig) {
         super();
-        extendUtil(this.config, config, null);
+        extend(this.config, config, null);
     }
     public init() {
         this.initEncrypt();

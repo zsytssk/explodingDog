@@ -2,43 +2,31 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
-import {
-    isCurPlayer,
-    formatGameReplayData,
-    formatUpdatePlayersData,
-} from '../../utils/tool';
+import { formatGameReplayData, formatUpdatePlayersData, isCurPlayer } from '../../utils/tool';
 import { Hall } from '../hall/scene';
+import { PopupGameOver } from '../popup/popupGameOver';
+import { PopUpInvite } from '../popup/popupInvite';
+import { PopupPrompt } from '../popup/popupPrompt';
+import { PopupTakeExplode } from '../popup/popupTakeExplode';
+import { PopupTip } from '../popup/popupTip';
+import { PopupUserExploded } from '../popup/popupUserExploded';
 import { BillBoardCtrl } from './billboard';
 import { CardHeapCtrl } from './cardHeap/main';
 import { DiscardZoneCtrl } from './discardZone';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
 import { CardModel } from './model/card/card';
-import {
-    CardType,
-    cmd as game_cmd,
-    GameModel,
-    GameStatus,
-    GAME_STATUS,
-    GAME_TYPE,
-} from './model/game';
+import { CardType, cmd as game_cmd, GameModel, GameStatus, GAME_STATUS, GAME_TYPE } from './model/game';
 import { PlayerModel } from './model/player';
 import { QuickStartCtrl } from './quickStart';
-import { CardCtrl } from './seat/cardBox/card';
 import { CurSeatCtrl } from './seat/curSeat';
 import { SeatCtrl } from './seat/seat';
 import { TurnArrowCtrl } from './turnArrow';
-import { GiveCardCtrl } from './widget/giveCard';
 import { AlarmCtrl } from './widget/alarm';
-import { ExplodePosCtrl } from './widget/explodePos';
-import { SlapCtrl } from './widget/slap';
-import { PopupUserExploded } from '../popup/popupUserExploded';
-import { PopupGameOver } from '../popup/popupGameOver';
-import { PopupPrompt } from '../popup/popupPrompt';
-import { PopupTip } from '../popup/popupTip';
-import { PopUpInvite } from '../popup/popupInvite';
-import { PopupTakeExplode } from '../popup/popupTakeExplode';
 import { ChatCtrl } from './widget/chat';
+import { ExplodePosCtrl } from './widget/explodePos';
+import { GiveCardCtrl } from './widget/giveCard';
+import { SlapCtrl } from './widget/slap';
 
 interface Link {
     view: ui.game.mainUI;
@@ -68,9 +56,6 @@ const seat_position = {
     4: [[60, -420], [20, -140], [20, 140], [60, 420]],
 };
 
-export const cmd = {
-    discard: 'discard',
-};
 export class GameCtrl extends BaseCtrl {
     public is_top = true;
     public name = 'game';
@@ -132,10 +117,6 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(discard_zone_ctrl);
         discard_zone_ctrl.init();
 
-        const card_heap_ctrl = new CardHeapCtrl(card_heap);
-        this.addChild(card_heap_ctrl);
-        card_heap_ctrl.init();
-
         const turn_arrow_ctrl = new TurnArrowCtrl(turn_arrow);
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
@@ -171,6 +152,10 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list.push(player_ctrl);
         }
 
+        const card_heap_ctrl = new CardHeapCtrl(card_heap);
+        this.addChild(card_heap_ctrl);
+        card_heap_ctrl.init();
+
         this.link = {
             ...this.link,
             alarm_ctrl,
@@ -191,23 +176,12 @@ export class GameCtrl extends BaseCtrl {
         };
     }
     protected initEvnet() {
-        const { discard_zone_ctrl } = this.link;
-        this.on(cmd.discard, (data: { card: CardCtrl }) => {
-            discard_zone_ctrl.borrowCard(data.card);
-        });
-
         this.actions = {
             [CMD.GAME_REPLAY]: this.onServerGameReplay,
             [CMD.UPDATE_USER]: this.onServerUpdateUser,
             [CMD.GAME_START]: this.onServerGameStart,
             [CMD.OUT_ROOM]: this.onServerOutRoom,
-            [CMD.HIT]: (data: HitData, code) => {
-                if (code !== 200) {
-                    this.model.unDiscardCard(data);
-                } else {
-                    this.model.discardCard(data);
-                }
-            },
+            [CMD.HIT]: this.onServerHit,
             [CMD.TAKE]: this.onServerTake,
             [CMD.TURNS]: this.onServerTurn,
             [CMD.CHANGE_CARD_TYPE]: this.onServerChangeCardType,
@@ -251,7 +225,8 @@ export class GameCtrl extends BaseCtrl {
             },
         );
         this.onModel(game_cmd.discard_card, (data: { card: CardModel }) => {
-            this.link.discard_zone_ctrl.discardCard(data.card);
+            const card_ctrl = this.discardByModel(data.card);
+            this.link.discard_zone_ctrl.discardCard(data.card, card_ctrl);
         });
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
             this.outRoom();
@@ -335,12 +310,24 @@ export class GameCtrl extends BaseCtrl {
         this.model.addPlayerCard(data);
         docker_ctrl.setRate(data.bombProb);
     }
+    /** 拿牌 */
+    private onServerHit(data: HitData, code?: string) {
+        const { docker_ctrl } = this.link;
+        if (Number(code) !== 200) {
+            this.model.unDiscardCard(data);
+            return;
+        }
+        this.model.discardCard(data);
+        if (data.hitInfo && data.hitInfo.bombProb) {
+            docker_ctrl.setRate(data.hitInfo.bombProb);
+        }
+    }
     public onServerTurn(data: TurnsData) {
         this.model.setSpeaker(data.speakerId);
     }
     /** 离开房间 */
     private onServerOutRoom(data: OutRoomData, code?: number, msg?: string) {
-        if (code != 200) {
+        if (code !== 200) {
             Sail.director.popScene(new PopupTip(msg));
             return;
         }
@@ -461,6 +448,18 @@ export class GameCtrl extends BaseCtrl {
             seatCtrl.updatePos(seat_position[4][index]);
         });
     }
+    public discardByModel(card_model: CardModel) {
+        const { seat_ctrl_list } = this.link;
+
+        let card_ctrl;
+        for (const seat_ctrl of seat_ctrl_list) {
+            card_ctrl = seat_ctrl.discardByModel(card_model);
+            if (card_ctrl) {
+                break;
+            }
+        }
+        return card_ctrl;
+    }
     /**
      * 用户淘汰
      */
@@ -517,14 +516,13 @@ export class GameCtrl extends BaseCtrl {
             discard_zone_ctrl,
             docker_ctrl,
             turn_arrow_ctrl,
-            quick_start_ctrl
+            quick_start_ctrl,
         } = this.link;
 
         alarm_ctrl.reset();
         give_card_ctrl.reset();
         slap_ctrl.reset();
         card_heap_ctrl.reset();
-        discard_zone_ctrl.reset();
         docker_ctrl.reset();
         turn_arrow_ctrl.reset();
         quick_start_ctrl.hideCountDown();

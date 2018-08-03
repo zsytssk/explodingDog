@@ -60,18 +60,25 @@ export const RES = {
     POP: [
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/buy.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/getFood.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/avatar.atlas', type: Laya.Loader.ATLAS },
         {
             url: 'res/atlas/images/pop/component.atlas',
             type: Laya.Loader.ATLAS,
         },
-        { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/rank.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
+        {
+            url: 'res/atlas/images/pop/help/cardTitle.atlas',
+            type: Laya.Loader.ATLAS,
+        },
         { url: 'res/atlas/images/pop/setting.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/shop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/pop/bg_join.png', type: Laya.Loader.IMAGE },
         { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
+        { url: 'font/getFood.fnt', type: Laya.Loader.FONT },
     ],
     GUIDE: [
         { url: 'res/atlas/images/guide.atlas', type: Laya.Loader.ATLAS },

@@ -27,6 +27,11 @@ export interface Link extends BaseLink {
     card_box_wrap: Laya.Sprite;
 }
 
+export const cmd = {
+    add_card: player_cmd.add_card,
+    status_change: player_cmd.status_change,
+};
+
 export class CurSeatCtrl extends SeatCtrl {
     protected link: Link;
     public model: PlayerModel;
@@ -123,6 +128,7 @@ export class CurSeatCtrl extends SeatCtrl {
             give_card_ctrl.reset();
         }
     }
+    /** 显示seeTheFuture and alterTheFuture功能 */
     private theFuture(action_data: ObserverActionInfo) {
         const { action, data, observer } = action_data;
         const card_list = data.topCards;
@@ -180,12 +186,7 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     /** 当前用户说话时 需要将牌堆激活, 可以拿牌 */
     protected setStatus(status: SeatStatus) {
-        const { card_heap_ctrl } = this.link;
-        if (status === 'speak') {
-            card_heap_ctrl.activeTake();
-        } else {
-            card_heap_ctrl.disableTake();
-        }
+        this.trigger(cmd.status_change, { status });
         super.setStatus(status);
     }
     /** 手牌中是否有某张牌 */
@@ -201,12 +202,11 @@ export class CurSeatCtrl extends SeatCtrl {
     /** 添加牌, 当前用户多一个牌从CardHeep飞到用户身上的动画 */
     protected addCard(data: AddInfo) {
         const { is_take } = data;
-        const { card_heap_ctrl } = this.link;
         const card = super.addCard(data) as CurCardCtrl;
         if (!is_take) {
             return;
         }
-        card_heap_ctrl.setCardFace(card);
+        this.trigger(cmd.add_card, { card });
         return card;
     }
 }

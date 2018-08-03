@@ -4,6 +4,8 @@ import {
     getCardInfo,
     popupFadeOutEffect,
     popupFadeInEffect,
+    splitStr,
+    getBlongStr,
 } from '../../utils/tool';
 
 type DataItem = {
@@ -11,6 +13,8 @@ type DataItem = {
         skin: string;
     };
     intro: string;
+    name: string;
+    belong: number[];
     overlay: {
         visible: boolean;
     };
@@ -45,10 +49,12 @@ export class PopupHelp extends ui.popup.popupHelpUI {
             }
             const card_info = getCardInfo(key);
             data.push({
+                belong: card_info.belong,
                 card: {
                     skin: card_info.url,
                 },
-                intro: 'sdfsdfsdfsdfsdf',
+                intro: card_info.intro,
+                name: card_info.name,
                 overlay: {
                     visible: true,
                 },
@@ -80,8 +86,10 @@ export class PopupHelp extends ui.popup.popupHelpUI {
         });
     }
     private renderSider(data: DataItem) {
-        const { sider_intro, sider_card } = this;
+        const { sider_intro, sider_card, sider_title, belong } = this;
         sider_card.skin = data.card.skin;
-        sider_intro.text = data.intro;
+        sider_title.skin = `images/pop/help/cardTitle/${data.name}.png`;
+        sider_intro.text = splitStr(data.intro, 26);
+        belong.text = getBlongStr(data.belong);
     }
 }
