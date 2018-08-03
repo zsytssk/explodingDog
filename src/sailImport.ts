@@ -6,3 +6,4 @@ import './sail/core/sail.dialog.js';
 import './sail/core/sail.director.js';
 import './sail/core/sail.entrace.js';
 import './sail/core/sail.scene.js';
+import '../laya/src/ui/layaUI.max.all.js';

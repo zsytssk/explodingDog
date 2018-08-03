@@ -16,7 +16,6 @@ import {
 import { tween, setStyle } from '../../../../mcTree/utils/animate';
 import { CMD } from '../../../../data/cmd';
 import { CardBoxCtrl } from './cardBox';
-import { log } from '../../../../mcTree/utils/zutil';
 
 type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
@@ -64,7 +63,7 @@ export class CardCtrl extends BaseCtrl {
         };
     }
     /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
-    private initUI() {
+    public initUI() {
         const { wrap } = this.link;
         const view = new ui.game.seat.cardBox.cardUI();
         const { blind, annoy } = view;
@@ -116,9 +115,6 @@ export class CardCtrl extends BaseCtrl {
         this.onModel(base_cmd.destroy, () => {
             this.destroy();
         });
-        this.onModel(card_cmd.discard, () => {
-            this.discard();
-        });
         this.onModel(card_cmd.blind_status, (data: BlindStatus) => {
             this.setBlindStatus(data);
         });
@@ -162,9 +158,11 @@ export class CardCtrl extends BaseCtrl {
             width,
         };
     }
-    protected discard() {
-        const { card_box, view } = this.link;
-        card_box.discardCard(this);
+    public isCardModel(card_model: CardModel) {
+        return this.model === card_model;
+    }
+    public discard() {
+        const { view } = this.link;
         view.zOrder = 0;
     }
     /** 其他用户的牌在被给出时直接销毁 */

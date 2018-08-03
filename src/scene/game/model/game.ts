@@ -208,7 +208,7 @@ export class GameModel extends BaseEvent {
     public discardCard(data: HitData) {
         /** 清理原来出的牌 */
 
-        this.updateBillboard(data);
+        this.updateData(data);
         const last_discard_card = this.discard_cards[
             this.discard_cards.length - 1
         ];
@@ -233,7 +233,6 @@ export class GameModel extends BaseEvent {
         if (!card) {
             if (!last_discard_card || last_discard_card.card_id !== hit_card) {
                 card = new CardModel(hit_card);
-                this.trigger(cmd.discard_card, { card });
             } else {
                 card = last_discard_card;
             }
@@ -246,17 +245,22 @@ export class GameModel extends BaseEvent {
         });
         if (last_discard_card !== card) {
             this.discard_cards.push(card);
+            this.trigger(cmd.discard_card, { card });
         }
 
         if (hit_info.clearEffect) {
             player.clearBlindAndAnnoy();
         }
     }
-    private updateBillboard(data: HitData) {
+    private updateData(data: HitData) {
         const hit_info = data.hitInfo;
         const player = this.getPlayerById(data.hitUserId);
         // 更新billboard
-        const step = hit_info.step;
+        const { step, remainCard, bombProb } = hit_info;
+        if (remainCard) {
+            this.setRemainCard(remainCard);
+        }
+
         let fromUser = null;
         let targetPlayer = null;
         const cardid_setp = data.hitCard + '_' + step;
@@ -302,7 +306,7 @@ export class GameModel extends BaseEvent {
             discard_cards.splice(i, 1);
         }
         this.discard_cards = [];
-        //重置用户
+        // 重置用户
         this.updatePlayers([]);
     }
 }
