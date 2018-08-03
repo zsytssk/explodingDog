@@ -69,7 +69,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"btn_get_food","top":0,"skin":"images/hall/btn_food.png","right":240,"pivotY":40,"pivotX":45},
+            "props":{"y":40,"x":1050,"var":"btn_get_food","skin":"images/hall/btn_food.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_get_food)",
             "isDirectory":false,
