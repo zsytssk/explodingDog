@@ -48,4 +48,8 @@ export const CMD = {
     GET_CHAT_LIST: 'getChatList',
     /** 发送聊天 */
     SEND_CHAT: 'sendChat',
+    /** 领取狗粮  */
+    GET_DOG_FOOD: 'getDogFood',
+    /** 获取狗粮配置 */
+    DOG_FOOD_CONFIG: 'dogFoodConfig',
 };

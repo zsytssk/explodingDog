@@ -199,3 +199,20 @@ type GetRankListData = {
         winRate: number;
     };
 };
+
+type DogConfigData = {
+    userId: string;
+    time: [
+        string, string
+    ][];
+    getCount: number;
+    totalCount: number;
+    stamina: number;
+};
+
+type GetDogFoodData = {
+    userId: string;
+    newStamina: number;
+    getCount: number;
+    totalCount: number;
+};

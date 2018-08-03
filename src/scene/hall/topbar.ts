@@ -1,6 +1,7 @@
 import { ValueBar } from './valuebar';
 import { PopupSetting } from '../popup/setting/pop';
 import { PopupRank } from '../popup/popupRank';
+import { PopupGetFood } from '../popup/popupGetFood';
 export class TopBar extends ui.hall.topbarUI {
     public stamina: ValueBar;
     public diamond: ValueBar;
@@ -15,12 +16,15 @@ export class TopBar extends ui.hall.topbarUI {
         this.initEvent();
     }
     private initEvent() {
-        const { btn_setting, btn_rank } = this;
+        const { btn_setting, btn_rank, btn_get_food } = this;
         btn_setting.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupSetting());
         });
         btn_rank.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupRank());
+        });
+        btn_get_food.on(Laya.Event.CLICK, this, () => {
+            Sail.director.popScene(new PopupGetFood());
         });
     }
 

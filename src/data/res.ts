@@ -61,6 +61,7 @@ export const RES = {
     POP: [
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/buy.atlas', type: Laya.Loader.ATLAS },
+        { url: 'res/atlas/images/pop/getFood.atlas', type: Laya.Loader.ATLAS },
         {
             url: 'res/atlas/images/pop/component.atlas',
             type: Laya.Loader.ATLAS,
