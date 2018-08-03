@@ -29,4 +29,11 @@ export let RESMAP: ResMap = [
         res_relatives: [],
         resource_status: 'unload',
     },
+    {
+        name: 'guide',
+        res: RES.GUIDE,
+        res_dependencies: [RES.COMPONENT],
+        res_relatives: [],
+        resource_status: 'unload',
+    },
 ];

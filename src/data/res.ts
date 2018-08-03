@@ -39,7 +39,6 @@ export const RES = {
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
-        { url: 'res/atlas/images/game.png', type: Laya.Loader.IMAGE },
         {
             url: 'images/game/img_take_explode1.png',
             type: Laya.Loader.IMAGE,
@@ -81,4 +80,14 @@ export const RES = {
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
         { url: 'font/getFood.fnt', type: Laya.Loader.FONT },
     ],
+    GUIDE: [
+        { url: 'res/atlas/images/guide.atlas', type: Laya.Loader.ATLAS },
+        { url: 'images/guide/bg.jpg', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/bg2.png', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/end.png', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/start.png', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/text_des.png', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/text_discard.png', type: Laya.Loader.IMAGE },
+        { url: 'images/guide/text_draw.png', type: Laya.Loader.IMAGE },
+    ]
 };

@@ -4,6 +4,8 @@ import { PopupJoinRoom } from '../popup/popupJoinRoom';
 import { rankIcon } from './rankIcon';
 import { PopupHelp } from '../popup/popupHelp';
 import { PopupShop } from '../popup/popupShop';
+import { loadAssets } from '../loaing/main';
+import { GuideView } from '../guide/guideView';
 
 export class HallContent extends ui.hall.hallcontentUI {
     rank: Laya.Box; //段位
@@ -16,7 +18,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.initEvent();
     }
     initEvent() {
-        const { btnPlay, btnCreate, btnJoin, btn_help, btn_shop } = this;
+        const { btnPlay, btnCreate, btnJoin, btn_help, btn_shop, btn_tutorial } = this;
         btnPlay.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
@@ -44,6 +46,11 @@ export class HallContent extends ui.hall.hallcontentUI {
         });
         btn_shop.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupShop());
+        });
+        btn_tutorial.on(Laya.Event.CLICK, this, () => {
+            loadAssets('guide').then(() => {
+                Sail.director.runScene(new GuideView());
+            });
         });
     }
     updateView(data) {

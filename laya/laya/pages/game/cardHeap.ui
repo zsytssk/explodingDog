@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":20,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item0","height":273},
+                    "props":{"y":20,"x":0,"width":264,"skin":"images/component/card/card_back.png","name":"item0","height":273},
                     "nodeParent":2,
                     "label":"Image(item0)",
                     "isDirectory":false,
@@ -40,7 +40,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":15,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item1","height":273},
+                    "props":{"y":15,"x":0,"width":264,"skin":"images/component/card/card_back.png","name":"item1","height":273},
                     "nodeParent":2,
                     "label":"Image(item1)",
                     "isDirectory":false,
@@ -54,7 +54,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":10,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item2","height":273},
+                    "props":{"y":10,"x":0,"width":264,"skin":"images/component/card/card_back.png","name":"item2","height":273},
                     "nodeParent":2,
                     "label":"Image(item2)",
                     "isDirectory":false,
@@ -67,7 +67,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":5,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item3","height":273},
+                    "props":{"y":5,"x":0,"width":264,"skin":"images/component/card/card_back.png","name":"item3","height":273},
                     "nodeParent":2,
                     "label":"Image(item3)",
                     "isDirectory":false,
@@ -80,7 +80,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":0,"x":0,"width":264,"skin":"images/game/card_back.png","name":"item4","height":273},
+                    "props":{"y":0,"x":0,"width":264,"skin":"images/component/card/card_back.png","name":"item4","height":273},
                     "nodeParent":2,
                     "label":"Image(item4)",
                     "isDirectory":false,
