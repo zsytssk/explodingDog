@@ -15,8 +15,6 @@ export class DiscardZoneCtrl extends BaseCtrl {
     protected link = {
         card_list: [],
     } as Link;
-    /** 是否是由cardBox直接借过来， 就不需要自己自取创建了 */
-    private is_borrowing = false;
     constructor(view: ui.game.discardZoneUI) {
         super();
         this.link.view = view;
@@ -27,45 +25,47 @@ export class DiscardZoneCtrl extends BaseCtrl {
     protected initLink() {
         const { view } = this.link;
         const { card_box } = view;
-        this.link.card_box = card_box;
+
+        this.link = {
+            ...this.link,
+            card_box,
+        };
     }
     public hide() {
         this.link.view.visible = false;
     }
-    public discardCard(card: CardModel) {
-        if (this.is_borrowing) {
-            return;
-        }
+    public discardCard(card: CardModel, card_ctrl) {
         const { card_box, card_list } = this.link;
         const { view } = this.link;
-        const card_ctrl = new CardCtrl(card, card_box);
+        let has_borrow_card = false;
+        if (card_ctrl) {
+            has_borrow_card = true;
+        } else {
+            card_ctrl = new CardCtrl(card, card_box);
+        }
         card_list.push(card_ctrl);
-
         this.addChild(card_ctrl);
-
-        card_ctrl.init();
-        card_ctrl.setStyle({
-            rotation: random(-2, 2),
-            x: view.width / 2,
-            y: view.height / 2 - card_list.length,
-        });
+        if (has_borrow_card) {
+            this.borrowCard(card_ctrl);
+        } else {
+            card_ctrl.init();
+            card_ctrl.setStyle({
+                rotation: random(-2, 2),
+                x: view.width / 2,
+                y: view.height / 2 - card_list.length,
+            });
+        }
     }
     public borrowCard(card_ctrl: CardCtrl) {
         if (!(card_ctrl instanceof CardCtrl)) {
             return;
         }
-        this.is_borrowing = true;
         const { card_box, card_list, view } = this.link;
-        this.addChild(card_ctrl);
-        card_list.push(card_ctrl);
         card_ctrl.putCardInWrap(card_box).then(() => {
             card_ctrl.setStyle({
                 rotation: random(-2, 2),
                 y: view.height / 2 - card_list.length,
             });
         });
-    }
-    public reset() {
-        this.is_borrowing = false;
     }
 }

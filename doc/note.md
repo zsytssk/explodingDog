@@ -1,4 +1,27 @@
 ## 2018-07-27 10:34:22
+* @bug thefuture 第一张牌不再最上面
+* @ques 将影响复用的东西抽离出来
+
+* @ques discard player->card-->cardCtrl-->..
+    * player  --> seat --> discardZone
+
+* @ques card tip 3秒自动还原
+
+* @ques 如何让新手引导 复用我原来的逻辑
+    * seatCtrl 不依赖 discardZone card Heap , 反过来依赖,
+    * 在创建discardZone card Heap 将curSeat传进去...
+
+* @ques 我的ctrl对model有很多的依赖不好复用...
+    * 影响复用的点..
+
+* ? 新手引导能不能用我原来的primus...mock ,
+
+* ? 将
+
+* ? 移动牌能不能做成component的形式
+    * wrap move_box view 这三个部分...
+
+* @ 适配可以背景延伸内容缩小
 
 * @ques 拖动出屏幕外的处理 + starDrag取消父类的处理
 * ? @todo 换房主 命令
