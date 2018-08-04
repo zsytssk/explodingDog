@@ -226,14 +226,18 @@ export class GameModel extends BaseEvent {
         const need_discard = hit_info.discard === 1;
 
         let card;
+        /** 需要打出 */
         if (need_discard) {
-            card = player.takeCardByStatus(hit_card, 'wait_discard');
-        }
-        /** 这地方乱需要整理下， 这逻辑都是抽出来的 */
-        if (!card) {
-            if (!last_discard_card || last_discard_card.card_id !== hit_card) {
+            card = player.drawCard(hit_card);
+        } else {
+            /** 复盘时 没有打出的牌需要重新创建 */
+            if (!last_discard_card) {
                 card = new CardModel(hit_card);
             } else {
+                /** 不是复盘 无需打出牌, 打出最后一张牌就是需要的牌 */
+                if (last_discard_card.card_id !== hit_card) {
+                    logErr(`last discard card_id not equal ${hit_card}`);
+                }
                 card = last_discard_card;
             }
         }
@@ -282,9 +286,9 @@ export class GameModel extends BaseEvent {
             toUser: targetPlayer,
         });
     }
-    public unDiscardCard(data: HitData) {
+    public unDrawCard(data: HitData) {
         const player = this.getPlayerById(data.userId);
-        player.unDiscardCard();
+        player.unDrawCard();
     }
     public getPlayerNum() {
         return this.player_list.length;

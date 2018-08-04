@@ -4,14 +4,12 @@ import { getCardInfo } from '../../../../utils/tool';
 import { ActionDataInfo, ActionSendData } from './action';
 import { ActionManager } from './actionManager';
 
-export type CardStatus = 'normal' | 'wait_discard' | 'discard' | 'wait_give';
 export const cmd = {
     action_send: 'action_send',
     annoy_status: 'annoy_status',
     blind_status: 'blind_status',
-    discard: 'discard',
-    give: 'give',
-    un_discard: 'un_discard',
+    draw: 'draw',
+    un_draw: 'un_discard',
     update_info: 'update_info',
 };
 
@@ -29,7 +27,7 @@ export class CardModel extends BaseEvent {
     /** 所属者 */
     public owner: PlayerModel;
     private action_manager: ActionManager;
-    public status: CardStatus = 'normal';
+    public pre_drawed = false;
     constructor(card_id: string) {
         super();
         this.updateInfo(card_id);
@@ -56,30 +54,25 @@ export class CardModel extends BaseEvent {
         this.action_manager.update(action_info);
     }
     /** 真正的出牌前 需要记录状态 */
-    public preDiscard(): CardStatus {
-        const { status: owner_status, is_wait_give } = this.owner;
-        let status = 'normal' as CardStatus;
-        /** 偷牌 */
-        if (is_wait_give) {
-            status = 'wait_give';
+    public preDrawCard(): boolean {
+        const pre_drawed = this.owner.preDrawCard(this);
+        if (pre_drawed) {
+            this.pre_drawed = true;
         }
-        /** 出牌 */
-        if (owner_status === 'speak') {
-            status = 'wait_discard';
-        }
-        this.status = status;
-        return status;
+        return pre_drawed;
     }
-    /** 真正的出牌 */
-    public discard() {
-        this.status = 'discard';
+    public draw() {
+        this.pre_drawed = false;
         this.setBlindStatus(false);
-        this.trigger(cmd.discard);
+        this.trigger(cmd.draw);
     }
-    /** 真正的出牌 */
-    public give() {
-        this.trigger(cmd.give);
-        this.status = 'normal';
+    /** 取消出牌， 服务器返回数据错误 */
+    public unDraw() {
+        if (!this.pre_drawed) {
+            return;
+        }
+        this.pre_drawed = false;
+        this.trigger(cmd.un_draw);
     }
     public sendAction(data: ActionSendData) {
         this.trigger(cmd.action_send, { ...data });
@@ -104,14 +97,7 @@ export class CardModel extends BaseEvent {
             } as AnnoyStatus);
         }
     }
-    /** 取消出牌， 服务器返回数据错误 */
-    public unDiscard() {
-        if (this.status !== 'wait_discard') {
-            return;
-        }
-        this.status = 'normal';
-        this.trigger(cmd.un_discard);
-    }
+
     public destroy() {
         /** 从所有者中移除自己 */
         if (this.owner) {

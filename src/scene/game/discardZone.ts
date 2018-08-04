@@ -34,14 +34,14 @@ export class DiscardZoneCtrl extends BaseCtrl {
     public hide() {
         this.link.view.visible = false;
     }
-    public discardCard(card: CardModel, card_ctrl) {
+    public discardCard(card_model: CardModel, card_ctrl: CardCtrl) {
         const { card_box, card_list } = this.link;
         const { view } = this.link;
         let has_borrow_card = false;
         if (card_ctrl) {
             has_borrow_card = true;
         } else {
-            card_ctrl = new CardCtrl(card, card_box);
+            card_ctrl = new CardCtrl(card_model, card_box);
         }
         card_list.push(card_ctrl);
         this.addChild(card_ctrl);

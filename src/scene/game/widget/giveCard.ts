@@ -23,7 +23,6 @@ export class GiveCardCtrl extends BaseCtrl {
     public name = 'give_card';
     protected link = {} as Link;
     private end_resolve: FuncVoid;
-    private card: CardCtrl;
     constructor(view: View) {
         super();
         this.link.view = view;
@@ -61,15 +60,20 @@ export class GiveCardCtrl extends BaseCtrl {
         });
     }
     /** 收到本地操作将命令发给服务器 */
-    public preGetCard(card: CardCtrl) {
+    public preGetCard(card_id: string) {
         if (this.end_resolve) {
-            this.end_resolve(card.getCardId());
+            this.end_resolve(card_id);
         }
     }
     /** 服务器收到命令后 cardCtrl会传给自己 */
     public getCard(card: CardCtrl) {
+        const { card_box } = this.link;
         this.addChild(card);
-        this.card = card;
+        card.putCardInWrap(card_box).then(() => {
+            this.hide().then(() => {
+                card.destroy();
+            });
+        });
     }
     private hide() {
         const { view: sprite } = this.link;
@@ -93,17 +97,6 @@ export class GiveCardCtrl extends BaseCtrl {
     }
     /** seat action complete之后， 如果有牌 需要展示牌飞行动画 */
     public reset() {
-        if (!this.card) {
-            this.hide();
-            return;
-        }
-        const { card } = this;
-        const { card_box } = this.link;
-        card.putCardInWrap(card_box).then(() => {
-            this.hide().then(() => {
-                card.destroy();
-                this.card = undefined;
-            });
-        });
+        this.hide();
     }
 }

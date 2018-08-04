@@ -121,9 +121,6 @@ export class CardCtrl extends BaseCtrl {
         this.onModel(card_cmd.annoy_status, (data: AnnoyStatus) => {
             this.setAnnoyStatus(data);
         });
-        this.onModel(card_cmd.give, () => {
-            this.give();
-        });
         this.onModel(card_cmd.action_send, (data: ActionSendData) => {
             Sail.io.emit(CMD.HIT, {
                 hitCard: this.model.card_id,
@@ -144,9 +141,6 @@ export class CardCtrl extends BaseCtrl {
         const { annoy } = this.link;
         annoy.visible = is_beannoyed;
     }
-    public getCardId() {
-        return this.model.card_id;
-    }
     /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
     public getCardBound() {
         const { view } = this.link;
@@ -161,15 +155,9 @@ export class CardCtrl extends BaseCtrl {
     public isCardModel(card_model: CardModel) {
         return this.model === card_model;
     }
-    public discard() {
+    public resetStyle() {
         const { view } = this.link;
         view.zOrder = 0;
-    }
-    /** 其他用户的牌在被给出时直接销毁 */
-    protected give() {
-        const { card_box } = this.link;
-        card_box.removeCard(this);
-        this.destroy();
     }
     /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */
     public putCardInWrap(wrap: Laya.Sprite) {
