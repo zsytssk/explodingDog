@@ -162,6 +162,7 @@ type MallAvatarData = {
     itemId: number;
     itemList: number[];
     perPrice: number;
+    purchased?: number;
 };
 
 type GetMAllData = {

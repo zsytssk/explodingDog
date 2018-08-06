@@ -24,6 +24,7 @@ export class PopupBuyAvatar extends ui.popup.buy.buyAvatarUI {
         Sail.io.register(this.actions, this);
 
         const { btn_buy } = this;
+        btn_buy.offAll();
         btn_buy.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(
                 new PopupPrompt('是否要购买头像礼包？', () => {
@@ -46,7 +47,7 @@ export class PopupBuyAvatar extends ui.popup.buy.buyAvatarUI {
     private onServerExchangeGoods(data, code, msg) {
         const { sucess_callback } = this;
         if (code !== 200) {
-            Sail.director.popScene(new PopupPrompt(msg, () => {}));
+            Sail.director.popScene(new PopupPrompt(msg, () => { }));
             return;
         }
         if (sucess_callback) {
