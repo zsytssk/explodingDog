@@ -6,6 +6,7 @@ import { PopupHelp } from '../popup/popupHelp';
 import { PopupShop } from '../popup/popupShop';
 import { loadAssets } from '../loaing/main';
 import { GuideView } from '../guide/guideView';
+import { BgCtrl } from '../bgCtrl';
 
 export class HallContent extends ui.hall.hallcontentUI {
     rank: Laya.Box; //段位
@@ -14,11 +15,21 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.init();
     }
     init() {
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
         this.expBar.bar.y = 2;
         this.initEvent();
     }
     initEvent() {
-        const { btnPlay, btnCreate, btnJoin, btn_help, btn_shop, btn_tutorial } = this;
+        const {
+            btnPlay,
+            btnCreate,
+            btnJoin,
+            btn_help,
+            btn_shop,
+            btn_tutorial,
+        } = this;
         btnPlay.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
