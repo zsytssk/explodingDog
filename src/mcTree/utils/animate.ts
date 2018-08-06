@@ -1,3 +1,4 @@
+import { isNumber } from 'lodash';
 import { zTimer } from './zTimer';
 
 export function fade_in(sprite, time?: number, ease_fn?: string) {
@@ -287,8 +288,6 @@ export function tween(data: {
         const laya_Tween = new Laya.Tween();
         const Ease = Laya.Ease;
 
-        time = time || 300;
-
         ease_fn = ease_fn || Ease.linearNone;
         if (typeof ease_fn === 'string') {
             ease_fn = Ease[ease_fn];
@@ -298,6 +297,13 @@ export function tween(data: {
             sprite.tween.clear();
         }
         setStyle(sprite, start_props);
+
+        if (time === 0) {
+            setStyle(sprite, end_props);
+            resolve();
+            return;
+        }
+        time = time || 300;
 
         /** 如果本身已经是那个属性就不做任何处理 */
         for (const key in end_props) {

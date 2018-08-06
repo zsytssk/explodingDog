@@ -208,11 +208,11 @@ export class CurCardCtrl extends CardCtrl {
         this.putInBoxByPos(pos);
         card_box.sortCard();
     }
-    public putCardInWrap(wrap: Laya.Sprite) {
+    public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
         this.is_selected = false;
         const { view } = this.link;
         this.offNode(view);
-        return super.putCardInWrap(wrap);
+        return super.putCardInWrap(wrap, no_time);
     }
     /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
     public setFace(props: FaceProps) {

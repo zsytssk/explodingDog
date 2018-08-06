@@ -120,11 +120,14 @@ export class CardCtrl extends CardBaseCtrl {
         view.zOrder = 0;
     }
     /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */
-    public putCardInWrap(wrap: Laya.Sprite) {
+    public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
         this.is_selected = false;
         const { view, card_box } = this.link;
         const card_move_box = card_box.getCardMoveBox();
-
+        let time = 300;
+        if (no_time) {
+            time = 0;
+        }
         const scale = wrap.height / card_height;
         const card_pos = new Laya.Point(view.width / 2, view.height / 2);
         const wrap_pos = new Laya.Point(wrap.width / 2, wrap.height / 2);
@@ -146,6 +149,7 @@ export class CardCtrl extends CardBaseCtrl {
                 y: wrap_pos.y,
             },
             sprite: view,
+            time,
         }).then(() => {
             this.scale = scale;
             wrap.addChild(view);
