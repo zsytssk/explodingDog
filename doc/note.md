@@ -1,3 +1,21 @@
+## 2018-08-06 10:10:36
+* @todo
+    * 牌堆 当前数目 + 打出牌的展示...
+    * 剪断引线 的牌飞行动画
+* @bug 1张牌抓完之后 card_heap还显示一张牌
+    * card_ctrl 的样式
+    * withDrawCardNoTime
+
+* @ques 牌堆如何处理性能问题
+
+* @ques 牌需不需要缓存 回收
+
+* @bug 其他人打出的牌是背面...
+
+* @ques 我有很多card_ctrl类 里面有很多相似的地方怎么处理
+    * new CardCtrl(card_id, wrap)
+    * card_heap theFuture cardBox
+
 ## 2018-07-27 10:34:22
 * @bug 再来一局 当前用户cardBox 的位置没有重置
 

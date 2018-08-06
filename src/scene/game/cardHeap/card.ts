@@ -21,7 +21,7 @@ export class CardCtrl extends BaseCtrl {
     private is_touched = false;
     public scale: number;
     public link = {} as Link;
-    private status: Status;
+    public status: Status;
     private is_move = false;
     constructor(view: CardUI, wrap: Laya.Sprite) {
         super();
