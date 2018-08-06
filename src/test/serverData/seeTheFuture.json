@@ -9,8 +9,8 @@
             "type": "seeFuture",
             "step": 1,
             "targetUserId": 0,
-            "discard": 1,
-            "topCards": ["3101", "3401", "3521"]
+            "discard": 0,
+            "topCards": ["3101", "3001"]
         }
     }
 }

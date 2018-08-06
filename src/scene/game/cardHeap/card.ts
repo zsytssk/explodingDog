@@ -21,7 +21,7 @@ export class CardCtrl extends BaseCtrl {
     private is_touched = false;
     public scale: number;
     public link = {} as Link;
-    private status: Status;
+    public status: Status;
     private is_move = false;
     constructor(view: CardUI, wrap: Laya.Sprite) {
         super();
@@ -34,6 +34,14 @@ export class CardCtrl extends BaseCtrl {
     public init() {
         this.initLink();
         this.initEvent();
+    }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
+    }
+    public show() {
+        const { view } = this.link;
+        view.visible = true;
     }
     protected initLink() {
         const { view, wrap } = this.link;

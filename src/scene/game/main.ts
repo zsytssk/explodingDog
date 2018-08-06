@@ -2,7 +2,12 @@ import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
 import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
-import { formatGameReplayData, formatUpdatePlayersData, isCurPlayer } from '../../utils/tool';
+import {
+    formatGameReplayData,
+    formatUpdatePlayersData,
+    isCurPlayer,
+    randomCardId,
+} from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { PopupGameOver } from '../popup/popupGameOver';
 import { PopUpInvite } from '../popup/popupInvite';
@@ -16,7 +21,14 @@ import { DiscardZoneCtrl } from './discardZone';
 import { DockerCtrl } from './docker';
 import { HostZoneCtrl } from './hostZoneCtrl';
 import { CardModel } from './model/card/card';
-import { CardType, cmd as game_cmd, GameModel, GameStatus, GAME_STATUS, GAME_TYPE } from './model/game';
+import {
+    CardType,
+    cmd as game_cmd,
+    GameModel,
+    GameStatus,
+    GAME_STATUS,
+    GAME_TYPE,
+} from './model/game';
 import { PlayerModel } from './model/player';
 import { QuickStartCtrl } from './quickStart';
 import { CurSeatCtrl } from './seat/curSeat';
@@ -224,8 +236,9 @@ export class GameCtrl extends BaseCtrl {
                 this.link.host_zone_ctrl.setCardType(data.card_type);
             },
         );
+
         this.onModel(game_cmd.discard_card, (data: { card: CardModel }) => {
-            const card_ctrl = this.discardByModel(data.card);
+            const card_ctrl = this.moveByModel(data.card);
             this.link.discard_zone_ctrl.discardCard(data.card, card_ctrl);
         });
         this.onModel(base_cmd.destroy, (data: { status: GameStatus }) => {
@@ -246,9 +259,10 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
-        const { quick_start_ctrl, docker_ctrl } = this.link;
+        const { quick_start_ctrl, docker_ctrl, discard_zone_ctrl } = this.link;
         const { roomInfo, roundInfo } = data;
         this.is_ready = true;
+
         /** 更新本地倒计时 */
         data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
@@ -264,8 +278,18 @@ export class GameCtrl extends BaseCtrl {
             if (turnDirection) {
                 this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
+            const hit_num = Number(roundInfo.discardNum) || 0;
+            const last_card = roundInfo.lastHitCard;
+            for (let i = 0; i < hit_num; i++) {
+                discard_zone_ctrl.discardCard(randomCardId());
+            }
+            if (
+                last_card &&
+                (!roundInfo.hitData || !roundInfo.hitData.hitCard)
+            ) {
+                discard_zone_ctrl.discardCard(last_card);
+            }
         }
-
         this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
@@ -314,7 +338,7 @@ export class GameCtrl extends BaseCtrl {
     private onServerHit(data: HitData, code?: string) {
         const { docker_ctrl } = this.link;
         if (Number(code) !== 200) {
-            this.model.unDiscardCard(data);
+            this.model.unDrawCard(data);
             return;
         }
         this.model.discardCard(data);
@@ -448,12 +472,12 @@ export class GameCtrl extends BaseCtrl {
             seatCtrl.updatePos(seat_position[4][index]);
         });
     }
-    public discardByModel(card_model: CardModel) {
+    public moveByModel(card_model: CardModel) {
         const { seat_ctrl_list } = this.link;
 
         let card_ctrl;
         for (const seat_ctrl of seat_ctrl_list) {
-            card_ctrl = seat_ctrl.discardByModel(card_model);
+            card_ctrl = seat_ctrl.moveByModel(card_model);
             if (card_ctrl) {
                 break;
             }
@@ -524,6 +548,7 @@ export class GameCtrl extends BaseCtrl {
         slap_ctrl.reset();
         card_heap_ctrl.reset();
         docker_ctrl.reset();
+        discard_zone_ctrl.reset();
         turn_arrow_ctrl.reset();
         quick_start_ctrl.hideCountDown();
         this.cur_seat_id = undefined;

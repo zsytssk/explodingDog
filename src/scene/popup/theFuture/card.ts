@@ -2,77 +2,37 @@ import { setStyle, tween } from '../../../mcTree/utils/animate';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { getCardInfo, convertPos } from '../../../utils/tool';
 import { CardBoxCtrl } from './cardBox';
+import {
+    CardBaseCtrl,
+    Link as BaseLink,
+} from '../../game/seat/cardBox/cardBase';
 
-interface Link {
-    view: ui.game.seat.cardBox.cardUI;
-    wrap: Laya.Sprite;
+interface Link extends BaseLink {
     card_box: CardBoxCtrl;
-    card_light: Laya.Skeleton;
 }
-export class CardCtrl extends BaseCtrl {
+export class CardCtrl extends CardBaseCtrl {
     private is_touched = false;
-    public card_id: string;
-    private scale: number;
-    public link = {} as Link;
-    constructor(card_id, wrap: Laya.Sprite) {
-        super();
-        this.card_id = card_id;
-        this.link.wrap = wrap;
+    public link: Link;
+    constructor(card_id: string, wrap: Laya.Sprite) {
+        super(card_id, wrap);
     }
     public init() {
-        this.initLink();
+        super.init();
         this.initEvent();
     }
     protected initLink() {
-        this.initUI();
-        const { view } = this.link;
-        const { card_light } = view;
-
-        card_light.stop();
+        super.initLink();
         this.link = {
             ...this.link,
             card_box: this.parent as CardBoxCtrl,
-            card_light,
         };
-    }
-    /** 初始化ui， 设置当前其他玩家牌的样式（大小 显示牌背面） */
-    private initUI() {
-        const { wrap } = this.link;
-        const view = new ui.game.seat.cardBox.cardUI();
-        const scale = wrap.height / view.height;
-        wrap.addChild(view);
-        setStyle(view, { scaleX: scale, scaleY: scale });
-        this.scale = scale;
-
-        wrap.addChild(view);
-        view.anchorX = 0.5;
-        view.anchorY = 0.5;
-        this.link = {
-            ...this.link,
-            view,
-        };
-        this.drawCard();
-    }
-    /** 绘制牌面 */
-    public drawCard() {
-        const { card_id } = this;
-        const { view } = this.link;
-        const card_info = getCardInfo(card_id);
-        const { card_id: view_card_id, card_face, card_back } = view;
-        if (card_info) {
-            card_face.skin = card_info.url;
-            view_card_id.text = `id:${card_id}`;
-            card_back.visible = false;
-        } else {
-            card_back.visible = true;
-        }
     }
     private initEvent() {
         const { view } = this.link;
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
     }
-    private mouseDown(event: Laya.Event) {
+    private mouseDown() {
         const { view } = this.link;
         this.is_touched = true;
         const pos = new Laya.Point(view.width / 2, view.height / 2);

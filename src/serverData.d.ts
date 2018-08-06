@@ -61,6 +61,7 @@ type RoundInfoData = {
     lastHitCard: string;
     remainCard: 9;
     bombProb: number;
+    discardNum: number;
 };
 type GameReplayData = {
     userList: UserData[];
@@ -182,6 +183,19 @@ type GetMAllData = {
     };
 };
 
+type GetChargeData = {
+    userId: string;
+    boneList: {
+        rmb: number;
+        num: number;
+        isFirst: 0 | 1,
+        give: {
+            first: number;
+            normal: number;
+        };
+    }[];
+};
+
 type GetRankListData = {
     userId: string;
     list: {
@@ -204,9 +218,7 @@ type GetRankListData = {
 
 type DogConfigData = {
     userId: string;
-    time: [
-        string, string
-    ][];
+    time: [string, string][];
     getCount: number;
     totalCount: number;
     stamina: number;
@@ -227,4 +239,13 @@ type GetAvatarListData = {
         isLock: number;
     }[];
     mallAvatar: MallAvatarData[];
+};
+
+type PayUrlParamsData = {
+    userId: string;
+    gameId: string;
+    tradeName: string;
+    gameCoinAmount: number;
+    platform: string;
+    gameOrderId: string;
 };

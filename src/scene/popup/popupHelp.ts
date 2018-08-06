@@ -7,6 +7,7 @@ import {
     splitStr,
     getBlongStr,
 } from '../../utils/tool';
+import { BgCtrl } from '../bgCtrl';
 
 type DataItem = {
     card: {
@@ -29,6 +30,10 @@ export class PopupHelp extends ui.popup.popupHelpUI {
         this.closeEffect = popupFadeOutEffect(this);
     }
     private init() {
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
+
         const top_bar = new TopBar();
         top_bar.top = 20;
 

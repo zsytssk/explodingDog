@@ -111,12 +111,12 @@ export class CardBoxCtrl extends BaseCtrl {
     public getCardNum() {
         return this.link.card_list.length;
     }
-    public discardByModel(card_model: CardModel) {
+    public moveByModel(card_model: CardModel) {
         const { card_list } = this.link;
         for (const card_item of card_list) {
             if (card_item.isCardModel(card_model)) {
                 this.removeCard(card_item);
-                card_item.discard();
+                card_item.resetStyle();
                 return card_item;
             }
         }

@@ -1,59 +1,148 @@
+## 2018-08-06 10:10:36
+* @todo 背景自适应
+    * @音效
+    * @牌组说明弹出层
+    * 商城的实现
+
+* @ques 全屏背景的弹出层能不能都继承一个基类 + topBar一样的公共类
+
+
+* @bug curCard unselect
+
+* @todo
+    * 牌堆 当前数目 + 打出牌的展示...
+    * 剪断引线 的牌飞行动画
+* @bug 张牌抓完之后 card_heap还显示一张牌
+    * card_ctrl 的样式
+    * withDrawCardNoTime
+
+* @ques 牌堆如何处理性能问题
+
+* @note loading 内测
+
+* @ques 牌需不需要缓存 回收
+
+* @bug 其他人打出的牌是背面...
+
+* @ques 我有很多card_ctrl类 里面有很多相似的地方怎么处理
+    * new CardCtrl(card_id, wrap)
+    * card_heap theFuture cardBox
+
 ## 2018-07-27 10:34:22
-* @bug thefuture 第一张牌不再最上面
-* @ques 将影响复用的东西抽离出来
+* @bug 再来一局 当前用户cardBox 的位置没有重置
 
-* @ques discard player->card-->cardCtrl-->..
-    * player  --> seat --> discardZone
+* discard 找不到打出那张牌
 
-* @ques card tip 3秒自动还原
+* @ques 我必须要复盘 最近打出那张牌 这必须要在 game里面处理
+    * 而我正常打牌的处理却在seat里面处理
+    * @ques 我能把打牌全部放在player身上吗
+    * 或者我可以把给牌放到game里面...
 
-* @ques 如何让新手引导 复用我原来的逻辑
-    * seatCtrl 不依赖 discardZone card Heap , 反过来依赖,
-    * 在创建discardZone card Heap 将curSeat传进去...
+```js
+ Sail.io.emit(CMD.HIT, {
+    hitCard: this.model.card_id,
+});
 
-* @ques 我的ctrl对model有很多的依赖不好复用...
-    * 影响复用的点..
+```
+* findCardByStatus 可能不能用了
+* CardStatus 还有用吗
 
-* ? 新手引导能不能用我原来的primus...mock ,
+* player status wait_give 会不会和其他的冲突
 
-* ? 将
+* card give
 
-* ? 移动牌能不能做成component的形式
-    * wrap move_box view 这三个部分...
-
-* @ 适配可以背景延伸内容缩小
-
-* @ques 拖动出屏幕外的处理 + starDrag取消父类的处理
-* ? @todo 换房主 命令
-* ? 开局复盘时打出一张牌 出错??
-    * ...
-
-* ? list item 中的按钮点击效果怎么没有??
-
-* @ 关闭按钮点击效果
-
-* @bug qpby
+* draw的牌如何销毁
+    * discard 是飞行到discardZone
+    * give 最好飞到其他人手上
+    * ... 不再销毁...
 
 
-* 打出牌 牌堆变薄 打出牌堆 增高
+* @note 打牌的逻辑
+    * cardCtrl.selected --> cardModel --> player --> seat
+    * 这样无形增加游戏的复杂度
 
--   => todo
+* @ques 偷牌能不能 牌从给牌用户身上飞到 偷牌用户身上
+    * 现在只是在牌的最后添加一张牌 牌多的时候都看不到...
+    * 添加的动作 牌的插入位置都可以保证
+
+* @优化 gameStart 牌的动画
+
+-   ? component
+    -   give_card
+    -   card_move...
+    -   有哪些功能能够做成 component
+
+*   ? 有哪些地方联系过于紧密
+
+* @todo router
+
+*   @ todo
+
+    -   头像购买弹框 + 更换头像界面
+    -   充值弹出层
+
+    *   购买卡组 弹出层
+
+*   @bug thefuture 第一张牌不再最上面
+*   @ques 将影响复用的东西抽离出来
+
+*   @ques discard player->card-->cardCtrl-->..
+
+    -   player --> seat --> discardZone
+
+*   @ques card tip 3 秒自动还原
+
+*   @ques 如何让新手引导 复用我原来的逻辑
+
+    -   seatCtrl 不依赖 discardZone card Heap , 反过来依赖,
+    -   在创建 discardZone card Heap 将 curSeat 传进去...
+
+*   @ques 我的 ctrl 对 model 有很多的依赖不好复用...
+
+    -   影响复用的点..
+
+*   ? 新手引导能不能用我原来的 primus...mock ,
+
+*   ? 将
+
+*   ? 移动牌能不能做成 component 的形式
+
+    -   wrap move_box view 这三个部分...
+
+*   @ 适配可以背景延伸内容缩小
+
+*   @ques 拖动出屏幕外的处理 + starDrag 取消父类的处理
+*   ? @todo 换房主 命令
+*   ? 开局复盘时打出一张牌 出错??
+
+    -   ...
+
+*   ? list item 中的按钮点击效果怎么没有??
+
+*   @ 关闭按钮点击效果
+
+*   @bug qpby
+
+-   打出牌 牌堆变薄 打出牌堆 增高
+
+*   => todo
+
     -   排行榜弹出层
     -   领取狗粮弹出层
-    -   充值弹出层
     -   头像购买弹框 + 更换头像界面
+    -   充值弹出层
 
--   ? dialog close effect 是默认的吗
+*   ? dialog close effect 是默认的吗
 
--   @bug 用户牌拖动最前面 报错
+*   @bug 用户牌拖动最前面 报错
 
--   @note 全屏弹出层 显示应该是 fadeIn
+*   @note 全屏弹出层 显示应该是 fadeIn
 
--   @note 充值有首冲优惠没有做
+*   @note 充值有首冲优惠没有做
 
--   bugAvatar Avatar 是不是要做成动态的
+*   bugAvatar Avatar 是不是要做成动态的
 
--   remain_card_change 这每添加一个就注册一个事件方法有没有太麻烦
+*   remain_card_change 这每添加一个就注册一个事件方法有没有太麻烦
 
     -   有没有更简单的方式...
     -   decorator watch...
@@ -61,45 +150,45 @@
     -   如果 card_heap 需要根据需要创建 那么就必须放在这里..
     -   这是比较合理的方式
 
--   @bug 角度太大 其他人的牌 就 跑掉了
+*   @bug 角度太大 其他人的牌 就 跑掉了
 
     -   如何形成一个完美的圆弧
 
--   @ques 马一帆 dialog 关闭之前..
+*   @ques 马一帆 dialog 关闭之前..
 
--   @ques 弹出层的自适应如何去做 @zy
+*   @ques 弹出层的自适应如何去做 @zy
 
--   @优化
+*   @优化
 
     -   抓到炸弹 炸弹牌的出牌动画有问题
 
--   @bug 连续两次 turn2 无法摸牌
+*   @bug 连续两次 turn2 无法摸牌
 
-*   @note 优化
+-   @note 优化
     -   当前牌上下错位
     -   其他人牌的扇形
     -   theFuture 中的位置...
 
--   @bug 再来一局原来的牌没有销毁
+*   @bug 再来一局原来的牌没有销毁
 
--   @note 聊天能不能放在另外一个类中...
--   @bug cardHeep 乱拖动会错位...
+*   @note 聊天能不能放在另外一个类中...
+*   @bug cardHeep 乱拖动会错位...
 
-*   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
+-   D:\zsytssk\job\git\exposiveDog\src\scene\popup\theFuture\card.ts
 
     -   this.space
 
-*   @note
+-   @note
 
     -   公共资源
     -   牌的名称需要做成图片吗 图片就是很多图片
     -   牌上的阴影 如何处理
 
-*   @bug 机器人要牌 give_Card 不消失
+-   @bug 机器人要牌 give_Card 不消失
 
--   @note dialog 有没有关闭之前
+*   @note dialog 有没有关闭之前
 
-*   @todo
+-   @todo
 
     -   自适应 + 音效 + ...
     -   牌的说明
@@ -108,38 +197,38 @@
     -   偷看动画
     -   @bug 打出 defuse CardBox 飞回时位置有问题...
 
-*   缺失弹出层
+-   缺失弹出层
 
     -   充值弹出层
     -   头像购买弹框
     -   商城弹出层
 
-*   @note 优化
+-   @note 优化
 
     -   当前牌上下错位
 
-*   login :union 这是什么意思
+-   login :union 这是什么意思
 
-*   neovim lua
+-   neovim lua
 
-*   @bug 抽出的牌没有打出 反而重新创建牌
+-   @bug 抽出的牌没有打出 反而重新创建牌
     -   和牌没有关系
 
--   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
+*   ? annoy + blind 的结束状态可以在牌 act 监听 target 的 status 发生改变
     -   但是如果是复盘 我就无法触发 action 的 act, 也无法执行绑定了 fuck
     -   其实我可以把 player be_action 做成一个数组， 如果他被作用了， 我就创建一个 action 放到数组里
     -   结束直接清除就可以了
 
-*   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
+-   ? is_wait_give 只是用在牌被抽出的时候判断他需要干什么
 
     -   card status 用来 服务器 hit 时候判断 能不能出 能不能 give
     -   这还是需要的
 
-*   @note theFuture card 移动放到 LayaStage 中
+-   @note theFuture card 移动放到 LayaStage 中
 
     -   drawCard
 
-*   @ques 牌如何从牌堆 飞到用户手上
+-   @ques 牌如何从牌堆 飞到用户手上
     -   seat 和 cardHeap 如何相互引用
     -   如何开启
     -   如何关闭
@@ -743,7 +832,7 @@ _ 状态清除
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                                   @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                                       @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

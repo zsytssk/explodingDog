@@ -1,3 +1,4 @@
+import { random } from 'lodash';
 import { CARD_MAP, CARD_TYPE } from '../data/card';
 import { CONFIG } from '../data/config';
 import { logErr } from '../mcTree/utils/zutil';
@@ -184,7 +185,9 @@ export function stopSkeleton(ani: Laya.Skeleton) {
     });
 }
 /** 播放骨骼动画, 如果是拖到页面上的 一开始播放 需要特殊处理` */
-export function playSkeleton(ani: Laya.Skeleton, ...params) {
+type Params = [any, boolean, boolean?, number?, number?, boolean?];
+
+export function playSkeleton(ani: Laya.Skeleton, ...params: Params) {
     if (ani.player) {
         ani.play(...params);
         return;
@@ -265,7 +268,17 @@ export function splitStr(str: string, line_char_num: number) {
     }
     return result;
 }
-
+/** 生成一个随机的card_id */
+export function randomCardId() {
+    const key_arr = [];
+    for (const key in CARD_MAP) {
+        if (!CARD_MAP.hasOwnProperty(key)) {
+            continue;
+        }
+        key_arr.push(key);
+    }
+    return key_arr[random(0, key_arr.length)]
+}
 /** 获取牌所属卡包字符串 */
 export function getBlongStr(belong: number[]) {
     let result = '';

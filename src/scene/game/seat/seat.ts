@@ -2,24 +2,25 @@ import { Observable, Subscriber } from 'rxjs';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../../mcTree/event';
 import {
+    scale_in,
+    scale_out,
     stopAni,
     tween,
     tweenLoop,
-    scale_in,
-    scale_out,
 } from '../../../mcTree/utils/animate';
 import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
+import { CardModel } from '../model/card/card';
 import {
+    AddInfo,
     cmd as player_cmd,
     ObserverActionInfo,
     PlayerModel,
     PlayerStatus,
-    AddInfo,
 } from '../model/player';
+import { GiveCardCtrl } from '../widget/giveCard';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { CardBoxCtrl } from './cardBox/cardBox';
-import { CardModel } from '../model/card/card';
 
 export type SeatStatus = 'exploding' | 'load_player' | 'clear' | PlayerStatus;
 
@@ -36,6 +37,7 @@ export interface Link {
     highlight: Laya.Sprite;
     chat_box: Laya.Sprite;
     chat_label: Laya.Label;
+    give_card_ctrl: GiveCardCtrl;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -67,6 +69,9 @@ export class SeatCtrl extends BaseCtrl {
         const chat_label = view.chatLabel;
         const card_box_ctrl = this.createCardBox(card_box);
 
+        const game_ctrl = queryClosest(this, 'name:game');
+        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+
         this.link = {
             ...this.link,
             active_box,
@@ -76,6 +81,7 @@ export class SeatCtrl extends BaseCtrl {
             chat_label,
             die_avatar,
             empty_box,
+            give_card_ctrl,
             highlight,
             nickname,
             player_box,
@@ -139,6 +145,10 @@ export class SeatCtrl extends BaseCtrl {
         );
         this.onModel(player_cmd.action, (data: ObserverActionInfo) => {
             this.beActioned(data);
+        });
+
+        this.onModel(player_cmd.draw_card, (data: { card: CardModel }) => {
+            this.drawCard(data.card);
         });
     }
 
@@ -347,8 +357,19 @@ export class SeatCtrl extends BaseCtrl {
     protected addCard(data: AddInfo) {
         return this.link.card_box_ctrl.addCard(data.card, true);
     }
-    public discardByModel(card_model: CardModel) {
+    public moveByModel(card_model: CardModel) {
         const { card_box_ctrl } = this.link;
-        return card_box_ctrl.discardByModel(card_model);
+        const card_ctrl = card_box_ctrl.moveByModel(card_model);
+        return card_ctrl;
+    }
+    private drawCard(card_model: CardModel) {
+        const { give_card_ctrl } = this.link;
+        const { status } = this.model;
+        /* 出牌的逻辑全部在game里面处理了 */
+        if (status === 'speak') {
+            return;
+        }
+        const card_ctrl = this.moveByModel(card_model);
+        give_card_ctrl.getCard(card_ctrl);
     }
 }

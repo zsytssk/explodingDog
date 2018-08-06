@@ -1,4 +1,5 @@
 import { load_util } from '../../mcTree/utils/load';
+import { BgCtrl } from '../bgCtrl';
 
 export async function loadAssets(name) {
     await load_util.load('loading');
@@ -33,7 +34,8 @@ class LoadingUI extends ui.loading.mainUI {
     }
     init() {
         this.size(Laya.stage.width, Laya.stage.height);
-        this.bg.size(Laya.stage.width, Laya.stage.height);
+        const bg_ctrl = new BgCtrl(this.bg);
+        bg_ctrl.init();
         if (
             GM.gamePublishInfo &&
             (window as CusWindow).laya &&

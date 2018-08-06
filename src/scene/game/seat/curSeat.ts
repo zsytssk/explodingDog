@@ -1,29 +1,25 @@
-import {
-    getChildrenByName,
-    log,
-    queryClosest,
-} from '../../../mcTree/utils/zutil';
+import { CMD } from '../../../data/cmd';
+import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { Type } from '../../popup/theFuture/popup';
 import { theFuture } from '../../popup/theFuture/theFuture';
+import { GameCtrl } from '../main';
+import { CardModel } from '../model/card/card';
 import {
+    AddInfo,
+    BlindStatus,
+    cmd as player_cmd,
     ObserverActionInfo,
     PlayerModel,
-    cmd as player_cmd,
-    BlindStatus,
-    AddInfo,
 } from '../model/player';
 import { PopupDefuse } from '../widget/defuse';
+import { CurCardCtrl } from './cardBox/curCard';
 import { CurCardBoxCtrl, CurCardBoxUI } from './cardBox/curCardBox';
 import { Link as BaseLink, SeatCtrl, SeatStatus } from './seat';
-import { GiveCardCtrl } from '../widget/giveCard';
-import { GameCtrl } from '../main';
-import { CurCardCtrl } from './cardBox/curCard';
 
 export interface Link extends BaseLink {
     view: ui.game.seat.curSeatUI;
     btn_chat: Laya.Button;
     card_box_ctrl: CurCardBoxCtrl;
-    give_card_ctrl: GiveCardCtrl;
     card_box_wrap: Laya.Sprite;
 }
 
@@ -49,14 +45,10 @@ export class CurSeatCtrl extends SeatCtrl {
         this.link.player_box = player_box;
         this.link.btn_chat = btn_chat;
 
-        const game_ctrl = queryClosest(this, 'name:game');
-        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
-
         this.link = {
             ...this.link,
             btn_chat,
             card_box_wrap,
-            give_card_ctrl,
             player_box,
         };
     }
@@ -75,6 +67,9 @@ export class CurSeatCtrl extends SeatCtrl {
                 this.link.card_box_ctrl.shuffle();
             }
         });
+        this.onModel(player_cmd.pre_draw_card, (data: { card: CardModel }) => {
+            this.preDrawCard(data.card);
+        });
     }
     protected createCardBox(card_box: CurCardBoxUI) {
         const card_box_ctrl = new CurCardBoxCtrl(card_box);
@@ -90,9 +85,6 @@ export class CurSeatCtrl extends SeatCtrl {
 
         /** 处理动作的完成 */
         if (status === 'complete') {
-            if (action === 'wait_get_card') {
-                this.waitGiveCardComplete();
-            }
             if (action === 'show_set_explode') {
                 this.hideSetExplode();
             }
@@ -121,12 +113,6 @@ export class CurSeatCtrl extends SeatCtrl {
         give_card_ctrl.show().then(card_id => {
             observer.next(card_id);
         });
-    }
-    private waitGiveCardComplete() {
-        const { give_card_ctrl } = this.link;
-        if (give_card_ctrl) {
-            give_card_ctrl.reset();
-        }
     }
     /** 显示seeTheFuture and alterTheFuture功能 */
     private theFuture(action_data: ObserverActionInfo) {
@@ -208,5 +194,18 @@ export class CurSeatCtrl extends SeatCtrl {
         }
         this.trigger(cmd.add_card, { card });
         return card;
+    }
+    private preDrawCard(card: CardModel) {
+        const card_id = card.card_id;
+        const { status } = this.model;
+        if (status === 'speak') {
+            Sail.io.emit(CMD.HIT, {
+                hitCard: card_id,
+            });
+        }
+        if (status === 'wait_give') {
+            const { give_card_ctrl } = this.link;
+            give_card_ctrl.preGetCard(card_id);
+        }
     }
 }

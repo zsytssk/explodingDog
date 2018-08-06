@@ -1,19 +1,12 @@
-import { CMD } from '../../../../data/cmd';
-import { CardModel, cmd as card_cmd } from '../../model/card/card';
-import { CurCardBoxCtrl } from './curCardBox';
-import { CardCtrl, Link as BaseLink, space_scale } from './card';
-import { tween, setStyle } from '../../../../mcTree/utils/animate';
-import {
-    log,
-    queryClosest,
-    getChildrenByName,
-} from '../../../../mcTree/utils/zutil';
-import { GiveCardCtrl } from '../../widget/giveCard';
+import { setStyle, tween } from '../../../../mcTree/utils/animate';
+import { log } from '../../../../mcTree/utils/zutil';
 import { convertPos, playSkeleton, stopSkeleton } from '../../../../utils/tool';
+import { CardModel, cmd as card_cmd } from '../../model/card/card';
+import { CardCtrl, Link as BaseLink, space_scale } from './card';
+import { CurCardBoxCtrl } from './curCardBox';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
-    give_card_ctrl: GiveCardCtrl;
 }
 
 type FaceProps = {
@@ -35,19 +28,12 @@ export class CurCardCtrl extends CardCtrl {
     constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
         super(model, wrap, is_insert);
     }
-    protected initLink() {
-        super.initLink();
-        const game_ctrl = queryClosest(this, 'name:game');
-        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
-
-        this.link.give_card_ctrl = give_card_ctrl;
-    }
     protected initEvent() {
         super.initEvent();
         const { view } = this.link;
 
-        this.onModel(card_cmd.un_discard, () => {
-            this.withDrawCard();
+        this.onModel(card_cmd.un_draw, () => {
+            this.unDraw();
         });
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
@@ -198,41 +184,22 @@ export class CurCardCtrl extends CardCtrl {
             this.calcDiscard();
             return;
         }
-        this.withDrawCard();
+        this.unDraw();
     }
-    /** 计算 各种出牌的类型 */
+    /** 计算各种出牌的类型 出牌命令在seat中发出
+     * cardCtrl --. cardModel -- player -- seat --> hit | give_card
+     */
     private calcDiscard() {
-        const card_status = this.model.preDiscard();
+        const pre_drawed = this.model.preDrawCard();
         /** 不是出牌状态 直接退回牌堆 */
-        switch (card_status) {
-            case 'normal':
-                this.withDrawCard();
-                break;
-            case 'wait_give':
-                this.preGiveCard();
-                break;
-            case 'wait_discard':
-                Sail.io.emit(CMD.HIT, {
-                    hitCard: this.model.card_id,
-                });
-                break;
+        if (!pre_drawed) {
+            this.unDraw();
         }
     }
-    private preGiveCard() {
-        const game_ctrl = queryClosest(this, 'name:game');
-        const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
-        give_card_ctrl.preGetCard(this);
-    }
-    /** 当前用户牌再被给别人时直接放在give_card_ctrl上 */
-    protected give() {
-        const { card_box, give_card_ctrl } = this.link;
-        card_box.removeCard(this);
-        give_card_ctrl.getCard(this);
-    }
-    /**  这个方法现在用到 card + cardBox， 这很恶心
+    /** @ques 这个方法现在用到 card + cardBox， 这很恶心
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...
      */
-    private withDrawCard() {
+    private unDraw() {
         this.is_selected = false;
         const { wrap, view, card_box } = this.link;
         const pos = new Laya.Point(view.x, view.y);
@@ -241,11 +208,11 @@ export class CurCardCtrl extends CardCtrl {
         this.putInBoxByPos(pos);
         card_box.sortCard();
     }
-    public putCardInWrap(wrap: Laya.Sprite) {
+    public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
         this.is_selected = false;
         const { view } = this.link;
         this.offNode(view);
-        return super.putCardInWrap(wrap);
+        return super.putCardInWrap(wrap, no_time);
     }
     /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
     public setFace(props: FaceProps) {

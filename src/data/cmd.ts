@@ -57,5 +57,7 @@ export const CMD = {
     /** 获取头像列表 */
     CHANGE_AVATAR: 'changeAvatar',
     /**完成新手引导 */
-    FINISH_GUIDE: 'finishedNewUserGuide'
+    FINISH_GUIDE: 'finishedNewUserGuide',
+    /** 获取充值链接参数 */
+    GET_PAY_URL_PARAMS: 'getPayUrlParams',
 };

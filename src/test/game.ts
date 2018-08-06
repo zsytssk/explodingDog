@@ -42,11 +42,11 @@ export function discardCards() {
         game_ctrl.link.discard_zone_ctrl.discardCard(new CardModel(key));
     }
 }
-export function gameSteal() {
+export function gameSteal(data) {
     describe('game steal', it => {
         it.test('game steal', () => {
             const game_ctrl = (window as any).game_ctrl as GameCtrl;
-            game_ctrl.model.discardCard(StealData.res);
+            game_ctrl.model.discardCard(data || StealData.res);
             assert(game_ctrl.model.discard_card.card_id === '3402');
         });
     });

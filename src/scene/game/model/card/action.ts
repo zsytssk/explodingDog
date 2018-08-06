@@ -117,7 +117,7 @@ export class WaitGetCard extends Action {
         if (!is_cur_player) {
             return;
         }
-        target.setWaitGiveStatus(true);
+        target.setStatus('wait_give');
         target
             .beActioned({
                 action: this.name,
@@ -137,13 +137,13 @@ export class WaitGetCard extends Action {
         if (!target) {
             return;
         }
-        const card_model = target.takeCardByStatus(card, 'wait_give');
+        const card_model = target.drawCard(card);
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
         player.addCard(card_model);
 
-        target.setWaitGiveStatus(false);
+        target.setStatus('normal');
         target
             .beActioned({
                 action: this.name,
@@ -166,7 +166,6 @@ export class ShowDefuse extends Action {
             .subscribe();
         log('act', data);
     }
-
 }
 
 export class SeeTheFuture extends Action {
@@ -304,7 +303,7 @@ export class ReverseArrows extends Action {
             .beActioned({
                 action: this.name,
                 status: 'act',
-                data
+                data,
             })
             .subscribe();
     }
