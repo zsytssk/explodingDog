@@ -2,6 +2,7 @@ import { CMD } from '../../data/cmd';
 import { CardPack } from './component/cardPack';
 import { TopBar } from '../hall/topbarCard';
 import { getChildren } from '../../mcTree/utils/zutil';
+import { BgCtrl } from '../bgCtrl';
 
 const position2 = [190, 730]; //两个牌组时的定位
 const position3 = [20, 460, 900]; //三个牌组时的定位
@@ -21,6 +22,11 @@ export class PopupCards extends ui.popup.popupCardsUI {
         this.topbar = new TopBar();
         this.topbar.top = 20;
         this.addChild(this.topbar);
+
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
+
         this.initEvent();
         this.actions = {
             [CMD.CARD_TYPE_LIST]: this.initCardPack,

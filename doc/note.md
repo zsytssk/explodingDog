@@ -1,8 +1,18 @@
 ## 2018-08-06 10:10:36
+* @todo 背景自适应
+    * @音效
+    * @牌组说明弹出层
+    * 商城的实现
+
+* @ques 全屏背景的弹出层能不能都继承一个基类 + topBar一样的公共类
+
+
+* @bug curCard unselect
+
 * @todo
     * 牌堆 当前数目 + 打出牌的展示...
     * 剪断引线 的牌飞行动画
-* @bug 1张牌抓完之后 card_heap还显示一张牌
+* @bug 张牌抓完之后 card_heap还显示一张牌
     * card_ctrl 的样式
     * withDrawCardNoTime
 

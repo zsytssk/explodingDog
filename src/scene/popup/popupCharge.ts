@@ -1,7 +1,13 @@
 import { TopBar } from '../hall/topbarCard';
 import { CMD } from '../../data/cmd';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
-import { log, getElementsByName, getQueryString, getUri } from '../../mcTree/utils/zutil';
+import {
+    log,
+    getElementsByName,
+    getQueryString,
+    getUri,
+} from '../../mcTree/utils/zutil';
+import { BgCtrl } from '../bgCtrl';
 
 type Link = {
     list: Laya.List;
@@ -28,6 +34,10 @@ export class PopupCharge extends ui.popup.popupChargeUI {
 
         this.addChild(top_bar);
         top_bar.setTitle('charge');
+
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
 
         const { btnBack: btn_back } = top_bar;
 
@@ -58,13 +68,31 @@ export class PopupCharge extends ui.popup.popupChargeUI {
         list.renderHandler = new Laya.Handler(this, (box: Laya.Box, index) => {
             const data_item = this.list.dataSource[index];
             const { is_first, give, buy_num, cost } = data_item;
-            const img_bone = getElementsByName(box, 'img_bone')[0] as Laya.Image;
-            const buy_num_node = getElementsByName(box, 'buy_num')[0] as Laya.Text;
-            const btn_cost = getElementsByName(box, 'btn_cost')[0] as Laya.Image;
-            const cost_node = getElementsByName(btn_cost, 'cost')[0] as Laya.Text;
+            const img_bone = getElementsByName(
+                box,
+                'img_bone',
+            )[0] as Laya.Image;
+            const buy_num_node = getElementsByName(
+                box,
+                'buy_num',
+            )[0] as Laya.Text;
+            const btn_cost = getElementsByName(
+                box,
+                'btn_cost',
+            )[0] as Laya.Image;
+            const cost_node = getElementsByName(
+                btn_cost,
+                'cost',
+            )[0] as Laya.Text;
             const shadow = getElementsByName(box, 'shadow')[0] as Laya.Text;
-            const tag_give = getElementsByName(box, 'tag_give')[0] as Laya.Image;
-            const tag_first_give = getElementsByName(box, 'tag_first_give')[0] as Laya.Image;
+            const tag_give = getElementsByName(
+                box,
+                'tag_give',
+            )[0] as Laya.Image;
+            const tag_first_give = getElementsByName(
+                box,
+                'tag_first_give',
+            )[0] as Laya.Image;
 
             let cur_give_node, give_num;
             if (is_first) {
@@ -78,7 +106,10 @@ export class PopupCharge extends ui.popup.popupChargeUI {
                 cur_give_node = tag_give;
                 give_num = give.normal;
             }
-            const give_num_node = getElementsByName(cur_give_node, 'give_num')[0] as Laya.Text;
+            const give_num_node = getElementsByName(
+                cur_give_node,
+                'give_num',
+            )[0] as Laya.Text;
             give_num_node.text = give_num;
             buy_num_node.text = `${buy_num}骨头`;
 

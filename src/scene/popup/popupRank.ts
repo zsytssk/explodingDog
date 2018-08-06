@@ -8,6 +8,7 @@ import {
 } from '../../utils/tool';
 import { CMD } from '../../data/cmd';
 import { log, logAll } from '../../mcTree/utils/zutil';
+import { BgCtrl } from '../bgCtrl';
 
 type DataItem = {
     avatar: string;
@@ -47,6 +48,10 @@ export class PopupRank extends ui.popup.rank.popUI {
 
         this.addChild(top_bar);
         top_bar.setTitle('rank');
+
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
 
         this.link = {
             ...this.link,

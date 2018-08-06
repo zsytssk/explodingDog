@@ -2,6 +2,9 @@
 import { GuideStep } from "./guideStep";
 import { GuideStart } from "./guideStart";
 import { fade_out, fade_in } from "../../mcTree/utils/animate";
+import { loadAssets } from "../loaing/main";
+import { Hall } from "../hall/scene";
+import { CMD } from "../../data/cmd";
 
 export class GuideView extends ui.guide.mainUI {
     private stepUI;
@@ -22,9 +25,21 @@ export class GuideView extends ui.guide.mainUI {
         this.startUI.btn_continue.on(Laya.Event.CLICK, this, () => {
             fade_out(this.startUI).then(() => {
                 fade_in(this.stepUI, 50);
+                this.stepUI.setStep(1);
             });
         });
-
+        this.startUI.btn_end.on(Laya.Event.CLICK, this, () => {
+            Sail.io.emit(CMD.FINISH_GUIDE);
+            loadAssets('hall').then(() => {
+                Sail.director.runScene(new Hall());
+            })
+        });
+        this.stepUI.on(this.stepUI.FINISH, this, () => {
+            fade_out(this.stepUI).then(() => {
+                fade_in(this.startUI, 50);
+                this.startUI.setType('end');
+            });
+        })
     }
 }
 

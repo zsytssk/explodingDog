@@ -17,7 +17,7 @@ export class CardBaseCtrl extends BaseCtrl {
     protected link = {} as Link;
     /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
     protected scale: number;
-    protected card_id: string;
+    public card_id: string;
     constructor(card_id: string, wrap: Laya.Sprite) {
         super();
         this.setCardId(card_id);

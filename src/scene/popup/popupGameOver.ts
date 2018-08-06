@@ -4,12 +4,13 @@ import { tween } from '../../mcTree/utils/animate';
 import { log, getChildren } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
+import { BgCtrl } from '../bgCtrl';
 
 export class PopupGameOver extends ui.popup.popupGameOverUI {
     private isUserCreate; // 是否为用户创建的房间
     name = 'game_over';
     group = 'exploding';
-    private onOpenFuns = [];//弹出后播放动画
+    private onOpenFuns = []; //弹出后播放动画
     CONFIG = {
         closeByGroup: true,
     };
@@ -20,6 +21,10 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         this.init();
     }
     init() {
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
+
         this.progressBar.bar.y = 2;
         this.btnBack.on(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
@@ -55,9 +60,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             this.avatarBox.addChild(avatar);
             if (user.isWinUser) {
                 this.winUserNamme.text = user.nickname;
-                this.onOpenFuns.push(
-                    avatar.showCrown.bind(avatar)
-                );
+                this.onOpenFuns.push(avatar.showCrown.bind(avatar));
             }
             if (isCurPlayer(user.userId)) {
                 if (user.updateInfo.level.isChange) {
