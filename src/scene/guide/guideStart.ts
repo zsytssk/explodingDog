@@ -6,7 +6,7 @@ export class GuideStart extends ui.guide.startGuideUI {
         if (param == 'start') {
             this.start.visible = true;
             this.end.visible = false;
-        } else {
+        } else if (param == 'end') {
             this.start.visible = false;
             this.end.visible = true;
         }
