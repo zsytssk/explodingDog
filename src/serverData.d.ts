@@ -183,6 +183,19 @@ type GetMAllData = {
     };
 };
 
+type GetChargeData = {
+    userId: string;
+    boneList: {
+        rmb: number;
+        num: number;
+        isFirst: 0 | 1,
+        give: {
+            first: number;
+            normal: number;
+        };
+    }[];
+};
+
 type GetRankListData = {
     userId: string;
     list: {
