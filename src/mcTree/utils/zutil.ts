@@ -430,7 +430,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const empty_fn = () => { };
 
     if (!type) {
         return empty_fn;
@@ -481,6 +481,17 @@ export function getQueryString(query) {
         }
     }
     return query_string;
+}
+// 拼接uri参数
+export function getUri(obj) {
+    let str = '';
+    for (let key in obj) {
+        if (str.length) {
+            str += '&';
+        }
+        str += key + '=' + obj[key];
+    }
+    return str;
 }
 
 const state_temp = {};

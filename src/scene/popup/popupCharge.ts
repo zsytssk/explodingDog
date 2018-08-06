@@ -1,7 +1,7 @@
 import { TopBar } from '../hall/topbarCard';
 import { CMD } from '../../data/cmd';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
-import { log, getElementsByName } from '../../mcTree/utils/zutil';
+import { log, getElementsByName, getQueryString, getUri } from '../../mcTree/utils/zutil';
 
 type Link = {
     list: Laya.List;
@@ -44,6 +44,7 @@ export class PopupCharge extends ui.popup.popupChargeUI {
     private initEvent() {
         this.actions = {
             [CMD.GET_MALL_LIST]: this.renderData,
+            [CMD.GET_PAY_URL_PARAMS]: this.gotoPayment,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GET_MALL_LIST, { type: 'bone' });
@@ -88,37 +89,39 @@ export class PopupCharge extends ui.popup.popupChargeUI {
             btn_cost.offAll();
             btn_cost.on(Laya.Event.CLICK, this, () => {
                 log('------', data_item);
-                //this.onClickAction(data_item);
+                Sail.io.emit(CMD.GET_PAY_URL_PARAMS, { count: cost });
             });
         });
     }
 
-    private onClickAction(data_item) {
-        log(data_item, this.mall_avatar);
-        const { is_cur, is_lock, id } = data_item;
-        if (is_cur) {
+    private gotoPayment(data: PayUrlParamsData, code) {
+        // 充值跳转地址
+        //  http://m.1768.com/?gameOrderId=DG0120180628193&act=payment&gameId=40144&tradeName=骨头&amount=1&platform=wap&redirect_uri=/?act=game_explodingdog
+        if (code !== 200) {
             return;
         }
-        if (!is_lock) {
-            Sail.io.emit(CMD.CHANGE_AVATAR, { avatar: id });
-            return;
-        }
-        let cur_mall_item;
-        for (const item of this.mall_avatar) {
-            if (item.itemList.indexOf(parseInt(id, 10)) !== -1) {
-                cur_mall_item = item;
-                break;
-            }
-        }
-        Sail.director.popScene(
-            new PopupBuyAvatar(cur_mall_item, () => {
-                Sail.io.emit(CMD.GET_AVATAR_LIST);
-            }),
-        );
+        const {
+            gameId,
+            tradeName,
+            gameCoinAmount,
+            platform,
+            gameOrderId,
+        } = data;
+        const [host, query_str] = (location.href + '').split('?');
+        const params = {
+            act: 'payment',
+            gameOrderId,
+            gameId,
+            tradeName,
+            platform,
+            amount: gameCoinAmount,
+            redirect_uri: encodeURIComponent('/?' + query_str),
+        };
+        const url = host + '?' + getUri(params);
+        window.location.href = url;
     }
 
     private renderData(data: GetChargeData) {
-        log('==========', data);
         const { list } = this.link;
         const { boneList } = data;
         const data_source = [];

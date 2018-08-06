@@ -240,3 +240,12 @@ type GetAvatarListData = {
     }[];
     mallAvatar: MallAvatarData[];
 };
+
+type PayUrlParamsData = {
+    userId: string;
+    gameId: string;
+    tradeName: string;
+    gameCoinAmount: number;
+    platform: string;
+    gameOrderId: string;
+};
