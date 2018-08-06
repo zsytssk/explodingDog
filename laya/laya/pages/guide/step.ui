@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":24,
+    "selecteID":5,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"tip","skin":"images/guide/text_des.png","centerY":-256,"centerX":0},
+            "props":{"var":"tip","skin":"images/guide/text_help1.png","centerY":-256,"centerX":0},
             "nodeParent":1,
             "label":"Image(tip)",
             "isDirectory":false,
@@ -152,7 +152,7 @@
         {
             "x":15,
             "type":"Box",
-            "props":{"y":590,"x":263,"var":"cardBox"},
+            "props":{"y":590,"x":263,"width":894,"var":"cardBox","height":305},
             "nodeParent":1,
             "label":"Box(cardBox)",
             "isOpen":true,
@@ -217,16 +217,17 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":193,"x":213,"skin":"images/guide/card_backs.png"},
+            "props":{"y":193,"x":213,"var":"cardbacks","skin":"images/guide/card_backs.png"},
             "nodeParent":1,
-            "label":"Image",
-            "isOpen":false,
+            "label":"Image(cardbacks)",
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":5,
             "child":[
                 {
+                    "x":30,
                     "type":"Image",
                     "props":{"y":297,"x":42,"skin":"images/guide/bg_text.png"},
                     "nodeParent":5,
@@ -251,8 +252,9 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Image",
-                    "props":{"y":1,"x":2,"width":261,"var":"drawCard","skin":"images/component/card/card_back.png","sizeGrid":"25,25,25,25","height":274},
+                    "props":{"y":138,"x":132,"width":261,"var":"drawCard","skin":"images/component/card/card_back.png","sizeGrid":"25,25,25,25","height":274,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":5,
                     "label":"Image(drawCard)",
                     "isDirectory":false,
@@ -260,7 +262,8 @@
                     "hasChild":false,
                     "compId":14,
                     "child":[
-                        ]
+                        ],
+                    "$HIDDEN":false
                 }]
         },
         {
@@ -269,13 +272,14 @@
             "props":{"y":424,"x":1065,"width":271,"height":326},
             "nodeParent":1,
             "label":"Box",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":26,
             "child":[
                 {
+                    "x":30,
                     "type":"Image",
                     "props":{"skin":"images/guide/bg_step.png"},
                     "nodeParent":26,
@@ -288,6 +292,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Button",
                     "props":{"y":277,"x":135,"var":"btnSkip","stateNum":"1","skin":"images/guide/btn_skip.png","label":"label","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":26,
@@ -300,21 +305,23 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Box",
-                    "props":{"y":74,"x":23},
+                    "props":{"y":74,"x":23,"name":"stepIndex"},
                     "nodeParent":26,
-                    "label":"Box",
-                    "isOpen":false,
+                    "label":"Box(stepIndex)",
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":29,
                     "child":[
                         {
+                            "x":45,
                             "type":"Clip",
-                            "props":{"skin":"images/guide/clip_step.png","clipX":2},
+                            "props":{"skin":"images/guide/clip_step.png","name":"icon","clipX":2},
                             "nodeParent":29,
-                            "label":"Clip",
+                            "label":"Clip(icon)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
@@ -323,6 +330,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Label",
                             "props":{"y":-2,"x":53,"width":149,"text":"看卡牌","name":"label","height":38,"fontSize":28,"font":"Microsoft YaHei","color":"#ffffff","align":"left"},
                             "nodeParent":29,
@@ -336,21 +344,23 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Box",
-                    "props":{"y":121,"x":23},
+                    "props":{"y":121,"x":23,"name":"stepIndex"},
                     "nodeParent":26,
-                    "label":"Box",
-                    "isOpen":false,
+                    "label":"Box(stepIndex)",
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":32,
                     "child":[
                         {
+                            "x":45,
                             "type":"Clip",
-                            "props":{"skin":"images/guide/clip_step.png","clipX":2},
+                            "props":{"skin":"images/guide/clip_step.png","name":"icon","clipX":2},
                             "nodeParent":32,
-                            "label":"Clip",
+                            "label":"Clip(icon)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
@@ -359,6 +369,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Label",
                             "props":{"y":-2,"x":53,"width":149,"text":"打出卡牌","name":"label","height":38,"fontSize":28,"font":"Microsoft YaHei","color":"#ffffff","align":"left"},
                             "nodeParent":32,
@@ -372,21 +383,23 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Box",
-                    "props":{"y":170,"x":23},
+                    "props":{"y":170,"x":23,"name":"stepIndex"},
                     "nodeParent":26,
-                    "label":"Box",
-                    "isOpen":false,
+                    "label":"Box(stepIndex)",
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":35,
                     "child":[
                         {
+                            "x":45,
                             "type":"Clip",
-                            "props":{"skin":"images/guide/clip_step.png","clipX":2},
+                            "props":{"skin":"images/guide/clip_step.png","name":"icon","clipX":2},
                             "nodeParent":35,
-                            "label":"Clip",
+                            "label":"Clip(icon)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
@@ -395,6 +408,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Label",
                             "props":{"y":-2,"x":53,"width":149,"text":"摸卡牌","name":"label","height":38,"fontSize":28,"font":"Microsoft YaHei","color":"#ffffff","align":"left"},
                             "nodeParent":35,
