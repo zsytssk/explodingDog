@@ -1,10 +1,11 @@
 import { isNumber } from 'lodash';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
+import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
-import { CardCtrl } from './card';
-import { CurSeatCtrl, cmd as seat_cmd } from '../seat/curSeat';
-import { queryClosest, getChildrenByName } from '../../../mcTree/utils/zutil';
+import { cmd as seat_cmd, CurSeatCtrl } from '../seat/curSeat';
 import { SeatStatus } from '../seat/seat';
+import { CardCtrl } from './card';
+import { calcCreate } from './cardBackPool';
 
 export interface Link {
     view: ui.game.cardHeapUI;
@@ -29,8 +30,8 @@ export class CardHeapCtrl extends BaseCtrl {
     // tslint:disable-next-line:no-empty
     protected initLink() {
         const { view } = this.link;
-        const { remain_num, heap, card } = view;
-        const card_ctrl = new CardCtrl(card, heap);
+        const { remain_num, heap, card, card_box } = view;
+        const card_ctrl = new CardCtrl(card, card_box);
         this.addChild(card_ctrl);
         card_ctrl.init();
 
@@ -72,11 +73,14 @@ export class CardHeapCtrl extends BaseCtrl {
     public activeTake() {
         const { card_ctrl } = this.link;
         card_ctrl.setStatus('actived');
+        /** 如果是当前用户出牌, 因为已经有card_ctrl显示 所以需要隐藏最上面的一张牌 */
+        this.setHeapTopVisible();
     }
     /** 拿牌失败, 牌飞到牌堆 */
     public withDrawTake() {
         const { card_ctrl } = this.link;
         card_ctrl.withDrawCard();
+        this.setHeapTopVisible();
     }
     /** 非当前用户 禁用拿牌 */
     public disableTake() {
@@ -89,6 +93,46 @@ export class CardHeapCtrl extends BaseCtrl {
         }
         const { remain_num } = this.link;
         remain_num.text = `剩余${num}张`;
+        this.setHeapCard(num);
+    }
+    private setHeapCard(num: number) {
+        const { heap } = this.link;
+        if (num > 6) {
+            num = 6;
+        }
+        const change_num = num - heap.numChildren;
+        if (change_num === 0) {
+            return;
+        }
+        calcCreate(heap, change_num);
+        const len = heap.numChildren;
+        for (let i = len - 1; i >= 0; i--) {
+            const card_back = heap.getChildAt(i) as Laya.Sprite;
+            card_back.x = 0;
+            card_back.y = (len - 1 - i) * 5;
+            card_back.visible = true;
+        }
+        this.setHeapTopVisible();
+    }
+    /** 在card_ctrl激活的时候需要将最上面一张牌隐藏, 以保持 */
+    private setHeapTopVisible() {
+        const { heap, card_ctrl } = this.link;
+        const len = heap.numChildren;
+        if (!len) {
+            return;
+        }
+        let top_visible = false;
+        if (card_ctrl.status === 'disabled') {
+            top_visible = false;
+        }
+        for (let i = len - 1; i >= 0; i--) {
+            const card_back = heap.getChildAt(i) as Laya.Sprite;
+            if (i === len - 1) {
+                card_back.visible = top_visible;
+            } else {
+                card_back.visible = true;
+            }
+        }
     }
     public reset() {
         const { card_ctrl } = this.link;

@@ -6,6 +6,7 @@ import {
     formatGameReplayData,
     formatUpdatePlayersData,
     isCurPlayer,
+    randomCardId,
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { PopupGameOver } from '../popup/popupGameOver';
@@ -258,7 +259,7 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
-        const { quick_start_ctrl, docker_ctrl } = this.link;
+        const { quick_start_ctrl, docker_ctrl, discard_zone_ctrl } = this.link;
         const { roomInfo, roundInfo } = data;
         this.is_ready = true;
         /** 更新本地倒计时 */
@@ -276,6 +277,21 @@ export class GameCtrl extends BaseCtrl {
             if (turnDirection) {
                 this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
+            const hit_num = Number(roundInfo.discardNum);
+            const last_card = roundInfo.lastHitCard;
+            if (!hit_num) {
+                return;
+            }
+            for (let i = 0; i < hit_num; i++) {
+                discard_zone_ctrl.discardCard(randomCardId());
+            }
+            if (
+                !last_card ||
+                (roundInfo.hitData && roundInfo.hitData.hitCard)
+            ) {
+                return;
+            }
+            discard_zone_ctrl.discardCard(last_card);
         }
 
         this.model.gameReplay(data);

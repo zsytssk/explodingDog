@@ -61,6 +61,7 @@ type RoundInfoData = {
     lastHitCard: string;
     remainCard: 9;
     bombProb: number;
+    discardNum: number;
 };
 type GameReplayData = {
     userList: UserData[];
@@ -217,9 +218,7 @@ type GetRankListData = {
 
 type DogConfigData = {
     userId: string;
-    time: [
-        string, string
-    ][];
+    time: [string, string][];
     getCount: number;
     totalCount: number;
     stamina: number;
