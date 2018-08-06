@@ -20,11 +20,14 @@ export class CardBaseCtrl extends BaseCtrl {
     protected card_id: string;
     constructor(card_id: string, wrap: Laya.Sprite) {
         super();
-        this.card_id = card_id;
+        this.setCardId(card_id);
         this.link.wrap = wrap;
     }
     public init() {
         this.initLink();
+    }
+    protected setCardId(card_id: string) {
+        this.card_id = card_id;
     }
     protected initLink() {
         this.initUI();

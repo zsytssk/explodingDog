@@ -65,9 +65,9 @@ export class CardCtrl extends CardBaseCtrl {
     }
     /** 设置牌的样式 */
     public drawCard() {
+        const { card_id, is_blind, is_beannoyed } = this.model;
+        super.setCardId(card_id);
         super.drawCard();
-        const { is_blind, is_beannoyed } = this.model;
-
         this.setBlindStatus({ is_blind });
         this.setAnnoyStatus({ is_beannoyed });
     }
