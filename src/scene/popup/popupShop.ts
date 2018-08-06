@@ -3,6 +3,7 @@ import { log, getElementsByName } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { CardPackShop } from './component/cardPackBaseShop';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
+import { BgCtrl } from '../bgCtrl';
 type Link = {
     tab: Laya.Tab;
     main_stack: Laya.ViewStack;
@@ -60,6 +61,10 @@ export class PopupShop extends ui.popup.popupShopUI {
 
         this.addChild(topbar);
         topbar.setTitle('shop');
+
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
 
         const { btnBack: btn_back } = topbar;
 

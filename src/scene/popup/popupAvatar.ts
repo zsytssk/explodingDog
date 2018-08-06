@@ -3,6 +3,7 @@ import { CMD } from '../../data/cmd';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
 import { log, getElementsByName } from '../../mcTree/utils/zutil';
 import { PopupBuyAvatar } from './popupBuyAvatar';
+import { BgCtrl } from '../bgCtrl';
 
 type Link = {
     list: Laya.List;
@@ -25,6 +26,10 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
         this.initEvent();
     }
     private initLink() {
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
+
         const top_bar = new TopBar();
         top_bar.top = 20;
 

@@ -5,6 +5,7 @@ import { PopupTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
+import { BgCtrl } from '../bgCtrl';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -22,29 +23,29 @@ export class Hall extends Sail.Scene {
             [CMD.CREATE_ROOM]: this.createRoom,
         };
         Sail.io.register(this.ACTIONS, this);
-        this.bgImg = new Laya.Image('images/component/bg.jpg');
-        this.bgImg.size(Laya.stage.width, Laya.stage.height);
+        const bgImg = new ui.component.bgUI();
+        const bg_ctrl = new BgCtrl(bgImg);
+        bg_ctrl.init();
+
         this.topbar = new TopBar();
         this.topbar.top = 20;
         this.content = new HallContent();
         this.content.centerY = 60;
-        this.addChildren(this.bgImg, this.topbar, this.content);
+        this.addChildren(bgImg, this.topbar, this.content);
         this.initEvent();
 
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
     }
-    initEvent() { }
+    initEvent() {}
 
     onExit() {
         Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) {
-        this.bgImg && this.bgImg.size(Laya.stage.width, Laya.stage.height);
-    }
+    onResize(width, height) {}
     updateUserAmount() {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
