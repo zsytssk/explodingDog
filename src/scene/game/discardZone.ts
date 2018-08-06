@@ -73,4 +73,13 @@ export class DiscardZoneCtrl extends BaseCtrl {
             });
         });
     }
+    /** 再来一局时需要reset 清除原有的牌 */
+    public reset() {
+        const { card_list } = this.link;
+        const len = card_list.length;
+        for (let i = len - 1; i >= 0; i--) {
+            card_list[i].destroy();
+            card_list.splice(i, 0);
+        }
+    }
 }

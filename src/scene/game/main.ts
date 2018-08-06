@@ -262,6 +262,7 @@ export class GameCtrl extends BaseCtrl {
         const { quick_start_ctrl, docker_ctrl, discard_zone_ctrl } = this.link;
         const { roomInfo, roundInfo } = data;
         this.is_ready = true;
+
         /** 更新本地倒计时 */
         data = formatGameReplayData(data);
         this.calcCurSeatId(data.userList);
@@ -277,23 +278,18 @@ export class GameCtrl extends BaseCtrl {
             if (turnDirection) {
                 this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
-            const hit_num = Number(roundInfo.discardNum);
+            const hit_num = Number(roundInfo.discardNum) || 0;
             const last_card = roundInfo.lastHitCard;
-            if (!hit_num) {
-                return;
-            }
             for (let i = 0; i < hit_num; i++) {
                 discard_zone_ctrl.discardCard(randomCardId());
             }
             if (
-                !last_card ||
-                (roundInfo.hitData && roundInfo.hitData.hitCard)
+                last_card &&
+                (!roundInfo.hitData || !roundInfo.hitData.hitCard)
             ) {
-                return;
+                discard_zone_ctrl.discardCard(last_card);
             }
-            discard_zone_ctrl.discardCard(last_card);
         }
-
         this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
@@ -552,6 +548,7 @@ export class GameCtrl extends BaseCtrl {
         slap_ctrl.reset();
         card_heap_ctrl.reset();
         docker_ctrl.reset();
+        discard_zone_ctrl.reset();
         turn_arrow_ctrl.reset();
         quick_start_ctrl.hideCountDown();
         this.cur_seat_id = undefined;

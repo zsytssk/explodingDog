@@ -35,6 +35,14 @@ export class CardCtrl extends BaseCtrl {
         this.initLink();
         this.initEvent();
     }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
+    }
+    public show() {
+        const { view } = this.link;
+        view.visible = true;
+    }
     protected initLink() {
         const { view, wrap } = this.link;
         const { card_light } = view;

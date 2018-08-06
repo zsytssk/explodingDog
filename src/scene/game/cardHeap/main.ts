@@ -18,6 +18,7 @@ export interface Link {
 /** 牌堆控制器 */
 export class CardHeapCtrl extends BaseCtrl {
     public name = 'card_heap';
+    private card_num: number;
     protected link = {} as Link;
     constructor(view: ui.game.cardHeapUI) {
         super();
@@ -80,19 +81,26 @@ export class CardHeapCtrl extends BaseCtrl {
     public withDrawTake() {
         const { card_ctrl } = this.link;
         card_ctrl.withDrawCard();
-        this.setHeapTopVisible();
     }
     /** 非当前用户 禁用拿牌 */
     public disableTake() {
         const { card_ctrl } = this.link;
         card_ctrl.setStatus('disabled');
+        this.setHeapTopVisible();
     }
     public setRemainCard(num: number) {
+        const { card_ctrl } = this.link;
         if (!isNumber(num)) {
             return;
         }
         const { remain_num } = this.link;
         remain_num.text = `剩余${num}张`;
+        if (num) {
+            card_ctrl.show();
+        } else {
+            card_ctrl.hide();
+        }
+        this.card_num = num;
         this.setHeapCard(num);
     }
     private setHeapCard(num: number) {
@@ -123,7 +131,7 @@ export class CardHeapCtrl extends BaseCtrl {
         }
         let top_visible = false;
         if (card_ctrl.status === 'disabled') {
-            top_visible = false;
+            top_visible = true;
         }
         for (let i = len - 1; i >= 0; i--) {
             const card_back = heap.getChildAt(i) as Laya.Sprite;

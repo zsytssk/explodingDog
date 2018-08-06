@@ -137,8 +137,8 @@ export class GameModel extends BaseEvent {
             return;
         }
         const { speakerId, remainCard } = data;
-        this.setSpeaker(speakerId);
         this.setRemainCard(remainCard);
+        this.setSpeaker(speakerId);
         const hit_data = data.hitData;
         if (hit_data) {
             const { hitCard, hitInfo, hitUserId } = hit_data;
