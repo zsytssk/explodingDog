@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":2,"width":423,"var":"bg","skin":"images/component/card/intro_bd/bd_intro1.png","sizeGrid":"67,58,91,93","height":232},
+            "props":{"y":0,"x":2,"width":423,"var":"bg","skin":"images/component/card/intro_bd/bd_intro_1.png","sizeGrid":"67,58,91,93","height":232},
             "nodeParent":1,
             "label":"Image(bg)",
             "isDirectory":false,

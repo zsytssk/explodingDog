@@ -56,6 +56,9 @@ export class CardIntroCtrl extends BaseCtrl {
         const card_info = getCardInfo(card_id);
         const icon_name = CARD_DISCRIBE_MAP[card_id].icon;
         icon.skin = `images/component/card/icon_${icon_name}.png`;
+        bg.skin = `images/component/card/intro_bd/bd_intro_${
+            card_info.color
+        }.png`;
         title.skin = `images/component/card/title/${card_info.name}.png`;
         title.filters = [getFilter('black')];
         content.text = card_info.intro;

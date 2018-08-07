@@ -94,6 +94,7 @@ export const CARD_MAP = {
     },
     '3601': {
         belong: [1, 2, 3],
+        color: 6,
         count: 1,
         intro: '直接结束本轮回合,且出牌顺序反转.',
         name: 'reverse',
@@ -102,6 +103,7 @@ export const CARD_MAP = {
     },
     '3701': {
         belong: [1, 2, 3],
+        color: 7,
         count: 1,
         intro: '将牌堆中的卡牌顺序全部打乱.',
         name: 'shuffle',
@@ -110,6 +112,7 @@ export const CARD_MAP = {
     },
     '3801': {
         belong: [1, 2, 3],
+        color: 8,
         count: 1,
         intro: '从牌堆底部抽1张卡牌,并结束本轮回合.',
         name: 'draw_from_the_bottom',
@@ -118,6 +121,7 @@ export const CARD_MAP = {
     },
     '3901': {
         belong: [2],
+        color: 9,
         count: 1,
         intro:
             '将指定对手的手牌中随机1张暂时失效,对方只有在卡堆里抽一张卡才能解除干扰效果.',
@@ -127,6 +131,7 @@ export const CARD_MAP = {
     },
     '3921': {
         belong: [2],
+        color: 9,
         count: 2,
         intro:
             '将指定对手的手牌中随机2张暂时失效,对方只有在卡堆里抽一张卡才能解除干扰效果.',
@@ -136,6 +141,7 @@ export const CARD_MAP = {
     },
     '4001': {
         belong: [2],
+        color: 7,
         count: 1,
         intro:
             '先将指定对手的手牌顺序全部遮蔽,让对方看不到卡面,再全部打乱,对方只能在卡堆里抽1卡才能解除干扰效果.',
@@ -145,6 +151,7 @@ export const CARD_MAP = {
     },
     '4101': {
         belong: [3],
+        color: 5,
         count: 2,
         intro: '可以看到牌堆里顶部的2张牌,并且可以重新排布顺序.',
         name: 'alter_the_future2',
@@ -153,6 +160,7 @@ export const CARD_MAP = {
     },
     '4121': {
         belong: [3],
+        color: 5,
         count: 3,
         intro: '可以看到牌堆里顶部的3张牌,并且可以重新排布顺序.',
         name: 'alter_the_future3',
@@ -161,6 +169,7 @@ export const CARD_MAP = {
     },
     '4141': {
         belong: [3],
+        color: 5,
         count: 5,
         intro: '可以看到牌堆里顶部的5张牌,并且可以重新排布顺序.',
         name: 'alter_the_future5',
@@ -169,6 +178,7 @@ export const CARD_MAP = {
     },
     '4201': {
         belong: [3],
+        color: 3,
         count: 2,
         intro:
             '让自己本回合可以操作2回合.附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
@@ -178,6 +188,7 @@ export const CARD_MAP = {
     },
     '4221': {
         belong: [3],
+        color: 3,
         count: 3,
         intro:
             '让自己本回合可以操作3回合.附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
@@ -187,6 +198,7 @@ export const CARD_MAP = {
     },
     '4301': {
         belong: [3],
+        color: 10,
         count: 1,
         intro: '将牌堆里的所有炸弹全部置顶.',
         name: 'roll_call',
@@ -195,6 +207,7 @@ export const CARD_MAP = {
     },
     '4401': {
         belong: [3],
+        color: 10,
         count: 1,
         intro: `卡牌打出后,所有人在出牌区看到的都是使用了【洗牌】,实际上没有洗牌.打出【假装洗牌】玩家本回合摸牌,获得卡堆里随机的一`,
         name: 'fake_shuffle',
