@@ -8,7 +8,7 @@ import {
 } from '../../utils/tool';
 import { CMD } from '../../data/cmd';
 import { log, logAll, ellipsisStr } from '../../mcTree/utils/zutil';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 type DataItem = {
     avatar: string;

@@ -5,6 +5,8 @@ import { PopupTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
+import { GuideView } from '../guide/guideView';
+import { PopupDaily } from '../popup/popupDaily';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -20,6 +22,8 @@ export class Hall extends Sail.Scene {
             [CMD.GET_USER_AMOUNT]: this.setUserAmount,
             [CMD.JOIN_ROOM]: this.joinRoom,
             [CMD.CREATE_ROOM]: this.createRoom,
+            [CMD.GET_HALL_USER_STATUS]: this.setUserStatus,
+            [CMD.GET_DAILY_AWARDS]: () => { Sail.io.emit(CMD.GET_USER_AMOUNT); }
         };
         Sail.io.register(this.ACTIONS, this);
 
@@ -32,18 +36,20 @@ export class Hall extends Sail.Scene {
 
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
+        Sail.io.emit(CMD.GET_HALL_USER_STATUS);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
     }
-    initEvent() {}
+    initEvent() { }
 
     onExit() {
         Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) {}
+    onResize(width, height) { }
     updateUserAmount() {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
+        Sail.io.emit(CMD.GET_HALL_USER_STATUS, { type: 'dogFood' });
     }
     setUserInfo(data) {
         this.content.updateView(data);
@@ -69,5 +75,18 @@ export class Hall extends Sail.Scene {
         } else {
             Sail.director.popScene(new PopupTip(msg));
         }
+    }
+
+    setUserStatus(data) {
+        if (data.needGuide) {
+            loadAssets('guide').then(() => {
+                Sail.director.runScene(new GuideView());
+            });
+            return;
+        }
+        if (data.isFirstLogin) {
+            Sail.director.popScene(new PopupDaily(data.firstLoginAward));
+        }
+        this.topbar.setRedPoint(data.hasDogFood);
     }
 }

@@ -8,6 +8,14 @@ export const RES = {
         },
         {
             type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/card/intro_bd.atlas',
+        },
+        {
+            type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/card/title.atlas',
+        },
+        {
+            type: Laya.Loader.ATLAS,
             url: 'res/atlas/images/component/cardType.atlas',
         },
         {
@@ -90,5 +98,5 @@ export const RES = {
         { url: 'images/guide/text_des.png', type: Laya.Loader.IMAGE },
         { url: 'images/guide/text_discard.png', type: Laya.Loader.IMAGE },
         { url: 'images/guide/text_draw.png', type: Laya.Loader.IMAGE },
-    ]
+    ],
 };
