@@ -70,6 +70,15 @@ export class HostZoneCtrl extends BaseCtrl {
             (item.getChildAt(0) as Laya.Clip).index = 1;
         });
     }
+    public enable() {
+        const { choose_card_btn, start_btn } = this.link;
+
+        choose_card_btn.disabled = false;
+        start_btn.disabled = false;
+        [choose_card_btn, start_btn].forEach(item => {
+            (item.getChildAt(0) as Laya.Clip).index = 0;
+        });
+    }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {
         if (!type) {
