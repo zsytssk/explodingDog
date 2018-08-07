@@ -206,6 +206,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.PLAY_AGAIN]: this.onServerPlayAgain,
             [CMD.GET_CHAT_LIST]: this.onServerGetChatList,
             [CMD.SEND_CHAT]: this.onServerSendChat,
+            [CMD.CHANGE_CREATOR]: this.onServerChangeCreator,
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -625,6 +626,13 @@ export class GameCtrl extends BaseCtrl {
         if (seat) {
             seat.showChat(data.content);
         }
+    }
+    private onServerChangeCreator(data, code) {
+        const { newCreateUser } = data;
+        if (!isCurPlayer(newCreateUser)) {
+            return;
+        }
+        this.link.host_zone_ctrl.enable();
     }
     /** 剩余张数 */
     public getRemainCardNum() {
