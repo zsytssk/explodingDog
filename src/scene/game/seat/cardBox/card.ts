@@ -65,11 +65,11 @@ export class CardCtrl extends CardBaseCtrl {
     }
     /** 设置牌的样式 */
     public drawCard() {
-        const { card_id, is_blind, is_beannoyed } = this.model;
+        const { card_id, is_blind, be_annoyed } = this.model;
         super.setCardId(card_id);
         super.drawCard();
         this.setBlindStatus({ is_blind });
-        this.setAnnoyStatus({ is_beannoyed });
+        this.setAnnoyStatus({ be_annoyed });
     }
     protected initEvent() {
         this.onModel(base_cmd.destroy, () => {
@@ -97,9 +97,9 @@ export class CardCtrl extends CardBaseCtrl {
         blind.visible = is_blind;
     }
     private setAnnoyStatus(data: AnnoyStatus) {
-        const { is_beannoyed } = data;
+        const { be_annoyed } = data;
         const { annoy } = this.link;
-        annoy.visible = is_beannoyed;
+        annoy.visible = be_annoyed;
     }
     /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
     public getCardBound() {

@@ -7,7 +7,7 @@ import {
     popupFadeOutEffect,
 } from '../../utils/tool';
 import { CMD } from '../../data/cmd';
-import { log, logAll } from '../../mcTree/utils/zutil';
+import { log, logAll, ellipsisStr } from '../../mcTree/utils/zutil';
 import { BgCtrl } from '../bgCtrl';
 
 type DataItem = {
@@ -97,7 +97,7 @@ export class PopupRank extends ui.popup.rank.popUI {
             } = data_item;
             data.push({
                 avatar: getAvatar(data_item.avatar),
-                nickname,
+                nickname: ellipsisStr(nickname, 18, '..'),
                 rank,
                 rate,
                 score,
@@ -107,7 +107,7 @@ export class PopupRank extends ui.popup.rank.popUI {
         list.dataSource = data;
         this.renderItem(my_rank, {
             avatar: getAvatar(myRankInfo.avatar),
-            nickname: myRankInfo.nickname,
+            nickname: ellipsisStr(myRankInfo.nickname, 18, '..'),
             rank: myRankInfo.rank,
             rate: myRankInfo.winRate,
             score: myRankInfo.score,
