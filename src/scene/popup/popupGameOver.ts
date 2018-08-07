@@ -26,14 +26,14 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         bg_ctrl.init();
 
         this.progressBar.bar.y = 2;
-        this.btnBack.on(Laya.Event.CLICK, this, () => {
+        this.btnBack.once(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
                 this.game_ctrl.outRoom();
                 return;
             }
             Sail.io.emit(CMD.OUT_ROOM);
         });
-        this.btnAgain.on(Laya.Event.CLICK, this, () => {
+        this.btnAgain.once(Laya.Event.CLICK, this, () => {
             if (!this.isUserCreate) {
                 this.close();
                 // 重新开始匹配
