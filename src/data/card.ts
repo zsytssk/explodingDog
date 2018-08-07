@@ -103,7 +103,7 @@ export const CARD_MAP = {
     },
     '3701': {
         belong: [1, 2, 3],
-        color: 7,
+        color: 10,
         count: 1,
         intro: '将牌堆中的卡牌顺序全部打乱.',
         name: 'shuffle',
