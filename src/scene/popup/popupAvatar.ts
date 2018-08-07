@@ -84,7 +84,6 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
     }
 
     private onClickAction(data_item) {
-        log(data_item, this.mall_avatar);
         const { is_cur, is_lock, id } = data_item;
         if (is_cur) {
             return;
@@ -99,6 +98,10 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
                 cur_mall_item = item;
                 break;
             }
+        }
+        if (!cur_mall_item) {
+            log('Avatar info error', data_item);
+            return;
         }
         Sail.director.popScene(
             new PopupBuyAvatar(cur_mall_item, () => {
