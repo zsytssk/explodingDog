@@ -39,6 +39,7 @@ import { ChatCtrl } from './widget/chat';
 import { ExplodePosCtrl } from './widget/explodePos';
 import { GiveCardCtrl } from './widget/giveCard';
 import { SlapCtrl } from './widget/slap';
+import { PopupSetting } from '../popup/setting/pop';
 
 interface Link {
     view: ui.game.mainUI;
@@ -222,7 +223,7 @@ export class GameCtrl extends BaseCtrl {
         });
 
         btn_setting.on(Laya.Event.CLICK, this, () => {
-            log('btn_setting');
+            Sail.director.popScene(new PopupSetting());
         });
 
         this.onModel(game_cmd.add_player, (data: { player: PlayerModel }) => {

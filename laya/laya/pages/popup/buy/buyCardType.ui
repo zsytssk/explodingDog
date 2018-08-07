@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":27,
-    "selecteID":36,
+    "selectedBox":41,
+    "selecteID":10,
     "referenceLines":null,
     "props":{"width":884,"sceneColor":"#ffffff","height":636,"appendProps":"laya/pages/effect/scaleBtn.prop"},
     "nodeParent":-1,
@@ -171,45 +171,6 @@
             "child":[
                 {
                     "x":30,
-                    "type":"Button",
-                    "props":{"y":55.5,"x":146,"var":"btn_buy","stateNum":1,"skin":"images/pop/buy/btn_green.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
-                    "nodeParent":40,
-                    "label":"Button(btn_buy)",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":4,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Text",
-                            "props":{"y":28,"x":101,"width":168,"var":"cost","valign":"middle","text":12345,"strokeColor":"#000000","stroke":5,"height":54,"fontSize":50,"font":"SimHei","color":"#ffffff","bold":true,"align":"left"},
-                            "nodeParent":4,
-                            "label":"Text(cost)",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":10,
-                            "child":[
-                                ]
-                        },
-                        {
-                            "x":45,
-                            "type":"Image",
-                            "props":{"y":30,"x":31,"skin":"images/component/icon_diamond.png"},
-                            "nodeParent":4,
-                            "label":"Image",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":11,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
                     "type":"Image",
                     "props":{"y":6.5,"width":293,"visible":false,"var":"buy_sucess","skin":"images/pop/component/buy_sucess.png","height":99},
                     "nodeParent":40,
@@ -221,6 +182,71 @@
                     "child":[
                         ],
                     "$HIDDEN":true
+                },
+                {
+                    "x":30,
+                    "type":"Button",
+                    "props":{"y":55,"x":146,"width":294,"var":"btn_buy","stateNum":1,"skin":"images/pop/buy/btn_green.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":40,
+                    "label":"Button(btn_buy)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":4,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Box",
+                            "props":{"y":0,"x":0,"width":294,"height":111},
+                            "nodeParent":4,
+                            "label":"Box",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":42,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":27,"x":83,"centerX":0},
+                                    "nodeParent":42,
+                                    "label":"Box",
+                                    "isOpen":true,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":41,
+                                    "child":[
+                                        {
+                                            "x":75,
+                                            "type":"Text",
+                                            "props":{"y":0,"x":55,"var":"cost","valign":"middle","text":12345,"strokeColor":"#000000","stroke":5,"height":54,"fontSize":50,"font":"SimHei","color":"#ffffff","bold":true,"align":"center"},
+                                            "nodeParent":41,
+                                            "label":"Text(cost)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":10,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Image",
+                                            "props":{"y":2,"skin":"images/component/icon_diamond.png"},
+                                            "nodeParent":41,
+                                            "label":"Image",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":11,
+                                            "child":[
+                                                ]
+                                        }]
+                                }]
+                        }]
                 }]
         }],
     "animations":[

@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":14,
-    "selecteID":5,
+    "selectedBox":1,
+    "selecteID":6,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -16,20 +16,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":230,"x":1000,"skin":"images/pop/theFuture/soff_star.png"},
-            "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":4,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Image",
-            "props":{"y":635,"x":576,"var":"btn_confirm","skin":"images/game/soff_confirm.png"},
+            "props":{"y":670,"x":666,"var":"btn_confirm","skin":"images/game/soff_confirm.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(btn_confirm)",
             "isDirectory":false,
@@ -45,27 +32,25 @@
             "props":{"y":0,"x":512,"width":309,"var":"header_see","height":245},
             "nodeParent":1,
             "label":"Box(header_see)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":14,
             "child":[
                 {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":0,"x":53,"skin":"images/pop/theFuture/soff_peek.png"},
+                    "type":"SkeletonPlayer",
+                    "props":{"y":375,"x":153,"url":"animation/see_the_future.sk"},
                     "nodeParent":14,
-                    "label":"Image",
+                    "label":"SkeletonPlayer",
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
-                    "compId":2,
+                    "compId":17,
                     "child":[
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Image",
                     "props":{"y":209,"x":22,"skin":"images/pop/theFuture/soff_txt.png"},
                     "nodeParent":14,
