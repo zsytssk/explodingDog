@@ -2,7 +2,7 @@
 export const CMD = {
     /** 卡包列表  */
     CARD_TYPE_LIST: 'cardTypeList',
-    /** 购买商城  */
+    /** 兑换商品  */
     EXCHANGE_GOODS: 'exchangeGoods',
     /** 游戏复盘 */
     GAME_REPLAY: 'gameReplay',
@@ -60,4 +60,5 @@ export const CMD = {
     FINISH_GUIDE: 'finishedNewUserGuide',
     /** 获取充值链接参数 */
     GET_PAY_URL_PARAMS: 'getPayUrlParams',
+
 };

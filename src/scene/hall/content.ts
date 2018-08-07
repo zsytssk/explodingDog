@@ -7,6 +7,7 @@ import { PopupShop } from '../popup/popupShop';
 import { loadAssets } from '../loaing/main';
 import { GuideView } from '../guide/guideView';
 import { PopupAvatar } from '../popup/popupAvatar';
+import { BgCtrl } from '../bgCtrl';
 
 export class HallContent extends ui.hall.hallcontentUI {
     rank: Laya.Box; //段位
@@ -15,6 +16,9 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.init();
     }
     init() {
+        const { bg } = this;
+        const bg_ctrl = new BgCtrl(bg);
+        bg_ctrl.init();
         this.expBar.bar.y = 2;
         this.initEvent();
     }

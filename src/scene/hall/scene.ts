@@ -5,7 +5,6 @@ import { PopupTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
-import { BgCtrl } from '../bgCtrl';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -23,15 +22,12 @@ export class Hall extends Sail.Scene {
             [CMD.CREATE_ROOM]: this.createRoom,
         };
         Sail.io.register(this.ACTIONS, this);
-        const bgImg = new ui.component.bgUI();
-        const bg_ctrl = new BgCtrl(bgImg);
-        bg_ctrl.init();
 
         this.topbar = new TopBar();
         this.topbar.top = 20;
         this.content = new HallContent();
         this.content.centerY = 60;
-        this.addChildren(bgImg, this.topbar, this.content);
+        this.addChildren(this.content, this.topbar);
         this.initEvent();
 
         Sail.io.emit(CMD.GET_USER_INFO);
