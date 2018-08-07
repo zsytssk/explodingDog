@@ -170,10 +170,10 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 取消选中 */
     private unSelect() {
-        if (!this.is_selected) {
+        const { wrap, view, card_box } = this.link;
+        if (!this.is_selected || view.destroyed) {
             return;
         }
-        const { wrap, view, card_box } = this.link;
         const pos = new Laya.Point(view.x, view.y);
         card_box.has_card_drag = false;
 
