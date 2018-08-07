@@ -9,6 +9,7 @@ export const CARD_MAP = {
     },
     '3101': {
         belong: [1, 2, 3],
+        color: 1,
         count: 1,
         intro:
             '玩家抽到【炸弹】卡牌后,才可使用剪断引线.使用后,可决定【炸弹】卡牌放置的位置.',
@@ -18,6 +19,7 @@ export const CARD_MAP = {
     },
     '3201': {
         belong: [1, 2, 3],
+        color: 2,
         count: 1,
         intro: '跳过摸牌阶段,结束本轮回合.',
         name: 'skip',
@@ -26,6 +28,7 @@ export const CARD_MAP = {
     },
     '3301': {
         belong: [1, 2, 3],
+        color: 3,
         count: 1,
         intro:
             '指定1名玩家,使该玩家立即进行1回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
@@ -35,6 +38,7 @@ export const CARD_MAP = {
     },
     '3321': {
         belong: [1, 2, 3],
+        color: 3,
         count: 2,
         intro:
             '指定1名玩家,使该玩家立即进行2回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
@@ -44,6 +48,7 @@ export const CARD_MAP = {
     },
     '3331': {
         belong: [1, 2, 3],
+        color: 3,
         count: 3,
         intro:
             '指定1名玩家,使该玩家立即进行3回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
@@ -53,6 +58,7 @@ export const CARD_MAP = {
     },
     '3401': {
         belong: [1, 2, 3],
+        color: 4,
         count: 1,
         intro: '选择1名玩家,被选中的玩家需要选1张手牌给到使用【要牌】的玩家.',
         name: 'steal',
@@ -61,6 +67,7 @@ export const CARD_MAP = {
     },
     '3501': {
         belong: [2],
+        color: 5,
         count: 1,
         intro: '查看牌堆里接下来的1张卡牌.',
         name: 'see_the_future1',
@@ -69,6 +76,7 @@ export const CARD_MAP = {
     },
     '3521': {
         belong: [1, 2, 3],
+        color: 5,
         count: 3,
         intro: '查看牌堆里接下来的3张卡牌.',
         name: 'see_the_future3',
@@ -77,6 +85,7 @@ export const CARD_MAP = {
     },
     '3541': {
         belong: [2],
+        color: 5,
         count: 5,
         intro: '查看牌堆里接下来的5张卡牌.',
         name: 'see_the_future5',
