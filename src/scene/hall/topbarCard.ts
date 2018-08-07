@@ -1,5 +1,6 @@
 import { ValueBar } from './valuebar';
 import { PopupSetting } from '../popup/setting/pop';
+import { CMD } from '../../data/cmd';
 export class TopBar extends ui.hall.topbarCardUI {
     public stamina: ValueBar;
     public diamond: ValueBar;
@@ -11,6 +12,8 @@ export class TopBar extends ui.hall.topbarCardUI {
         (this.stamina as ValueBar).setType('stamina');
         this.diamond.setType('diamond');
         this.initEvent();
+        Sail.io.register(CMD.GET_USER_AMOUNT, this, this.updateView);
+        Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
     private initEvent() {
         const { btnSetting } = this;

@@ -59,6 +59,7 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
         const { btn_back, list } = this.link;
 
         btn_back.on(Laya.Event.CLICK, this, () => {
+            Sail.io.emit(CMD.GET_USER_INFO);//更新大厅头像
             Sail.director.closeByName(this.name);
         });
 

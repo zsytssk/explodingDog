@@ -411,7 +411,7 @@
                                                 },
                                                 {
                                                     "type":"Image",
-                                                    "props":{"y":0,"visible":false,"skin":"images/pop/buy/buy_sucess.png","name":"btn_success"},
+                                                    "props":{"y":0,"visible":false,"skin":"images/pop/component/buy_sucess.png","name":"btn_success"},
                                                     "nodeParent":126,
                                                     "label":"Image(btn_success)",
                                                     "isDirectory":false,

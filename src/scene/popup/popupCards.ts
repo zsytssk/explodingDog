@@ -29,12 +29,10 @@ export class PopupCards extends ui.popup.popupCardsUI {
 
         this.initEvent();
         this.actions = {
-            [CMD.CARD_TYPE_LIST]: this.initCardPack,
-            [CMD.GET_USER_AMOUNT]: this.setUserAmount,
+            [CMD.CARD_TYPE_LIST]: this.initCardPack
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.CARD_TYPE_LIST);
-        Sail.io.emit(CMD.GET_USER_AMOUNT);
     }
 
     initEvent() {

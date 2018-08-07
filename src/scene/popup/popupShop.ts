@@ -1,5 +1,5 @@
 import { TopBar } from '../hall/topbarCard';
-import { log, getElementsByName } from '../../mcTree/utils/zutil';
+import { getElementsByName } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { CardPackShop } from './component/cardPackBaseShop';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
@@ -15,7 +15,6 @@ type Link = {
     avatar_list: Laya.List;
     card_type_list: Laya.List;
     card_type_box: Laya.Box;
-    avatar_box: Laya.Box;
 };
 
 type StaminaData = {
@@ -29,18 +28,7 @@ type AvatarData = PartialAll<
     {
         item_list: number[];
     }
-    >;
-
-const card_type_pos = [
-    {
-        x: 80,
-        y: 16,
-    },
-    {
-        x: 551,
-        y: 16,
-    },
-];
+>;
 
 export class PopupShop extends ui.popup.popupShopUI {
     public name = 'shop';
@@ -76,19 +64,17 @@ export class PopupShop extends ui.popup.popupShopUI {
             tab,
             main_stack,
             stamina_list,
-            avatar_box,
             avatar_list,
             card_type_list,
         } = this;
 
         this.link = {
             ...this.link,
-            avatar_box,
             avatar_list,
             btn_back,
+            card_type_list,
             main_stack,
             stamina_list,
-            card_type_list,
             tab,
             topbar,
         };
@@ -145,12 +131,15 @@ export class PopupShop extends ui.popup.popupShopUI {
                 btn_buy.offAll();
                 btn_buy.on(Laya.Event.CLICK, this, () => {
                     Sail.director.popScene(
-                        new PopupPrompt(`是否要购买${data_item.buy_num}体力值？`, () => {
-                            Sail.io.emit(CMD.EXCHANGE_GOODS, {
-                                type: 'stamina',
-                                itemId: data_item.id
-                            });
-                        }),
+                        new PopupPrompt(
+                            `是否要购买${data_item.buy_num}体力值？`,
+                            () => {
+                                Sail.io.emit(CMD.EXCHANGE_GOODS, {
+                                    itemId: data_item.id,
+                                    type: 'stamina',
+                                });
+                            },
+                        ),
                     );
                 });
             },
@@ -185,8 +174,8 @@ export class PopupShop extends ui.popup.popupShopUI {
                     Sail.director.popScene(
                         new PopupPrompt('是否要购买头像礼包？', () => {
                             Sail.io.emit(CMD.EXCHANGE_GOODS, {
+                                itemId: id,
                                 type: 'avatar',
-                                itemId: id
                             });
                         }),
                     );
@@ -199,7 +188,7 @@ export class PopupShop extends ui.popup.popupShopUI {
             (box: Laya.Box, index) => {
                 const data_item = card_type_list.dataSource[index];
                 box.removeChildren();
-                box.addChild(new CardPackShop(data_item))
+                box.addChild(new CardPackShop(data_item));
             },
         );
     }
@@ -243,8 +232,8 @@ export class PopupShop extends ui.popup.popupShopUI {
             avatar_data.push({
                 cost: avatar_item.perPrice,
                 id: avatar_item.itemId,
-                item_list: avatar_item.itemList,
                 is_buy: avatar_item.purchased,
+                item_list: avatar_item.itemList,
             });
         }
         avatar_list.dataSource = avatar_data;
@@ -259,9 +248,9 @@ export class PopupShop extends ui.popup.popupShopUI {
             } = card_data;
             card_type_data.push({
                 card_id,
+                is_buy,
                 price,
                 type,
-                is_buy,
             });
         }
         card_type_list.dataSource = card_type_data;
