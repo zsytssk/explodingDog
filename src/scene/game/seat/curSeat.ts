@@ -105,6 +105,13 @@ export class CurSeatCtrl extends SeatCtrl {
         if (action === 'show_set_explode') {
             this.showSetExplode();
         }
+        if (action === 'finish_set_explode') {
+            let popup = Sail.director.getDialogByName('popup_defuse');
+            if (popup) {
+                popup.defuseSuccess();
+                popup.close();
+            }
+        }
     }
     /** 等待给牌 */
     private waitGiveCard(action_data: ObserverActionInfo) {

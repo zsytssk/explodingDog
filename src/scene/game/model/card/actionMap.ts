@@ -9,13 +9,14 @@ import {
     ReverseArrows,
     Annoy,
     Blind,
+    FinishSetExplode
 } from './action';
 
 export const action_map = {
     alter_the_future: [AlterTheFuture],
     annoy: [ChooseTarget, Annoy],
     blind: [ChooseTarget, Blind],
-    defuse: [ShowSetExplode],
+    defuse: [ShowSetExplode, FinishSetExplode],
     exploding: [ShowDefuse],
     reverse: [ReverseArrows],
     see_the_future: [SeeTheFuture],

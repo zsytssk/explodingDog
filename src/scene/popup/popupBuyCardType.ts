@@ -9,11 +9,11 @@ type Data = {
     is_buy: string;
 };
 const type_map = {
-    2002: {
+    2003: {
         en: 'dance',
         zh: '乱舞',
     },
-    2003: {
+    2002: {
         en: 'crazy',
         zh: '疯狂',
     },
