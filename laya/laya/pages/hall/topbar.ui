@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":11,
+    "selectedBox":10,
+    "selecteID":13,
     "props":{"width":1334,"sceneColor":"#000000","height":80},
     "nodeParent":-1,
     "label":"View",
@@ -72,12 +72,25 @@
             "props":{"y":40,"x":1050,"var":"btn_get_food","skin":"images/hall/btn_food.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_get_food)",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":10,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":-2,"x":58,"var":"redPoint","skin":"images/hall/red_point.png"},
+                    "nodeParent":10,
+                    "label":"Image(redPoint)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":13,
+                    "child":[
+                        ]
+                }]
         },
         {
             "x":15,

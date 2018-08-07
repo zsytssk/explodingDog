@@ -45,4 +45,8 @@ export class TopBar extends ui.hall.topbarUI {
         this.stamina.setValue([stamina, upperLimit]);
         this.diamond.setValue([bone]);
     }
+
+    public setRedPoint(flag) {
+        this.redPoint.visible = flag;
+    }
 }
