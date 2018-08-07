@@ -60,5 +60,8 @@ export const CMD = {
     FINISH_GUIDE: 'finishedNewUserGuide',
     /** 获取充值链接参数 */
     GET_PAY_URL_PARAMS: 'getPayUrlParams',
-
+    /**用户状态提示 */
+    GET_HALL_USER_STATUS: 'getHallUserStatus',
+    /**获取每日登录奖励 */
+    GET_DAILY_AWARDS: 'getDailyLoginAwards'
 };
