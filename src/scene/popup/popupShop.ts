@@ -4,7 +4,7 @@ import { CMD } from '../../data/cmd';
 import { CardPackShop } from './component/cardPackBaseShop';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
 import { PopupPrompt } from './popupPrompt';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 type Link = {
     tab: Laya.Tab;

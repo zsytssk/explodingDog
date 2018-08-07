@@ -1,5 +1,5 @@
 import { load_util } from '../../mcTree/utils/load';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 export async function loadAssets(name) {
     await load_util.load('loading');

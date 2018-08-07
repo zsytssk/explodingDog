@@ -627,7 +627,7 @@ export class GameCtrl extends BaseCtrl {
             seat.showChat(data.content);
         }
     }
-    private onServerChangeCreator(data, code) {
+    private onServerChangeCreator(data) {
         const { newCreateUser } = data;
         if (!isCurPlayer(newCreateUser)) {
             return;

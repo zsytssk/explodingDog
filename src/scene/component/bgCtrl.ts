@@ -1,4 +1,4 @@
-import { tweenLoop, stopAni } from '../mcTree/utils/animate';
+import { tweenLoop, stopAni } from '../../mcTree/utils/animate';
 
 type bgUI = ui.component.bgUI;
 interface Link {

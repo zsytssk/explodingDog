@@ -13,7 +13,7 @@ export const cmd = {
     update_info: 'update_info',
 };
 
-export type AnnoyStatus = { is_beannoyed: boolean };
+export type AnnoyStatus = { be_annoyed: boolean };
 export type BlindStatus = { is_blind: boolean };
 export class CardModel extends BaseEvent {
     /** 牌的id */
@@ -23,7 +23,7 @@ export class CardModel extends BaseEvent {
     /** 牌的执行数目 */
     public card_count: number;
     public is_blind = false;
-    public is_beannoyed = false;
+    public be_annoyed = false;
     /** 所属者 */
     public owner: PlayerModel;
     private action_manager: ActionManager;
@@ -55,6 +55,9 @@ export class CardModel extends BaseEvent {
     }
     /** 真正的出牌前 需要记录状态 */
     public preDrawCard(): boolean {
+        if (this.be_annoyed) {
+            return false;
+        }
         const pre_drawed = this.owner.preDrawCard(this);
         if (pre_drawed) {
             this.pre_drawed = true;
@@ -87,13 +90,13 @@ export class CardModel extends BaseEvent {
         }
     }
     public setAnnoyStatus(status: boolean, is_trigger = true) {
-        if (status === this.is_beannoyed) {
+        if (status === this.be_annoyed) {
             return;
         }
-        this.is_beannoyed = status;
+        this.be_annoyed = status;
         if (is_trigger) {
             this.trigger(cmd.annoy_status, {
-                is_beannoyed: status,
+                be_annoyed: status,
             } as AnnoyStatus);
         }
     }

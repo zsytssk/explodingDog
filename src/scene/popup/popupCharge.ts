@@ -7,7 +7,7 @@ import {
     getQueryString,
     getUri,
 } from '../../mcTree/utils/zutil';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 type Link = {
     list: Laya.List;

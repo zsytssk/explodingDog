@@ -8,7 +8,7 @@ import {
     tween,
     tweenLoop,
 } from '../../../mcTree/utils/animate';
-import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
+import { getChildrenByName, queryClosest, ellipsisStr } from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
 import { CardModel } from '../model/card/card';
 import {
@@ -169,7 +169,7 @@ export class SeatCtrl extends BaseCtrl {
                 die_avatar.visible = false;
                 avatar.visible = true;
                 avatar.skin = getAvatar(model.avatar);
-                nickname.text = model.nickname;
+                nickname.text = ellipsisStr(model.nickname, 18, '..');
                 break;
             case 'speak':
                 const start_props = {

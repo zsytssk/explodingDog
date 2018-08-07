@@ -4,9 +4,11 @@ import { convertPos, playSkeleton, stopSkeleton } from '../../../../utils/tool';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CardCtrl, Link as BaseLink, space_scale } from './card';
 import { CurCardBoxCtrl } from './curCardBox';
+import { CardIntroCtrl } from '../../../component/cardIntro';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
+    card_intro_ctrl: CardIntroCtrl;
 }
 
 type FaceProps = {
@@ -66,7 +68,7 @@ export class CurCardCtrl extends CardCtrl {
 
         const center_y = (sprite.height * scale) / 2;
         const y1 = center_y;
-        const y2 = -250 + center_y;
+        const y2 = -150 + center_y;
         let start_props;
         let end_props;
         if (show_tip) {
@@ -82,10 +84,25 @@ export class CurCardCtrl extends CardCtrl {
             sprite,
             start_props,
             time: 300,
+        }).then(() => {
+            this.addTip();
         });
         this.show_tip = show_tip;
     }
-
+    private addTip() {
+        const { view } = this.link;
+        let { card_intro_ctrl } = this.link;
+        if (!card_intro_ctrl) {
+            card_intro_ctrl = new CardIntroCtrl(this.card_id, view);
+            this.addChild(card_intro_ctrl);
+            card_intro_ctrl.init();
+            card_intro_ctrl.setStyle({
+                y: -230,
+            });
+            this.link.card_intro_ctrl = card_intro_ctrl;
+        }
+        card_intro_ctrl.toggle();
+    }
     private mouseDown(event: Laya.Event) {
         this.is_touched = true;
         this.start_pos = {

@@ -28,7 +28,7 @@ export type ObserverActionInfo = PartialAll<
         /** 动作执行的resolve */
         observer?: Subscriber<string | string[]>;
     }
->;
+    >;
 
 /** 拿牌的信息 */
 export type AddInfo = {
@@ -207,7 +207,7 @@ export class PlayerModel extends BaseEvent {
         const { card_list } = this;
         for (const card_id of card_id_list) {
             for (const card of card_list) {
-                if (card.is_beannoyed) {
+                if (card.be_annoyed) {
                     continue;
                 }
                 if (card.card_id !== card_id + '') {
@@ -238,7 +238,7 @@ export class PlayerModel extends BaseEvent {
         const { card_list } = this;
         this.setBlindStatus(false);
         for (const card of card_list) {
-            if (card.is_beannoyed === true) {
+            if (card.be_annoyed === true) {
                 card.setAnnoyStatus(false);
             }
         }
