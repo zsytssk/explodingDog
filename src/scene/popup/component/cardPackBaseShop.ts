@@ -2,6 +2,7 @@ import { CMD } from '../../../data/cmd';
 import { CardPackCtrl } from './cardPackBase';
 import { log } from '../../../mcTree/utils/zutil';
 import { PopupPrompt } from '../popupPrompt';
+import { PopupBuyCardType } from '../popupBuyCardType';
 
 type CardTypeData = {
     type: number;
@@ -27,14 +28,11 @@ export class CardPackShop extends ui.popup.component.cardPackShopUI {
         }
 
         cost.text = price;
-
         btn_buy.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(
-                new PopupPrompt('是否要购买此卡包？', () => {
-                    Sail.io.emit(CMD.EXCHANGE_GOODS, {
-                        type: 'cards',
-                        itemId: card_id
-                    });
+                new PopupBuyCardType(card_id + '', () => {
+                    btn_buy.visible = false;
+                    btn_success.visible = true;
                 }),
             );
         });
