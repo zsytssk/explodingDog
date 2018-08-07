@@ -296,6 +296,19 @@ export class ShowSetExplode extends Action {
     }
 }
 
+export class FinishSetExplode extends Action {
+    private name = 'finish_set_explode' as ActionType;
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        player
+            .beActioned({
+                action: this.name,
+                status: 'act',
+            })
+            .subscribe();
+    }
+}
+
 export class ReverseArrows extends Action {
     private name = 'reverse_arrows' as ActionType;
     public act(data: ActionDataInfo) {

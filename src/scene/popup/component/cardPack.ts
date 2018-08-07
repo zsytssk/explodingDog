@@ -1,6 +1,7 @@
 import { CMD } from '../../../data/cmd';
 import { log } from '../../../mcTree/utils/zutil';
 import { CardPackCtrl } from './cardPackBase';
+import { PopupBuyCardType } from '../popupBuyCardType';
 export class CardPack extends ui.popup.component.cardPackUI {
     /** choose,play,create */
     private type: 'choose' | 'play' | 'create';
@@ -9,23 +10,24 @@ export class CardPack extends ui.popup.component.cardPackUI {
         this.init(data);
     }
 
-    protected init({ isLock, cardType, staminaCost }) {
-        this.type = cardType;
+    protected init(data) {
+        const { isLock, cardType, staminaCost } = data;
         const { pack_base } = this;
         const card_pack_ctrl = new CardPackCtrl(pack_base);
         card_pack_ctrl.setType(cardType);
 
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.chooseBtn.visible = !isLock;
-        this.iconI.visible = isLock;
+        this.iconI.visible = cardType != '1';
         this.btnLock.visible = isLock;
         if (staminaCost) {
             this.staminaLabel.text = `${Math.abs(staminaCost)}`;
         }
-        this.initEvent(cardType);
+        this.initEvent(data);
     }
 
-    private initEvent(cardType) {
+    private initEvent(data) {
+        const { cardType, buyInfo } = data;
         this.chooseBtn.on(Laya.Event.CLICK, this, () => {
             switch (this.type) {
                 case 'play':
@@ -49,6 +51,16 @@ export class CardPack extends ui.popup.component.cardPackUI {
                     break;
             }
         });
+        this.iconI.on(Laya.Event.CLICK, this, () => {
+            Sail.director.popScene(new PopupBuyCardType({
+                id: buyInfo.itemId,
+                price: buyInfo.price,
+                is_buy: !data.isLock
+            }, () => {
+                this.chooseBtn.visible = true;
+                this.btnLock.visible = false;
+            }));
+        })
     }
     /**
      *

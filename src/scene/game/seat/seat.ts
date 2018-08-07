@@ -243,6 +243,9 @@ export class SeatCtrl extends BaseCtrl {
         if (action === 'show_set_explode') {
             this.setStatus('speak');
         }
+        if (action === 'finish_set_explode') {
+            this.setStatus('speak');
+        }
     }
 
     // 显示头像炸弹
