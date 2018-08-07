@@ -3,7 +3,7 @@ import { CMD } from '../../data/cmd';
 import { popupFadeInEffect, popupFadeOutEffect } from '../../utils/tool';
 import { log, getElementsByName } from '../../mcTree/utils/zutil';
 import { PopupBuyAvatar } from './popupBuyAvatar';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 type Link = {
     list: Laya.List;

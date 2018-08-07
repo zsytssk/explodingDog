@@ -7,7 +7,7 @@ import {
     splitStr,
     getBlongStr,
 } from '../../utils/tool';
-import { BgCtrl } from '../bgCtrl';
+import { BgCtrl } from '../component/bgCtrl';
 
 type DataItem = {
     card: {
@@ -93,8 +93,8 @@ export class PopupHelp extends ui.popup.popupHelpUI {
     private renderSider(data: DataItem) {
         const { sider_intro, sider_card, sider_title, belong } = this;
         sider_card.skin = data.card.skin;
-        sider_title.skin = `images/pop/help/cardTitle/${data.name}.png`;
-        sider_intro.text = splitStr(data.intro, 26);
+        sider_title.skin = `images/component/card/title/${data.name}.png`;
+        sider_intro.text = splitStr(data.intro, 30);
         belong.text = getBlongStr(data.belong);
     }
 }

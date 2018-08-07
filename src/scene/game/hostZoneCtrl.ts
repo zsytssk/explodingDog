@@ -1,8 +1,7 @@
+import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
-import { CMD } from '../../data/cmd';
 import { CardType } from './model/game';
-import { getGrayFilter } from '../../utils/tool';
 interface Link {
     view: ui.game.hostZone.mainUI;
     card_type: Laya.ViewStack;
