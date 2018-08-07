@@ -1,11 +1,12 @@
 import { PopupCards } from '../popup/popupCards';
-import { checkLogin } from '../../utils/tool';
+import { checkLogin, getAvatar } from '../../utils/tool';
 import { PopupJoinRoom } from '../popup/popupJoinRoom';
 import { rankIcon } from './rankIcon';
 import { PopupHelp } from '../popup/popupHelp';
 import { PopupShop } from '../popup/popupShop';
 import { loadAssets } from '../loaing/main';
 import { GuideView } from '../guide/guideView';
+import { PopupAvatar } from '../popup/popupAvatar';
 import { BgCtrl } from '../bgCtrl';
 
 export class HallContent extends ui.hall.hallcontentUI {
@@ -22,14 +23,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.initEvent();
     }
     initEvent() {
-        const {
-            btnPlay,
-            btnCreate,
-            btnJoin,
-            btn_help,
-            btn_shop,
-            btn_tutorial,
-        } = this;
+        const { btnPlay, btnCreate, btnJoin, btn_help, btn_shop, btn_tutorial, avatar } = this;
         btnPlay.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
@@ -63,6 +57,9 @@ export class HallContent extends ui.hall.hallcontentUI {
                 Sail.director.runScene(new GuideView());
             });
         });
+        avatar.on(Laya.Event.CLICK, this, () => {
+            Sail.director.popScene(new PopupAvatar());
+        })
     }
     updateView(data) {
         this.userName.changeText(data.nickname);
@@ -71,6 +68,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.winrate.changeText(`胜率:${data.winRate.toFixed(2)}%`);
         this.score.changeText(`积分:${data.score}`);
         this.expBar.value = data.currentExp / data.nextLevelExp;
+        this.avatar.skin = getAvatar(data.avatar);
         this.rank = new rankIcon(data.danGrading);
         this.rank.pos(35, 395);
         this.userInfoBox.addChild(this.rank);
