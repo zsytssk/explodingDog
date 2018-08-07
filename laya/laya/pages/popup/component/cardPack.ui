@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":13,
+    "selecteID":8,
     "props":{"width":411,"sceneColor":"#000000","height":602},
     "nodeParent":-1,
     "label":"View",
@@ -94,7 +94,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":54,"x":342,"var":"iconI","skin":"images/component/cardType/icon_i.png"},
+            "props":{"y":87,"x":376,"var":"iconI","skin":"images/component/cardType/icon_i.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(iconI)",
             "isOpen":false,

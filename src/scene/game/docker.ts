@@ -140,6 +140,7 @@ export class DockerCtrl extends BaseCtrl {
     }
     public destroy() {
         stopAni(this.link.view);
+        Laya.timer.clear(this, this.setLabel);
         Laya.timer.clear(this, this.arrowLoop);
         super.destroy();
     }
