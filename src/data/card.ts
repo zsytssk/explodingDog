@@ -60,7 +60,7 @@ export const CARD_MAP = {
         type: 'steal',
     },
     '3501': {
-        belong: [1, 2, 3],
+        belong: [2],
         count: 1,
         intro: '查看牌堆里接下来的1张卡牌.',
         name: 'see_the_future1',
@@ -76,7 +76,7 @@ export const CARD_MAP = {
         type: 'see_the_future',
     },
     '3541': {
-        belong: [1, 2, 3],
+        belong: [2],
         count: 5,
         intro: '查看牌堆里接下来的5张卡牌.',
         name: 'see_the_future5',

@@ -63,5 +63,8 @@ export const CMD = {
     /**用户状态提示 */
     GET_HALL_USER_STATUS: 'getHallUserStatus',
     /**获取每日登录奖励 */
-    GET_DAILY_AWARDS: 'getDailyLoginAwards'
+    GET_DAILY_AWARDS: 'getDailyLoginAwards',
+    /** 更换房主 */
+    CHANGE_CREATOR: 'changeCreator',
+
 };
