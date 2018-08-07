@@ -13,6 +13,7 @@ type Link = {
     btn_back: Laya.Sprite;
     stamina_list: Laya.List;
     avatar_list: Laya.List;
+    card_type_list: Laya.List;
     card_type_box: Laya.Box;
     avatar_box: Laya.Box;
 };
@@ -75,9 +76,9 @@ export class PopupShop extends ui.popup.popupShopUI {
             tab,
             main_stack,
             stamina_list,
-            card_type_box,
             avatar_box,
             avatar_list,
+            card_type_list,
         } = this;
 
         this.link = {
@@ -85,9 +86,9 @@ export class PopupShop extends ui.popup.popupShopUI {
             avatar_box,
             avatar_list,
             btn_back,
-            card_type_box,
             main_stack,
             stamina_list,
+            card_type_list,
             tab,
             topbar,
         };
@@ -106,6 +107,7 @@ export class PopupShop extends ui.popup.popupShopUI {
             btn_back,
             stamina_list,
             avatar_list,
+            card_type_list,
         } = this.link;
         tab.selectHandler = new Laya.Handler(this, index => {
             for (let i = 0; i < tab.numChildren; i++) {
@@ -191,14 +193,21 @@ export class PopupShop extends ui.popup.popupShopUI {
                 });
             },
         );
+
+        card_type_list.renderHandler = new Laya.Handler(
+            this,
+            (box: Laya.Box, index) => {
+                const data_item = card_type_list.dataSource[index];
+                box.removeChildren();
+                box.addChild(new CardPackShop(data_item))
+            },
+        );
     }
     private exchangeGoods(data, code) {
         if (code !== 200) {
             return;
         }
-        log('------EXCHANGE_GOODS', data);
-        // TODO: 更新用户体力值, 弹层参数
-        const { card_type_box, avatar_list } = this.link;
+        const { card_type_list, avatar_list } = this.link;
         const { type, itemId } = data;
         if (type === 'avatar') {
             for (const avatar_item of avatar_list.dataSource) {
@@ -208,11 +217,16 @@ export class PopupShop extends ui.popup.popupShopUI {
             }
             avatar_list.refresh();
         } else if (type === 'cards') {
-
+            for (const item of card_type_list.dataSource) {
+                if (itemId + '' === item.card_id + '') {
+                    item.is_buy = 1;
+                }
+            }
+            card_type_list.refresh();
         }
     }
     private renderData(data: GetMAllData) {
-        const { stamina_list, card_type_box, avatar_list } = this.link;
+        const { stamina_list, card_type_list, avatar_list } = this.link;
         const { stamina, cards, avatar } = data.data;
         const stamina_data = [] as StaminaData[];
         for (const stamina_item of stamina) {
@@ -235,7 +249,7 @@ export class PopupShop extends ui.popup.popupShopUI {
         }
         avatar_list.dataSource = avatar_data;
 
-        card_type_box.removeChildren();
+        const card_type_data = [];
         for (const card_data of cards) {
             const {
                 perPrice: price,
@@ -243,16 +257,14 @@ export class PopupShop extends ui.popup.popupShopUI {
                 itemId: card_id,
                 purchased: is_buy,
             } = card_data;
-            const card_type_item = new CardPackShop({
+            card_type_data.push({
                 card_id,
                 price,
                 type,
                 is_buy,
             });
-            card_type_box.addChild(card_type_item);
-            const pos = card_type_pos[type - 2];
-            card_type_item.pos(pos.x, pos.y);
         }
+        card_type_list.dataSource = card_type_data;
     }
     public destroy() {
         super.destroy();
