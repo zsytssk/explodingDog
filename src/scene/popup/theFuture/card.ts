@@ -85,6 +85,7 @@ export class CardCtrl extends CardBaseCtrl {
         const rel_hal = index - (all - 1) / 2;
         y += Math.abs(rel_hal) * Math.abs(rel_hal) * 10;
         const rotation = rel_hal * 10;
+        view.zOrder = all - index;
 
         const space = (view.width * scale) / 2;
         const x = wrap_w / 2 + space * (index - (card_num - 1) / 2);
