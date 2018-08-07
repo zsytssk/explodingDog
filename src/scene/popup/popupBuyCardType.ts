@@ -4,8 +4,9 @@ import { nameMap } from '../../mcTree/utils/zutil';
 
 type Type = 'dance' | 'crazy';
 type Data = {
-    card_type: string;
-    sucess_callback: FuncVoid;
+    id: string;
+    price: string;
+    is_buy: string;
 };
 const type_map = {
     1: {
@@ -21,10 +22,10 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
     public name = 'buy_card_type';
     private actions: SailIoAction;
     private sucess_callback: FuncVoid;
-    private type_id: string;
-    constructor(type_id: string, callback: FuncVoid) {
+    private data: Data;
+    constructor(data: Data, callback: FuncVoid) {
         super();
-        this.type_id = type_id;
+        this.data = data;
         this.sucess_callback = callback;
         this.init();
     }
@@ -39,14 +40,14 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         };
         Sail.io.register(this.actions, this);
 
-        const { btn_buy } = this;
+        const { btn_buy, data } = this;
         btn_buy.offAll();
         btn_buy.on(Laya.Event.CLICK, this, () => {
-            const str = `是否要购买${type_map[this.type_id].zh}扩展包？`;
+            const str = `是否要购买${type_map[data.id].zh}扩展包？`;
             Sail.director.popScene(
                 new PopupPrompt(str, () => {
                     Sail.io.emit(CMD.EXCHANGE_GOODS, {
-                        itemId: this.type_id,
+                        itemId: data.id,
                         type: 'cards',
                     });
                 }),
@@ -54,15 +55,21 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         });
     }
     private renderData() {
-        const { type_id, content, title } = this;
-        const type_str = type_map[this.type_id].en;
+        const { data, content, title, cost, btn_buy, buy_sucess } = this;
+        const { id, price, is_buy } = data;
+        const type_str = type_map[id].en;
         title.skin = `images/pop/buy/${type_str}_title.png`;
         content.skin = `images/pop/buy/${type_str}.png`;
+        cost.text = price + '';
+        if (is_buy) {
+            btn_buy.visible = false;
+            buy_sucess.visible = true;
+        }
     }
     private onServerExchangeGoods(data, code, msg) {
         const { sucess_callback } = this;
         if (code !== 200) {
-            Sail.director.popScene(new PopupPrompt(msg, () => {}));
+            Sail.director.popScene(new PopupPrompt(msg));
             return;
         }
         if (sucess_callback) {
