@@ -96,6 +96,9 @@ export class CardBaseCtrl extends BaseCtrl {
         view.zOrder = 0;
     }
     public destroy() {
+        if (this.is_destroyed) {
+            return;
+        }
         const { view } = this.link;
         view.destroy();
         super.destroy();

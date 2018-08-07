@@ -97,7 +97,7 @@ export class CurCardCtrl extends CardCtrl {
             this.addChild(card_intro_ctrl);
             card_intro_ctrl.init();
             card_intro_ctrl.setStyle({
-                y: -230,
+                y: -240,
             });
             this.link.card_intro_ctrl = card_intro_ctrl;
         }
