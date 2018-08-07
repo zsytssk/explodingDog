@@ -199,6 +199,9 @@ export class CardCtrl extends CardBaseCtrl {
         });
     }
     public destroy() {
+        if (this.is_destroyed) {
+            return;
+        }
         const { view } = this.link;
         view.destroy();
 
