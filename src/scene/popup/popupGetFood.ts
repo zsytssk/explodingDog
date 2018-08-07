@@ -1,4 +1,6 @@
 import { CMD } from '../../data/cmd';
+import { PopupPrompt } from './popupPrompt';
+import { PopupTip } from './popupTip';
 
 export class PopupGetFood extends ui.popup.popupGetFoodUI {
     name = 'popup_get_food';
@@ -55,7 +57,13 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         this.updateCountStatus({ getCount, totalCount });
     }
 
-    private getDogFood(data: GetDogFoodData) {
+    private getDogFood(data: GetDogFoodData, code, msg) {
+        if (code !== 200) {
+            Sail.director.popScene(
+                new PopupTip(msg)
+            );
+            return;
+        }
         // TODO: 领取后更新大厅的体力值数据
         const { newStamina, getCount, totalCount } = data;
         this.updateCountStatus({ getCount, totalCount });
