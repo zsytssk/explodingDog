@@ -277,13 +277,13 @@ export const CARD_DISCRIBE_MAP = {
         name: '致盲',
     },
     '4101': {
-        name: '偷天换日X2',
+        name: '出千X2',
     },
     '4121': {
-        name: '偷天换日X3',
+        name: '出千X3',
     },
     '4141': {
-        name: '偷天换日X5',
+        name: '出千X5',
     },
     '4201': {
         icon: 'self_slap',
