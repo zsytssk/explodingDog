@@ -46,7 +46,7 @@ export class PopupBuyAvatar extends ui.popup.buy.buyAvatarUI {
     private onServerExchangeGoods(data, code, msg) {
         const { sucess_callback } = this;
         if (code !== 200) {
-            Sail.director.popScene(new PopupPrompt(msg, () => {}));
+            Sail.director.popScene(new PopupPrompt(msg, () => { }));
             return;
         }
         if (sucess_callback) {
