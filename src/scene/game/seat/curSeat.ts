@@ -96,7 +96,7 @@ export class CurSeatCtrl extends SeatCtrl {
             this.waitGiveCard(data);
         }
         /** 只有当前用户需要给牌才显示 */
-        if (action === 'see_the_future' || action === 'alter_the_future') {
+        if (action === 'see_future' || action === 'alter_future') {
             this.theFuture(data);
         }
         if (action === 'show_defuse') {
@@ -106,7 +106,7 @@ export class CurSeatCtrl extends SeatCtrl {
             this.showSetExplode();
         }
         if (action === 'finish_set_explode') {
-            let popup = Sail.director.getDialogByName('popup_defuse');
+            const popup = Sail.director.getDialogByName('popup_defuse');
             if (popup) {
                 popup.defuseSuccess();
                 popup.close();
@@ -126,7 +126,7 @@ export class CurSeatCtrl extends SeatCtrl {
         const { action, data, observer } = action_data;
         const card_list = data.topCards;
         theFuture(action as Type, card_list).subscribe(rdata => {
-            if (action === 'alter_the_future') {
+            if (action === 'alter_future') {
                 observer.next(rdata);
             }
         });

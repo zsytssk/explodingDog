@@ -8,6 +8,10 @@ export const RES = {
         },
         {
             type: Laya.Loader.ATLAS,
+            url: 'res/atlas/images/component/card/icon.atlas',
+        },
+        {
+            type: Laya.Loader.ATLAS,
             url: 'res/atlas/images/component/card/intro_bd.atlas',
         },
         {

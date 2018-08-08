@@ -1,7 +1,7 @@
 import { CardBoxCtrl } from './cardBox';
 import { Subscriber } from 'rxjs';
 
-export type Type = 'alter_the_future' | 'see_the_future';
+export type Type = 'alter_future' | 'see_future';
 export interface Link {
     card_box_ctrl: CardBoxCtrl;
 }
@@ -30,11 +30,11 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
     private initEvent() {
         const { btn_confirm } = this;
 
-        /** 如果是 see_the_future直接关闭弹出层
-         * alter_the_future需要在服务器收到命令再关闭
+        /** 如果是 see_future直接关闭弹出层
+         * alter_future需要在服务器收到命令再关闭
          */
         btn_confirm.on(Laya.Event.CLICK, this, () => {
-            if (this.type === 'see_the_future') {
+            if (this.type === 'see_future') {
                 Sail.director.closeByName('the_future');
             } else {
                 this.replay();
@@ -56,7 +56,7 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         this.observer = observer;
         const { card_box_ctrl } = this.link;
         const { header_see, header_alter } = this;
-        if (type === 'alter_the_future') {
+        if (type === 'alter_future') {
             header_alter.visible = true;
             card_box_ctrl.setCanSort(true);
         } else {

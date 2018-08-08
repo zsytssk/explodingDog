@@ -1,4 +1,11 @@
 ## 2018-08-06 10:10:36
+
+* @ques 缺失的icon
+    * 出千 + 同归于尽
+    * CARD_DISCRIBE_MAP
+    * see_the_future see_future
+    * alter_the_future
+
 * @socket 链接成功之后再发送
 
 * @todo 背景自适应

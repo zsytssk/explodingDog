@@ -16,11 +16,12 @@ export type ActionDataInfo = PartialAll<HitData['hitInfo'], Data>;
 export type ActionType =
     | 'choose_target'
     | 'wait_get_card'
-    | 'see_the_future'
-    | 'alter_the_future'
+    | 'see_future'
+    | 'alter_future'
     | 'show_defuse'
     | 'reverse_arrows'
     | 'show_set_explode'
+    | 'finish_set_explode'
     | 'annoy'
     | 'blind'
     | 'slap';
@@ -169,7 +170,7 @@ export class ShowDefuse extends Action {
 }
 
 export class SeeTheFuture extends Action {
-    private name = 'see_the_future' as ActionType;
+    private name = 'see_future' as ActionType;
     constructor(manager: ActionManager) {
         super(manager);
     }
@@ -210,7 +211,7 @@ export class SeeTheFuture extends Action {
 }
 
 export class AlterTheFuture extends Action {
-    private name = 'alter_the_future' as ActionType;
+    private name = 'alter_future' as ActionType;
     constructor(manager: ActionManager) {
         super(manager);
     }

@@ -3,9 +3,9 @@ import { PopupTheFutureUI, Type } from './popup';
 
 export function theFuture(type: Type, data): Observable<string[]> {
     return new Observable(observer => {
-        const see_the_future = new PopupTheFutureUI();
-        see_the_future.updateView(type, data, observer);
-        Sail.director.popScene(see_the_future);
+        const see_future = new PopupTheFutureUI();
+        see_future.updateView(type, data, observer);
+        Sail.director.popScene(see_future);
     });
 }
 
