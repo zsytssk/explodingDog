@@ -55,9 +55,12 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         this.type = type;
         this.observer = observer;
         const { card_box_ctrl } = this.link;
+        const { header_see, header_alter } = this;
         if (type === 'alter_the_future') {
+            header_alter.visible = true;
             card_box_ctrl.setCanSort(true);
         } else {
+            header_see.visible = true;
             card_box_ctrl.setCanSort(false);
         }
         card_box_ctrl.addCards(data);
