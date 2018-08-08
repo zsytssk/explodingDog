@@ -81,6 +81,10 @@ export function getAvatar(avatar_id) {
     return `images/component/avatar/${avatar_id}.png`;
 }
 
+export function getSoundPath(name) {
+    return `sound/${name}.mp3`;
+}
+
 export function isCurPlayer(user_id) {
     return user_id + '' === CONFIG.user_id;
 }

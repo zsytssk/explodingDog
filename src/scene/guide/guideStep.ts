@@ -3,6 +3,7 @@ import { Hall } from "../hall/scene";
 import { getChildren, log, getAllChildren, getChildrenByName, getElementsByName } from "../../mcTree/utils/zutil";
 import { tween, stopAni, fade_out, fade_in } from "../../mcTree/utils/animate";
 import { CMD } from "../../data/cmd";
+import { CardIntroCtrl } from "../component/cardIntro";
 
 export class GuideStep extends ui.guide.stepUI {
     public FINISH = 'finish';
@@ -133,8 +134,13 @@ export class GuideStep extends ui.guide.stepUI {
 
     enableCardClick() {
         const { cardBox, successAni, handAni } = this;
-        getChildren(cardBox).forEach((card) => {
+        const cardId = ['4201', '3321', '3601', '3201'];
+        getChildren(cardBox).forEach((card, index) => {
             card.on(Laya.Event.CLICK, this, () => {
+                let intro = new CardIntroCtrl(cardId[index], card);
+                intro.init();
+                intro.setStyle({ y: -260 });
+                intro.show();
                 successAni.visible = true;
                 successAni.play(0, false);
                 this.setIndex(1);
@@ -144,6 +150,7 @@ export class GuideStep extends ui.guide.stepUI {
                     card.offAll();
                 });
                 this.timerOnce(2000, this, () => {
+                    intro.destroy();
                     fade_out(this).then(() => {
                         this.setStep(2);
                         fade_in(this);
@@ -187,14 +194,16 @@ export class GuideStep extends ui.guide.stepUI {
                         cardBox.addChild(card);
                     }));
                 }
-            })
-            card.on(Laya.Event.MOUSE_DOWN, this, () => {
+            });
+            card.on(Laya.Event.DRAG_START, this, () => {
                 let point = card.originPoint = card.localToGlobal(new Laya.Point(0.5 * card.width, 0.5 * card.height));
                 card.pos(point.x, point.y);
                 Laya.stage.addChild(card);
-                card.startDrag();
                 this.moveCard(card.index, 0);
-            })
+            });
+            card.on(Laya.Event.MOUSE_DOWN, this, () => {
+                card.startDrag();
+            });
         });
     }
 

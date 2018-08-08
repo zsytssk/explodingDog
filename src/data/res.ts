@@ -44,6 +44,7 @@ export const RES = {
         { url: 'images/hall/btn_bg.png', type: Laya.Loader.IMAGE },
         { url: 'images/hall/user_panel.png', type: Laya.Loader.IMAGE },
         { url: 'font/hall_user_info.fnt', type: Laya.Loader.FONT },
+        { url: 'sound/bgm_hall.mp3', type: Laya.Loader.SOUND },
     ],
     GAME: [
         { url: 'res/atlas/images/game.atlas', type: Laya.Loader.ATLAS },
