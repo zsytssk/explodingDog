@@ -2,13 +2,13 @@
     "cmd": "hit",
     "code": 200,
     "res": {
-        "userId": 3002,
-        "hitCard": 3001,
-        "hitUserId": 3002,
+        "userId": 4002,
+        "hitCard": 3101,
+        "hitUserId": 4001,
         "hitInfo": {
             "type": "exploding",
             "step": 1,
-            "discard": 1,
+            "discard": 0,
             "remainTime": 6
         }
     }

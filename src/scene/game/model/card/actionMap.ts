@@ -16,11 +16,11 @@ export const action_map = {
     alter_future: [AlterTheFuture],
     annoy: [ChooseTarget, Annoy],
     blind: [ChooseTarget, Blind],
+    bomb: [ShowDefuse],
     defuse: [ShowSetExplode, FinishSetExplode],
-    exploding: [ShowDefuse],
     reverse: [ReverseArrows],
     see_future: [SeeTheFuture],
+    self_slap: [ChooseTarget, Slap],
     slap: [ChooseTarget, Slap],
-    slef_slap: [ChooseTarget, Slap],
     steal: [ChooseTarget, WaitGetCard],
 };
