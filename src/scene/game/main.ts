@@ -59,6 +59,7 @@ interface Link {
     game_zone: Laya.Sprite;
     explode_pos_ctrl: ExplodePosCtrl;
     chat_ctrl: ChatCtrl;
+    turn_animation: Laya.Skeleton;
 }
 
 const max_user_count: number = 5;
@@ -106,6 +107,7 @@ export class GameCtrl extends BaseCtrl {
             turn_arrow,
             explode_pos,
             chatview,
+            turn_animation
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -186,6 +188,7 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list,
             slap_ctrl,
             turn_arrow_ctrl,
+            turn_animation
         };
     }
     protected initEvnet() {
@@ -365,6 +368,10 @@ export class GameCtrl extends BaseCtrl {
         }
     }
     public onServerTurn(data: TurnsData) {
+        if (isCurPlayer(data.speakerId)) {
+            this.link.turn_animation.visible = true;
+            this.link.turn_animation.play(0, false);
+        }
         this.model.setSpeaker(data.speakerId);
     }
     /** 离开房间 */
