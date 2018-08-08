@@ -70,10 +70,10 @@ export class CardBaseCtrl extends BaseCtrl {
     public drawCard() {
         const { card_id } = this;
         const { view } = this.link;
-        const card_info = getCardInfo(card_id);
+        const { url } = getCardInfo(card_id);
         const { card_id: view_card_id, card_face, card_back } = view;
-        if (card_info) {
-            card_face.skin = card_info.url;
+        if (url) {
+            card_face.skin = url;
             view_card_id.text = `id:${card_id}`;
             card_back.visible = false;
         } else {

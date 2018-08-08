@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":178,
+    "selecteID":61,
     "props":{"width":1334,"sceneColor":"#000000","height":750,"centerY":0,"centerX":0},
     "nodeParent":-1,
     "label":"View",
@@ -1200,7 +1200,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":63,"x":1260,"var":"btn_setting","stateNum":"1","skin":"images/hall/btn_setting.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
+            "props":{"y":62,"x":1254,"var":"btn_setting","stateNum":"1","skin":"images/component/btn_setting.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btn_setting)",
             "isDirectory":false,
@@ -1467,20 +1467,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":177,
-            "child":[
-                ],
-            "$HIDDEN":true
-        },
-        {
-            "x":15,
-            "type":"SkeletonPlayer",
-            "props":{"y":335,"x":705,"visible":false,"var":"turn_animation","url":"animation/turn.sk"},
-            "nodeParent":1,
-            "label":"SkeletonPlayer(turn_animation)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":178,
             "child":[
                 ],
             "$HIDDEN":true

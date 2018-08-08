@@ -1,4 +1,4 @@
-## 2018-08-08 
+## 2018-08-08
 * 待添加动画
     拆弹笑脸
     桌面头像爆炸
@@ -9,6 +9,19 @@
     洗牌
 
 ## 2018-08-06 10:10:36
+* @note 牌的 (view.width * scale) / 2 在很多地方都用到了..
+    * 通用..
+
+* @note 牌可以用发光滤镜...
+
+
+* @bug curCard tweenMove 有问题...
+    * 自适应的问题 animate_box 的位置没有自适应
+
+* @bug curCard toggle 牌的位置有问题
+    * slide_up_in
+    * slide_down_out 会让牌的位置有问题..
+
 
 * @ques 缺失的icon
     * 出千 + 同归于尽
@@ -16,14 +29,11 @@
     * see_the_future see_future
     * alter_the_future
 
-* @socket 链接成功之后再发送
+* @socket 连接成功之后再发送
 
 * @todo 背景自适应
 
 * @优化 gameStart 牌的动画
-
-* @bug curCard tweenMove 有问题...
-    * 自适应的问题 animate_box 的位置没有自适应
 
 * @ques 洗牌动画 应该只有声音吧
     * 有一大堆动画我没有用 有没有问题
@@ -31,10 +41,6 @@
 * @产品 最好在整体提测之后马上uat
 
 * @ques CARD_DISCRIBE_MAP CARD_MAP 能不能合并
-
-* @bug curCard toggle 牌的位置有问题
-    * slide_up_in
-    * slide_down_out 会让牌的位置有问题..
 
 * @ques 牌的说明 颜色 + 大小...
 

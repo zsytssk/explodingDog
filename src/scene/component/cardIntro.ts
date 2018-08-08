@@ -5,7 +5,6 @@ import {
 } from '../../mcTree/utils/animate';
 import { getCardInfo, getFilter } from '../../utils/tool';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
-import { CARD_DISCRIBE_MAP } from '../../data/card';
 import { nameMap } from '../../mcTree/utils/zutil';
 
 type UI = ui.component.cardIntroUI;

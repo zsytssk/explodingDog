@@ -295,6 +295,7 @@ export function tween(data: {
         if (sprite.tween) {
             sprite.tween.complete();
             sprite.tween.clear();
+            sprite.tween = undefined;
         }
         setStyle(sprite, start_props);
 

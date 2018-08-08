@@ -63,7 +63,7 @@ export function getCardInfo(card_id) {
         if (card_id !== '*') {
             logErr(`cant find card_info for ${card_id}`);
         }
-        return;
+        return {};
     }
     if (typeof card_data === 'string') {
         return {

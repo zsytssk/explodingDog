@@ -232,10 +232,13 @@ export class CurCardCtrl extends CardCtrl {
      */
     private unDraw() {
         this.is_selected = false;
+        const { scale } = this;
         const { wrap, view, card_box } = this.link;
-        const pos = new Laya.Point(view.x, view.y);
-        wrap.globalToLocal(pos);
-        view.pos(pos.x, pos.y);
+        const pos = new Laya.Point(
+            (view.width * scale) / 2,
+            (view.height * scale) / 2,
+        );
+        convertPos(pos, view, wrap);
         this.putInBoxByPos(pos);
         card_box.sortCard();
     }
@@ -271,13 +274,14 @@ export class CurCardCtrl extends CardCtrl {
         let index = Math.ceil((pos.x - center_x) / space);
         index = card_box.withDrawCardIndex(this, index);
         wrap.addChildAt(view, index);
+        view.pos(pos.x, pos.y);
     }
     /** 移动位置 */
     public tweenMove(index: number) {
         const { view, card_light } = this.link;
         const { scale, is_copy_face } = this;
         const space = view.width * scale * space_scale;
-        let time = 200;
+        let time = 300;
         const x = (view.width * scale) / 2 + space * index;
         let y = (view.height * scale) / 2;
 
