@@ -2,7 +2,7 @@
 import { GuideStep } from "./guideStep";
 import { GuideStart } from "./guideStart";
 import { fade_out, fade_in } from "../../mcTree/utils/animate";
-import { loadAssets } from "../loaing/main";
+import { loadAssets } from "../loading/main";
 import { Hall } from "../hall/scene";
 import { CMD } from "../../data/cmd";
 

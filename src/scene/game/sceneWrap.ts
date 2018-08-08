@@ -2,7 +2,7 @@ import { CMD } from '../../data/cmd';
 import { RES } from '../../data/res';
 
 import { GameCtrl } from './main';
-import { loadAssets } from '../loaing/main';
+import { loadAssets } from '../loading/main';
 export class GameWrap extends Sail.Scene {
     constructor() {
         super();

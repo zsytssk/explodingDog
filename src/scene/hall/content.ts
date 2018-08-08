@@ -4,13 +4,13 @@ import { PopupJoinRoom } from '../popup/popupJoinRoom';
 import { rankIcon } from './rankIcon';
 import { PopupHelp } from '../popup/popupHelp';
 import { PopupShop } from '../popup/popupShop';
-import { loadAssets } from '../loaing/main';
+import { loadAssets } from '../loading/main';
 import { GuideView } from '../guide/guideView';
 import { PopupAvatar } from '../popup/popupAvatar';
 import { BgCtrl } from '../component/bgCtrl';
 
 export class HallContent extends ui.hall.hallcontentUI {
-    rank: Laya.Box; //段位
+    private rank: Laya.Box; //段位
     constructor() {
         super();
         this.init();
@@ -23,7 +23,15 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.initEvent();
     }
     initEvent() {
-        const { btnPlay, btnCreate, btnJoin, btn_help, btn_shop, btn_tutorial, avatar } = this;
+        const {
+            btnPlay,
+            btnCreate,
+            btnJoin,
+            btn_help,
+            btn_shop,
+            btn_tutorial,
+            avatar,
+        } = this;
         btnPlay.on(Laya.Event.CLICK, this, () => {
             if (!checkLogin()) {
                 return;
@@ -59,7 +67,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         });
         avatar.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupAvatar());
-        })
+        });
     }
     updateView(data) {
         this.userName.changeText(data.nickname);

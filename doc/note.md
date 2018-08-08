@@ -1,4 +1,6 @@
 ## 2018-08-06 10:10:36
+* @socket 链接成功之后再发送
+
 * @todo 背景自适应
 
 * @优化 gameStart 牌的动画
@@ -16,7 +18,6 @@
 * @bug curCard toggle 牌的位置有问题
     * slide_up_in
     * slide_down_out 会让牌的位置有问题..
-
 
 * @ques 牌的说明 颜色 + 大小...
 

@@ -50,7 +50,7 @@ Sail.run({
     DIALOGTYPE: 'multiple',
     HEIGHT: 750,
     /** 自动横屏时选择:Laya.Stage.SCALE_FIXED_WIDTH  自动竖屏时选择:Laya.Stage.SCALE_FIXED_HEIGHT  */
-    SCALE_MODE: Laya.Stage.SCALE_FIXED_WIDTH,
+    SCALE_MODE: Laya.Stage.SCALE_FIXED_AUTO,
     /** 可选自动横屏:Laya.Stage.SCREEN_HORIZONTAL 或者 自动竖屏:Laya.Stage.SCREEN_VERTICAL  */
     SCREEN_MODE: Laya.Stage.SCREEN_HORIZONTAL,
     VERSION: CONFIG.cdn_version,
