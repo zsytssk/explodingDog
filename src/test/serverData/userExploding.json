@@ -11,7 +11,7 @@
                 "isDead": 0
             },
             {
-                "userId": "3004",
+                "userId": "3001",
                 "avatar": "101",
                 "nickname": "blue",
                 "isDead": 1
@@ -24,7 +24,7 @@
             }
         ],
         "explodeUserName": "blue",
-        "explodeUserId": 3004,
+        "explodeUserId": 3001,
         "remainUser": 2,
         "remainCard": 26,
         "remainBomb": 1,
