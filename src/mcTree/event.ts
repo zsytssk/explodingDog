@@ -35,9 +35,6 @@ export abstract class BaseEvent {
     protected hook_funs: HookFunS = {};
     /** 绑定在别人身上的事件, 保存在这里用于销毁时 找到绑定的目标 去取消这些事件的绑定 */
     protected hook_other_funs = [] as HookOtherEvent[];
-    /** 储存所有的timetimeout interval 在destroy的时候清除 */
-    protected timeout_list: number[] = [];
-    protected interval_list: number[] = [];
     public readonly name: string = 'base_event';
     /** 事件基础类, 创建随机id */
     constructor() {

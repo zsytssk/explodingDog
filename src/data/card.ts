@@ -47,7 +47,7 @@ export const CARD_MAP = {
         type: 'slap',
     },
     '3331': {
-        belong: [1, 2, 3],
+        belong: [2],
         color: 3,
         count: 3,
         intro:

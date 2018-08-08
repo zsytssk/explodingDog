@@ -1,16 +1,21 @@
 import { CMD } from '../../data/cmd';
 import { GameWrap } from '../game/sceneWrap';
-import { loadAssets } from '../loaing/main';
+import { loadAssets } from '../loading/main';
 import { PopupTip } from '../popup/popupTip';
 import { TopBar } from './topbar';
 import './valuebar';
 import { HallContent } from './content';
 import { GuideView } from '../guide/guideView';
 import { PopupDaily } from '../popup/popupDaily';
+import { nameMap } from '../../mcTree/utils/zutil';
 
 export class Hall extends Sail.Scene {
     constructor() {
         super();
+
+        /* @test  */
+        nameMap(['hall'], null, this);
+
         loadAssets('hall').then(() => {
             this.init();
         });
@@ -23,7 +28,9 @@ export class Hall extends Sail.Scene {
             [CMD.JOIN_ROOM]: this.joinRoom,
             [CMD.CREATE_ROOM]: this.createRoom,
             [CMD.GET_HALL_USER_STATUS]: this.setUserStatus,
-            [CMD.GET_DAILY_AWARDS]: () => { Sail.io.emit(CMD.GET_USER_AMOUNT); }
+            [CMD.GET_DAILY_AWARDS]: () => {
+                Sail.io.emit(CMD.GET_USER_AMOUNT);
+            },
         };
         Sail.io.register(this.ACTIONS, this);
 
@@ -33,20 +40,26 @@ export class Hall extends Sail.Scene {
         this.content.centerY = 60;
         this.addChildren(this.content, this.topbar);
         this.initEvent();
+        this.onResize(Laya.stage.width, Laya.stage.height);
 
         Sail.io.emit(CMD.GET_USER_INFO);
         Sail.io.emit(CMD.GET_USER_AMOUNT);
         Sail.io.emit(CMD.GET_HALL_USER_STATUS);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
     }
-    initEvent() { }
+    initEvent() {}
 
     onExit() {
         Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }
 
-    onResize(width, height) { }
+    onResize(width?, height?) {
+        this.centerX = 0;
+        this.centerY = 0;
+        this.width = 1334;
+        this.height = 750;
+    }
     updateUserAmount() {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
         Sail.io.emit(CMD.GET_HALL_USER_STATUS, { type: 'dogFood' });

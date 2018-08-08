@@ -16,6 +16,7 @@ type FaceProps = {
     pos: Laya.Point;
 };
 
+const tip_show_time = 3000;
 /** 当前用户的牌 */
 export class CurCardCtrl extends CardCtrl {
     public parent: CurCardBoxCtrl;
@@ -27,6 +28,8 @@ export class CurCardCtrl extends CardCtrl {
     /** 是否被触摸 */
     public is_move = false;
     private start_pos = {} as Point;
+    private tip_time_out: number;
+    private index: number;
     constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
         super(model, wrap, is_insert);
     }
@@ -63,21 +66,32 @@ export class CurCardCtrl extends CardCtrl {
     /** 显示牌的说明 */
     public toggleTip() {
         const { view: sprite, card_box } = this.link;
-        const { scale } = this;
+        const { scale, index } = this;
+        const card_intro_ctrl = this.getCardIntro();
+        let intro_toggle: FuncVoid;
         const show_tip = !this.show_tip;
+        clearTimeout(this.tip_time_out);
 
         const center_y = (sprite.height * scale) / 2;
-        const y1 = center_y;
+        let y1 = center_y;
         const y2 = -150 + center_y;
+        if (index % 2 === 1) {
+            y1 = y1 + 15;
+        }
         let start_props;
         let end_props;
         if (show_tip) {
             start_props = { y: y1 };
             end_props = { y: y2 };
             card_box.unToggleExcept(this);
+            this.tip_time_out = setTimeout(() => {
+                this.toggleTip();
+            }, tip_show_time);
+            intro_toggle = card_intro_ctrl.show.bind(card_intro_ctrl);
         } else {
             start_props = { y: y2 };
             end_props = { y: y1 };
+            intro_toggle = card_intro_ctrl.hide.bind(card_intro_ctrl);
         }
         tween({
             end_props,
@@ -85,11 +99,11 @@ export class CurCardCtrl extends CardCtrl {
             start_props,
             time: 300,
         }).then(() => {
-            this.addTip();
+            intro_toggle();
         });
         this.show_tip = show_tip;
     }
-    private addTip() {
+    private getCardIntro() {
         const { view } = this.link;
         let { card_intro_ctrl } = this.link;
         if (!card_intro_ctrl) {
@@ -101,7 +115,7 @@ export class CurCardCtrl extends CardCtrl {
             });
             this.link.card_intro_ctrl = card_intro_ctrl;
         }
-        card_intro_ctrl.toggle();
+        return card_intro_ctrl;
     }
     private mouseDown(event: Laya.Event) {
         this.is_touched = true;
@@ -271,6 +285,7 @@ export class CurCardCtrl extends CardCtrl {
             y = y + 15;
         }
 
+        this.index = index;
         let end_props = { y, x } as AnyObj;
 
         if (this.is_insert) {
@@ -297,5 +312,9 @@ export class CurCardCtrl extends CardCtrl {
             stopSkeleton(card_light);
             card_light.visible = false;
         });
+    }
+    public destroy() {
+        clearTimeout(this.tip_time_out);
+        super.destroy();
     }
 }

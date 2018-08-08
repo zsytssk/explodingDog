@@ -1,4 +1,4 @@
-import { loadAssets } from "../loaing/main";
+import { loadAssets } from "../loading/main";
 import { Hall } from "../hall/scene";
 import { getChildren, log, getAllChildren, getChildrenByName, getElementsByName } from "../../mcTree/utils/zutil";
 import { tween, stopAni, fade_out, fade_in } from "../../mcTree/utils/animate";
@@ -236,7 +236,7 @@ export class GuideStep extends ui.guide.stepUI {
 
     /**
      * 卡组横向移动
-     * @param index 删除或增加的卡牌位置 
+     * @param index 删除或增加的卡牌位置
      * @param type 0:删除.1:增加
      */
     moveCard(index, type) {

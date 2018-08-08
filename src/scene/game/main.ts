@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
-import { getChildren, log, logErr } from '../../mcTree/utils/zutil';
+import { getChildren, log, logErr, nameMap } from '../../mcTree/utils/zutil';
 import {
     formatGameReplayData,
     formatUpdatePlayersData,
@@ -84,7 +84,7 @@ export class GameCtrl extends BaseCtrl {
         this.link.view = view;
 
         /** @test */
-        (window as any).game_ctrl = this;
+        nameMap(['game_ctrl'], null, this);
     }
     public init() {
         this.initLink();
@@ -229,6 +229,9 @@ export class GameCtrl extends BaseCtrl {
             Sail.director.popScene(new PopupSetting());
         });
 
+        Laya.stage.on(Laya.Event.RESIZE, this, this.resize);
+        this.resize();
+
         this.onModel(game_cmd.add_player, (data: { player: PlayerModel }) => {
             this.addPlayer(data.player);
         });
@@ -261,6 +264,19 @@ export class GameCtrl extends BaseCtrl {
                 this.link.card_heap_ctrl.setRemainCard(data.remain_card);
             },
         );
+    }
+    private resize() {
+        const { width, height } = Laya.stage;
+        const { bg } = this.link.view;
+        if (!width) {
+            return;
+        }
+        let scale = (width * 750) / (height * 1334);
+        if (scale < 1) {
+            scale = 1;
+        }
+        bg.scaleX = scale;
+        bg.scaleY = scale;
     }
     /** 游戏复盘逻辑 */
     public onServerGameReplay(data: GameReplayData) {
@@ -567,6 +583,7 @@ export class GameCtrl extends BaseCtrl {
     public destroy() {
         this.offModel();
         this.model.destroy();
+        Laya.stage.off(Laya.Event.RESIZE, this, this.resize);
         Sail.io.unregister(this.actions);
         super.destroy();
     }

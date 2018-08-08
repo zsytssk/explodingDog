@@ -18,11 +18,11 @@ interface Link {
     wrap: Laya.Sprite;
 }
 const max_content_h = 114;
+
 /** 牌说明 */
 export class CardIntroCtrl extends BaseCtrl {
     protected link = {} as Link;
     private card_id: string;
-    private is_toggled = false;
     private minus_h: number;
     constructor(card_id: string, wrap: Laya.Sprite) {
         super();
@@ -39,6 +39,7 @@ export class CardIntroCtrl extends BaseCtrl {
 
         const view = new ui.component.cardIntroUI();
         wrap.addChild(view);
+        view.visible = false;
 
         const { icon, content, title, bg } = view;
         this.link = {
@@ -79,24 +80,13 @@ export class CardIntroCtrl extends BaseCtrl {
             ...props,
         });
     }
-    public toggle() {
-        const { is_toggled } = this;
-        if (!is_toggled) {
-            this.show();
-        } else {
-            this.hide();
-        }
-        this.is_toggled = !is_toggled;
-    }
-    private show() {
+    public show() {
         const { view } = this.link;
         slide_up_in(view, 500);
     }
-    private hide() {
+    public hide() {
         const { view } = this.link;
-        slide_down_out(view).then(() => {
-            // this.destroy();
-        });
+        slide_down_out(view, 500);
     }
     public destroy() {
         const { view } = this.link;

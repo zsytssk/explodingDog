@@ -9,7 +9,25 @@
     洗牌
 
 ## 2018-08-06 10:10:36
+* @socket 链接成功之后再发送
+
+* @todo 背景自适应
+
+* @优化 gameStart 牌的动画
+
 * @bug curCard tweenMove 有问题...
+    * 自适应的问题 animate_box 的位置没有自适应
+
+* @ques 洗牌动画 应该只有声音吧
+    * 有一大堆动画我没有用 有没有问题
+
+* @产品 最好在整体提测之后马上uat
+
+* @ques CARD_DISCRIBE_MAP CARD_MAP 能不能合并
+
+* @bug curCard toggle 牌的位置有问题
+    * slide_up_in
+    * slide_down_out 会让牌的位置有问题..
 
 * @ques 牌的说明 颜色 + 大小...
 
@@ -25,8 +43,6 @@
 * @bug theFuture
     * 顶部动画
     * 牌的顺序
-
-* @优化 洗牌动画
 
 * @优化 list 默认清空
 

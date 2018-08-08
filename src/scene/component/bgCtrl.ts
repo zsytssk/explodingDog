@@ -24,10 +24,13 @@ export class BgCtrl {
         };
     }
     private initEvent() {
-        const { view, icon_box } = this.link;
+        const { view } = this.link;
         view.on(Laya.Event.REMOVED, view, () => {
-            stopAni(icon_box);
+            this.destroy();
         });
+
+        Laya.stage.on(Laya.Event.RESIZE, this, this.resize);
+        this.resize();
     }
     private initMove() {
         const { icon_box } = this.link;
@@ -44,5 +47,23 @@ export class BgCtrl {
             sprite: icon_box,
             time: 10000,
         });
+    }
+    public resize() {
+        const { width, height } = Laya.stage;
+        const { view } = this.link;
+        if (!width) {
+            return;
+        }
+        let scale = (width * 750) / (height * 1334);
+        if (scale < 1) {
+            scale = 1;
+        }
+        view.scaleX = scale;
+        view.scaleY = scale;
+    }
+    public destroy() {
+        const { icon_box } = this.link;
+        stopAni(icon_box);
+        Laya.stage.off(Laya.Event.RESIZE, this, this.resize);
     }
 }
