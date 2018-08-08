@@ -8,6 +8,8 @@ import { HallContent } from './content';
 import { GuideView } from '../guide/guideView';
 import { PopupDaily } from '../popup/popupDaily';
 import { nameMap } from '../../mcTree/utils/zutil';
+import { CONFIG } from '../../data/config';
+import { getSoundPath } from '../../utils/tool';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -46,10 +48,20 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
         Sail.io.emit(CMD.GET_HALL_USER_STATUS);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
+
+        this.initSound();
     }
-    initEvent() {}
+
+    initSound() {
+        if (localStorage.getItem(CONFIG.music_switch_key) == '1') {
+            Laya.SoundManager.playMusic(getSoundPath('bgm_hall'), 0);
+        }
+    }
+
+    initEvent() { }
 
     onExit() {
+        Laya.SoundManager.stopAll();
         Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }

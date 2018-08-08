@@ -6,4 +6,6 @@ export const CONFIG = {
     token: (window as CusWindow).token || '',
     user_id: (window as CusWindow).userId || '',
     websocket_url: (window as CusWindow).websocketurl || '',
+    music_switch_key: 'exploding_dog_music',
+    sound_switch_key: 'exploding_dog_sound'
 };
