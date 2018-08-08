@@ -71,8 +71,14 @@ export function getCardInfo(card_id) {
         };
     }
     const name = card_data.name;
+    let icon = card_data.icon || card_data.type;
+    if (icon) {
+        icon = 'icon_' + icon;
+    }
+
     return {
         ...card_data,
+        icon,
         url: `images/component/card/${name}.png`,
     };
 }

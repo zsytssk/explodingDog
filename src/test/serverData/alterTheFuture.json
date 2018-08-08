@@ -6,7 +6,7 @@
         "hitCard": 4101,
         "hitUserId": 4001,
         "hitInfo": {
-            "type": "alter_the_future",
+            "type": "alter_future",
             "step": 1,
             "targetUserId": 0,
             "discard": 0,

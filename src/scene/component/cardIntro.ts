@@ -52,17 +52,14 @@ export class CardIntroCtrl extends BaseCtrl {
         };
     }
     private draw() {
-        const { icon, content, title, bg, view } = this.link;
+        const { icon: icon_node, content, title, bg, view } = this.link;
         const { card_id } = this;
-        const card_info = getCardInfo(card_id);
-        const icon_name = CARD_DISCRIBE_MAP[card_id].icon;
-        icon.skin = `images/component/card/icon_${icon_name}.png`;
-        bg.skin = `images/component/card/intro_bd/bd_intro_${
-            card_info.color
-        }.png`;
-        title.skin = `images/component/card/title/${card_info.name}.png`;
+        const { color, icon, name, intro } = getCardInfo(card_id);
+        icon_node.skin = `images/component/card/icon/${icon}.png`;
+        bg.skin = `images/component/card/intro_bd/bd_intro_${color}.png`;
+        title.skin = `images/component/card/title/${name}.png`;
         title.filters = [getFilter('black')];
-        content.text = card_info.intro;
+        content.text = intro;
         const minus_h = max_content_h - content.height - 10;
 
         view.height -= minus_h;

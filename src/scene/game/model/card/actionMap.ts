@@ -9,17 +9,17 @@ import {
     ReverseArrows,
     Annoy,
     Blind,
-    FinishSetExplode
+    FinishSetExplode,
 } from './action';
 
 export const action_map = {
-    alter_the_future: [AlterTheFuture],
+    alter_future: [AlterTheFuture],
     annoy: [ChooseTarget, Annoy],
     blind: [ChooseTarget, Blind],
     defuse: [ShowSetExplode, FinishSetExplode],
     exploding: [ShowDefuse],
     reverse: [ReverseArrows],
-    see_the_future: [SeeTheFuture],
+    see_future: [SeeTheFuture],
     slap: [ChooseTarget, Slap],
     slef_slap: [ChooseTarget, Slap],
     steal: [ChooseTarget, WaitGetCard],

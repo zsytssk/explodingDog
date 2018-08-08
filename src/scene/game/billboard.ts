@@ -1,6 +1,6 @@
 import { PlayerModel } from './model/player';
-import { getAvatar } from '../../utils/tool';
-import { CARD_DISCRIBE_MAP, TURN_CHANGE_ID } from '../../data/card';
+import { getAvatar, getCardInfo } from '../../utils/tool';
+import { TURN_CHANGE_ID } from '../../data/card';
 import { log } from '../../mcTree/utils/zutil';
 
 export class BillBoardCtrl {
@@ -63,11 +63,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-            fromUser: PlayerModel;
-            toUser?: PlayerModel;
-            cardId: string;
-            step?: number;
-        }) {
+        fromUser: PlayerModel;
+        toUser?: PlayerModel;
+        cardId: string;
+        step?: number;
+    }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
@@ -79,23 +79,23 @@ export class BillBoardCtrl {
             }
             avatarTo.skin = getAvatar(toUser.avatar);
         } else if (cardId == TURN_CHANGE_ID) {
-            avatarTo.skin = `images/component/card/icon_card.png`;
+            avatarTo.skin = `images/component/card/icon/icon_card.png`;
         } else {
-            avatarTo.skin = `images/component/card/icon_unknow.png`;
+            avatarTo.skin = `images/component/card/icon/icon_unknow.png`;
         }
         text += '\n';
-        const cardDescribe = CARD_DISCRIBE_MAP[cardId];
-        if (cardDescribe.info) {
-            text += `${cardDescribe.info[step - 1]}`;
+        const { icon, intro_billbard, name_zh } = getCardInfo(cardId);
+        if (intro_billbard) {
+            text += `${intro_billbard[step - 1]}`;
         } else {
-            text += `使用了${cardDescribe.name}`;
+            text += `使用了${name_zh}`;
         }
         operationTip.text = text;
-        if (cardDescribe.icon) {
+        if (icon) {
             if (!cardIcon.visible) {
                 cardIcon.visible = true;
             }
-            cardIcon.skin = `images/component/card/icon_${cardDescribe.icon}.png`;
+            cardIcon.skin = `images/component/card/icon/${icon}.png`;
         } else {
             cardIcon.visible = false;
         }
