@@ -1,7 +1,7 @@
-import { isNumber } from 'lodash';
 import { zTimer } from './zTimer';
 
 export function fade_in(sprite, time?: number, ease_fn?: string) {
+    completeAni(sprite);
     const start_props = {
         alpha: 0,
         visible: true,
@@ -21,6 +21,8 @@ export function fade_in(sprite, time?: number, ease_fn?: string) {
     });
 }
 export function fade_out(sprite, time?: number, ease_fn?: string) {
+    completeAni(sprite);
+
     time = time ? 700 : time;
 
     ease_fn = ease_fn || 'circleOut';
@@ -38,6 +40,8 @@ export function fade_out(sprite, time?: number, ease_fn?: string) {
     });
 }
 export function scale_in(sprite, time?: number, ease_fn?: string) {
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleIn';
     time = time || 400;
     const start_props = {
@@ -55,6 +59,8 @@ export function scale_in(sprite, time?: number, ease_fn?: string) {
     return tween({ sprite, start_props, end_props, time, ease_fn });
 }
 export function scale_out(sprite, time?: number, ease_fn?: string) {
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleIn';
     time = time || 400;
     const end_props = {
@@ -73,24 +79,41 @@ export function slide_up_in(
     ease_fn?: string,
     space?: number,
 ) {
-    if (!space) {
-        const height = sprite.getBounds().height;
-        space = height > 50 ? 50 : height;
-    }
-    ease_fn = ease_fn || 'circleOut';
-    time = time || 200;
-    const ori_y = sprite.y;
-    const start_props = {
-        alpha: 0,
-        visible: true,
-        y: ori_y + space,
-    };
-    const end_props = {
-        alpha: 1,
-        y: ori_y,
-    };
+    return new Promise((resolve, reject) => {
+        if (!space) {
+            const height = sprite.getBounds().height;
+            space = height > 50 ? 50 : height;
+        }
+        completeAni(sprite);
 
-    return tween({ sprite, start_props, end_props, time, ease_fn });
+        /** 因为completeAni 导致的动画完成函数要异步执行
+         * 所以为了等待原来的函数执行完成 所以他自己必须异步执行
+         */
+        setTimeout(() => {
+            ease_fn = ease_fn || 'circleOut';
+            time = time || 200;
+            const ori_y = sprite.y;
+            const start_props = {
+                alpha: 0,
+                visible: true,
+                y: ori_y + space,
+            };
+            const end_props = {
+                alpha: 1,
+                y: ori_y,
+            };
+
+            return tween({
+                sprite,
+                start_props,
+                end_props,
+                time,
+                ease_fn,
+            }).then(() => {
+                resolve();
+            });
+        });
+    });
 }
 export function slide_up_out(
     sprite,
@@ -102,6 +125,8 @@ export function slide_up_out(
         const height = sprite.getBounds().height;
         space = height > 50 ? 50 : height;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleIn';
     time = time || 200;
     const ori_y = sprite.y;
@@ -124,6 +149,8 @@ export function slide_down_in(
         const height = sprite.getBounds().height;
         space = height > 50 ? 50 : height;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleOut';
     time = time || 200;
     const ori_y = sprite.y;
@@ -145,20 +172,30 @@ export function slide_down_out(
     ease_fn?: string,
     space?: number,
 ) {
-    if (!space) {
-        const height = sprite.getBounds().height;
-        space = height > 50 ? 50 : height;
-    }
-    ease_fn = ease_fn || 'circleIn';
-    time = time || 200;
-    const ori_y = sprite.y;
-    const end_props = {
-        alpha: 0,
-        y: ori_y + space,
-    };
+    return new Promise((resolve, reject) => {
+        if (!space) {
+            const height = sprite.getBounds().height;
+            space = height > 50 ? 50 : height;
+        }
+        completeAni(sprite);
 
-    return tween({ sprite, end_props, time, ease_fn }).then(() => {
-        setStyle(sprite, { visible: false, alpha: 1, y: ori_y });
+        /** 因为completeAni 导致的动画完成函数要异步执行
+         * 所以为了等待原来的函数执行完成 所以他自己必须异步执行
+         */
+        setTimeout(() => {
+            ease_fn = ease_fn || 'circleIn';
+            time = time || 200;
+            const ori_y = sprite.y;
+            const end_props = {
+                alpha: 0,
+                y: ori_y + space,
+            };
+
+            return tween({ sprite, end_props, time, ease_fn }).then(() => {
+                setStyle(sprite, { visible: false, alpha: 1, y: ori_y });
+                resolve();
+            });
+        });
     });
 }
 export function slide_left_in(
@@ -171,6 +208,8 @@ export function slide_left_in(
         const width = sprite.getBounds().width;
         space = width > 50 ? 50 : width;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleOut';
     time = time || 200;
     const ori_x = sprite.x;
@@ -196,6 +235,8 @@ export function slide_left_out(
         const width = sprite.getBounds().width;
         space = width > 50 ? 50 : width;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleIn';
     time = time || 200;
     const ori_x = sprite.x;
@@ -220,6 +261,8 @@ export function slide_right_in(
         const width = sprite.getBounds().width;
         space = width > 50 ? 50 : width;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleOut';
     time = time || 200;
     const ori_x = sprite.x;
@@ -245,6 +288,8 @@ export function slide_right_out(
         const width = sprite.getBounds().width;
         space = width > 50 ? 50 : width;
     }
+    completeAni(sprite);
+
     ease_fn = ease_fn || 'circleIn';
     time = time || 200;
     const ori_x = sprite.x;
@@ -278,9 +323,11 @@ export function tween(data: {
 }) {
     return new Promise((resolve, reject) => {
         const { sprite, start_props, end_props } = data;
-        if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
+        if ((sprite as Laya.Sprite).destroyed) {
             return reject();
         }
+
+        completeAni(sprite);
 
         let { ease_fn } = data;
 
@@ -292,14 +339,10 @@ export function tween(data: {
         if (typeof ease_fn === 'string') {
             ease_fn = Ease[ease_fn];
         }
-        if (sprite.tween) {
-            sprite.tween.complete();
-            sprite.tween.clear();
-            sprite.tween = undefined;
-        }
+
         setStyle(sprite, start_props);
 
-        if (time === 0) {
+        if (time === 0 || sprite.is_stop) {
             setStyle(sprite, end_props);
             resolve();
             return;
@@ -585,4 +628,14 @@ export function stopAni(sprite) {
         sprite.tween.clear();
     }
     sprite.is_stop = true;
+}
+export function completeAni(sprite) {
+    if (!sprite) {
+        return;
+    }
+    if (sprite.tween) {
+        sprite.tween.complete();
+        sprite.tween.clear();
+        sprite.tween = undefined;
+    }
 }

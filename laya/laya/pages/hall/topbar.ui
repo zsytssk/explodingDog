@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":10,
-    "selecteID":13,
+    "selectedBox":1,
+    "selecteID":12,
     "props":{"width":1334,"sceneColor":"#000000","height":80},
     "nodeParent":-1,
     "label":"View",
@@ -108,7 +108,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":40,"x":1270,"var":"btn_setting","skin":"images/hall/btn_setting.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
+            "props":{"y":40,"x":1270,"var":"btn_setting","skin":"images/component/btn_setting.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_setting)",
             "isDirectory":false,
