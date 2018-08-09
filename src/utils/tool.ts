@@ -1,7 +1,7 @@
 import { random } from 'lodash';
 import { CARD_MAP, CARD_TYPE } from '../data/card';
 import { CONFIG } from '../data/config';
-import { logErr, log } from '../mcTree/utils/zutil';
+import { logErr, log, getQueryString, getUri } from '../mcTree/utils/zutil';
 
 export function callFunc(func) {
     if (!isFunc(func)) {
@@ -298,13 +298,14 @@ export function shareToWx(
     img_url: string,
     link: string,
 ) {
+    alert(link);
     const share_fun =
         (window as any).Client &&
         ((window as any).Client.shareDocToWX as FuncVoid);
     if (!share_fun) {
         return;
     }
-    share_fun(title, desc, img_url, link);
+    share_fun(1, title, desc, img_url, link);
 }
 /** 复制文本 */
 
@@ -314,11 +315,13 @@ export function browserSupportCopy() {
     }
     return false;
 }
+
+let textArea;
 export function copy(txt) {
-    const textArea = document.createElement('textarea');
+    textArea = document.createElement('textarea');
     textArea.style.position = 'fixed';
-    textArea.style.top = '0px';
-    textArea.style.left = '0px';
+    textArea.style.top = '-100px';
+    textArea.style.left = '-100px';
     textArea.style.width = '2em';
     textArea.style.height = '2em';
     textArea.style.padding = '0px';
@@ -329,13 +332,40 @@ export function copy(txt) {
     textArea.value = txt;
     document.body.appendChild(textArea);
     textArea.select();
+}
+document.querySelector('body').addEventListener('touchend', () => {
+    setTimeout(() => {
+        if (!textArea) {
+            return;
+        }
+        try {
+            const successful = document.execCommand('copy');
+            const msg = successful ? 'successful' : 'unsuccessful';
+            log('Copying text command was ' + msg);
+        } catch (err) {
+            log('Oops, unable to copy');
+        }
+        document.body.removeChild(textArea);
+        textArea = undefined;
+    }, 10);
+});
 
-    try {
-        const successful = document.execCommand('copy');
-        const msg = successful ? 'successful' : 'unsuccessful';
-        log('Copying text command was ' + msg);
-    } catch (err) {
-        log('Oops, unable to copy');
+export function getRoomId() {
+    const hash = location.hash.replace('#', '');
+    if (!hash) {
+        return;
     }
-    document.body.removeChild(textArea);
+    const query = getQueryString(hash) as AnyObj;
+    return query.room_id;
+}
+export function resetRoomId() {
+    let hash = location.hash.replace('#', '');
+    if (!hash) {
+        return;
+    }
+    const query = getQueryString(hash) as AnyObj;
+    query.room_id = '';
+
+    hash = getUri(query);
+    location.href = location.href.replace(location.hash, '#' + hash);
 }

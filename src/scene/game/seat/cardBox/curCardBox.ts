@@ -134,14 +134,16 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     /** 牌没有打出去， 回收牌 */
     public withDrawCardIndex(card, index: number) {
         let { card_list } = this.link;
-        if (index > card_list.length - 1) {
-            index = card_list.length - 1;
-        } else if (index < 0) {
-            index = 0;
-        }
+
         card_list = card_list.filter(item => {
             return item !== card;
         });
+
+        if (index > card_list.length) {
+            index = card_list.length;
+        } else if (index < 0) {
+            index = 0;
+        }
 
         card_list.splice(index, 0, card);
         this.link.card_list = card_list;

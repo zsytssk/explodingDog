@@ -6,10 +6,11 @@ interface CusWindow extends Window {
     websocketurl: string;
     publicKey: string;
     logout_uri: string;
+    redirect_uri: string;
     gameId: string;
     token: string;
     userId: string;
-    laya: laya;
+    siteUrl: string;
 }
 
 declare namespace Component {

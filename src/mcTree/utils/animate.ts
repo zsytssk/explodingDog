@@ -414,41 +414,43 @@ export async function tweenLoop({
     stopAni(sprite);
 
     /** 等待原来的动画结束再继续执行 */
-    setTimeout(async () => {
-        sprite.is_stop = false;
-        while (true) {
-            if ((sprite as Laya.Sprite).destroyed || sprite.is_stop) {
-                break;
-            }
 
-            if (is_jump) {
-                await jump(sprite, props_arr[i], time);
-            } else {
-                let next = i + 1;
-                if (next >= len) {
-                    if (end_jump) {
-                        i = 0;
-                        next = 1;
-                    } else {
-                        next = 0;
-                    }
-                }
-                const start_props = props_arr[i];
-                const end_props = props_arr[next];
-                await tween({
-                    ease_fn,
-                    end_props,
-                    sprite,
-                    start_props,
-                    time,
-                });
-            }
-            i++;
-            if (i >= len) {
-                i = 0;
-            }
+    function runItem() {
+        if ((sprite as Laya.Sprite).destroyed) {
+            return;
         }
-    });
+
+        if (is_jump) {
+            jump(sprite, props_arr[i], time);
+        } else {
+            let next = i + 1;
+            if (next >= len) {
+                if (end_jump) {
+                    i = 0;
+                    next = 1;
+                } else {
+                    next = 0;
+                }
+            }
+            const start_props = props_arr[i];
+            const end_props = props_arr[next];
+            tween({
+                ease_fn,
+                end_props,
+                sprite,
+                start_props,
+                time,
+            });
+        }
+        i++;
+        if (i >= len) {
+            i = 0;
+        }
+
+        sprite.time_out = setTimeout(runItem, time);
+    }
+
+    runItem();
 }
 
 type TweenPropsParam = {
@@ -623,11 +625,13 @@ export function stopAni(sprite) {
     if (typeof sprite === 'function') {
         sprite();
     }
+    if (sprite.time_out) {
+        clearTimeout(sprite.time_out);
+    }
     if (sprite.tween) {
         sprite.tween.complete();
         sprite.tween.clear();
     }
-    sprite.is_stop = true;
 }
 export function completeAni(sprite) {
     if (!sprite) {

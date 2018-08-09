@@ -8,6 +8,7 @@ import {
     browserSupportCopy,
     copy,
 } from '../../utils/tool';
+import { CONFIG } from '../../data/config';
 interface Link {
     view: ui.game.hostZone.mainUI;
     card_type: Laya.ViewStack;
@@ -17,6 +18,15 @@ interface Link {
     start_btn: Laya.Box;
     room_id_text: Laya.Text;
 }
+
+const share_title =
+    '捕鱼经典玩法，多人同场竞技，话费油卡万件商品轻松兑换等你来！';
+const share_msg = '1768游戏，捕鱼全新玩法，玩游戏赢话费油卡';
+// const share_icon = CONFIG.site_url + 'files/images/game/explodingdog/icon.png';
+const share_icon =
+    'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png';
+const link_url = CONFIG.site_url + CONFIG.redirect_uri;
+
 export class HostZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
     private is_disabled = false;
@@ -49,12 +59,18 @@ export class HostZoneCtrl extends BaseCtrl {
 
         if (hasShareToWx()) {
             btn_share.visible = true;
-        } else if (browserSupportCopy) {
+        } else if (browserSupportCopy()) {
             btn_copy.visible = true;
         }
     }
     protected initEvent() {
-        const { choose_card_btn, start_btn, btn_share, btn_copy } = this.link;
+        const {
+            choose_card_btn,
+            start_btn,
+            btn_share,
+            btn_copy,
+            room_id_text,
+        } = this.link;
         choose_card_btn.on(Laya.Event.CLICK, this, () => {
             if (this.is_disabled) {
                 return;
@@ -73,10 +89,15 @@ export class HostZoneCtrl extends BaseCtrl {
             Sail.io.emit(CMD.GAME_START);
         });
         btn_share.on(Laya.Event.CLICK, this, () => {
-            shareToWx('炸弹狗', '哈哈哈', '', location.href);
+            shareToWx(
+                share_title,
+                share_msg,
+                share_icon,
+                `${link_url}#room_id=${room_id_text.text}`,
+            );
         });
         btn_copy.on(Laya.Event.CLICK, this, () => {
-            copy(location.href);
+            copy(`${link_url}#room_id=${room_id_text.text}`);
         });
     }
     public show(room_id: string, is_cur_create: boolean) {

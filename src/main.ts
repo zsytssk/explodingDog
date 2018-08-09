@@ -9,7 +9,7 @@ import { Hall } from './scene/hall/scene';
 import { GameWrap } from './scene/game/sceneWrap';
 import { CMD } from './data/cmd';
 import './effect/scaleBtn';
-import { detectModel } from './mcTree/utils/zutil';
+import { detectModel, log } from './mcTree/utils/zutil';
 import { checkLogin } from './utils/tool';
 Sail.onStart = () => {
     if (!checkLogin()) {
@@ -20,13 +20,17 @@ Sail.onStart = () => {
         Laya.Stat.show();
     }
     Laya.SoundManager.setMusicVolume(0.4);
-    Laya.SoundManager.autoStopMusic = true
-    !localStorage.getItem(CONFIG.music_switch_key) && localStorage.setItem(CONFIG.music_switch_key, '1');
-    !localStorage.getItem(CONFIG.sound_switch_key) && localStorage.setItem(CONFIG.sound_switch_key, '1');
-    Laya.SoundManager.musicMuted = localStorage.getItem(CONFIG.music_switch_key) != '1';
-    Laya.SoundManager.soundMuted = localStorage.getItem(CONFIG.sound_switch_key) != '1';
-    Sail.keyboard = new Tools.KeyBoardNumber();
+    Laya.SoundManager.autoStopMusic = true;
+    !localStorage.getItem(CONFIG.music_switch_key) &&
+        localStorage.setItem(CONFIG.music_switch_key, '1');
+    !localStorage.getItem(CONFIG.sound_switch_key) &&
+        localStorage.setItem(CONFIG.sound_switch_key, '1');
+    Laya.SoundManager.musicMuted =
+        localStorage.getItem(CONFIG.music_switch_key) != '1';
+    Laya.SoundManager.soundMuted =
+        localStorage.getItem(CONFIG.sound_switch_key) != '1';
 
+    Sail.keyboard = new Tools.KeyBoardNumber();
     Sail.io.init({
         publicKey: CONFIG.publick_key,
         token: CONFIG.token,
@@ -59,4 +63,11 @@ Sail.run({
     SCREEN_MODE: Laya.Stage.SCREEN_HORIZONTAL,
     VERSION: CONFIG.cdn_version,
     WIDTH: 1334,
+});
+
+document.querySelector('body').addEventListener('touchend', () => {
+    if (!Laya.stage) {
+        return;
+    }
+    Laya.stage.event(Laya.Event.MOUSE_OVER);
 });

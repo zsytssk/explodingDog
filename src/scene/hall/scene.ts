@@ -7,9 +7,9 @@ import './valuebar';
 import { HallContent } from './content';
 import { GuideView } from '../guide/guideView';
 import { PopupDaily } from '../popup/popupDaily';
-import { nameMap } from '../../mcTree/utils/zutil';
+import { nameMap, detectModel } from '../../mcTree/utils/zutil';
 import { CONFIG } from '../../data/config';
-import { getSoundPath } from '../../utils/tool';
+import { getSoundPath, getRoomId, resetRoomId } from '../../utils/tool';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -49,6 +49,15 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_HALL_USER_STATUS);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
 
+        const room_id = getRoomId();
+        if (room_id) {
+            resetRoomId();
+            Sail.io.emit(CMD.JOIN_ROOM, {
+                roomId: room_id,
+                type: 'fixed',
+            });
+        }
+
         this.initSound();
     }
 
@@ -58,7 +67,7 @@ export class Hall extends Sail.Scene {
         }
     }
 
-    initEvent() { }
+    initEvent() {}
 
     onExit() {
         Laya.SoundManager.stopAll();
