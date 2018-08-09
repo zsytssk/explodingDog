@@ -2,7 +2,7 @@ import { CMD } from '../../../data/cmd';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tween } from '../../../mcTree/utils/animate';
 import { queryClosest } from '../../../mcTree/utils/zutil';
-import { convertPos, playSkeleton, stopSkeleton } from '../../../utils/tool';
+import { convertPos, playSkeleton, stopSkeleton, getSoundPath } from '../../../utils/tool';
 import { GameCtrl } from '../main';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
 import { CardHeapCtrl } from './main';
@@ -82,6 +82,7 @@ export class CardCtrl extends BaseCtrl {
         card_move_box.addChild(view);
         view.pos(pos.x, pos.y);
         view.startDrag();
+        Laya.SoundManager.playSound(getSoundPath('draw_down'), 0);
         this.is_move = true;
 
         this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
@@ -104,6 +105,7 @@ export class CardCtrl extends BaseCtrl {
         this.is_touched = false;
         this.offNode(Laya.stage);
         view.stopDrag();
+        Laya.SoundManager.stopSound(getSoundPath('draw_down'));
         if (y > 120) {
             Sail.io.emit(CMD.TAKE);
             return;

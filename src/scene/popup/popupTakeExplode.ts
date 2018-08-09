@@ -1,4 +1,5 @@
 import { tween } from "../../mcTree/utils/animate";
+import { getSoundPath } from "../../utils/tool";
 
 export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
     name = 'popup_take_explode';
@@ -8,8 +9,9 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
     }
     constructor() {
         super();
-        this.init();
+        this.bg.width = Laya.stage.width;
     }
-    init() {
+    onOpened() {
+        Laya.SoundManager.playSound(getSoundPath('exploding'));
     }
 }

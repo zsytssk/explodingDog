@@ -1,5 +1,5 @@
 import { PlayerModel } from './model/player';
-import { getAvatar, getCardInfo } from '../../utils/tool';
+import { getAvatar, getCardInfo, getSoundPath } from '../../utils/tool';
 import { TURN_CHANGE_ID, TURN_CHANGE_INFO } from '../../data/card';
 import { log } from '../../mcTree/utils/zutil';
 
@@ -36,7 +36,7 @@ export class BillBoardCtrl {
         let localPoint = view.parent.globalToLocal(
             new Laya.Point(Laya.stage.width, 0),
         );
-        log(localPoint);
+        Laya.SoundManager.playSound(getSoundPath('billboard'));
         Laya.Tween.to(
             view,
             { x: localPoint.x },
@@ -63,11 +63,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-        fromUser: PlayerModel;
-        toUser?: PlayerModel;
-        cardId: string;
-        step?: number;
-    }) {
+            fromUser: PlayerModel;
+            toUser?: PlayerModel;
+            cardId: string;
+            step?: number;
+        }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;

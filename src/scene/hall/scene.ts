@@ -70,7 +70,6 @@ export class Hall extends Sail.Scene {
     initEvent() {}
 
     onExit() {
-        Laya.SoundManager.stopAll();
         Laya.timer.clear(this, this.updateUserAmount);
         Sail.io.unregister(this.ACTIONS);
     }

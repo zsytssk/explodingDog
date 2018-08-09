@@ -357,6 +357,7 @@ export class GameCtrl extends BaseCtrl {
         }
         this.model.addPlayerCard(data);
         docker_ctrl.setRate(data.bombProb);
+        Laya.SoundManager.playSound(getSoundPath('hit'));
     }
     /** 拿牌 */
     private onServerHit(data: HitData, code?: string) {
@@ -369,8 +370,10 @@ export class GameCtrl extends BaseCtrl {
         if (data.hitInfo && data.hitInfo.bombProb) {
             docker_ctrl.setRate(data.hitInfo.bombProb);
         }
-        log(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
-        Laya.SoundManager.playSound(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
+        Laya.SoundManager.playSound(getSoundPath('hit'));
+        Laya.timer.once(500, this, () => {
+            Laya.SoundManager.playSound(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
+        });
     }
 
     private getCardSoundPath(cardId, step) {
@@ -378,7 +381,7 @@ export class GameCtrl extends BaseCtrl {
         if (!sound) {
             return;
         }
-        return 'sound/' + sound + step + '.mp3';
+        return getSoundPath(sound + step);
     }
     public onServerTurn(data: TurnsData) {
         if (isCurPlayer(data.speakerId)) {

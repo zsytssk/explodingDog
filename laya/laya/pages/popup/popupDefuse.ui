@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":11,
+    "selecteID":12,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"Dialog",
@@ -76,6 +76,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":11,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"SkeletonPlayer",
+            "props":{"y":309,"x":735,"visible":false,"var":"faceAni","url":"animation/defuse_sccess.sk"},
+            "nodeParent":1,
+            "label":"SkeletonPlayer(faceAni)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":12,
             "child":[
                 ]
         }],
