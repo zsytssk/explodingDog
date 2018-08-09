@@ -11,6 +11,7 @@ import { CMD } from './data/cmd';
 import './effect/scaleBtn';
 import { detectModel, log } from './mcTree/utils/zutil';
 import { checkLogin } from './utils/tool';
+import { ErrorManager } from './error';
 Sail.onStart = () => {
     if (!checkLogin()) {
         return;
@@ -21,22 +22,25 @@ Sail.onStart = () => {
     }
     Laya.SoundManager.setMusicVolume(0.4);
     Laya.SoundManager.autoStopMusic = true;
-    !localStorage.getItem(CONFIG.music_switch_key) &&
-        localStorage.setItem(CONFIG.music_switch_key, '1');
-    !localStorage.getItem(CONFIG.sound_switch_key) &&
+    if (localStorage.getItem(CONFIG.music_switch_key)) {
         localStorage.setItem(CONFIG.sound_switch_key, '1');
+        localStorage.setItem(CONFIG.music_switch_key, '1');
+    }
     Laya.SoundManager.musicMuted =
-        localStorage.getItem(CONFIG.music_switch_key) != '1';
+        localStorage.getItem(CONFIG.music_switch_key) !== '1';
     Laya.SoundManager.soundMuted =
-        localStorage.getItem(CONFIG.sound_switch_key) != '1';
+        localStorage.getItem(CONFIG.sound_switch_key) !== '1';
 
     Sail.keyboard = new Tools.KeyBoardNumber();
-    Sail.io.init({
-        publicKey: CONFIG.publick_key,
-        token: CONFIG.token,
-        type: 'primus',
-        URL: CONFIG.websocket_url,
-    });
+    Sail.io.init(
+        {
+            publicKey: CONFIG.publick_key,
+            token: CONFIG.token,
+            type: 'primus',
+            URL: CONFIG.websocket_url,
+        },
+        ErrorManager,
+    );
 
     /** 监听用户状态， 是否在游戏中 */
     Sail.io.register(CMD.GET_USER_INFO, this, (data: UserData) => {

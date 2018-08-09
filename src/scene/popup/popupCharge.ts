@@ -127,7 +127,6 @@ export class PopupCharge extends ui.popup.popupChargeUI {
 
     private gotoPayment(data: PayUrlParamsData, code) {
         // 充值跳转地址
-        //  http://m.1768.com/?gameOrderId=DG0120180628193&act=payment&gameId=40144&tradeName=骨头&amount=1&platform=wap&redirect_uri=/?act=game_explodingdog
         if (code !== 200) {
             return;
         }
@@ -153,6 +152,9 @@ export class PopupCharge extends ui.popup.popupChargeUI {
     }
 
     private renderData(data: GetChargeData) {
+        if (data.type !== 'bone') {
+            return;
+        }
         const { list } = this.link;
         const { boneList } = data;
         const data_source = [];

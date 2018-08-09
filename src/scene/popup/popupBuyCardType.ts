@@ -2,9 +2,8 @@ import { CMD } from '../../data/cmd';
 import { PopupPrompt } from './popupPrompt';
 import { nameMap } from '../../mcTree/utils/zutil';
 
-type Type = 'dance' | 'crazy';
 type Data = {
-    id: string;
+    card_id: string;
     price: string;
     is_buy: string;
 };
@@ -43,11 +42,11 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         const { btn_buy, data } = this;
         btn_buy.offAll();
         btn_buy.on(Laya.Event.CLICK, this, () => {
-            const str = `是否要购买${type_map[data.id].zh}扩展包？`;
+            const str = `是否要购买${type_map[data.card_id].zh}扩展包？`;
             Sail.director.popScene(
                 new PopupPrompt(str, () => {
                     Sail.io.emit(CMD.EXCHANGE_GOODS, {
-                        itemId: data.id,
+                        itemId: data.card_id,
                         type: 'cards',
                     });
                 }),
@@ -56,8 +55,8 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
     }
     private renderData() {
         const { data, content, title, cost, btn_buy, buy_sucess } = this;
-        const { id, price, is_buy } = data;
-        const type_str = type_map[id].en;
+        const { card_id, price, is_buy } = data;
+        const type_str = type_map[card_id].en;
         title.skin = `images/pop/buy/${type_str}_title.png`;
         content.skin = `images/pop/buy/${type_str}.png`;
         cost.text = price + '';

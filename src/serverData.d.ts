@@ -167,6 +167,7 @@ type MallAvatarData = {
 
 type GetMAllData = {
     userId: string;
+    type: string;
     data: {
         avatar: MallAvatarData[];
         cards: {
@@ -186,10 +187,11 @@ type GetMAllData = {
 
 type GetChargeData = {
     userId: string;
+    type: string;
     boneList: {
         rmb: number;
         num: number;
-        isFirst: 0 | 1,
+        isFirst: 0 | 1;
         give: {
             first: number;
             normal: number;

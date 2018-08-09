@@ -85,7 +85,7 @@ export class PopupShop extends ui.popup.popupShopUI {
             [CMD.EXCHANGE_GOODS]: this.exchangeGoods,
         };
         Sail.io.register(this.actions, this);
-        Sail.io.emit(CMD.GET_MALL_LIST);
+        Sail.io.emit(CMD.GET_MALL_LIST, { type: 'shop' });
 
         const {
             tab,
@@ -215,6 +215,9 @@ export class PopupShop extends ui.popup.popupShopUI {
         }
     }
     private renderData(data: GetMAllData) {
+        if (data.type !== 'shop') {
+            return;
+        }
         const { stamina_list, card_type_list, avatar_list } = this.link;
         const { stamina, cards, avatar } = data.data;
         const stamina_data = [] as StaminaData[];
