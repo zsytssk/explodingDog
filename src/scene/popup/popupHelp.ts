@@ -53,6 +53,10 @@ export class PopupHelp extends ui.popup.popupHelpUI {
                 continue;
             }
             const card_info = getCardInfo(key);
+            /** TURN_CHANGE_ID 的特殊处理  */
+            if (!card_info.url) {
+                continue;
+            }
             data.push({
                 belong: card_info.belong,
                 card: {

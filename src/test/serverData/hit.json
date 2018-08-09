@@ -3,7 +3,7 @@
     "code": 200,
     "res": {
         "userId": 4002,
-        "hitCard": 3101,
+        "hitCard": 3001,
         "hitUserId": 4001,
         "hitInfo": {
             "type": "exploding",

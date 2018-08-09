@@ -80,7 +80,9 @@ export class GameModel extends BaseEvent {
             this.addPlayer(player_data);
         }
         /** 删除已经存在的user */
-        for (const player_model of this.player_list) {
+        const { player_list } = this;
+        for (let len = player_list.length, i = len - 1; i >= 0; i--) {
+            const player_model = player_list[i];
             if (user_id_list.indexOf(player_model.user_id) !== -1) {
                 continue;
             }

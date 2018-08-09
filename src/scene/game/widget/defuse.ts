@@ -1,22 +1,21 @@
+import { CMD } from '../../../data/cmd';
+import { PopupTakeExplode } from '../../popup/popupTakeExplode';
 import { CardModel } from '../model/card/card';
 import { CurSeatCtrl } from '../seat/curSeat';
-import { PopupTakeExplode } from '../../popup/popupTakeExplode';
-import { CMD } from '../../../data/cmd';
-import { log } from '../../../mcTree/utils/zutil';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
-    name = 'popup_defuse';
-    group = 'exploding';
-    remainTime: number; // 倒计时 s
-    ani: Laya.Skeleton;
-    defuseSeccess = false; // 弹出popup_take_explode弹层
+    public name = 'popup_defuse';
+    public group = 'exploding';
+    public remainTime: number; // 倒计时 s
+    public ani: Laya.Skeleton;
+    public defuseSeccess = false; // 弹出popup_take_explode弹层
     private clickTimes = 0; // 点击3次爆炸
-    curSeatCtrl;
+    public curSeatCtrl;
     constructor(remainTime) {
         super();
         this.init(remainTime);
     }
-    init(remainTime) {
+    public init(remainTime) {
         this.ani = new Laya.Skeleton();
         this.ani.pos(675, 355);
         this.ani.load(
@@ -34,13 +33,13 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         this.card_box_wrap.zOrder = 5;
         this.remainTime = remainTime;
     }
-    onOpened() {
+    public onOpened() {
         if (!this.curSeatCtrl.haveCard('3101')) {
             this.timerLoop(1000, this, this.countdown);
             Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
         }
     }
-    onClickAction() {
+    public onClickAction() {
         if (this.remainTime <= 0) {
             return;
         }
@@ -58,7 +57,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         );
         this.remainTime -= 2;
     }
-    countdown() {
+    public countdown() {
         if (this.remainTime <= 0) {
             this.clearTimer(this, this.countdown);
             Sail.io.emit(CMD.HIT, {
@@ -68,23 +67,23 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         }
         this.remainTime--;
     }
-    setCards(cards: CardModel[], cur_seat_ctrl: CurSeatCtrl) {
-        const { card_box_wrap, ani } = this;
+    public setCards(cards: CardModel[], cur_seat_ctrl: CurSeatCtrl) {
+        const { card_box_wrap } = this;
         this.curSeatCtrl = cur_seat_ctrl;
-        cur_seat_ctrl.putCardBoxInWrap(card_box_wrap, this);
+        cur_seat_ctrl.putCardBoxInWrap(card_box_wrap, Laya.stage);
     }
-    defuseSuccess() {
+    public defuseSuccess() {
         this.ani.paused();
         this.defuseCard.visible = true;
         this.defuseSeccess = true;
     }
-    closeEffect = new Laya.Handler(this, () => {
+    public closeEffect = new Laya.Handler(this, () => {
         if (this.curSeatCtrl) {
             this.curSeatCtrl.putCardBoxBack();
         }
         Sail.director.dialog.closeEffect.runWith(this);
     });
-    onClosed() {
+    public onClosed() {
         Laya.stage.off(Laya.Event.CLICK, this, this.onClickAction);
         if (
             !this.defuseSeccess &&
