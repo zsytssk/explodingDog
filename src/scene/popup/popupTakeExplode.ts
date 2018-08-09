@@ -9,6 +9,7 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
     }
     constructor() {
         super();
+        this.bg.width = Laya.stage.width;
     }
     onOpened() {
         Laya.SoundManager.playSound(getSoundPath('exploding'));

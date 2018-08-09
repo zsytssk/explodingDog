@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":1,
-    "selecteID":5,
+    "selectedBox":2,
+    "selecteID":2,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"Dialog",
@@ -15,9 +15,9 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"skin":"images/component/bg2.jpg"},
+            "props":{"var":"bg","skin":"images/component/bg.jpg","centerY":0,"centerX":0},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Image(bg)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
@@ -27,16 +27,29 @@
         },
         {
             "x":15,
-            "type":"SkeletonPlayer",
-            "props":{"y":380,"x":660,"url":"animation/exploding.sk"},
+            "type":"Box",
+            "props":{"centerY":0,"centerX":0},
             "nodeParent":1,
-            "label":"SkeletonPlayer",
-            "isDirectory":false,
+            "label":"Box",
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":6,
+            "hasChild":true,
+            "compId":7,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"SkeletonPlayer",
+                    "props":{"url":"animation/exploding.sk"},
+                    "nodeParent":7,
+                    "label":"SkeletonPlayer",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":6,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {
