@@ -1,6 +1,7 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { tween, tweenLoop, stopAni } from '../../mcTree/utils/animate';
 import { log } from '../../mcTree/utils/zutil';
+import { getSoundPath } from '../../utils/tool';
 
 export interface Link {
     view: Laya.Sprite;
@@ -14,6 +15,7 @@ export interface Link {
 /**  */
 export class DockerCtrl extends BaseCtrl {
     name = 'docker_ctrl';
+    private rateLevel = 0;
     private isShaking = false;
     protected link = {} as Link;
     constructor(view) {
@@ -96,6 +98,7 @@ export class DockerCtrl extends BaseCtrl {
             arrow.rotation = 255;
         }
         Laya.timer.frameLoop(1, this, this.setLabel, [rate]);
+        this.setRateLevel(rate);
     }
     private setLabel(rate: number) {
         const { rateLabel, arrow } = this.link;
@@ -116,6 +119,18 @@ export class DockerCtrl extends BaseCtrl {
             rateLabel.text = '' + --lastRate;
             arrow.rotation -= 2.85;
         }
+    }
+
+    /**危险等级提高时播放音效 */
+    private setRateLevel(rate) {
+        let level = Math.floor(rate / 25);
+        if (level == this.rateLevel) {
+            return;
+        }
+        if (level > this.rateLevel) {
+            Laya.SoundManager.playSound(getSoundPath('docker'));
+        }
+        this.rateLevel = level;
     }
 
     private arrowLoop() {

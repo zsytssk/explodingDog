@@ -55,7 +55,7 @@ export class CheckCtrl extends BaseCtrl {
             this.setStatus('checked');
         }
     }
-    private setStatus(status: Status) {
+    public setStatus(status: Status, isInit: boolean = false) {
         const { sign_node, progress_node, off_node, on_node } = this.link;
         if (this.status === status) {
             return;
@@ -63,9 +63,11 @@ export class CheckCtrl extends BaseCtrl {
         this.status = status;
         const sign_x = status === 'checked' ? sign_pos.end : sign_pos.start;
         const progress_value = status === 'checked' ? 1 : 0;
+        const time = isInit ? 0 : null;
         tween({
             end_props: { x: sign_x },
             sprite: sign_node,
+            time
         }).then(() => {
             if (status === 'checked') {
                 off_node.visible = false;
@@ -74,11 +76,12 @@ export class CheckCtrl extends BaseCtrl {
                 off_node.visible = true;
                 on_node.visible = false;
             }
-            this.trigger(cmd.status_change, { status });
+            !isInit && this.trigger(cmd.status_change, { status });
         });
         tween({
             end_props: { value: progress_value },
             sprite: progress_node,
+            time
         });
     }
 }

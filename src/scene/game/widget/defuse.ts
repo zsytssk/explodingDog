@@ -3,6 +3,7 @@ import { CurSeatCtrl } from '../seat/curSeat';
 import { PopupTakeExplode } from '../../popup/popupTakeExplode';
 import { CMD } from '../../../data/cmd';
 import { log } from '../../../mcTree/utils/zutil';
+import { getSoundPath } from '../../../utils/tool';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
     name = 'popup_defuse';
@@ -39,6 +40,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             this.timerLoop(1000, this, this.countdown);
             Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
         }
+        Laya.SoundManager.playSound(getSoundPath('pop_defuse'));
     }
     onClickAction() {
         if (this.remainTime <= 0) {
@@ -54,7 +56,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         }
         this.ani.playbackRate(
             (this.ani.player.playbackRate * this.remainTime) /
-                (this.remainTime - 2),
+            (this.remainTime - 2),
         );
         this.remainTime -= 2;
     }

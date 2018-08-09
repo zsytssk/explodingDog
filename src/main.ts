@@ -20,9 +20,11 @@ Sail.onStart = () => {
         Laya.Stat.show();
     }
     Laya.SoundManager.setMusicVolume(0.4);
-    Laya.SoundManager.autoStopMusic = true;
+    Laya.SoundManager.autoStopMusic = true
     !localStorage.getItem(CONFIG.music_switch_key) && localStorage.setItem(CONFIG.music_switch_key, '1');
     !localStorage.getItem(CONFIG.sound_switch_key) && localStorage.setItem(CONFIG.sound_switch_key, '1');
+    Laya.SoundManager.musicMuted = localStorage.getItem(CONFIG.music_switch_key) != '1';
+    Laya.SoundManager.soundMuted = localStorage.getItem(CONFIG.sound_switch_key) != '1';
     Sail.keyboard = new Tools.KeyBoardNumber();
 
     Sail.io.init({

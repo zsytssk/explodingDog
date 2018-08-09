@@ -12,6 +12,7 @@ export const CARD_MAP = {
         name_zh: '炸弹',
         show_count: false,
         type: 'bomb',
+        sound: 'bomb'
     },
     '3101': {
         belong: [1, 2, 3],
@@ -25,6 +26,7 @@ export const CARD_MAP = {
         name_zh: '剪断引线',
         show_count: false,
         type: 'defuse',
+        sound: 'defuse'
     },
     '3201': {
         belong: [1, 2, 3],
@@ -35,6 +37,7 @@ export const CARD_MAP = {
         name_zh: '跳过回合',
         show_count: false,
         type: 'skip',
+        sound: 'skip'
     },
     '3301': {
         belong: [1, 2, 3],
@@ -46,6 +49,7 @@ export const CARD_MAP = {
         name_zh: '立即攻击',
         show_count: false,
         type: 'slap',
+        sound: 'slap'
     },
     '3321': {
         belong: [1, 2, 3],
@@ -57,6 +61,7 @@ export const CARD_MAP = {
         name_zh: '立即攻击X2',
         show_count: false,
         type: 'slap',
+        sound: 'slap'
     },
     '3331': {
         belong: [2],
@@ -68,6 +73,7 @@ export const CARD_MAP = {
         name_zh: '立即攻击X3',
         show_count: false,
         type: 'slap',
+        sound: 'slap'
     },
     '3401': {
         belong: [1, 2, 3],
@@ -76,9 +82,9 @@ export const CARD_MAP = {
         intro: '选择1名玩家,被选中的玩家需要选1张手牌给到使用【要牌】的玩家.',
         intro_billbard: ['使用要牌\n正在选择', '正在选择', '一张手牌'],
         name: 'steal',
-        name_zh: '出千X2',
         show_count: false,
         type: 'steal',
+        sound: 'steal'
     },
     '3501': {
         belong: [2],
@@ -89,6 +95,7 @@ export const CARD_MAP = {
         name_zh: '偷看',
         show_count: true,
         type: 'see_future',
+        sound: 'see_future'
     },
     '3521': {
         belong: [1, 2, 3],
@@ -99,6 +106,7 @@ export const CARD_MAP = {
         name_zh: '偷看X3',
         show_count: true,
         type: 'see_future',
+        sound: 'see_future'
     },
     '3541': {
         belong: [2],
@@ -109,6 +117,7 @@ export const CARD_MAP = {
         name_zh: '偷看X5',
         show_count: true,
         type: 'see_future',
+        sound: 'see_future'
     },
     '3601': {
         belong: [1, 2, 3],
@@ -129,6 +138,7 @@ export const CARD_MAP = {
         name_zh: '洗牌',
         show_count: false,
         type: 'shuffle',
+        sound: 'shuffle'
     },
     '3801': {
         belong: [1, 2, 3],
@@ -139,6 +149,7 @@ export const CARD_MAP = {
         name_zh: '偷牌',
         show_count: false,
         type: 'draw_bottom',
+        sound: 'draw_bottom'
     },
     '3901': {
         belong: [2],
@@ -150,6 +161,7 @@ export const CARD_MAP = {
         name_zh: '干扰',
         show_count: true,
         type: 'annoy',
+        sound: 'annoy'
     },
     '3921': {
         belong: [2],
@@ -161,6 +173,7 @@ export const CARD_MAP = {
         name_zh: '干扰X2',
         show_count: true,
         type: 'annoy',
+        sound: 'annoy'
     },
     '4001': {
         belong: [2],
@@ -172,6 +185,7 @@ export const CARD_MAP = {
         name_zh: '致盲',
         show_count: false,
         type: 'blind',
+        sound: 'blind'
     },
     '4101': {
         belong: [3],
@@ -182,6 +196,7 @@ export const CARD_MAP = {
         name_zh: '出千X2',
         show_count: true,
         type: 'alter_future',
+        sound: 'alter_future'
     },
     '4121': {
         belong: [3],
@@ -192,6 +207,7 @@ export const CARD_MAP = {
         name_zh: '出千X3',
         show_count: true,
         type: 'alter_future',
+        sound: 'alter_future'
     },
     '4141': {
         belong: [3],
@@ -202,6 +218,7 @@ export const CARD_MAP = {
         name_zh: '出千X5',
         show_count: true,
         type: 'alter_future',
+        sound: 'alter_future'
     },
     '4201': {
         belong: [3],
@@ -213,6 +230,7 @@ export const CARD_MAP = {
         name_zh: '再来一次X2',
         show_count: true,
         type: 'self_slap',
+        sound: 'slap'
     },
     '4221': {
         belong: [3],
@@ -224,6 +242,7 @@ export const CARD_MAP = {
         name_zh: '再来一次X3',
         show_count: true,
         type: 'self_slap',
+        sound: 'slap'
     },
     '4301': {
         belong: [3],
@@ -231,9 +250,10 @@ export const CARD_MAP = {
         count: 1,
         intro: '将牌堆里的所有炸弹全部置顶.',
         name: 'roll_call',
-        name_zh: '同归于尽',
+        name_zh: '布置炸弹',
         show_count: false,
         type: 'roll_call',
+        sound: 'roll_call'
     },
     '4401': {
         belong: [3],
@@ -245,6 +265,7 @@ export const CARD_MAP = {
         name_zh: '假装洗牌',
         show_count: false,
         type: 'fake_shuffle',
+        sound: 'shuffle'
     },
 };
 

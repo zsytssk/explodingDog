@@ -1,4 +1,4 @@
-import { getAvatar } from "../../utils/tool";
+import { getAvatar, getSoundPath } from "../../utils/tool";
 import { Avatar } from "./component/avatar";
 import { getElementsByName } from "../../mcTree/utils/zutil";
 import { scale_in } from "../../mcTree/utils/animate";
@@ -37,9 +37,11 @@ export class PopupUserExploded extends ui.popup.popupUserExplodedUI {
     }
 
     onOpened() {
+        Laya.SoundManager.playSound(getSoundPath('user_exploded'));
         getElementsByName(this, 'infoBox').forEach((item, index) => {
             this.timerOnce(800 * (index + 1), this, () => {
                 scale_in(item, 300, 'backOut');
+                Laya.SoundManager.playSound(getSoundPath('user_exploded_info'));
             })
         });
         let ani = new Laya.Skeleton();

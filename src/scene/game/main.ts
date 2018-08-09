@@ -7,6 +7,7 @@ import {
     formatUpdatePlayersData,
     isCurPlayer,
     randomCardId,
+    getSoundPath,
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { PopupGameOver } from '../popup/popupGameOver';
@@ -40,6 +41,7 @@ import { ExplodePosCtrl } from './widget/explodePos';
 import { GiveCardCtrl } from './widget/giveCard';
 import { SlapCtrl } from './widget/slap';
 import { PopupSetting } from '../popup/setting/pop';
+import { CARD_MAP } from '../../data/card';
 
 interface Link {
     view: ui.game.mainUI;
@@ -344,6 +346,7 @@ export class GameCtrl extends BaseCtrl {
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
         this.model.setRemainCard(data.remainCard);
         this.model.updatePlayersCards(data);
+        Laya.SoundManager.playSound(getSoundPath('game_start'));
     }
     /** 拿牌 */
     private onServerTake(data: TakeData, code?: string) {
@@ -366,11 +369,22 @@ export class GameCtrl extends BaseCtrl {
         if (data.hitInfo && data.hitInfo.bombProb) {
             docker_ctrl.setRate(data.hitInfo.bombProb);
         }
+        log(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
+        Laya.SoundManager.playSound(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
+    }
+
+    private getCardSoundPath(cardId, step) {
+        const sound = CARD_MAP[cardId].sound;
+        if (!sound) {
+            return;
+        }
+        return 'sound/' + sound + step + '.mp3';
     }
     public onServerTurn(data: TurnsData) {
         if (isCurPlayer(data.speakerId)) {
             this.link.turn_animation.visible = true;
             this.link.turn_animation.play(0, false);
+            Laya.SoundManager.playSound(getSoundPath(`turn${Math.ceil(Math.random() * 2)}`));
         }
         this.model.setSpeaker(data.speakerId);
     }
