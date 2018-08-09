@@ -430,7 +430,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => { };
+    const empty_fn = () => {};
 
     if (!type) {
         return empty_fn;
@@ -470,22 +470,21 @@ export function getQueryString(query) {
     const query_string = {};
     const lets = query.split('&');
     for (const item of lets) {
-        const pair = item.split('=');
-        if (typeof query_string[pair[0]] === 'undefined') {
-            query_string[pair[0]] = decodeURIComponent(pair[1]);
-        } else if (typeof query_string[pair[0]] === 'string') {
-            const arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
-            query_string[pair[0]] = arr;
-        } else {
-            query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        if (!item) {
+            continue;
         }
+        const pair = item.split('=');
+        query_string[pair[0]] = decodeURIComponent(pair[1]);
     }
     return query_string;
 }
 // 拼接uri参数
 export function getUri(obj) {
     let str = '';
-    for (let key in obj) {
+    for (const key in obj) {
+        if (!obj.hasOwnProperty(key)) {
+            continue;
+        }
         if (str.length) {
             str += '&';
         }

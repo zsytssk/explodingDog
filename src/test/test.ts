@@ -2,6 +2,7 @@ import '../sailImport';
 import { CONFIG } from '../data/config';
 import * as animate from '../mcTree/utils/animate';
 import * as zutil from '../mcTree/utils/zutil';
+import * as tool from '../utils/tool';
 import * as game from './game';
 import * as animateTest from './animate';
 
@@ -14,7 +15,7 @@ interface CusWindow extends Window {
 
 if (zutil.debugFE()) {
     const test = {};
-    assign(test, [game, animateTest, animate, zutil, server]);
+    assign(test, [game, animateTest, animate, zutil, server, tool]);
     (window as CusWindow).CONFIG = CONFIG;
     (window as any).test = test;
 

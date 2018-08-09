@@ -75,7 +75,8 @@
             "hasChild":false,
             "compId":9,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         },
         {
             "x":15,
@@ -89,7 +90,7 @@
             "compId":11,
             "child":[
                 ],
-            "$HIDDEN":true
+            "$HIDDEN":false
         }],
     "animations":[
         {

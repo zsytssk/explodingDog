@@ -8,7 +8,11 @@ import {
     tween,
     tweenLoop,
 } from '../../../mcTree/utils/animate';
-import { getChildrenByName, queryClosest, ellipsisStr } from '../../../mcTree/utils/zutil';
+import {
+    getChildrenByName,
+    queryClosest,
+    ellipsisStr,
+} from '../../../mcTree/utils/zutil';
 import { getAvatar } from '../../../utils/tool';
 import { CardModel } from '../model/card/card';
 import {
@@ -195,6 +199,7 @@ export class SeatCtrl extends BaseCtrl {
                 active_box.visible = true;
                 die_avatar.visible = true;
                 highlight.visible = false;
+                stopAni(highlight);
                 avatar.visible = false;
                 this.hideExplode();
                 break;
@@ -202,6 +207,7 @@ export class SeatCtrl extends BaseCtrl {
                 empty_box.visible = true;
                 active_box.visible = true;
                 highlight.visible = false;
+                stopAni(highlight);
                 avatar.skin = '';
                 nickname.text = '';
                 die_avatar.visible = false;
@@ -212,6 +218,7 @@ export class SeatCtrl extends BaseCtrl {
                 break;
             default:
                 highlight.visible = false;
+                stopAni(highlight);
         }
     }
     /** 处理被action作用 */
