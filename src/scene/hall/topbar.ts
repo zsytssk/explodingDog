@@ -35,10 +35,18 @@ export class TopBar extends ui.hall.topbarUI {
         diamond.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupCharge());
         });
-        // test
-        btn_home.on(Laya.Event.CLICK, this, () => {
-            Sail.director.popScene(new PopupAvatar());
-        });
+        if (GM.backHomeUrl) {
+            this.btn_home.visible = true; // 显示home按钮
+            this.btn_home.on(Laya.Event.CLICK, this, function () {
+                location.href = GM.backHomeUrl;
+            });
+        }
+        if (window.GM && GM.isCall_out === 1 && GM.isShowBtnBack_out && GM.btnBackCall_out) {
+            this.btnBack.visible = true; // 显示返回按钮
+        };
+        this.btnBack.on(Laya.Event.CLICK, this, function () {
+            GM.btnBackCall_out();
+        })
     }
 
     public updateView({ bone, stamina, upperLimit }) {
