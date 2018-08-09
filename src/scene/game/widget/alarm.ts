@@ -1,5 +1,6 @@
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tween, countDown, stopAni } from '../../../mcTree/utils/animate';
+import { getSoundPath } from '../../../utils/tool';
 
 type View = ui.game.widget.alarmUI;
 export interface Link {
@@ -74,6 +75,9 @@ export class AlarmCtrl extends BaseCtrl {
                 if (cur_count <= 10) {
                     this.show();
                 }
+                if (cur_count <= 3) {
+                    Laya.SoundManager.playSound(getSoundPath('countdown_second'));
+                }
                 tween({
                     end_props: {
                         rotation:
@@ -86,6 +90,7 @@ export class AlarmCtrl extends BaseCtrl {
                 count.text = cur_count + '';
             },
             () => {
+                Laya.SoundManager.playSound(getSoundPath('countdown_end'));
                 this.hide();
             },
         );
