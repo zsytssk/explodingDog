@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":9,
-    "selecteID":9,
+    "selectedBox":1,
+    "selecteID":11,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"Dialog",
@@ -65,6 +65,19 @@
             "child":[
                 ],
             "$HIDDEN":false
+        },
+        {
+            "x":15,
+            "type":"Box",
+            "props":{"width":1334,"var":"card_move_box","height":750},
+            "nodeParent":1,
+            "label":"Box(card_move_box)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":11,
+            "child":[
+                ]
         }],
     "animations":[
         {

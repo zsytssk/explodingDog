@@ -1,7 +1,7 @@
 import { random } from 'lodash';
 import { CARD_MAP, CARD_TYPE } from '../data/card';
 import { CONFIG } from '../data/config';
-import { logErr } from '../mcTree/utils/zutil';
+import { logErr, log } from '../mcTree/utils/zutil';
 
 export function callFunc(func) {
     if (!isFunc(func)) {
@@ -115,9 +115,7 @@ export function convertPos(
 export function getFilter(type: string) {
     let data;
     if (type === 'black') {
-        data = [
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-        ];
+        data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
     }
     return new Laya.ColorFilter(data);
 }
@@ -271,7 +269,7 @@ export function randomCardId() {
         }
         key_arr.push(key);
     }
-    return key_arr[random(0, key_arr.length)]
+    return key_arr[random(0, key_arr.length)];
 }
 /** 获取牌所属卡包字符串 */
 export function getBlongStr(belong: number[]) {
@@ -281,4 +279,63 @@ export function getBlongStr(belong: number[]) {
     }
     result += '\n中出现.';
     return result;
+}
+
+export function hasShareToWx() {
+    let has = (window as any).PAG_JS && (window as any).PAG_JS.shareToWX;
+    if (has) {
+        return true;
+    }
+    has = (window as any).wltgame && (window as any).wltgame.shareToWX;
+    if (has) {
+        return true;
+    }
+    return false;
+}
+export function shareToWx(
+    title: string,
+    desc: string,
+    img_url: string,
+    link: string,
+) {
+    const share_fun =
+        (window as any).Client &&
+        ((window as any).Client.shareDocToWX as FuncVoid);
+    if (!share_fun) {
+        return;
+    }
+    share_fun(title, desc, img_url, link);
+}
+/** 复制文本 */
+
+export function browserSupportCopy() {
+    if (document && document.execCommand) {
+        return true;
+    }
+    return false;
+}
+export function copy(txt) {
+    const textArea = document.createElement('textarea');
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0px';
+    textArea.style.left = '0px';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0px';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = txt;
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        const msg = successful ? 'successful' : 'unsuccessful';
+        log('Copying text command was ' + msg);
+    } catch (err) {
+        log('Oops, unable to copy');
+    }
+    document.body.removeChild(textArea);
 }

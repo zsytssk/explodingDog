@@ -1,6 +1,6 @@
 import { PlayerModel } from './model/player';
 import { getAvatar, getCardInfo } from '../../utils/tool';
-import { TURN_CHANGE_ID } from '../../data/card';
+import { TURN_CHANGE_ID, TURN_CHANGE_INFO } from '../../data/card';
 import { log } from '../../mcTree/utils/zutil';
 
 export class BillBoardCtrl {
@@ -71,6 +71,19 @@ export class BillBoardCtrl {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
+
+        let icon;
+        let name_zh;
+        let intro_billbard;
+        if (cardId === TURN_CHANGE_ID) {
+            intro_billbard = TURN_CHANGE_INFO;
+        } else {
+            const card_info = getCardInfo(cardId);
+            icon = card_info.icon;
+            intro_billbard = card_info.intro_billbard;
+            name_zh = card_info.name_zh;
+        }
+
         if (toUser) {
             if (cardId == '3401' && step == 3) {
                 text += `获得${toUser.nickname}`;
@@ -84,13 +97,14 @@ export class BillBoardCtrl {
             avatarTo.skin = `images/component/card/icon/icon_unknow.png`;
         }
         text += '\n';
-        const { icon, intro_billbard, name_zh } = getCardInfo(cardId);
+
         if (intro_billbard) {
             text += `${intro_billbard[step - 1]}`;
         } else {
             text += `使用了${name_zh}`;
         }
         operationTip.text = text;
+
         if (icon) {
             if (!cardIcon.visible) {
                 cardIcon.visible = true;
