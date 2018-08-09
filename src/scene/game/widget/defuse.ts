@@ -77,6 +77,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     public defuseSuccess() {
         Laya.SoundManager.stopSound(getSoundPath('pop_defuse'));
         this.ani.paused();
+        this.faceAni.visible = true;
         this.defuseCard.visible = true;
         this.defuseSeccess = true;
     }
