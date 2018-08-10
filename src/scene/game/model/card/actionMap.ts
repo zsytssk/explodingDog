@@ -21,7 +21,7 @@ export const action_map = {
     [CARD_NAME.DEFUSE]: [ShowSetExplode, FinishSetExplode],
     [CARD_NAME.REVERSE]: [ReverseArrows],
     [CARD_NAME.SEE_FUTURE]: [SeeTheFuture],
-    [CARD_NAME.SELF_SLAP]: [ChooseTarget, Slap],
+    [CARD_NAME.SELF_SLAP]: [Slap],
     [CARD_NAME.SLAP]: [ChooseTarget, Slap],
     [CARD_NAME.STEAL]: [ChooseTarget, WaitGetCard],
 };

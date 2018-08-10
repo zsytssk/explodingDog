@@ -3,13 +3,13 @@
     "code": 200,
     "res": {
         "userId": 4002,
-        "hitCard": 3001,
-        "hitUserId": 4001,
+        "hitCard": "4001",
+        "hitUserId": 4002,
         "hitInfo": {
-            "type": "exploding",
-            "step": 1,
-            "discard": 0,
-            "remainTime": 6
+            "type": "blind",
+            "step": 2,
+            "targetUserId": "4001",
+            "discard": 1
         }
     }
 }

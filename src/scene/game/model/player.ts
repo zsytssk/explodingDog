@@ -235,7 +235,7 @@ export class PlayerModel extends BaseEvent {
         for (const card of card_list) {
             card.setBlindStatus(status);
         }
-        this.trigger(cmd.blind_status, { blind: status });
+        this.trigger(cmd.blind_status, { is_blind: status } as BlindStatus);
     }
     public clearBlindAndAnnoy() {
         const { card_list } = this;
