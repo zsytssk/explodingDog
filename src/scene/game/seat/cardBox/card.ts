@@ -33,10 +33,10 @@ export class CardCtrl extends CardBaseCtrl {
     protected model: CardModel;
     /** 是否被选中, 用于处理card_box sort 要不要处理 */
     public is_selected = false;
-    constructor(model: CardModel, wrap: Laya.Sprite, from: CardFrom) {
+    constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
         super(model.card_id, wrap);
         this.model = model;
-        if (from !== 'cards') {
+        if (from && from !== 'cards') {
             this.slow_move = true;
         }
         this.link.wrap = wrap;
