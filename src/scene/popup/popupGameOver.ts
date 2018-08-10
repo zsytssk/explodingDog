@@ -15,6 +15,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
     private onOpenFuns = []; //弹出后播放动画
     CONFIG = {
         closeByGroup: true,
+        closeOther: true
     };
     game_ctrl;
     constructor(game_ctrl) {

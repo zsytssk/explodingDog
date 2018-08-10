@@ -51,7 +51,7 @@ export class BillBoardCtrl {
         );
         Laya.Tween.to(view, { x: originX }, period, null, null, period);
 
-        Laya.timer.once(1000, this, () => {
+        this.link.view.timerOnce(1000, this, () => {
             this.msgList.shift();
             this.updateMsg();
         });
