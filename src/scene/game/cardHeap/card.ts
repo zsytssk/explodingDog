@@ -2,9 +2,14 @@ import { CMD } from '../../../data/cmd';
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { tween } from '../../../mcTree/utils/animate';
 import { queryClosest } from '../../../mcTree/utils/zutil';
-import { convertPos, playSkeleton, stopSkeleton, getSoundPath } from '../../../utils/tool';
+import {
+    convertPos,
+    getSoundPath,
+    playSkeleton,
+    stopSkeleton,
+} from '../../../utils/tool';
 import { GameCtrl } from '../main';
-import { CurCardCtrl } from '../seat/cardBox/curCard';
+import { CardBaseCtrl } from '../seat/cardBox/cardBase';
 import { CardHeapCtrl } from './main';
 
 type Status = 'disabled' | 'actived';
@@ -16,7 +21,7 @@ interface Link {
     card_light: Laya.Skeleton;
     card_box: CardHeapCtrl;
 }
-export class CardCtrl extends BaseCtrl {
+export class HeapCardCtrl extends BaseCtrl {
     public name = 'card';
     private is_touched = false;
     public scale: number;
@@ -169,15 +174,14 @@ export class CardCtrl extends BaseCtrl {
         this.setStatus('disabled');
     }
     /** 设置当前用户牌的样式 */
-    public putFaceToCard(card: CurCardCtrl) {
+    public putFaceToCard(card: CardBaseCtrl) {
         const { scale } = this;
-        const { wrap, view, card_move_box } = this.link;
-        const pos = new Laya.Point(view.x, view.y);
-        if (view.parent === card_move_box) {
-            card_move_box.localToGlobal(pos);
-        } else {
-            wrap.localToGlobal(pos);
-        }
+        const { view } = this.link;
+        const pos = new Laya.Point(
+            (view.width * scale) / 2,
+            (view.height * scale) / 2,
+        );
+        view.localToGlobal(pos);
         card.setFace({
             pos,
             scale,

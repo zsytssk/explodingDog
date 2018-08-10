@@ -179,7 +179,12 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     /** 当前用户说话时 需要将牌堆激活, 可以拿牌 */
     protected setStatus(status: SeatStatus) {
-        this.trigger(cmd.status_change, { status });
+        const { card_heap_ctrl } = this.link;
+        if (status === 'speak') {
+            card_heap_ctrl.activeTake();
+        } else {
+            card_heap_ctrl.disableTake();
+        }
         super.setStatus(status);
     }
     /** 手牌中是否有某张牌 */
@@ -191,16 +196,6 @@ export class CurSeatCtrl extends SeatCtrl {
             }
         });
         return result;
-    }
-    /** 添加牌, 当前用户多一个牌从CardHeep飞到用户身上的动画 */
-    protected addCard(data: AddInfo) {
-        const { is_take } = data;
-        const card = super.addCard(data) as CurCardCtrl;
-        if (!is_take) {
-            return;
-        }
-        this.trigger(cmd.add_card, { card });
-        return card;
     }
     private preDrawCard(card: CardModel) {
         const card_id = card.card_id;

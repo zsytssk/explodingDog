@@ -4,14 +4,16 @@ import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
 import { CurCardCtrl } from '../seat/cardBox/curCard';
 import { cmd as seat_cmd, CurSeatCtrl } from '../seat/curSeat';
 import { SeatStatus } from '../seat/seat';
-import { CardCtrl } from './card';
+import { HeapCardCtrl } from './card';
 import { calcCreate } from './cardBackPool';
+import { CardCtrl } from '../seat/cardBox/card';
+import { CardBaseCtrl } from '../seat/cardBox/cardBase';
 
 export interface Link {
     view: ui.game.cardHeapUI;
     heap: Laya.Box;
     remain_num: Laya.Text;
-    card_ctrl: CardCtrl;
+    card_ctrl: HeapCardCtrl;
     cur_seat: CurSeatCtrl;
 }
 
@@ -26,13 +28,12 @@ export class CardHeapCtrl extends BaseCtrl {
     }
     public init() {
         this.initLink();
-        this.initEvent();
     }
     // tslint:disable-next-line:no-empty
     protected initLink() {
         const { view } = this.link;
         const { remain_num, heap, card, card_box } = view;
-        const card_ctrl = new CardCtrl(card, card_box);
+        const card_ctrl = new HeapCardCtrl(card, card_box);
         this.addChild(card_ctrl);
         card_ctrl.init();
 
@@ -46,29 +47,6 @@ export class CardHeapCtrl extends BaseCtrl {
             heap,
             remain_num,
         };
-    }
-    private initEvent() {
-        const { cur_seat } = this.link;
-        this.bindOtherEvent(
-            cur_seat,
-            seat_cmd.status_change,
-            (data: { status: SeatStatus }) => {
-                const { status } = data;
-                if (status === 'speak') {
-                    this.activeTake();
-                } else {
-                    this.disableTake();
-                }
-            },
-        );
-        this.bindOtherEvent(
-            cur_seat,
-            seat_cmd.add_card,
-            (data: { card: CurCardCtrl }) => {
-                const { card } = data;
-                this.setCardFace(card);
-            },
-        );
     }
     /** 激活拿牌 */
     public activeTake() {
@@ -148,7 +126,7 @@ export class CardHeapCtrl extends BaseCtrl {
         card_ctrl.reset();
     }
     /** 设置当前用户的牌的位置, 用来做牌飞到用户牌堆的动画 */
-    public setCardFace(card: CurCardCtrl) {
+    public setCardFace(card: CardBaseCtrl) {
         const { card_ctrl } = this.link;
         card_ctrl.putFaceToCard(card);
     }

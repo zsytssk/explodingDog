@@ -3,6 +3,7 @@ import { CardModel } from '../../model/card/card';
 import { CardCtrl } from './card';
 import { GameCtrl } from '../../main';
 import { queryClosest } from '../../../../mcTree/utils/zutil';
+import { CardFrom } from '../../model/player';
 
 export interface Link {
     view: Laya.Sprite;
@@ -74,30 +75,29 @@ export class CardBoxCtrl extends BaseCtrl {
     /**
      *
      * @param card
-     * @param is_insert s
+     * @param slow_move s
      */
-    public addCard(card: CardModel, is_insert?: boolean) {
+    public addCard(card: CardModel, from: CardFrom, is_sort = true) {
         const { card_list, card_wrap } = this.link;
-        const card_ctrl = new this.card_creator(card, card_wrap, is_insert);
+        const card_ctrl = new this.card_creator(card, card_wrap, from);
         this.addChild(card_ctrl);
         card_ctrl.init();
         card_list.push(card_ctrl);
-        /** 当前用户需要先设置牌到牌堆拿出牌的位置,所以需要异步重组  */
-        setTimeout(() => {
-            this.sortCard();
-        });
+
+        if (is_sort) {
+            /** 当前用户需要先设置牌到牌堆拿出牌的位置,所以需要异步重组  */
+            setTimeout(() => {
+                this.sortCard();
+            });
+        }
         return card_ctrl;
     }
     /**
      * 初始化牌时需要处理多张的牌
      */
     public addCards(cards: CardModel[]) {
-        const { card_list, card_wrap } = this.link;
         for (const card of cards) {
-            const card_ctrl = new this.card_creator(card, card_wrap);
-            this.addChild(card_ctrl);
-            card_ctrl.init();
-            card_list.push(card_ctrl);
+            this.addCard(card, 'cards', false);
         }
         this.sortCard();
     }
