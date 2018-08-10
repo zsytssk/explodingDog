@@ -13,6 +13,7 @@ import {
     CardModel,
     cmd as card_cmd,
 } from '../../model/card/card';
+import { CardFrom } from '../../model/player';
 import { CardBaseCtrl, Link as BaseLink } from './cardBase';
 import { CardBoxCtrl } from './cardBox';
 
@@ -27,15 +28,17 @@ export const space_scale = 1 / 2;
 export class CardCtrl extends CardBaseCtrl {
     public name = 'card';
     protected link: Link;
-    protected is_insert: boolean;
-    protected is_copy_face: boolean;
+    /** 是否是插入的牌, 用来处理插入牌 插入动作慢于在牌堆里的牌 */
+    protected slow_move: boolean;
     protected model: CardModel;
     /** 是否被选中, 用于处理card_box sort 要不要处理 */
     public is_selected = false;
-    constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
+    constructor(model: CardModel, wrap: Laya.Sprite, from: CardFrom) {
         super(model.card_id, wrap);
         this.model = model;
-        this.is_insert = is_insert;
+        if (from !== 'cards') {
+            this.slow_move = true;
+        }
         this.link.wrap = wrap;
     }
     public init() {
@@ -53,7 +56,7 @@ export class CardCtrl extends CardBaseCtrl {
         super.initUI();
         const { view } = this.link;
         const { blind, annoy } = view;
-        if (this.is_insert) {
+        if (this.slow_move) {
             view.visible = false;
         }
         this.link = {
@@ -159,7 +162,7 @@ export class CardCtrl extends CardBaseCtrl {
     /** 移动位置 */
     public tweenMove(index: number, all: number) {
         const { view, card_light } = this.link;
-        const { scale, is_copy_face } = this;
+        const { scale, copyed_face } = this;
         const space = view.width * scale * space_scale;
         let time = 200;
         const x = (view.width * scale) / 2 + space * index;
@@ -173,8 +176,8 @@ export class CardCtrl extends CardBaseCtrl {
         y += rel_hal * Math.tan(degreeToAngle(rotation)) * 5;
         let end_props = { y, x, rotation } as AnyObj;
 
-        if (this.is_insert) {
-            if (!is_copy_face) {
+        if (this.slow_move) {
+            if (!copyed_face) {
                 view.x = x;
             } else {
                 time = 700;
@@ -184,9 +187,9 @@ export class CardCtrl extends CardBaseCtrl {
                 scaleX: scale,
                 scaleY: scale,
             };
-            this.is_copy_face = false;
+            this.copyed_face = false;
             view.visible = true;
-            this.is_insert = false;
+            this.slow_move = false;
         }
         view.zOrder = index;
         tween({

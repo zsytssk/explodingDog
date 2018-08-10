@@ -1,8 +1,15 @@
 import { BaseCtrl } from '../../../../mcTree/ctrl/base';
 import { setStyle } from '../../../../mcTree/utils/animate';
-import { getCardInfo, stopSkeleton } from '../../../../utils/tool';
-import { CardBoxCtrl } from './cardBox';
+import {
+    getCardInfo,
+    stopSkeleton,
+    playSkeleton,
+} from '../../../../utils/tool';
 
+export type FaceProps = {
+    scale: number;
+    pos: Laya.Point;
+};
 type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
     view: CardView;
@@ -18,6 +25,7 @@ export class CardBaseCtrl extends BaseCtrl {
     /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
     protected scale: number;
     public card_id: string;
+    protected copyed_face: boolean;
     constructor(card_id: string, wrap: Laya.Sprite) {
         super();
         this.setCardId(card_id);
@@ -65,6 +73,36 @@ export class CardBaseCtrl extends BaseCtrl {
         setStyle(view, {
             ...props,
         });
+    }
+    /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
+    public setFace(props: FaceProps) {
+        const { wrap, card_light } = this.link;
+        const { scale, pos } = props;
+        wrap.globalToLocal(pos);
+        card_light.visible = true;
+        playSkeleton(card_light, 0, true);
+        this.copyed_face = true;
+        this.setStyle({
+            scaleX: scale,
+            scaleY: scale,
+            x: pos.x,
+            y: pos.y,
+        });
+        // this.withDrawCard();
+    }
+    public getCardFace() {
+        const { scale } = this;
+        const { view } = this.link;
+        const pos = new Laya.Point(
+            (view.width * scale) / 2,
+            (view.height * scale) / 2,
+        );
+        view.localToGlobal(pos);
+
+        return {
+            pos,
+            scale,
+        };
     }
     /** 设置牌的样式 */
     public drawCard() {

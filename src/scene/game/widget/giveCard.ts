@@ -1,6 +1,7 @@
 import { BaseCtrl } from '../../../mcTree/ctrl/base';
 import { CardCtrl } from '../seat/cardBox/card';
 import { tween } from '../../../mcTree/utils/animate';
+import { CardBaseCtrl } from '../seat/cardBox/cardBase';
 
 type View = ui.game.widget.giveCardUI;
 export interface Link {
@@ -22,6 +23,7 @@ const hide_pos = {
 export class GiveCardCtrl extends BaseCtrl {
     public name = 'give_card';
     protected link = {} as Link;
+    protected card: CardCtrl;
     private end_resolve: FuncVoid;
     constructor(view: View) {
         super();
@@ -69,6 +71,12 @@ export class GiveCardCtrl extends BaseCtrl {
     public getCard(card: CardCtrl) {
         const { card_box } = this.link;
         this.addChild(card);
+        /** 如果当前没有显示, 只需要将card隐藏就可以了 */
+        if (!this.end_resolve) {
+            this.card = card;
+            card.setStyle({ visible: false });
+            return;
+        }
         card.putCardInWrap(card_box).then(() => {
             this.hide().then(() => {
                 card.destroy();
@@ -98,5 +106,15 @@ export class GiveCardCtrl extends BaseCtrl {
     /** seat action complete之后， 如果有牌 需要展示牌飞行动画 */
     public reset() {
         this.hide();
+    }
+    public setCardFace(card: CardBaseCtrl) {
+        const face_card = this.card;
+        if (!face_card) {
+            return;
+        }
+        const face = face_card.getCardFace();
+        card.setFace(face);
+        face_card.destroy();
+        this.card = undefined;
     }
 }

@@ -109,7 +109,7 @@ export class GameCtrl extends BaseCtrl {
             turn_arrow,
             explode_pos,
             chatview,
-            turn_animation
+            turn_animation,
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -133,6 +133,10 @@ export class GameCtrl extends BaseCtrl {
         const discard_zone_ctrl = new DiscardZoneCtrl(discard_zone);
         this.addChild(discard_zone_ctrl);
         discard_zone_ctrl.init();
+
+        const card_heap_ctrl = new CardHeapCtrl(card_heap);
+        this.addChild(card_heap_ctrl);
+        card_heap_ctrl.init();
 
         const turn_arrow_ctrl = new TurnArrowCtrl(turn_arrow);
         this.addChild(turn_arrow_ctrl);
@@ -169,10 +173,6 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list.push(player_ctrl);
         }
 
-        const card_heap_ctrl = new CardHeapCtrl(card_heap);
-        this.addChild(card_heap_ctrl);
-        card_heap_ctrl.init();
-
         this.link = {
             ...this.link,
             alarm_ctrl,
@@ -190,7 +190,7 @@ export class GameCtrl extends BaseCtrl {
             seat_ctrl_list,
             slap_ctrl,
             turn_arrow_ctrl,
-            turn_animation
+            turn_animation,
         };
     }
     protected initEvnet() {
@@ -372,7 +372,9 @@ export class GameCtrl extends BaseCtrl {
         }
         Laya.SoundManager.playSound(getSoundPath('hit'));
         Laya.timer.once(500, this, () => {
-            Laya.SoundManager.playSound(this.getCardSoundPath(data.hitCard, data.hitInfo.step));
+            Laya.SoundManager.playSound(
+                this.getCardSoundPath(data.hitCard, data.hitInfo.step),
+            );
         });
     }
 
@@ -387,7 +389,9 @@ export class GameCtrl extends BaseCtrl {
         if (isCurPlayer(data.speakerId)) {
             this.link.turn_animation.visible = true;
             this.link.turn_animation.play(0, false);
-            Laya.SoundManager.playSound(getSoundPath(`turn${Math.ceil(Math.random() * 2)}`));
+            Laya.SoundManager.playSound(
+                getSoundPath(`turn${Math.ceil(Math.random() * 2)}`),
+            );
         }
         this.model.setSpeaker(data.speakerId);
     }

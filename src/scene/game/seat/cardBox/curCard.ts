@@ -1,20 +1,17 @@
-import { setStyle, tween } from '../../../../mcTree/utils/animate';
+import { tween } from '../../../../mcTree/utils/animate';
 import { log } from '../../../../mcTree/utils/zutil';
-import { convertPos, playSkeleton, stopSkeleton } from '../../../../utils/tool';
-import { CardModel, cmd as card_cmd } from '../../model/card/card';
-import { CardCtrl, Link as BaseLink, space_scale } from './card';
-import { CurCardBoxCtrl } from './curCardBox';
+import { convertPos, stopSkeleton } from '../../../../utils/tool';
 import { CardIntroCtrl } from '../../../component/cardIntro';
+import { CardModel, cmd as card_cmd } from '../../model/card/card';
+import { CardFrom } from '../../model/player';
+import { CardCtrl, Link as BaseLink, space_scale } from './card';
+import { FaceProps } from './cardBase';
+import { CurCardBoxCtrl } from './curCardBox';
 
 export interface Link extends BaseLink {
     card_box: CurCardBoxCtrl;
     card_intro_ctrl: CardIntroCtrl;
 }
-
-type FaceProps = {
-    scale: number;
-    pos: Laya.Point;
-};
 
 const tip_show_time = 3000;
 /** 当前用户的牌 */
@@ -30,8 +27,8 @@ export class CurCardCtrl extends CardCtrl {
     private start_pos = {} as Point;
     private tip_time_out: number;
     private index: number;
-    constructor(model: CardModel, wrap: Laya.Sprite, is_insert?: boolean) {
-        super(model, wrap, is_insert);
+    constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
+        super(model, wrap, from);
     }
     protected initEvent() {
         super.initEvent();
@@ -242,28 +239,16 @@ export class CurCardCtrl extends CardCtrl {
         this.putInBoxByPos(pos);
         card_box.sortCard();
     }
+    public setFace(props: FaceProps) {
+        const { pos } = props;
+        super.setFace(props);
+        this.putInBoxByPos(pos);
+    }
     public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
         this.is_selected = false;
         const { view } = this.link;
         this.offNode(view);
         return super.putCardInWrap(wrap, no_time);
-    }
-    /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
-    public setFace(props: FaceProps) {
-        const { view, wrap, card_light } = this.link;
-        const { scale, pos } = props;
-        wrap.globalToLocal(pos);
-        card_light.visible = true;
-        playSkeleton(card_light, 0, true);
-        this.is_copy_face = true;
-        setStyle(view, {
-            scaleX: scale,
-            scaleY: scale,
-            x: pos.x,
-            y: pos.y,
-        });
-        this.putInBoxByPos(pos);
-        // this.withDrawCard();
     }
     /** 通过牌的x位置设置 */
     private putInBoxByPos(pos: Laya.Point) {
@@ -279,7 +264,7 @@ export class CurCardCtrl extends CardCtrl {
     /** 移动位置 */
     public tweenMove(index: number) {
         const { view, card_light } = this.link;
-        const { scale, is_copy_face } = this;
+        const { scale, copyed_face } = this;
         const space = view.width * scale * space_scale;
         let time = 300;
         const x = (view.width * scale) / 2 + space * index;
@@ -292,8 +277,8 @@ export class CurCardCtrl extends CardCtrl {
         this.index = index;
         let end_props = { y, x } as AnyObj;
 
-        if (this.is_insert) {
-            if (!is_copy_face) {
+        if (this.slow_move) {
+            if (!copyed_face) {
                 view.x = x;
             } else {
                 time = 700;
@@ -303,9 +288,9 @@ export class CurCardCtrl extends CardCtrl {
                 scaleX: scale,
                 scaleY: scale,
             };
-            this.is_copy_face = false;
+            this.copyed_face = false;
             view.visible = true;
-            this.is_insert = false;
+            this.slow_move = false;
         }
         view.zOrder = index;
         tween({

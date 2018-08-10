@@ -18,7 +18,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
 
         (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.chooseBtn.visible = !isLock;
-        this.iconI.visible = cardType != '1';
+        this.iconI.visible = cardType !== '1';
         this.btnLock.visible = isLock;
         if (staminaCost) {
             this.staminaLabel.text = `${Math.abs(staminaCost)}`;
@@ -52,15 +52,20 @@ export class CardPack extends ui.popup.component.cardPackUI {
             }
         });
         this.iconI.on(Laya.Event.CLICK, this, () => {
-            Sail.director.popScene(new PopupBuyCardType({
-                id: buyInfo.itemId,
-                price: buyInfo.price,
-                is_buy: !data.isLock
-            }, () => {
-                this.chooseBtn.visible = true;
-                this.btnLock.visible = false;
-            }));
-        })
+            Sail.director.popScene(
+                new PopupBuyCardType(
+                    {
+                        card_id: buyInfo.itemId,
+                        is_buy: !data.isLock,
+                        price: buyInfo.price,
+                    },
+                    () => {
+                        this.chooseBtn.visible = true;
+                        this.btnLock.visible = false;
+                    },
+                ),
+            );
+        });
     }
     /**
      *

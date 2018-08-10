@@ -28,12 +28,15 @@ export type ObserverActionInfo = PartialAll<
         /** 动作执行的resolve */
         observer?: Subscriber<string | string[]>;
     }
-    >;
+>;
+
+/* 牌的来源 抓 | 别人给的 | 牌堆里的 */
+export type CardFrom = 'take' | 'give' | 'cards';
 
 /** 拿牌的信息 */
 export type AddInfo = {
     card: CardModel;
-    is_take: boolean;
+    from: CardFrom;
 };
 
 export class PlayerModel extends BaseEvent {
@@ -105,10 +108,10 @@ export class PlayerModel extends BaseEvent {
             return;
         }
         for (const card_info of cards_info) {
-            this.addCard(card_info + '');
+            this.addCard(card_info + '', 'cards');
         }
     }
-    public addCard(card: string | CardModel, is_take = false) {
+    public addCard(card: string | CardModel, from: CardFrom) {
         if (!card) {
             return;
         }
@@ -117,7 +120,7 @@ export class PlayerModel extends BaseEvent {
         }
         card.setOwner(this);
         this.card_list.push(card);
-        this.trigger(cmd.add_card, { card, is_take } as AddInfo);
+        this.trigger(cmd.add_card, { card, from } as AddInfo);
     }
     public removeCard(card: CardModel) {
         const card_list = this.card_list;

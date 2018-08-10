@@ -25,6 +25,7 @@ import {
 import { GiveCardCtrl } from '../widget/giveCard';
 import { SlapCtrl, SlapType } from '../widget/slap';
 import { CardBoxCtrl } from './cardBox/cardBox';
+import { CardHeapCtrl } from '../cardHeap/main';
 
 export type SeatStatus = 'exploding' | 'load_player' | 'clear' | PlayerStatus;
 
@@ -42,6 +43,7 @@ export interface Link {
     chat_box: Laya.Sprite;
     chat_label: Laya.Label;
     give_card_ctrl: GiveCardCtrl;
+    card_heap_ctrl: CardHeapCtrl;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -75,12 +77,14 @@ export class SeatCtrl extends BaseCtrl {
 
         const game_ctrl = queryClosest(this, 'name:game');
         const give_card_ctrl = getChildrenByName(game_ctrl, 'give_card')[0];
+        const card_heap_ctrl = getChildrenByName(game_ctrl, 'card_heap')[0];
 
         this.link = {
             ...this.link,
             active_box,
             avatar,
             card_box_ctrl,
+            card_heap_ctrl,
             chat_box,
             chat_label,
             die_avatar,
@@ -364,14 +368,26 @@ export class SeatCtrl extends BaseCtrl {
             scale_out(chat_box, 100);
         }
     }
+    /** 添加牌, 当前用户多一个牌从CardHeep飞到用户身上的动画 */
     protected addCard(data: AddInfo) {
-        return this.link.card_box_ctrl.addCard(data.card, true);
+        const { from } = data;
+        const { give_card_ctrl, card_heap_ctrl } = this.link;
+        const card = this.link.card_box_ctrl.addCard(data.card, data.from);
+        if (from === 'take') {
+            card_heap_ctrl.setCardFace(card);
+            return;
+        }
+        if (from === 'give') {
+            give_card_ctrl.setCardFace(card);
+            return;
+        }
     }
     public moveByModel(card_model: CardModel) {
         const { card_box_ctrl } = this.link;
         const card_ctrl = card_box_ctrl.moveByModel(card_model);
         return card_ctrl;
     }
+    /** 打出牌 到牌堆或者给其他玩家 */
     private drawCard(card_model: CardModel) {
         const { give_card_ctrl } = this.link;
         const { status } = this.model;

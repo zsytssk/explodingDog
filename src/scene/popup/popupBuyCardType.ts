@@ -5,7 +5,7 @@ import { nameMap } from '../../mcTree/utils/zutil';
 type Data = {
     card_id: string;
     price: string;
-    is_buy: string;
+    is_buy: boolean;
 };
 const type_map = {
     2003: {

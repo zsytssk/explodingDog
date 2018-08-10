@@ -142,7 +142,7 @@ export class WaitGetCard extends Action {
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
-        player.addCard(card_model);
+        player.addCard(card_model, 'give');
 
         target.setStatus('normal');
         target
@@ -316,8 +316,8 @@ export class ReverseArrows extends Action {
         data.player
             .beActioned({
                 action: this.name,
-                status: 'act',
                 data,
+                status: 'act',
             })
             .subscribe();
     }
