@@ -22,7 +22,11 @@ export class ErrorManager {
                 return true;
         }
         /** 买完东西需要更新余额 */
-        if (cmd === CMD.EXCHANGE_GOODS && code === 200) {
+        if (code === 200 &&
+            (cmd === CMD.EXCHANGE_GOODS
+                || cmd === CMD.GET_DOG_FOOD
+                || cmd === CMD.GET_DAILY_AWARDS
+            )) {
             Sail.io.emit(CMD.GET_USER_AMOUNT);
         }
         return false;
