@@ -1,4 +1,6 @@
 import { getAvatar } from "../../../utils/tool";
+import { rankIcon } from "../../hall/rankIcon";
+import { log } from "../../../mcTree/utils/zutil";
 
 
 export class Avatar extends ui.popup.component.avatarUI {
@@ -7,25 +9,20 @@ export class Avatar extends ui.popup.component.avatarUI {
         super();
         this.init(data);
     }
-    init({ avatar, nickname, isDead, isWinUser, getScore, userId }) {
+    init({ avatar, nickname, isDead, isWinUser, getScore, userId, danGrading }) {
         this.userId = userId;
         this.avatar.skin = isDead ? 'images/game/avatar_die.png' : getAvatar(avatar);
         this.username.changeText(nickname);
-        // if (isWinUser) {
-        //     let crown = new Laya.Skeleton();
-        //     crown.load('animation/crown.sk', new Laya.Handler(this, () => {
-        //         crown.on(Laya.Event.STOPPED, this, () => {
-        //             crown.play('wait', true);
-        //         });
-        //         crown.play('show', false);
-        //         crown.pos(90, 0);
-        //         crown.zOrder = -1;
-        //         this.addChild(crown);
-        //     }))
-        // }
         if (getScore) {
             this.score.visible = true;
+            this.score.zOrder = 5;
             this.score.text = getScore > 0 ? `积分+${getScore}` : `积分${getScore}`;
+        }
+        if (danGrading) {
+            let rank = new rankIcon(danGrading);
+            rank.bottom = -10;
+            rank.centerX = -2;
+            this.addChild(rank);
         }
     }
     public getUserId() {
@@ -33,6 +30,7 @@ export class Avatar extends ui.popup.component.avatarUI {
     }
     public showInviteIcon() {
         this.inviteStatus.visible = true;
+        this.inviteStatus.zOrder = 5;
     }
     public levelUp() {
         let ani = new Laya.Skeleton();

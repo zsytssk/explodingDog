@@ -55,10 +55,10 @@ export class TopBar extends ui.hall.topbarUI {
             GM.btnBackCall_out
         ) {
             this.btnBack.visible = true; // 显示返回按钮
+            this.btnBack.on(Laya.Event.CLICK, this, () => {
+                GM.btnBackCall_out();
+            });
         }
-        this.btnBack.on(Laya.Event.CLICK, this, () => {
-            GM.btnBackCall_out();
-        });
     }
 
     public updateView({ bone, stamina, upperLimit }) {

@@ -5,6 +5,8 @@ import { log, getChildren } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
 import { BgCtrl } from '../component/bgCtrl';
+import { popupRankChange } from './popupRankChange';
+import { rankIcon } from '../hall/rankIcon';
 
 export class PopupGameOver extends ui.popup.popupGameOverUI {
     private isUserCreate; // 是否为用户创建的房间
@@ -65,6 +67,11 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             if (isCurPlayer(user.userId)) {
                 if (user.updateInfo.level.isChange) {
                     this.onOpenFuns.push(avatar.levelUp.bind(avatar));
+                }
+                if (user.updateInfo.danGrading.isChange) {
+                    this.onOpenFuns.push(() => {
+                        Sail.director.popScene(new popupRankChange(user.danGrading));
+                    });
                 }
                 this.levLabel.text = `Lv:${user.level}`;
                 tween({

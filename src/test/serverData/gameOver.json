@@ -4,7 +4,7 @@
     "res": {
         "list": [
             {
-                "userId": "3002",
+                "userId": "3003",
                 "nickname": "3003",
                 "avatar": "101",
                 "isWinUser": 0,
@@ -17,7 +17,7 @@
                 "nextLvlExp": 420,
                 "updateInfo": {
                     "danGrading": {
-                        "isChange": 0
+                        "isChange": 1
                     },
                     "level": {
                         "isChange": 0
