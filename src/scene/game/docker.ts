@@ -28,20 +28,26 @@ export class DockerCtrl extends BaseCtrl {
         this.initAni();
     }
     private initAni() {
-        let wire = this.link.wire = new Laya.Skeleton();
-        wire.load('animation/zhadanjiqi_mopai.sk', new Laya.Handler(this, () => {
-            wire.stop();
-            wire.pos(115, 100);
-            wire.zOrder = -1;
-            this.link.view.addChild(wire);
-        }));
-        let smoke = this.link.smoke = new Laya.Skeleton();
-        smoke.load('animation/zhadanjiqi_jingbao.sk', new Laya.Handler(this, () => {
-            smoke.pos(115, 115);
-            smoke.zOrder = -1;
-            smoke.visible = false;
-            this.link.view.addChild(smoke);
-        }));
+        let wire = (this.link.wire = new Laya.Skeleton());
+        wire.load(
+            'animation/zhadanjiqi_mopai.sk',
+            new Laya.Handler(this, () => {
+                wire.stop();
+                wire.pos(115, 100);
+                wire.zOrder = -1;
+                this.link.view.addChild(wire);
+            }),
+        );
+        let smoke = (this.link.smoke = new Laya.Skeleton());
+        smoke.load(
+            'animation/zhadanjiqi_jingbao.sk',
+            new Laya.Handler(this, () => {
+                smoke.pos(115, 115);
+                smoke.zOrder = -1;
+                smoke.visible = false;
+                this.link.view.addChild(smoke);
+            }),
+        );
     }
     protected initLink() {
         const view = this.link.view as any;
@@ -54,7 +60,7 @@ export class DockerCtrl extends BaseCtrl {
         this.link.arrow = arrow;
         this.link.rateLabel = view.rateLabel;
     }
-    protected initEvent() { }
+    protected initEvent() {}
     public start() {
         const { wire, tip, arrow } = this.link;
         wire.visible = true;
@@ -121,7 +127,7 @@ export class DockerCtrl extends BaseCtrl {
         }
     }
 
-    /**危险等级提高时播放音效 */
+    /** 危险等级提高时播放音效 */
     private setRateLevel(rate) {
         let level = Math.floor(rate / 25);
         if (level == this.rateLevel) {

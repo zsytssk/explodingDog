@@ -32,8 +32,8 @@ export class CardHeapCtrl extends BaseCtrl {
     // tslint:disable-next-line:no-empty
     protected initLink() {
         const { view } = this.link;
-        const { remain_num, heap, card, card_box } = view;
-        const card_ctrl = new HeapCardCtrl(card, card_box);
+        const { remain_num, heap, card_box } = view;
+        const card_ctrl = new HeapCardCtrl(card_box);
         this.addChild(card_ctrl);
         card_ctrl.init();
 

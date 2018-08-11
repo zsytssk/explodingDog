@@ -1,5 +1,13 @@
 ## 2018-08-09 10:27:18
+
+* getCardSoundPath 这能放到tool里面去吗
+
+* *   @note slow_move visible
 * @ques card_heap card 能不能继承 cardBase..
+
+* @note tweenMove card curCard 有大部分是相同的 只是
+    * card rotation
+    * curCard y...
 
 * @note 按钮点击统计
 
@@ -12,6 +20,8 @@
     * is_move
 
 * @ques draw_bottom 的速度太快了
+    * 先收到take 然后才收到hit
+    * 能不能反过来 @zengxiaoping
 
 * touchend -- leave
 

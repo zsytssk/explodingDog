@@ -69,6 +69,8 @@ export class PopupRank extends ui.popup.rank.popUI {
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GET_RANK_LIST);
 
+        list.dataSource = [];
+        list.vScrollBarSkin = '';
         list.renderHandler = new Laya.Handler(this, (box: Laya.Box, index) => {
             box.removeChildren();
             const data_item = list.dataSource[index] as DataItem;

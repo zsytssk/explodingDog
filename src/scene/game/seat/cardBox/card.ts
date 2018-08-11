@@ -56,9 +56,6 @@ export class CardCtrl extends CardBaseCtrl {
         super.initUI();
         const { view } = this.link;
         const { blind, annoy } = view;
-        if (this.slow_move) {
-            view.visible = false;
-        }
         this.link = {
             ...this.link,
             annoy,
@@ -159,22 +156,35 @@ export class CardCtrl extends CardBaseCtrl {
             view.pos(wrap.width / 2, wrap.height / 2);
         });
     }
-    /** 移动位置 */
+    /** 当前用户和其他用户tweenmove中不一样的地方抽离处理 */
+    protected specialStyle(
+        common_props: AnyObj,
+        index: number,
+        all: number,
+    ): AnyObj {
+        const rel_hal = index - (all - 1) / 2;
+        let rotation = rel_hal * 10;
+        if (all + 1 > 10) {
+            rotation = (rel_hal * 80) / all;
+        }
+        const y =
+            common_props.y + rel_hal * Math.tan(degreeToAngle(rotation)) * 5;
+        return {
+            ...common_props,
+            rotation,
+            y,
+        };
+    }
+    /** sortCard的时候会调用, 牌从任何位置飞到牌堆 */
     public tweenMove(index: number, all: number) {
         const { view, card_light } = this.link;
         const { scale, copyed_face } = this;
         const space = view.width * scale * space_scale;
         let time = 200;
         const x = (view.width * scale) / 2 + space * index;
-        let y = (view.height * scale) / 2;
+        const y = (view.height * scale) / 2;
 
-        const rel_hal = index - (all - 1) / 2;
-        let rotation = rel_hal * 10;
-        if (all + 1 > 10) {
-            rotation = (rel_hal * 80) / all;
-        }
-        y += rel_hal * Math.tan(degreeToAngle(rotation)) * 5;
-        let end_props = { y, x, rotation } as AnyObj;
+        let end_props = { y, x } as AnyObj;
 
         if (this.slow_move) {
             if (!copyed_face) {
@@ -188,10 +198,11 @@ export class CardCtrl extends CardBaseCtrl {
                 scaleY: scale,
             };
             this.copyed_face = false;
-            view.visible = true;
             this.slow_move = false;
         }
         view.zOrder = index;
+        end_props = this.specialStyle(end_props, index, all);
+
         tween({
             end_props,
             sprite: view,

@@ -9,61 +9,44 @@ import {
     stopSkeleton,
 } from '../../../utils/tool';
 import { GameCtrl } from '../main';
-import { CardBaseCtrl } from '../seat/cardBox/cardBase';
+import { CardBaseCtrl, Link as BaseLink } from '../seat/cardBox/cardBase';
 import { CardHeapCtrl } from './main';
 
 type Status = 'disabled' | 'actived';
-type CardUI = ui.game.seat.cardBox.cardUI;
-interface Link {
-    view: CardUI;
-    wrap: Laya.Sprite;
+interface Link extends BaseLink {
     card_move_box: Laya.Sprite;
-    card_light: Laya.Skeleton;
     card_box: CardHeapCtrl;
 }
-export class HeapCardCtrl extends BaseCtrl {
+
+/** 牌堆上发光拖动的牌 */
+export class HeapCardCtrl extends CardBaseCtrl {
     public name = 'card';
     private is_touched = false;
-    public scale: number;
-    public link = {} as Link;
+    public link: Link;
     public status: Status;
     private is_move = false;
-    constructor(view: CardUI, wrap: Laya.Sprite) {
-        super();
-
-        this.link = {
-            view,
-            wrap,
-        } as Link;
+    constructor(wrap: Laya.Sprite) {
+        super('*', wrap);
     }
     public init() {
-        this.initLink();
+        super.init();
         this.initEvent();
     }
-    public hide() {
-        const { view } = this.link;
-        view.visible = false;
-    }
-    public show() {
-        const { view } = this.link;
-        view.visible = true;
-    }
     protected initLink() {
+        super.initLink();
         const { view, wrap } = this.link;
-        const { card_light } = view;
         const game_ctrl = queryClosest(this, 'name:game') as GameCtrl;
         const card_move_box = game_ctrl.getWidgetBox();
 
-        card_light.visible = false;
-        stopSkeleton(card_light);
         this.link = {
             ...this.link,
             card_box: this.parent as CardHeapCtrl,
-            card_light,
             card_move_box,
         };
         const scale = wrap.width / view.width;
         this.scale = scale;
+
+        this.toDefaultStyle();
     }
     private initEvent() {
         const { view } = this.link;
@@ -142,6 +125,14 @@ export class HeapCardCtrl extends BaseCtrl {
             view.pos(x, y);
         });
     }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
+    }
+    public show() {
+        const { view } = this.link;
+        view.visible = true;
+    }
     public setStatus(status: Status) {
         const { card_light } = this.link;
         if (this.status === status) {
@@ -157,7 +148,8 @@ export class HeapCardCtrl extends BaseCtrl {
         }
         this.status = status;
     }
-    public withDrawCardNoTime() {
+    /** 设置默认样式... */
+    public toDefaultStyle() {
         const { scale } = this;
         const { wrap, view } = this.link;
         const { x, y } = {
@@ -170,22 +162,13 @@ export class HeapCardCtrl extends BaseCtrl {
         this.is_move = false;
     }
     public reset() {
-        this.withDrawCardNoTime();
+        this.toDefaultStyle();
         this.setStatus('disabled');
     }
     /** 设置当前用户牌的样式 */
     public putFaceToCard(card: CardBaseCtrl) {
-        const { scale } = this;
-        const { view } = this.link;
-        const pos = new Laya.Point(
-            (view.width * scale) / 2,
-            (view.height * scale) / 2,
-        );
-        view.localToGlobal(pos);
-        card.setFace({
-            pos,
-            scale,
-        });
-        this.withDrawCardNoTime();
+        const face_props = this.getCardFace();
+        card.setFace(face_props);
+        this.toDefaultStyle();
     }
 }
