@@ -1,11 +1,12 @@
 ## 2018-08-09 10:27:18
-* @ques es6 promise auto webpack
+* @ques es5 chrome 26 报错...
+
 
 * @note 低版本chrome 黑屏
 
 * getCardSoundPath 这能放到tool里面去吗
 
-* *   @note slow_move visible
+* @note slow_move visible
 * @ques card_heap card 能不能继承 cardBase..
 
 * @note tweenMove card curCard 有大部分是相同的 只是
@@ -43,7 +44,6 @@
 * 致盲 + 干扰 动画.. 卡牌获得 动画
 
 --------------
-
 * @todo 弹出层管理器
 
 * @bug 打出非干扰牌 其他玩家 显示干扰的牌

@@ -15,6 +15,7 @@ export interface Link {
     view: CardView;
     wrap: Laya.Sprite;
     card_light: Laya.Skeleton;
+    card_get_star: Laya.Skeleton;
 }
 
 export const space_scale = 1 / 2;
@@ -40,11 +41,13 @@ export class CardBaseCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
         const { view } = this.link;
-        const { card_light } = view;
+        const { card_light, card_get_star } = view;
 
         stopSkeleton(card_light);
+        stopSkeleton(card_get_star);
         this.link = {
             ...this.link,
+            card_get_star,
             card_light,
         };
         this.drawCard();

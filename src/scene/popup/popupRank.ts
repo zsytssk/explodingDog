@@ -118,7 +118,14 @@ export class PopupRank extends ui.popup.rank.popUI {
     }
     private renderItem(ui: ItemUI | CurItemUI, data: DataItem) {
         const { avatar, nickname, rank, rank_clip, rate, score } = ui;
-        rate.text = data.rate.toFixed(2) + '%';
+        const { rate: rate_num } = data;
+        let rate_text = '';
+        if (rate_num === -1) {
+            rate_text = '--';
+        } else {
+            rate_text = rate_num.toFixed(2) + '%';
+        }
+        rate.text = rate_text;
         nickname.text = data.nickname + '';
         rank.text = data.rank + '';
         score.text = data.score + '';
