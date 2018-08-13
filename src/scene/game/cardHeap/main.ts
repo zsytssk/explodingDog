@@ -8,6 +8,7 @@ import { HeapCardCtrl } from './card';
 import { calcCreate } from './cardBackPool';
 import { CardCtrl } from '../seat/cardBox/card';
 import { CardBaseCtrl } from '../seat/cardBox/cardBase';
+import { slide_left_in } from '../../../mcTree/utils/animate';
 
 export interface Link {
     view: ui.game.cardHeapUI;
@@ -20,7 +21,6 @@ export interface Link {
 /** 牌堆控制器 */
 export class CardHeapCtrl extends BaseCtrl {
     public name = 'card_heap';
-    private card_num: number;
     protected link = {} as Link;
     constructor(view: ui.game.cardHeapUI) {
         super();
@@ -78,7 +78,6 @@ export class CardHeapCtrl extends BaseCtrl {
         } else {
             card_ctrl.hide();
         }
-        this.card_num = num;
         this.setHeapCard(num);
     }
     private setHeapCard(num: number) {
@@ -119,6 +118,15 @@ export class CardHeapCtrl extends BaseCtrl {
                 card_back.visible = true;
             }
         }
+    }
+    public async show() {
+        const { view } = this.link;
+        view.visible = false;
+        return slide_left_in(view, 500);
+    }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
     }
     public reset() {
         const { card_ctrl } = this.link;

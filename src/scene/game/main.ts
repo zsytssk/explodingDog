@@ -462,15 +462,10 @@ export class GameCtrl extends BaseCtrl {
     }
     /** 根据游戏的状态显示不同的ui */
     private setStatus(status: GameStatus) {
-        const {
-            docker_ctrl,
-            game_zone,
-            host_zone_ctrl,
-            quick_start_ctrl,
-        } = this.link;
+        const { docker_ctrl, host_zone_ctrl, quick_start_ctrl } = this.link;
         const game_type = this.model.game_type;
         if (status === GAME_STATUS.INIT) {
-            game_zone.visible = false;
+            this.hideGameZone();
             docker_ctrl.reset();
             if (game_type === GAME_TYPE.HOST) {
                 const { room_id, create_user_id } = this.model;
@@ -489,7 +484,26 @@ export class GameCtrl extends BaseCtrl {
         } else {
             quick_start_ctrl.hide();
         }
+        this.showGameZone();
+    }
+    private async showGameZone() {
+        const {
+            game_zone,
+            card_heap_ctrl,
+            discard_zone_ctrl,
+            bill_board_ctrl,
+        } = this.link;
+        card_heap_ctrl.hide();
+        discard_zone_ctrl.hide();
+        bill_board_ctrl.hide();
         game_zone.visible = true;
+        await card_heap_ctrl.show();
+        await discard_zone_ctrl.show();
+        await bill_board_ctrl.show();
+    }
+    private hideGameZone() {
+        const { game_zone } = this.link;
+        game_zone.visible = false;
     }
 
     /**

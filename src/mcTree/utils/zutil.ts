@@ -554,10 +554,11 @@ export function extend(sub_class, super_class, name_sapce?) {
         }
         sub_class[p] = super_class[p];
     }
+
+    function __() {
+        this.constructor = sub_class;
+    }
     if (typeof sub_class === 'function' && typeof super_class === 'function') {
-        function __() {
-            this.constructor = sub_class;
-        }
         sub_class.prototype =
             super_class === null
                 ? Object.create(super_class)

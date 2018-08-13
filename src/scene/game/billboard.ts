@@ -2,6 +2,7 @@ import { PlayerModel } from './model/player';
 import { getAvatar, getCardInfo, getSoundPath } from '../../utils/tool';
 import { TURN_CHANGE_ID, TURN_CHANGE_INFO } from '../../data/card';
 import { log } from '../../mcTree/utils/zutil';
+import { slide_left_in } from '../../mcTree/utils/animate';
 
 export class BillBoardCtrl {
     private link;
@@ -63,11 +64,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-            fromUser: PlayerModel;
-            toUser?: PlayerModel;
-            cardId: string;
-            step?: number;
-        }) {
+        fromUser: PlayerModel;
+        toUser?: PlayerModel;
+        cardId: string;
+        step?: number;
+    }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
@@ -113,5 +114,14 @@ export class BillBoardCtrl {
         } else {
             cardIcon.visible = false;
         }
+    }
+    public async show() {
+        const { view } = this.link;
+        view.visible = false;
+        return slide_left_in(view, 500);
+    }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
     }
 }

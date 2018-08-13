@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":10,
+    "selecteID":2,
     "props":{"width":230,"sceneColor":"#000000","height":238},
     "nodeParent":-1,
     "label":"View",
@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":230,"var":"card_face","skin":"images/component/card/annoy1.png","height":238},
+            "props":{"y":0,"x":0,"width":230,"var":"card_face","height":238},
             "nodeParent":1,
             "label":"Image(card_face)",
             "isDirectory":false,

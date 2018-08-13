@@ -15,9 +15,6 @@ export class Hall extends Sail.Scene {
     constructor() {
         super();
 
-        /* @test  */
-        nameMap(['hall'], null, this);
-
         loadAssets('hall').then(() => {
             this.init();
         });
