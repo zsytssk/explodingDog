@@ -1,3 +1,5 @@
+import { getSoundPath } from "../utils/tool";
+
 function createClass(SuperClass) {
     return class extends SuperClass {
         constructor() {
@@ -7,6 +9,7 @@ function createClass(SuperClass) {
         init() {
             this.on(Laya.Event.MOUSE_DOWN, this, () => {
                 this.scale(0.9, 0.9);
+                Laya.SoundManager.playSound(getSoundPath('click_btn'));
             });
             this.on(Laya.Event.MOUSE_OUT, this, () => {
                 this.scale(1, 1);

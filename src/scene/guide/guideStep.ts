@@ -137,25 +137,28 @@ export class GuideStep extends ui.guide.stepUI {
         const cardId = ['4201', '3321', '3601', '3201'];
         getChildren(cardBox).forEach((card, index) => {
             card.on(Laya.Event.CLICK, this, () => {
-                let intro = new CardIntroCtrl(cardId[index], card);
-                intro.init();
-                intro.setStyle({ y: -260 });
-                intro.show();
-                successAni.visible = true;
-                successAni.play(0, false);
-                this.setIndex(1);
-                this.clearTimer(this, this.showHandClick);
-                handAni.visible = false;
-                getChildren(cardBox).forEach(card => {
-                    card.offAll();
-                });
-                this.timerOnce(2000, this, () => {
-                    intro.destroy();
-                    fade_out(this).then(() => {
-                        this.setStep(2);
-                        fade_in(this);
+                Laya.Tween.to(card, { y: card.y - 100 }, 200, null, new Laya.Handler(this, () => {
+                    let intro = new CardIntroCtrl(cardId[index], card);
+                    intro.init();
+                    intro.setStyle({ y: -260 });
+                    intro.show();
+                    successAni.visible = true;
+                    successAni.play(0, false);
+                    this.setIndex(1);
+                    this.clearTimer(this, this.showHandClick);
+                    handAni.visible = false;
+                    getChildren(cardBox).forEach(card => {
+                        card.offAll();
                     });
-                });
+                    this.timerOnce(2000, this, () => {
+                        card.y += 100;
+                        intro.destroy();
+                        fade_out(this).then(() => {
+                            this.setStep(2);
+                            fade_in(this);
+                        });
+                    });
+                }));
             });
         });
     }
