@@ -535,18 +535,19 @@ export class GameCtrl extends BaseCtrl {
      */
     public onServerUserExploding(data: UserExplodingData) {
         const { explodeUserId, bombProb } = data;
-        let delay = 0;
         const popupUserExploded = new PopupUserExploded();
         popupUserExploded.updateData(data);
+        this.model.playerExploding(data);
         if (isCurPlayer(explodeUserId)) {
-            delay = 3000;
-            Sail.director.popScene(new PopupTakeExplode());
-        }
-        Laya.timer.once(delay, this, () => {
+            let takeExplode = new PopupTakeExplode();
+            takeExplode.onClosed = () => {
+                Sail.director.popScene(popupUserExploded);
+            }
+            Sail.director.popScene(takeExplode);
+        } else {
             Sail.director.popScene(popupUserExploded);
             this.link.docker_ctrl.setRate(bombProb);
-            this.model.playerExploding(data);
-        });
+        }
     }
     public onServerGetChatList(data) {
         this.link.chat_ctrl.loadMsg(data.list);

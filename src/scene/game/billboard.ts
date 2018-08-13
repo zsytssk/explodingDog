@@ -36,7 +36,6 @@ export class BillBoardCtrl {
         let localPoint = view.parent.globalToLocal(
             new Laya.Point(Laya.stage.width, 0),
         );
-        Laya.SoundManager.playSound(getSoundPath('billboard'));
         Laya.Tween.to(
             view,
             { x: localPoint.x },

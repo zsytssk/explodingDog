@@ -50,6 +50,7 @@ export class AlarmCtrl extends BaseCtrl {
     }
     private show() {
         const { view: sprite } = this.link;
+        Laya.SoundManager.playSound(getSoundPath('alarm'));
         sprite.visible = true;
         const end_props = {
             alpha: 1,
@@ -74,6 +75,9 @@ export class AlarmCtrl extends BaseCtrl {
             cur_count => {
                 if (cur_count <= 10) {
                     this.show();
+                }
+                if (cur_count <= 5) {
+                    Laya.SoundManager.playSound(getSoundPath('alarm'));
                 }
                 if (cur_count <= 3) {
                     Laya.SoundManager.playSound(getSoundPath('countdown_second'));

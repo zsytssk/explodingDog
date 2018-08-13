@@ -2,7 +2,7 @@
     "cmd": "userExploding",
     "code": 200,
     "res": {
-        "userId": 3004,
+        "userId": 3002,
         "userList": [
             {
                 "userId": "3003",
@@ -11,20 +11,20 @@
                 "isDead": 0
             },
             {
-                "userId": "3001",
+                "userId": "3004",
                 "avatar": "101",
                 "nickname": "blue",
                 "isDead": 1
             },
             {
-                "userId": "3005",
+                "userId": "3002",
                 "avatar": "101",
                 "nickname": "3005",
                 "isDead": 0
             }
         ],
         "explodeUserName": "blue",
-        "explodeUserId": 3001,
+        "explodeUserId": 3002,
         "remainUser": 2,
         "remainCard": 26,
         "remainBomb": 1,
