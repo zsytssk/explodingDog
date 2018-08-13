@@ -44,69 +44,6 @@
                         "isChange": 0
                     }
                 }
-            },
-            {
-                "userId": "3001",
-                "nickname": "blue",
-                "avatar": "101",
-                "isWinUser": 0,
-                "getExp": 25,
-                "getScore": -1,
-                "score": 1076,
-                "danGrading": 10,
-                "level": 3,
-                "currentExp": 30,
-                "nextLvlExp": 750,
-                "updateInfo": {
-                    "danGrading": {
-                        "isChange": 0
-                    },
-                    "level": {
-                        "isChange": 1
-                    }
-                }
-            },
-            {
-                "userId": "3004",
-                "nickname": "blue",
-                "avatar": "101",
-                "isWinUser": 0,
-                "getExp": 25,
-                "getScore": -1,
-                "score": 1076,
-                "danGrading": 10,
-                "level": 3,
-                "currentExp": 30,
-                "nextLvlExp": 750,
-                "updateInfo": {
-                    "danGrading": {
-                        "isChange": 0
-                    },
-                    "level": {
-                        "isChange": 0
-                    }
-                }
-            },
-            {
-                "userId": "3005",
-                "nickname": "3005",
-                "avatar": "101",
-                "isWinUser": 1,
-                "getExp": 20,
-                "getScore": 2,
-                "score": 1227,
-                "danGrading": 12,
-                "level": 2,
-                "currentExp": 255,
-                "nextLvlExp": 420,
-                "updateInfo": {
-                    "danGrading": {
-                        "isChange": 0
-                    },
-                    "level": {
-                        "isChange": 0
-                    }
-                }
             }
         ],
         "maxInfo": {
@@ -116,8 +53,18 @@
                 "avatar": "101",
                 "count": 3
             },
-            "attack": {},
-            "defuse": {}
+            "attack": {
+                "userId": "3003",
+                "nickname": "3003",
+                "avatar": "101",
+                "count": 3
+            },
+            "defuse": {
+                "userId": "3003",
+                "nickname": "3003",
+                "avatar": "101",
+                "count": 3
+            }
         },
         "isUserCreate": 0,
         "__explodedUserIds": [

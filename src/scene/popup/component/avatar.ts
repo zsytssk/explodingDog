@@ -20,7 +20,7 @@ export class Avatar extends ui.popup.component.avatarUI {
         }
         if (danGrading) {
             let rank = new rankIcon(danGrading);
-            rank.bottom = -10;
+            rank.y = 100;
             rank.centerX = -2;
             this.addChild(rank);
         }

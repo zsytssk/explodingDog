@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":9,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
     "label":"Dialog",
@@ -94,7 +94,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":690,"x":844,"var":"btnAgain","stateNum":"1","skin":"images/game/btn_once_more.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5,"alpha":0},
+            "props":{"y":695,"x":844,"var":"btnAgain","stateNum":"1","skin":"images/game/btn_once_more.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5,"alpha":0},
             "nodeParent":1,
             "label":"Button(btnAgain)",
             "isDirectory":false,
@@ -107,7 +107,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":690,"x":503,"var":"btnBack","stateNum":"1","skin":"images/game/btn_back_hall.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5,"alpha":0},
+            "props":{"y":695,"x":503,"var":"btnBack","stateNum":"1","skin":"images/game/btn_back_hall.png","name":"close","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5,"alpha":0},
             "nodeParent":1,
             "label":"Button(btnBack)",
             "isDirectory":false,

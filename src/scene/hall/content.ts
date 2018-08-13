@@ -70,10 +70,14 @@ export class HallContent extends ui.hall.hallcontentUI {
         });
     }
     updateView(data) {
+        let winRate = data.winRate.toFixed(2) + '%';
+        if (data.winRate == -1) {
+            winRate = '--';
+        }
+        this.winrate.changeText(`胜率:${winRate}`);
         this.userName.changeText(data.nickname);
         this.level.changeText(`Lv:${data.level}`);
         this.totalRound.changeText(`场次:${data.totalPlayCount}`);
-        this.winrate.changeText(`胜率:${data.winRate.toFixed(2)}%`);
         this.score.changeText(`积分:${data.score}`);
         this.expBar.value = data.currentExp / data.nextLevelExp;
         this.avatar.skin = getAvatar(data.avatar);

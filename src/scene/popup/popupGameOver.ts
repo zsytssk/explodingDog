@@ -58,8 +58,8 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         data.list.forEach((user, index) => {
             let avatar = new Avatar(user);
             avatar.left =
-                (this.avatarBox.width / (data.list.length + 1)) * (index + 1) -
-                100;
+                ((this.avatarBox.width + 200) / (data.list.length + 1)) * (index + 1) -
+                200;
             this.avatarBox.addChild(avatar);
             if (user.isWinUser) {
                 this.winUserNamme.text = user.nickname;
