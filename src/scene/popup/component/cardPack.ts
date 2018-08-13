@@ -12,7 +12,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
         const { isLock, buyInfo, cardType, staminaCost } = data;
         const { pack_base } = this;
 
-        (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
+        // (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.chooseBtn.visible = !isLock;
         this.btnLock.visible = isLock;
         if (staminaCost) {
@@ -35,7 +35,12 @@ export class CardPack extends ui.popup.component.cardPackUI {
     }
 
     private initEvent(data) {
-        const { cardType } = data;
+        const { cardType, isLock } = data;
+        if (isLock) {
+            this.on(Laya.Event.CLICK, this, () => {
+
+            })
+        }
         this.chooseBtn.on(Laya.Event.CLICK, this, () => {
             switch (this.type) {
                 case 'play':

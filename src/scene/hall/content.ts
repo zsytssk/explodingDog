@@ -8,6 +8,7 @@ import { loadAssets } from '../loading/main';
 import { GuideView } from '../guide/guideView';
 import { PopupAvatar } from '../popup/popupAvatar';
 import { BgCtrl } from '../component/bgCtrl';
+import { ellipsisStr } from '../../mcTree/utils/zutil';
 
 export class HallContent extends ui.hall.hallcontentUI {
     private rank: Laya.Box; //段位
@@ -75,7 +76,7 @@ export class HallContent extends ui.hall.hallcontentUI {
             winRate = '--';
         }
         this.winrate.changeText(`胜率:${winRate}`);
-        this.userName.changeText(data.nickname);
+        this.userName.changeText(ellipsisStr(data.nickname, 10));
         this.level.changeText(`Lv:${data.level}`);
         this.totalRound.changeText(`场次:${data.totalPlayCount}`);
         this.score.changeText(`积分:${data.score}`);

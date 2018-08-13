@@ -1,7 +1,7 @@
 import { Avatar } from './component/avatar';
 import { isCurPlayer } from '../../utils/tool';
 import { tween } from '../../mcTree/utils/animate';
-import { log, getChildren } from '../../mcTree/utils/zutil';
+import { log, getChildren, ellipsisStr } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
 import { BgCtrl } from '../component/bgCtrl';
@@ -62,7 +62,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
                 200;
             this.avatarBox.addChild(avatar);
             if (user.isWinUser) {
-                this.winUserNamme.text = user.nickname;
+                this.winUserNamme.text = ellipsisStr(user.nickname, 10);
                 this.onOpenFuns.push(avatar.showCrown.bind(avatar));
             }
             if (isCurPlayer(user.userId)) {

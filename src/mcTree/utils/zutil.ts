@@ -430,7 +430,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => {};
+    const empty_fn = () => { };
 
     if (!type) {
         return empty_fn;
@@ -586,7 +586,7 @@ export function nameMap(arr_space, obj, end_obj) {
 export function calcStrLen(str) {
     return str.replace(/[^\x00-\xff]/g, '01').length;
 }
-export function ellipsisStr(text, max_len, append_str) {
+export function ellipsisStr(text, max_len, append_str?) {
     /** 非NaN数字转化为字符串 */
     append_str = append_str || '..';
     if (typeof text === 'number' && text === text) {
