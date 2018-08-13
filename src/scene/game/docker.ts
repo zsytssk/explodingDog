@@ -86,6 +86,9 @@ export class DockerCtrl extends BaseCtrl {
         }
         //大于50概率显示烟雾
         setTimeout(() => {
+            if (!this.link.smoke) {
+                return;
+            }
             if (rate > 50) {
                 this.link.smoke.visible = true;
             } else {
