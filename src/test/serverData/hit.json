@@ -3,11 +3,12 @@
     "code": 200,
     "res": {
         "userId": 4002,
-        "hitCard": "4201",
+        "hitCard": "4001",
         "hitUserId": 4002,
         "hitInfo": {
             "type": "blind",
-            "step": 1,
+            "step": 2,
+            "targetUserId": 4001,
             "discard": 0
         }
     }

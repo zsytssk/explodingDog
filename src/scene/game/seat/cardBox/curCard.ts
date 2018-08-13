@@ -1,6 +1,6 @@
 import { tween } from '../../../../mcTree/utils/animate';
 import { log } from '../../../../mcTree/utils/zutil';
-import { convertPos, stopSkeleton } from '../../../../utils/tool';
+import { convertPos } from '../../../../utils/tool';
 import { CardIntroCtrl } from '../../../component/cardIntro';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CardFrom } from '../../model/player';
@@ -20,9 +20,9 @@ export class CurCardCtrl extends CardCtrl {
     protected model: CardModel;
     protected link: Link;
     public show_tip = false;
-    /** 是否被触摸 */
+    /** 在touchStart设置为true, 防止在其他地方移动的牌上移动牌 */
     public is_touched = false;
-    /** 是否被触摸 */
+    /** 鼠标在牌上是否移动,, 用来判断是否是触发提示 */
     public is_move = false;
     private start_pos = {} as Point;
     private tip_time_out: number;
@@ -96,7 +96,9 @@ export class CurCardCtrl extends CardCtrl {
             start_props,
             time: 300,
         }).then(() => {
-            intro_toggle();
+            if (!this.model.is_blind) {
+                intro_toggle();
+            }
         });
         this.show_tip = show_tip;
     }

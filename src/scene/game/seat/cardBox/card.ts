@@ -31,7 +31,7 @@ export class CardCtrl extends CardBaseCtrl {
     /** 是否是插入的牌, 用来处理插入牌 插入动作慢于在牌堆里的牌 */
     protected slow_move: boolean;
     protected model: CardModel;
-    /** 是否被选中, 用于处理card_box sort 要不要处理 */
+    /** 是否被拖动出牌堆, 用于处理card_box sort 要不要处理,  */
     public is_selected = false;
     constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
         super(model.card_id, wrap);

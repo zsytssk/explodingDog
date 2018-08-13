@@ -66,6 +66,7 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     private mouseMove(event: Laya.Event) {
         const { touch_info } = this;
+        /** 如果有牌拖动时候时候不能拖动cardBox */
         if (this.has_card_drag) {
             this.mouseEnd();
             return;
