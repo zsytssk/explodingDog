@@ -91,7 +91,6 @@ export class GameCtrl extends BaseCtrl {
     public init() {
         this.initLink();
         this.initEvnet();
-        Laya.SoundManager.playMusic(getSoundPath('bgm_hall'));
     }
     protected initLink() {
         const view = this.link.view;
