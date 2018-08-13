@@ -10,6 +10,7 @@ import {
     Annoy,
     Blind,
     FinishSetExplode,
+    SlapSelf,
 } from './action';
 import { CARD_NAME } from '../../../../data/card';
 
@@ -21,7 +22,7 @@ export const action_map = {
     [CARD_NAME.DEFUSE]: [ShowSetExplode, FinishSetExplode],
     [CARD_NAME.REVERSE]: [ReverseArrows],
     [CARD_NAME.SEE_FUTURE]: [SeeTheFuture],
-    [CARD_NAME.SELF_SLAP]: [ChooseTarget, Slap],
+    [CARD_NAME.SELF_SLAP]: [SlapSelf],
     [CARD_NAME.SLAP]: [ChooseTarget, Slap],
     [CARD_NAME.STEAL]: [ChooseTarget, WaitGetCard],
 };

@@ -59,10 +59,11 @@ export class PopupAvatar extends ui.popup.popupAvatarUI {
         const { btn_back, list } = this.link;
 
         btn_back.on(Laya.Event.CLICK, this, () => {
-            Sail.io.emit(CMD.GET_USER_INFO);//更新大厅头像
+            Sail.io.emit(CMD.GET_USER_INFO); // 更新大厅头像
             Sail.director.closeByName(this.name);
         });
-
+        list.dataSource = [];
+        list.vScrollBarSkin = '';
         list.renderHandler = new Laya.Handler(this, (box: Laya.Box, index) => {
             const data_item = this.list.dataSource[index];
             const { is_cur, is_lock, id } = data_item;

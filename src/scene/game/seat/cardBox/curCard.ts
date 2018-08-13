@@ -261,46 +261,21 @@ export class CurCardCtrl extends CardCtrl {
         wrap.addChildAt(view, index);
         view.pos(pos.x, pos.y);
     }
-    /** 移动位置 */
-    public tweenMove(index: number) {
-        const { view, card_light } = this.link;
-        const { scale, copyed_face } = this;
-        const space = view.width * scale * space_scale;
-        let time = 300;
-        const x = (view.width * scale) / 2 + space * index;
-        let y = (view.height * scale) / 2;
-
+    /** 当前用户和其他用户tweenmove中不一样的地方抽离处理 */
+    protected specialStyle(
+        common_props: AnyObj,
+        index: number,
+        all: number,
+    ): AnyObj {
+        let y = common_props.y;
         if (index % 2 === 1) {
             y = y + 15;
         }
-
         this.index = index;
-        let end_props = { y, x } as AnyObj;
-
-        if (this.slow_move) {
-            if (!copyed_face) {
-                view.x = x;
-            } else {
-                time = 700;
-            }
-            end_props = {
-                ...end_props,
-                scaleX: scale,
-                scaleY: scale,
-            };
-            this.copyed_face = false;
-            view.visible = true;
-            this.slow_move = false;
-        }
-        view.zOrder = index;
-        tween({
-            end_props,
-            sprite: view,
-            time,
-        }).then(() => {
-            stopSkeleton(card_light);
-            card_light.visible = false;
-        });
+        return {
+            ...common_props,
+            y,
+        };
     }
     public destroy() {
         clearTimeout(this.tip_time_out);

@@ -93,20 +93,6 @@
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":87,"x":376,"var":"iconI","skin":"images/component/cardType/icon_i.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
-            "nodeParent":1,
-            "label":"Image(iconI)",
-            "isOpen":false,
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":8,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
             "type":"Button",
             "props":{"y":478,"x":68,"visible":false,"var":"btnLock","stateNum":"1","skin":"images/component/cardType/btn_lock.png"},
             "nodeParent":1,

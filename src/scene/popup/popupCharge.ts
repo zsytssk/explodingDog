@@ -65,6 +65,8 @@ export class PopupCharge extends ui.popup.popupChargeUI {
             Sail.director.closeByName(this.name);
         });
 
+        list.dataSource = [];
+        list.vScrollBarSkin = '';
         list.renderHandler = new Laya.Handler(this, (box: Laya.Box, index) => {
             const data_item = this.list.dataSource[index];
             const { is_first, give, buy_num, cost } = data_item;

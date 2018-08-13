@@ -274,6 +274,15 @@ export class Slap extends Action {
         log('act', data);
     }
 }
+export class SlapSelf extends Slap {
+    public act(data: ActionDataInfo) {
+        const { player } = data;
+        super.act({
+            ...data,
+            targetUserId: player.user_id,
+        });
+    }
+}
 export class ShowSetExplode extends Action {
     private name = 'show_set_explode' as ActionType;
     public act(data: ActionDataInfo) {

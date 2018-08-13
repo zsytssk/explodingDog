@@ -113,6 +113,8 @@ export class PopupShop extends ui.popup.popupShopUI {
             Sail.director.closeByName(this.name);
         });
 
+        stamina_list.dataSource = [];
+        stamina_list.vScrollBarSkin = '';
         stamina_list.renderHandler = new Laya.Handler(
             this,
             (box: Laya.Box, index) => {
@@ -144,6 +146,8 @@ export class PopupShop extends ui.popup.popupShopUI {
                 });
             },
         );
+
+        avatar_list.dataSource = [];
         avatar_list.renderHandler = new Laya.Handler(
             this,
             (box: Laya.Box, index) => {
@@ -183,6 +187,7 @@ export class PopupShop extends ui.popup.popupShopUI {
             },
         );
 
+        card_type_list.dataSource = [];
         card_type_list.renderHandler = new Laya.Handler(
             this,
             (box: Laya.Box, index) => {
