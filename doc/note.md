@@ -1,4 +1,7 @@
 ## 2018-08-09 10:27:18
+* @ques es6 promise auto webpack
+
+* @note 低版本chrome 黑屏
 
 * getCardSoundPath 这能放到tool里面去吗
 
@@ -27,6 +30,7 @@
 
 *   @note 如何使牌 每个地方都可以拖动
     * 屏幕点击监听 位置 是否在自己身上
+    * @小马哥
 
 *   @bug 其他人牌被偷 飞掉了
     -   可能是飞到猫手上面..

@@ -3,6 +3,7 @@ import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { CardModel } from './model/card/card';
 import { CardCtrl } from './seat/cardBox/card';
 import { CardBaseCtrl } from './seat/cardBox/cardBase';
+import { slide_left_in } from '../../mcTree/utils/animate';
 
 export interface Link {
     view: ui.game.discardZoneUI;
@@ -31,9 +32,6 @@ export class DiscardZoneCtrl extends BaseCtrl {
             ...this.link,
             card_box,
         };
-    }
-    public hide() {
-        this.link.view.visible = false;
     }
     public discardCard(card: CardModel | string, card_ctrl?: CardBaseCtrl) {
         const { card_box, card_list } = this.link;
@@ -77,6 +75,15 @@ export class DiscardZoneCtrl extends BaseCtrl {
                 y: view.height / 2 - card_list.length,
             });
         });
+    }
+    public async show() {
+        const { view } = this.link;
+        view.visible = false;
+        return slide_left_in(view, 500);
+    }
+    public hide() {
+        const { view } = this.link;
+        view.visible = false;
     }
     /** 再来一局时需要reset 清除原有的牌 */
     public reset() {

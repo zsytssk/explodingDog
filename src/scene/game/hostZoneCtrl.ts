@@ -9,6 +9,7 @@ import {
     copy,
 } from '../../utils/tool';
 import { CONFIG } from '../../data/config';
+import { scale_in, slide_left_in } from '../../mcTree/utils/animate';
 interface Link {
     view: ui.game.hostZone.mainUI;
     card_type: Laya.ViewStack;
@@ -100,8 +101,9 @@ export class HostZoneCtrl extends BaseCtrl {
             copy(`${link_url}#room_id=${room_id_text.text}`);
         });
     }
-    public show(room_id: string, is_cur_create: boolean) {
+    public async show(room_id: string, is_cur_create: boolean) {
         const { view, room_id_text } = this.link;
+        const { card_type, start, billboard } = view;
         view.visible = true;
         /** 设置roomId */
         room_id_text.text = room_id;
@@ -109,9 +111,14 @@ export class HostZoneCtrl extends BaseCtrl {
         if (!is_cur_create) {
             this.disable();
         }
+        card_type.visible = start.visible = billboard.visible = false;
+        await slide_left_in(card_type);
+        await slide_left_in(start);
+        await slide_left_in(billboard);
     }
     public hide() {
-        this.link.view.visible = false;
+        const { view } = this.link;
+        view.visible = false;
     }
     public disable() {
         const { choose_card_btn, start_btn } = this.link;
