@@ -5,6 +5,8 @@ import { fade_out, fade_in } from "../../mcTree/utils/animate";
 import { loadAssets } from "../loading/main";
 import { Hall } from "../hall/scene";
 import { CMD } from "../../data/cmd";
+import { BgCtrl } from "../component/bgCtrl";
+import { log } from "../../mcTree/utils/zutil";
 
 export class GuideView extends ui.guide.mainUI {
     private stepUI;
@@ -14,6 +16,7 @@ export class GuideView extends ui.guide.mainUI {
         this.init();
     }
     init() {
+        new BgCtrl(this.bg).init();
         this.stepUI = new GuideStep();
         this.stepUI.visible = false;
         this.startUI = new GuideStart();
