@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":4,
-    "selecteID":6,
+    "selectedBox":1,
+    "selecteID":4,
     "props":{"width":534,"sceneColor":"#ffffff","height":146},
     "nodeParent":-1,
     "label":"View",
@@ -23,7 +23,8 @@
             "hasChild":false,
             "compId":2,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -36,12 +37,13 @@
             "hasChild":false,
             "compId":3,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":66,"x":142,"var":"txt","skin":"images/game/txt_matching_dot.png"},
+            "props":{"var":"txt","skin":"images/game/txt_matching_dot.png","centerY":18,"centerX":0},
             "nodeParent":1,
             "label":"Image(txt)",
             "isOpen":true,
@@ -50,7 +52,8 @@
             "hasChild":false,
             "compId":4,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -63,7 +66,8 @@
             "hasChild":false,
             "compId":5,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         }],
     "animations":[
         {

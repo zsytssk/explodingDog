@@ -1,5 +1,6 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { stopAni, tweenLoop, countDown } from '../../mcTree/utils/animate';
+import { GameCtrl } from './main';
 
 interface Link {
     match_view: ui.game.bannerMatchUI;
@@ -7,6 +8,7 @@ interface Link {
     count_down_text: Laya.Text;
     scroll_rect: Laya.Rectangle;
     light: Laya.Sprite;
+    match_txt: Laya.Image;
 }
 
 /** 快速匹配进入游戏 匹配 + 马上要开始倒计时 */
@@ -24,9 +26,9 @@ export class QuickStartCtrl extends BaseCtrl {
         const { match_view, countdown_view } = this.link;
         this.link.count_down_text = countdown_view.text;
         this.link.light = match_view.light;
-        const match_txt = match_view.txt;
+        this.link.match_txt = match_view.txt;
         const scrollRect = new Laya.Rectangle(0, 0, 255, 66);
-        match_txt.scrollRect = scrollRect;
+        this.link.match_txt.scrollRect = scrollRect;
         this.link.scroll_rect = scrollRect;
     }
     public hide() {
@@ -40,7 +42,7 @@ export class QuickStartCtrl extends BaseCtrl {
         this.link.countdown_view.visible = false;
     }
     public show() {
-        const { match_view, light, scroll_rect } = this.link;
+        const { match_view, light, scroll_rect, match_txt } = this.link;
         match_view.visible = true;
         tweenLoop({
             props_arr: [
@@ -50,17 +52,22 @@ export class QuickStartCtrl extends BaseCtrl {
             sprite: light,
             time: 1000,
         });
-        tweenLoop({
-            is_jump: true,
-            props_arr: [
-                { width: 210 },
-                { width: 225 },
-                { width: 240 },
-                { width: 255 },
-            ],
-            sprite: scroll_rect,
-            time: 500,
-        });
+        this.setTxt();
+        // tweenLoop({
+        //     is_jump: true,
+        //     props_arr: [
+        //         // { width: 210 },
+        //         // { width: 225 },
+        //         // { width: 240 },
+        //         // { width: 255 },
+        //         { width: match_txt.width - 45 },
+        //         { width: match_txt.width - 30 },
+        //         { width: match_txt.width - 15 },
+        //         { width: match_txt.width },
+        //     ],
+        //     sprite: scroll_rect,
+        //     time: 500,
+        // });
     }
 
     /** 设置倒计时 */
@@ -79,5 +86,29 @@ export class QuickStartCtrl extends BaseCtrl {
         const { scroll_rect, light } = this.link;
         stopAni(scroll_rect);
         stopAni(light);
+    }
+    public setTxt() {
+        const game_ctrl = this.parent as GameCtrl;
+        const userCount = game_ctrl.getPlayerNum();
+        const { scroll_rect, match_txt } = this.link;
+        if (userCount == 1) {
+            match_txt.skin = 'images/game/txt_matching_dot.png';
+        } else if (userCount == 5) {
+            match_txt.skin = 'images/game/txt_shuffle.png';
+        } else {
+            match_txt.skin = 'images/game/txt_waiting_users.png';
+        }
+        stopAni(match_txt)
+        tweenLoop({
+            is_jump: true,
+            props_arr: [
+                { width: match_txt.width - 45 },
+                { width: match_txt.width - 30 },
+                { width: match_txt.width - 15 },
+                { width: match_txt.width },
+            ],
+            sprite: scroll_rect,
+            time: 500,
+        });
     }
 }
