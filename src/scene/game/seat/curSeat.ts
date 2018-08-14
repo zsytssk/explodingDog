@@ -62,11 +62,6 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     protected bindModel() {
         super.bindModel();
-        this.onModel(player_cmd.blind_status, (data: BlindStatus) => {
-            if (data.is_blind && data.play_ani) {
-                this.link.card_box_ctrl.shuffle();
-            }
-        });
         this.onModel(player_cmd.pre_draw_card, (data: { card: CardModel }) => {
             this.preDrawCard(data.card);
         });
@@ -209,5 +204,8 @@ export class CurSeatCtrl extends SeatCtrl {
             const { give_card_ctrl } = this.link;
             give_card_ctrl.preGetCard(card_id);
         }
+    }
+    protected shuffle() {
+        this.link.card_box_ctrl.shuffle();
     }
 }

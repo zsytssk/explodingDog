@@ -24,20 +24,6 @@
             "compId":2,
             "child":[
                 ]
-        },
-        {
-            "x":15,
-            "type":"SkeletonPlayer",
-            "props":{"y":350,"x":545,"width":10,"visible":false,"var":"blind_ani","url":"animation/blind.sk","height":10},
-            "nodeParent":1,
-            "label":"SkeletonPlayer(blind_ani)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
-            "child":[
-                ],
-            "$HIDDEN":false
         }],
     "animations":[
         {

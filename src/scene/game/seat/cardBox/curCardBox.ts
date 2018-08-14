@@ -1,17 +1,16 @@
 import { shuffle } from 'lodash';
-import { CurCardCtrl } from './curCard';
-import { CardBoxCtrl, Link as BaseLink } from './cardBox';
-import { CardCtrl } from './card';
-import { CurSeatCtrl } from '../curSeat';
+import { setStyle, tween } from '../../../../mcTree/utils/animate';
 import { log } from '../../../../mcTree/utils/zutil';
-import { tween } from '../../../../mcTree/utils/animate';
-import { playSkeleton } from '../../../../utils/tool';
+import { createSkeleton, playSkeleton } from '../../../../utils/tool';
+import { CurSeatCtrl } from '../curSeat';
+import { CardCtrl } from './card';
+import { CardBoxCtrl, Link as BaseLink } from './cardBox';
+import { CurCardCtrl } from './curCard';
 
 export type CurCardBoxUI = ui.game.seat.cardBox.curCardBoxUI;
 export interface Link extends BaseLink {
     view: CurCardBoxUI;
     seat: CurSeatCtrl;
-    blind_ani: Laya.Skeleton;
     card_list: CurCardCtrl[];
 }
 type TouchStatus = 'move' | 'start' | 'default';
@@ -21,6 +20,10 @@ type TouchInfo = {
     last_pos: Point;
 };
 
+const blind_ani_pos = {
+    x: 535,
+    y: 350,
+};
 export class CurCardBoxCtrl extends CardBoxCtrl {
     protected link: Link;
     public has_card_drag = false;
@@ -39,11 +42,10 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     protected initLink() {
         super.initLink();
         const { view } = this.link;
-        const { card_wrap, blind_ani } = view;
+        const { card_wrap } = view;
         const seat = this.parent as CurSeatCtrl;
         this.link = {
             ...this.link,
-            blind_ani,
             card_wrap,
             seat,
         };
@@ -182,16 +184,25 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     }
     /** 致盲时洗牌 */
     public shuffle() {
-        const { card_list, blind_ani, view, card_wrap } = this.link;
+        const { card_list, view, card_wrap } = this.link;
         /** 致盲烟雾动画 */
-        blind_ani.visible = true;
-        blind_ani.once(Laya.Event.COMPLETE, blind_ani, () => {
-            blind_ani.visible = false;
-        });
-        blind_ani.x = Math.min(view.width, card_wrap.width) / 2;
-        playSkeleton(blind_ani, 0, false);
+        const blind_ani = createSkeleton('blind');
+        view.addChild(blind_ani);
 
-        for (let i = 0; i < 5; i++) {
+        blind_ani_pos.x = Math.min(view.width, card_wrap.width) / 2;
+        setStyle(blind_ani, blind_ani_pos);
+
+        const num = 5;
+        let played_num = 0;
+        blind_ani.player.on(Laya.Event.COMPLETE, blind_ani, () => {
+            played_num++;
+            if (played_num >= num) {
+                blind_ani.destroy();
+            }
+        });
+        playSkeleton(blind_ani, 0, true);
+
+        for (let i = 0; i < num; i++) {
             setTimeout(() => {
                 this.link.card_list = shuffle(card_list);
                 this.sortCard();
