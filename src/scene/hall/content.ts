@@ -83,7 +83,7 @@ export class HallContent extends ui.hall.hallcontentUI {
         this.expBar.value = data.currentExp / data.nextLevelExp;
         this.avatar.skin = getAvatar(data.avatar);
         this.rank = new rankIcon(data.danGrading);
-        this.rank.pos(35, 395);
+        this.rank.pos(43, 395);
         this.userInfoBox.addChild(this.rank);
     }
 }
