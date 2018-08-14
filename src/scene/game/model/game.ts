@@ -230,7 +230,7 @@ export class GameModel extends BaseEvent {
         let card;
         /** 需要打出 */
         if (need_discard) {
-            card = player.drawCard(hit_card);
+            card = player.drawCard(hit_card, 'discard');
         } else {
             /** 复盘时 没有打出的牌需要重新创建 */
             if (!last_discard_card) {

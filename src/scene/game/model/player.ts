@@ -4,7 +4,7 @@ import { BaseEvent } from '../../../mcTree/event';
 import { logErr } from '../../../mcTree/utils/zutil';
 import { isCurPlayer } from '../../../utils/tool';
 import { BeActionInfo } from './card/action';
-import { CardModel } from './card/card';
+import { CardModel, DrawType } from './card/card';
 
 export type PlayerStatus = 'speak' | 'wait_give' | 'die' | 'normal';
 export const cmd = {
@@ -20,6 +20,7 @@ export const cmd = {
 };
 export type BlindStatus = {
     is_blind: boolean;
+    play_ani: boolean;
 };
 /** 动作的信息 */
 export type ObserverActionInfo = PartialAll<
@@ -156,11 +157,14 @@ export class PlayerModel extends BaseEvent {
         }
     }
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
-    public drawCard(card_id: string) {
+    public drawCard(card_id: string, type: DrawType) {
         const card_list = this.card_list;
         let pre_draw_card = this.findPreDrawCard();
         if (!pre_draw_card) {
             for (const card of card_list) {
+                if (card.be_annoyed) {
+                    continue;
+                }
                 if (card.card_id === '*') {
                     if (card_id) {
                         card.updateInfo(card_id);
@@ -178,7 +182,7 @@ export class PlayerModel extends BaseEvent {
             logErr(`cant find card_id=${card_id}`);
             return;
         }
-        pre_draw_card.draw();
+        pre_draw_card.draw(type);
         this.trigger(cmd.draw_card, { card: pre_draw_card });
         this.removeCard(pre_draw_card);
         return pre_draw_card;
@@ -230,12 +234,20 @@ export class PlayerModel extends BaseEvent {
             card_list[card_index].setAnnoyStatus(true);
         }
     }
-    public setBlindStatus(status: boolean) {
+    /**
+     *
+     * @param status
+     * @param play_ani 是否播放洗牌动画 replay时不播
+     */
+    public setBlindStatus(status: boolean, play_ani = false) {
         const { card_list } = this;
         for (const card of card_list) {
             card.setBlindStatus(status);
         }
-        this.trigger(cmd.blind_status, { is_blind: status } as BlindStatus);
+        this.trigger(cmd.blind_status, {
+            is_blind: status,
+            play_ani,
+        } as BlindStatus);
     }
     public clearBlindAndAnnoy() {
         const { card_list } = this;

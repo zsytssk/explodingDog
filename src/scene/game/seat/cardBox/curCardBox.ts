@@ -5,11 +5,13 @@ import { CardCtrl } from './card';
 import { CurSeatCtrl } from '../curSeat';
 import { log } from '../../../../mcTree/utils/zutil';
 import { tween } from '../../../../mcTree/utils/animate';
+import { playSkeleton } from '../../../../utils/tool';
 
 export type CurCardBoxUI = ui.game.seat.cardBox.curCardBoxUI;
 export interface Link extends BaseLink {
     view: CurCardBoxUI;
     seat: CurSeatCtrl;
+    blind_ani: Laya.Skeleton;
     card_list: CurCardCtrl[];
 }
 type TouchStatus = 'move' | 'start' | 'default';
@@ -37,10 +39,11 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     protected initLink() {
         super.initLink();
         const { view } = this.link;
-        const { card_wrap } = view;
+        const { card_wrap, blind_ani } = view;
         const seat = this.parent as CurSeatCtrl;
         this.link = {
             ...this.link,
+            blind_ani,
             card_wrap,
             seat,
         };
@@ -177,8 +180,17 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
             sprite: view,
         });
     }
+    /** 致盲时洗牌 */
     public shuffle() {
-        const { card_list } = this.link;
+        const { card_list, blind_ani, view, card_wrap } = this.link;
+        /** 致盲烟雾动画 */
+        blind_ani.visible = true;
+        blind_ani.once(Laya.Event.COMPLETE, blind_ani, () => {
+            blind_ani.visible = false;
+        });
+        blind_ani.x = Math.min(view.width, card_wrap.width) / 2;
+        playSkeleton(blind_ani, 0, false);
+
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 this.link.card_list = shuffle(card_list);

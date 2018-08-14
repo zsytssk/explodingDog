@@ -1,4 +1,6 @@
 ## 2018-08-14 10:20:35
+* @note 致盲的动画太不明显了
+
 * @ques card 默认 设置 index 设置他的位置
     * 这样不需要在tweenMove设置x, 不需要copyed_face
 

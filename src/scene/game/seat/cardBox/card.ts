@@ -12,6 +12,7 @@ import {
     BlindStatus,
     CardModel,
     cmd as card_cmd,
+    DrawType,
 } from '../../model/card/card';
 import { CardFrom } from '../../model/player';
 import { CardBaseCtrl, Link as BaseLink } from './cardBase';
@@ -77,11 +78,17 @@ export class CardCtrl extends CardBaseCtrl {
         this.onModel(base_cmd.destroy, () => {
             this.destroy();
         });
+        this.onModel(card_cmd.draw, (data: { type: DrawType }) => {
+            /** 给牌给别人时,  防止致盲效果消除, 取消和model的绑定 */
+            if (data.type === 'give') {
+                this.offModel();
+            }
+        });
         this.onModel(card_cmd.blind_status, (data: BlindStatus) => {
             this.setBlindStatus(data);
         });
         this.onModel(card_cmd.annoy_status, (data: AnnoyStatus) => {
-            this.setAnnoyStatus(data);
+            this.setAnnoyStatus(data, true);
         });
         this.onModel(card_cmd.action_send, (data: ActionSendData) => {
             Sail.io.emit(CMD.HIT, {
@@ -98,10 +105,18 @@ export class CardCtrl extends CardBaseCtrl {
         const { blind } = this.link;
         blind.visible = is_blind;
     }
-    private setAnnoyStatus(data: AnnoyStatus) {
+    /**
+     * 设置annnoy状态
+     * @param data
+     * @param is_play 是否播放annoy动画 replay的时候不用播放动画
+     */
+    private setAnnoyStatus(data: AnnoyStatus, is_play = false) {
         const { be_annoyed } = data;
         const { annoy } = this.link;
         annoy.visible = be_annoyed;
+        if (is_play) {
+            this.playMudAni();
+        }
     }
     /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
     public getCardBound() {

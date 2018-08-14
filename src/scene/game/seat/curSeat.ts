@@ -63,7 +63,7 @@ export class CurSeatCtrl extends SeatCtrl {
     protected bindModel() {
         super.bindModel();
         this.onModel(player_cmd.blind_status, (data: BlindStatus) => {
-            if (data.is_blind) {
+            if (data.is_blind && data.play_ani) {
                 this.link.card_box_ctrl.shuffle();
             }
         });
