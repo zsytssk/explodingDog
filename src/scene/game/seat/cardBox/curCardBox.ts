@@ -83,9 +83,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         if (!this.isMove()) {
             if (Math.abs(delta.x) < 150) {
                 return;
-            } else {
-                delta.x = 0;
             }
+            delta.x = 0;
+            this.unToggleExcept();
         }
         const last_pos = {
             x: event.stageX,
@@ -152,16 +152,30 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         return index;
     }
 
-    public unToggleExcept(card: CardCtrl) {
+    public unToggleExcept(card?: CardCtrl) {
         const { card_list } = this.link;
         for (const card_item of card_list) {
-            if (card_item === card) {
-                continue;
+            if (card) {
+                if (card_item === card) {
+                    continue;
+                }
             }
             if (card_item.show_tip) {
                 card_item.toggleTip();
             }
         }
+    }
+    public movePosCenter(x: number) {
+        // putInBoxByPos
+        const { view } = this.link;
+        const new_x = view.width / 2 - x;
+
+        return tween({
+            end_props: {
+                x: new_x,
+            },
+            sprite: view,
+        });
     }
     public shuffle() {
         const { card_list } = this.link;

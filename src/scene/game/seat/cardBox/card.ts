@@ -25,7 +25,6 @@ export interface Link extends BaseLink {
 }
 
 const card_height = 238;
-export const space_scale = 1 / 2;
 export class CardCtrl extends CardBaseCtrl {
     public name = 'card';
     protected link: Link;
@@ -34,6 +33,8 @@ export class CardCtrl extends CardBaseCtrl {
     protected model: CardModel;
     /** 是否被拖动出牌堆, 用于处理card_box sort 要不要处理,  */
     public is_selected = false;
+    /** 牌的间距相对牌的比例 */
+    protected space_scale = 1 / 2;
     constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
         super(model.card_id, wrap);
         this.model = model;
@@ -105,7 +106,7 @@ export class CardCtrl extends CardBaseCtrl {
     /** 获取牌的大小 边距， CurCardBox滑动需要数据 */
     public getCardBound() {
         const { view } = this.link;
-        const { scale } = this;
+        const { scale, space_scale } = this;
         const width = view.width * scale;
         const space = width * space_scale;
         return {
@@ -179,7 +180,7 @@ export class CardCtrl extends CardBaseCtrl {
     /** sortCard的时候会调用, 牌从任何位置飞到牌堆 */
     public tweenMove(index: number, all: number) {
         const { view, light_ani } = this.link;
-        const { scale, copyed_face } = this;
+        const { scale, copyed_face, space_scale } = this;
         const space = view.width * scale * space_scale;
         let time = 200;
         const x = (view.width * scale) / 2 + space * index;

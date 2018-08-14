@@ -77,11 +77,11 @@ export class CardIntroCtrl extends BaseCtrl {
     }
     public show() {
         const { view } = this.link;
-        slide_up_in(view, 500);
+        slide_up_in(view, 200);
     }
     public hide() {
         const { view } = this.link;
-        slide_down_out(view, 500);
+        slide_down_out(view, 200);
     }
     public destroy() {
         const { view } = this.link;

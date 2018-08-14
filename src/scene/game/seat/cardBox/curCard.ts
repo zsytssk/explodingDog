@@ -4,7 +4,7 @@ import { convertPos } from '../../../../utils/tool';
 import { CardIntroCtrl } from '../../../component/cardIntro';
 import { CardModel, cmd as card_cmd } from '../../model/card/card';
 import { CardFrom } from '../../model/player';
-import { CardCtrl, Link as BaseLink, space_scale } from './card';
+import { CardCtrl, Link as BaseLink } from './card';
 import { FaceProps } from './cardBase';
 import { CurCardBoxCtrl } from './curCardBox';
 
@@ -27,6 +27,7 @@ export class CurCardCtrl extends CardCtrl {
     private start_pos = {} as Point;
     private tip_time_out: number;
     private index: number;
+    protected space_scale = 2 / 3;
     constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
         super(model, wrap, from);
     }
@@ -61,13 +62,17 @@ export class CurCardCtrl extends CardCtrl {
         return true;
     }
     /** 显示牌的说明 */
-    public toggleTip() {
+    public async toggleTip() {
         const { view: sprite, card_box } = this.link;
-        const { scale, index } = this;
+        const { scale, index, space_scale } = this;
         const card_intro_ctrl = this.getCardIntro();
         let intro_toggle: FuncVoid;
         const show_tip = !this.show_tip;
         clearTimeout(this.tip_time_out);
+
+        /** 牌在牌堆中的位置 */
+        const space = sprite.width * scale * space_scale;
+        const x = (sprite.width * scale) / 2 + space * index;
 
         const center_y = (sprite.height * scale) / 2;
         let y1 = center_y;
@@ -90,11 +95,15 @@ export class CurCardCtrl extends CardCtrl {
             end_props = { y: y1 };
             intro_toggle = card_intro_ctrl.hide.bind(card_intro_ctrl);
         }
-        tween({
+        /** 如果显示提示, 需要将牌堆移动到中间 */
+        if (show_tip) {
+            await card_box.movePosCenter(x);
+        }
+        await tween({
             end_props,
             sprite,
             start_props,
-            time: 300,
+            time: 200,
         }).then(() => {
             if (!this.model.is_blind) {
                 intro_toggle();
@@ -254,7 +263,7 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 通过牌的x位置设置 */
     private putInBoxByPos(pos: Laya.Point) {
-        const { scale } = this;
+        const { scale, space_scale } = this;
         const { wrap, view, card_box } = this.link;
         const space = view.width * scale * space_scale;
         const center_x = (view.width * scale) / 2;
