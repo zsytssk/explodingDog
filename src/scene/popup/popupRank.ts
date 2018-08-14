@@ -9,6 +9,7 @@ import {
 import { CMD } from '../../data/cmd';
 import { log, logAll, ellipsisStr } from '../../mcTree/utils/zutil';
 import { BgCtrl } from '../component/bgCtrl';
+import { rankIcon } from '../hall/rankIcon';
 
 type DataItem = {
     avatar: string;
@@ -17,6 +18,7 @@ type DataItem = {
     rate: number;
     rank: number;
     user_id: string;
+    danGrading: number;
 };
 type Link = {
     top_bar: TopBar;
@@ -96,6 +98,7 @@ export class PopupRank extends ui.popup.rank.popUI {
                 rank,
                 nickname,
                 userId: user_id,
+                danGrading
             } = data_item;
             data.push({
                 avatar: getAvatar(data_item.avatar),
@@ -104,6 +107,7 @@ export class PopupRank extends ui.popup.rank.popUI {
                 rate,
                 score,
                 user_id,
+                danGrading
             });
         }
         list.dataSource = data;
@@ -114,11 +118,12 @@ export class PopupRank extends ui.popup.rank.popUI {
             rate: myRankInfo.winRate,
             score: myRankInfo.score,
             user_id: myRankInfo.userId,
+            danGrading: myRankInfo.danGrading
         });
     }
     private renderItem(ui: ItemUI | CurItemUI, data: DataItem) {
-        const { avatar, nickname, rank, rank_clip, rate, score } = ui;
-        const { rate: rate_num } = data;
+        const { avatar, nickname, rank, rank_clip, rate, score, gradeBox } = ui;
+        const { rate: rate_num, danGrading } = data;
         let rate_text = '';
         if (rate_num === -1) {
             rate_text = '--';
@@ -131,5 +136,8 @@ export class PopupRank extends ui.popup.rank.popUI {
         score.text = data.score + '';
         avatar.skin = data.avatar;
         rank_clip.index = data.rank - 1;
+        let grade = new rankIcon(danGrading);
+        grade.scale(0.8, 0.8);
+        gradeBox.addChild(grade);
     }
 }

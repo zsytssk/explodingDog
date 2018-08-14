@@ -208,6 +208,7 @@ type GetRankListData = {
         avatar: string;
         score: number;
         winRate: number;
+        danGrading: number;
     }[];
     myRankInfo: {
         userId: string;
@@ -216,6 +217,7 @@ type GetRankListData = {
         avatar: string;
         score: number;
         winRate: number;
+        danGrading: number;
     };
 };
 
