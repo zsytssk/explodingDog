@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":7,
+    "selecteID":2,
     "props":{"width":1334,"sceneColor":"#000000","height":80},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":50,"x":10,"var":"btnBack","top":0,"skin":"images/component/btn_back.png","pivotY":40,"pivotX":45,"left":20},
+            "props":{"y":39,"x":64,"var":"btnBack","top":0,"skin":"images/component/btn_back.png","left":20,"appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(btnBack)",
             "isDirectory":false,

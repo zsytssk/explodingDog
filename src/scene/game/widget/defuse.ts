@@ -39,7 +39,6 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             this.timerLoop(1000, this, this.countdown);
             Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
         }
-        Laya.SoundManager.playSound(getSoundPath('pop_defuse'));
     }
     public onClickAction() {
         if (this.remainTime <= 0) {
@@ -75,7 +74,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         cur_seat_ctrl.putCardBoxInWrap(card_box_wrap, Laya.stage);
     }
     public defuseSuccess() {
-        Laya.SoundManager.stopSound(getSoundPath('pop_defuse'));
+        Laya.SoundManager.stopSound(getSoundPath('bomb1'));
         this.ani.paused();
         this.faceAni.visible = true;
         this.defuseCard.visible = true;
