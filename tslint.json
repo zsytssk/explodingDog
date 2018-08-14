@@ -30,6 +30,6 @@
     "semicolon": [true, "always", "ignore-bound-class-methods"],
     "extends": ["tslint:recommended"],
     "linterOptions": {
-        "exclude": ["laya"]
+        "exclude": ["./laya"]
     }
 }

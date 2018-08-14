@@ -93,7 +93,7 @@ export function mapType(typeStr) {
                 result = type;
                 break;
             }
-            result = laya.ui[type] || ui[type] || laya.display[type];
+            result = Laya[type];
         } else {
             result = result[type];
         }
@@ -175,15 +175,25 @@ export function querySiblings(dom_origin) {
     return arr;
 }
 /**  寻找最近符合条件的父类  */
-export function queryClosest(dom_item, queryString) {
-    if (isChecked(dom_item, queryString)) {
-        return dom_item;
-    }
-    const parent = dom_item.parent;
+export function queryClosest(item, query_string) {
+    const parent = item.parent;
     if (!parent) {
         return null;
     }
-    return queryClosest(parent, queryString);
+    if (isChecked(parent, query_string)) {
+        return parent;
+    }
+    return queryClosest(parent, query_string);
+}
+export function queryClosestClass(item, query_class) {
+    const parent = item.parent;
+    if (!parent) {
+        return undefined;
+    }
+    if (parent instanceof query_class) {
+        return parent;
+    }
+    return queryClosestClass(parent, query_class);
 }
 /**  寻找最顶级的父类  */
 export function queryTop(dom_item) {
@@ -320,15 +330,10 @@ export function convertXMLToNode(xmlText) {
 export function convertJSONToNode(jsonObj) {
     const type = jsonObj.type;
     let node;
-    if (laya.ui[type]) {
-        node = new laya.ui[type]();
-    } else if (type === 'Sprite') {
-        node = new Laya.Sprite();
-    } else if (type === 'SkeletonPlayer') {
-        node = new laya.ani.bone.Skeleton();
-    } else {
+    if (!Laya[type]) {
         return;
     }
+    node = new Laya[type]();
     const props = jsonObj.props;
     for (const prop_name in props) {
         if (!props.hasOwnProperty(prop_name)) {
@@ -430,7 +435,7 @@ export function isSpriteLock(sprite) {
 export function createLogAll() {
     const type = debugFE();
     // tslint:disable-next-line:no-empty
-    const empty_fn = () => { };
+    const empty_fn = () => {};
 
     if (!type) {
         return empty_fn;
@@ -478,20 +483,6 @@ export function getQueryString(query) {
     }
     return query_string;
 }
-// 拼接uri参数
-export function getUri(obj) {
-    let str = '';
-    for (const key in obj) {
-        if (!obj.hasOwnProperty(key)) {
-            continue;
-        }
-        if (str.length) {
-            str += '&';
-        }
-        str += key + '=' + obj[key];
-    }
-    return str;
-}
 
 const state_temp = {};
 // 检测页面的状态
@@ -512,6 +503,22 @@ export function detectModel(type) {
     state_temp[type] = result;
     return result;
 }
+
+// 拼接uri参数
+export function getUri(obj) {
+    let str = '';
+    for (const key in obj) {
+        if (!obj.hasOwnProperty(key)) {
+            continue;
+        }
+        if (str.length) {
+            str += '&';
+        }
+        str += key + '=' + obj[key];
+    }
+    return str;
+}
+
 export function debugFE() {
     return (
         detectModel('debugType') ||
@@ -547,6 +554,7 @@ export function compareObj(x, y) {
     }
     return true;
 }
+
 export function extend(sub_class, super_class, name_sapce?) {
     for (const p in super_class) {
         if (!super_class.hasOwnProperty(p)) {
@@ -566,22 +574,26 @@ export function extend(sub_class, super_class, name_sapce?) {
     }
 
     if (name_sapce) {
-        const arr_space = name_sapce.split('.');
-        nameMap(arr_space, null, sub_class);
+        nameMap(sub_class, name_sapce);
     }
     return sub_class;
 }
-export function nameMap(arr_space, obj, end_obj) {
-    if (!obj) {
-        obj = window;
+
+export function nameMap(end_obj, arr_space, ori_obj?) {
+    if (!ori_obj) {
+        ori_obj = window;
     }
+    if (typeof arr_space === 'string') {
+        arr_space = arr_space.split('.');
+    }
+
     if (arr_space.length === 1) {
-        return (obj[arr_space[0]] = end_obj);
+        return (ori_obj[arr_space[0]] = end_obj);
     }
-    if (!obj[arr_space[0]]) {
-        obj[arr_space[0]] = {};
+    if (!ori_obj[arr_space[0]]) {
+        ori_obj[arr_space[0]] = {};
     }
-    return nameMap(arr_space.slice(1), obj[arr_space[0]], end_obj);
+    return nameMap(end_obj, arr_space.slice(1), ori_obj[arr_space[0]]);
 }
 export function calcStrLen(str) {
     return str.replace(/[^\x00-\xff]/g, '01').length;
@@ -739,7 +751,6 @@ export function addPressEvent(sprite) {
         }
     });
 }
-
 export const log = createLog();
 export const logAll = createLogAll();
 export const group = createLog('groupCollapsed');

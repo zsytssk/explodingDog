@@ -86,7 +86,7 @@ export class GameCtrl extends BaseCtrl {
         this.link.view = view;
 
         /** @test */
-        nameMap(['game_ctrl'], null, this);
+        nameMap(this, 'game_ctrl');
     }
     public init() {
         this.initLink();
@@ -189,8 +189,8 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             slap_ctrl,
-            turn_arrow_ctrl,
             turn_animation,
+            turn_arrow_ctrl,
         };
     }
     protected initEvnet() {
@@ -553,10 +553,10 @@ export class GameCtrl extends BaseCtrl {
         popupUserExploded.updateData(data);
         this.model.playerExploding(data);
         if (isCurPlayer(explodeUserId)) {
-            let takeExplode = new PopupTakeExplode();
+            const takeExplode = new PopupTakeExplode();
             takeExplode.onClosed = () => {
                 Sail.director.popScene(popupUserExploded);
-            }
+            };
             Sail.director.popScene(takeExplode);
         } else {
             Sail.director.popScene(popupUserExploded);

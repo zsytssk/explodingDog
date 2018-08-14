@@ -95,5 +95,3 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         super.destroy();
     }
 }
-
-nameMap(['PopupBuyCardType'], null, PopupBuyCardType);

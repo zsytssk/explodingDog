@@ -27,7 +27,6 @@ export class CardIntroCtrl extends BaseCtrl {
         super();
         this.card_id = card_id;
         this.link.wrap = wrap;
-        nameMap(['intro'], null, this);
     }
     public init() {
         this.initLink();

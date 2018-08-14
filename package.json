@@ -20,8 +20,6 @@
         "release-all": "node ./script/releaseFile/main.js release_all"
     },
     "devDependencies": {
-        "lodash": "^4.17.10",
-        "rxjs": "^6.2.1",
         "ts-loader": "^4.4.2",
         "typescript": "^2.9.2",
         "webpack": "^4.15.1",
@@ -29,6 +27,8 @@
         "webpack-dev-server": "^3.1.4"
     },
     "dependencies": {
+        "rxjs": "^6.2.1",
+        "lodash": "^4.17.10",
         "art-template": "^4.12.2",
         "axios": "^0.18.0",
         "es6-promise": "^4.2.4",
