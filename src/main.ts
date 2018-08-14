@@ -20,7 +20,7 @@ Sail.onStart = () => {
     if (detectModel('showStat')) {
         Laya.Stat.show();
     }
-    Laya.SoundManager.setMusicVolume(0.4);
+    // Laya.SoundManager.setMusicVolume(0.4);
     Laya.SoundManager.autoStopMusic = true;
     if (!localStorage.getItem(CONFIG.music_switch_key)) {
         localStorage.setItem(CONFIG.sound_switch_key, '1');
