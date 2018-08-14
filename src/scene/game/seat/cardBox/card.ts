@@ -16,6 +16,7 @@ import {
 import { CardFrom } from '../../model/player';
 import { CardBaseCtrl, Link as BaseLink } from './cardBase';
 import { CardBoxCtrl } from './cardBox';
+import { getCardStarColor } from '../../../../data/cardColor';
 
 export interface Link extends BaseLink {
     card_box: CardBoxCtrl;
@@ -177,7 +178,7 @@ export class CardCtrl extends CardBaseCtrl {
     }
     /** sortCard的时候会调用, 牌从任何位置飞到牌堆 */
     public tweenMove(index: number, all: number) {
-        const { view, card_light } = this.link;
+        const { view, light_ani } = this.link;
         const { scale, copyed_face } = this;
         const space = view.width * scale * space_scale;
         let time = 200;
@@ -186,7 +187,10 @@ export class CardCtrl extends CardBaseCtrl {
 
         let end_props = { y, x } as AnyObj;
 
+        /** 是否需要播放星星动画 */
+        let play_star = false;
         if (this.slow_move) {
+            play_star = true;
             if (!copyed_face) {
                 view.x = x;
             } else {
@@ -208,9 +212,21 @@ export class CardCtrl extends CardBaseCtrl {
             sprite: view,
             time,
         }).then(() => {
-            stopSkeleton(card_light);
-            card_light.visible = false;
+            if (play_star) {
+                this.playStarAni();
+            }
+
+            /** setFace时候可能会显示light_ani 这时需要关闭 */
+            if (light_ani) {
+                stopSkeleton(light_ani);
+                light_ani.visible = false;
+            }
         });
+    }
+    public playStarAni() {
+        const { card_id } = this.model;
+        const ani_name = getCardStarColor(card_id);
+        super.playStarAni(ani_name);
     }
     public destroy() {
         if (this.is_destroyed) {

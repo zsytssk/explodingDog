@@ -1,15 +1,14 @@
 import { CMD } from '../../data/cmd';
+import { CONFIG } from '../../data/config';
+import { getRoomId, getSoundPath, resetRoomId } from '../../utils/tool';
 import { GameWrap } from '../game/sceneWrap';
+import { GuideView } from '../guide/guideView';
 import { loadAssets } from '../loading/main';
+import { PopupDaily } from '../popup/popupDaily';
 import { PopupTip } from '../popup/popupTip';
+import { HallContent } from './content';
 import { TopBar } from './topbar';
 import './valuebar';
-import { HallContent } from './content';
-import { GuideView } from '../guide/guideView';
-import { PopupDaily } from '../popup/popupDaily';
-import { nameMap, detectModel } from '../../mcTree/utils/zutil';
-import { CONFIG } from '../../data/config';
-import { getSoundPath, getRoomId, resetRoomId } from '../../utils/tool';
 
 export class Hall extends Sail.Scene {
     constructor() {
@@ -64,7 +63,7 @@ export class Hall extends Sail.Scene {
         }
     }
 
-    initEvent() { }
+    initEvent() {}
 
     onExit() {
         Laya.SoundManager.stopMusic();

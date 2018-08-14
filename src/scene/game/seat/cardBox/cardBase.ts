@@ -9,13 +9,14 @@ import {
 export type FaceProps = {
     scale: number;
     pos: Laya.Point;
+    show_light_ani: boolean;
 };
 type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
     view: CardView;
     wrap: Laya.Sprite;
-    card_light: Laya.Skeleton;
-    card_get_star: Laya.Skeleton;
+    light_ani: Laya.Skeleton;
+    star_ani: Laya.Skeleton;
 }
 
 export const space_scale = 1 / 2;
@@ -23,9 +24,10 @@ export const space_scale = 1 / 2;
 export class CardBaseCtrl extends BaseCtrl {
     public name = 'card';
     protected link = {} as Link;
-    /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的高度去做缩小 */
+    /** 牌需要缩小的比例， 所有的牌都使用一个ui， 需要根据父类的 高度|宽度 去做缩小 */
     protected scale: number;
     public card_id: string;
+    /** 是否从其他牌复制属性, 比方说拿牌 偷牌时, 牌复制目标牌样式, 然后 tweenMove 飞到自己的位置 */
     protected copyed_face: boolean;
     constructor(card_id: string, wrap: Laya.Sprite) {
         super();
@@ -41,14 +43,14 @@ export class CardBaseCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
         const { view } = this.link;
-        const { card_light, card_get_star } = view;
+        const { light_ani, star_ani } = view;
 
-        stopSkeleton(card_light);
-        stopSkeleton(card_get_star);
+        stopSkeleton(light_ani);
+        stopSkeleton(star_ani);
         this.link = {
             ...this.link,
-            card_get_star,
-            card_light,
+            light_ani,
+            star_ani,
         };
         this.drawCard();
     }
@@ -71,43 +73,7 @@ export class CardBaseCtrl extends BaseCtrl {
         };
         this.scale = scale;
     }
-    public setStyle(props: AnyObj) {
-        const { view } = this.link;
-        setStyle(view, {
-            ...props,
-        });
-    }
-    /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
-    public setFace(props: FaceProps) {
-        const { wrap, card_light } = this.link;
-        const { scale, pos } = props;
-        wrap.globalToLocal(pos);
-        card_light.visible = true;
-        playSkeleton(card_light, 0, true);
-        this.copyed_face = true;
-        this.setStyle({
-            scaleX: scale,
-            scaleY: scale,
-            x: pos.x,
-            y: pos.y,
-        });
-        // this.withDrawCard();
-    }
-    public getCardFace() {
-        const { scale } = this;
-        const { view } = this.link;
-        const pos = new Laya.Point(
-            (view.width * scale) / 2,
-            (view.height * scale) / 2,
-        );
-        view.localToGlobal(pos);
-
-        return {
-            pos,
-            scale,
-        };
-    }
-    /** 设置牌的样式 */
+    /** 画牌面+id */
     public drawCard() {
         const { card_id } = this;
         const { view } = this.link;
@@ -132,9 +98,58 @@ export class CardBaseCtrl extends BaseCtrl {
             width,
         };
     }
+    public setStyle(props: AnyObj) {
+        const { view } = this.link;
+        setStyle(view, {
+            ...props,
+        });
+    }
     public resetStyle() {
         const { view } = this.link;
         view.zOrder = 0;
+    }
+    /** 播放星星动画 */
+    public playStarAni(name: string) {
+        const { star_ani } = this.link;
+
+        star_ani.visible = true;
+        star_ani.once(Laya.Event.COMPLETE, star_ani, () => {
+            star_ani.visible = false;
+        });
+        playSkeleton(star_ani, name || 0, false);
+    }
+    /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
+    public setFace(props: FaceProps) {
+        const { wrap, light_ani } = this.link;
+        const { scale, pos } = props;
+        wrap.globalToLocal(pos);
+        if (props.show_light_ani) {
+            light_ani.visible = true;
+            playSkeleton(light_ani, 0, true);
+        }
+        this.copyed_face = true;
+        this.setStyle({
+            scaleX: scale,
+            scaleY: scale,
+            x: pos.x,
+            y: pos.y,
+        });
+        // this.withDrawCard();
+    }
+    public getCardFace(): FaceProps {
+        const { scale } = this;
+        const { view, light_ani } = this.link;
+        const pos = new Laya.Point(
+            (view.width * scale) / 2,
+            (view.height * scale) / 2,
+        );
+        view.localToGlobal(pos);
+        const show_light_ani = light_ani.visible;
+        return {
+            pos,
+            scale,
+            show_light_ani,
+        };
     }
     public destroy() {
         if (this.is_destroyed) {

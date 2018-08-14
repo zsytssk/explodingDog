@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":41,
-    "selecteID":10,
+    "selectedBox":45,
+    "selecteID":47,
     "referenceLines":null,
     "props":{"width":884,"sceneColor":"#ffffff","height":636,"appendProps":"laya/pages/effect/scaleBtn.prop"},
     "nodeParent":-1,
@@ -92,16 +92,41 @@
                         },
                         {
                             "x":45,
-                            "type":"Image",
-                            "props":{"y":290,"x":484,"var":"content","skin":"images/pop/buy/dance.png","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                            "type":"Panel",
+                            "props":{"y":41,"x":26,"width":722,"vScrollBarSkin":"\"\"","height":353},
                             "nodeParent":36,
-                            "label":"Image(content)",
-                            "isDirectory":false,
+                            "label":"Panel",
+                            "isOpen":true,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
-                            "compId":34,
+                            "hasChild":true,
+                            "compId":45,
                             "child":[
-                                ]
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":0,"x":0,"var":"intro_box"},
+                                    "nodeParent":45,
+                                    "label":"Box(intro_box)",
+                                    "isOpen":null,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":47,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":0,"x":0,"width":663,"var":"content","skin":"images/pop/buy/dance.png"},
+                                            "nodeParent":47,
+                                            "label":"Image(content)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":34,
+                                            "child":[
+                                                ]
+                                        }]
+                                }]
                         }]
                 }]
         },

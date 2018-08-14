@@ -1,6 +1,6 @@
 import { CMD } from '../../data/cmd';
 import { PopupPrompt } from './popupPrompt';
-import { nameMap } from '../../mcTree/utils/zutil';
+import { nameMap, log } from '../../mcTree/utils/zutil';
 
 type Data = {
     card_id: string;
@@ -54,16 +54,29 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         });
     }
     private renderData() {
-        const { data, content, title, cost, btn_buy, buy_sucess } = this;
+        const {
+            data,
+            content,
+            title,
+            cost,
+            btn_buy,
+            buy_sucess,
+            intro_box,
+        } = this;
         const { card_id, price, is_buy } = data;
         const type_str = type_map[card_id].en;
         title.skin = `images/pop/buy/${type_str}_title.png`;
         content.skin = `images/pop/buy/${type_str}.png`;
         cost.text = price + '';
+
         if (is_buy) {
             btn_buy.visible = false;
             buy_sucess.visible = true;
         }
+        Laya.timer.frameOnce(30, this, () => {
+            intro_box.height = content.height;
+            log(content.height);
+        });
     }
     private onServerExchangeGoods(data, code, msg) {
         const { sucess_callback } = this;
@@ -82,5 +95,3 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         super.destroy();
     }
 }
-
-nameMap(['PopupBuyCardType'], null, PopupBuyCardType);

@@ -50,8 +50,8 @@ export const CARD_MAP = {
         name: 'skip',
         name_zh: '跳过回合',
         show_count: false,
+        sound: 'skip',
         type: 'skip',
-        sound: 'skip'
     },
     '3301': {
         belong: [1, 2, 3],
@@ -95,10 +95,10 @@ export const CARD_MAP = {
         count: 1,
         intro: '选择1名玩家,被选中的玩家需要选1张手牌给到使用【要牌】的玩家.',
         intro_billbard: ['使用要牌\n正在选择', '正在选择', '一张手牌'],
-        sound: 'steal',
         name: CARD_NAME.STEAL,
         name_zh: '出千X2',
         show_count: false,
+        sound: 'steal',
         type: CARD_NAME.STEAL,
     },
     '3501': {
@@ -264,10 +264,10 @@ export const CARD_MAP = {
         color: 10,
         count: 1,
         intro: '将牌堆里的所有炸弹全部置顶.',
+        name: CARD_NAME.ROLL_CALL,
         name_zh: '布置炸弹',
         show_count: false,
         sound: 'roll_call',
-        name: CARD_NAME.ROLL_CALL,
         type: CARD_NAME.ROLL_CALL,
     },
     '4401': {
