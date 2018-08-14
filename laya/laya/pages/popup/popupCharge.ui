@@ -30,7 +30,7 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":108,"x":68,"width":1239,"var":"list","spaceY":20,"spaceX":85,"repeatY":2,"repeatX":3,"height":641},
+            "props":{"y":108,"x":68,"width":1251,"var":"list","spaceY":20,"spaceX":85,"repeatY":2,"repeatX":3,"height":641},
             "nodeParent":1,
             "label":"List(list)",
             "isOpen":true,

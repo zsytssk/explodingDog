@@ -29,7 +29,7 @@
         {
             "x":15,
             "type":"SkeletonPlayer",
-            "props":{"y":20,"x":114,"width":1,"visible":false,"var":"card_get_star","url":"animation/card_get_star.sk","height":3},
+            "props":{"y":20,"x":114,"width":1,"var":"card_get_star","url":"animation/card_get_star.sk","height":3},
             "nodeParent":1,
             "label":"SkeletonPlayer(card_get_star)",
             "isDirectory":false,

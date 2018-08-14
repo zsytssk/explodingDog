@@ -44,7 +44,7 @@ export class CardBaseCtrl extends BaseCtrl {
         const { card_light, card_get_star } = view;
 
         stopSkeleton(card_light);
-        stopSkeleton(card_get_star);
+        // stopSkeleton(card_get_star);
         this.link = {
             ...this.link,
             card_get_star,
