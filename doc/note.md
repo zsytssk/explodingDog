@@ -17,6 +17,14 @@
 
 * @note 更新mctree
 
+* @note 致盲的处理 自己看不到给的牌
+
+* @bug loading 上去再下来 再上去 ...
+
+* @note toggleTip 居中...
+
+* @note  干扰致盲的bug
+
 
 ## 2018-08-09 10:27:18
 * @ques es5 chrome 26 报错...
