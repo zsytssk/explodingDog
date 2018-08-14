@@ -75,13 +75,13 @@ export class AlarmCtrl extends BaseCtrl {
             count,
             count_num,
             cur_count => {
-                if (cur_count <= 10) {
+                if (cur_count <= 10 && !view.visible) {
                     this.show();
                 }
-                if (cur_count <= 5) {
+                if (cur_count == 5) {
                     Laya.SoundManager.playSound(getSoundPath('alarm'));
                 }
-                if (cur_count <= 3) {
+                if (cur_count <= 5) {
                     Laya.SoundManager.playSound(getSoundPath('countdown_second'));
                 }
                 tween({

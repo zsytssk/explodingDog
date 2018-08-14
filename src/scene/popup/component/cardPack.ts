@@ -36,11 +36,9 @@ export class CardPack extends ui.popup.component.cardPackUI {
 
     private initEvent(data) {
         const { cardType, isLock } = data;
-        if (isLock) {
-            this.on(Laya.Event.CLICK, this, () => {
-
-            })
-        }
+        this.btnLock.on(Laya.Event.CLICK, this, () => {
+            this.pack_base.icon_info.event(Laya.Event.CLICK)
+        })
         this.chooseBtn.on(Laya.Event.CLICK, this, () => {
             switch (this.type) {
                 case 'play':

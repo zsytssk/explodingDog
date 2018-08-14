@@ -295,3 +295,8 @@ export const CARD_TYPE = {
         name: '乱舞扩展包',
     },
 };
+
+//需要播放音效的技能
+export const CARD_SOUND_LIST = ['alter_future1', 'alter_future2', 'annoy2', 'blind1', 'blind2',
+    'defuse1', 'draw_bottom1', 'roll_call1', 'see_future1', 'bomb1',
+    'shuffle1', 'skip1', 'steal1', 'steal2', 'steal3'];

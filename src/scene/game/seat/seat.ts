@@ -13,7 +13,7 @@ import {
     queryClosest,
     ellipsisStr,
 } from '../../../mcTree/utils/zutil';
-import { getAvatar } from '../../../utils/tool';
+import { getAvatar, getSoundPath } from '../../../utils/tool';
 import { CardModel } from '../model/card/card';
 import {
     AddInfo,
@@ -252,6 +252,7 @@ export class SeatCtrl extends BaseCtrl {
             this.setStatus('exploding');
         }
         if (action === 'show_set_explode') {
+            Laya.SoundManager.stopSound(getSoundPath('bomb1'));
             this.setStatus('speak');
         }
         if (action === 'finish_set_explode') {

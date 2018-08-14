@@ -41,7 +41,7 @@ import { ExplodePosCtrl } from './widget/explodePos';
 import { GiveCardCtrl } from './widget/giveCard';
 import { SlapCtrl } from './widget/slap';
 import { PopupSetting } from '../popup/setting/pop';
-import { CARD_MAP } from '../../data/card';
+import { CARD_MAP, CARD_SOUND_LIST } from '../../data/card';
 
 interface Link {
     view: ui.game.mainUI;
@@ -381,6 +381,9 @@ export class GameCtrl extends BaseCtrl {
     private getCardSoundPath(cardId, step) {
         const sound = CARD_MAP[cardId].sound;
         if (!sound) {
+            return;
+        }
+        if (CARD_SOUND_LIST.indexOf(sound + step) == -1) {
             return;
         }
         return getSoundPath(sound + step);

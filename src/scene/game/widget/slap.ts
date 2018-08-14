@@ -3,6 +3,7 @@ import { SeatCtrl } from '../seat/seat';
 import { GameCtrl } from '../main';
 import { log } from '../../../mcTree/utils/zutil';
 import { setStyle, tweenLoop, stopAni } from '../../../mcTree/utils/animate';
+import { getSoundPath } from '../../../utils/tool';
 
 export interface Link {
     view: ui.game.widget.slapUI;
@@ -85,6 +86,7 @@ export class SlapCtrl extends BaseCtrl {
         ani.play(0, true);
         let i = 0;
         ani.player.on(Laya.Event.COMPLETE, this, () => {
+            Laya.SoundManager.playSound(getSoundPath('slap'));
             i++;
             if (i >= time) {
                 this.reset();
@@ -110,6 +112,7 @@ export class SlapCtrl extends BaseCtrl {
         ani.play(0, true);
         let i = 0;
         ani.player.on(Laya.Event.COMPLETE, this, () => {
+            Laya.SoundManager.playSound(getSoundPath('slap'));
             i++;
             if (i >= time) {
                 this.reset();
