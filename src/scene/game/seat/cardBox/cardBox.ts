@@ -2,8 +2,10 @@ import { BaseCtrl } from '../../../../mcTree/ctrl/base';
 import { CardModel } from '../../model/card/card';
 import { CardCtrl } from './card';
 import { GameCtrl } from '../../main';
-import { queryClosest } from '../../../../mcTree/utils/zutil';
+import { queryClosest, nameMap } from '../../../../mcTree/utils/zutil';
 import { CardFrom } from '../../model/player';
+import { createSkeleton, playSkeleton } from '../../../../utils/tool';
+import { setStyle } from '../../../../mcTree/utils/animate';
 
 export interface Link {
     view: Laya.Sprite;
@@ -13,6 +15,10 @@ export interface Link {
     card_move_box: Laya.Sprite;
 }
 
+const blind_ani_pos = {
+    x: 110,
+    y: 21,
+};
 export class CardBoxCtrl extends BaseCtrl {
     public name = 'card_box';
     protected link = {
@@ -120,5 +126,21 @@ export class CardBoxCtrl extends BaseCtrl {
                 return card_item;
             }
         }
+    }
+    /** 致盲时洗牌 */
+    public shuffle() {
+        const { view } = this.link;
+        /** 致盲烟雾动画 */
+        const blind_ani = createSkeleton('blind');
+        view.addChild(blind_ani);
+
+        setStyle(blind_ani, blind_ani_pos);
+
+        blind_ani.player.once(Laya.Event.COMPLETE, blind_ani, () => {
+            blind_ani.destroy();
+        });
+        playSkeleton(blind_ani, 0, true);
+
+        nameMap(blind_ani, 'blind_ani');
     }
 }

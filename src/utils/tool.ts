@@ -369,3 +369,27 @@ export function resetRoomId() {
     hash = getUri(query);
     location.href = location.href.replace(location.hash, '#' + hash);
 }
+
+const templet_pool: {
+    [key: string]: Laya.Templet;
+} = {};
+/**
+ * 创建骨骼, 通过传过来的动画名称去animate文件夹下寻找动画文件
+ * @param name 动画的名称, 用来定位动画文件
+ */
+export function createSkeleton(name: string): laya.ani.bone.Skeleton {
+    let templet: Laya.Templet;
+    if (templet_pool[name]) {
+        templet = templet_pool[name];
+    } else {
+        templet = new Laya.Templet();
+        templet.parseData(
+            Laya.loader.getRes('animation/' + name + '.png'),
+            Laya.loader.getRes('animation/' + name + '.sk'),
+            24,
+        );
+        templet_pool[name] = templet;
+    }
+
+    return templet.buildArmature(0);
+}

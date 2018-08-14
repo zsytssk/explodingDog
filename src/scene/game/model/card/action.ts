@@ -138,7 +138,7 @@ export class WaitGetCard extends Action {
         if (!target) {
             return;
         }
-        const card_model = target.drawCard(card);
+        const card_model = target.drawCard(card, 'give');
         if (!player.is_cur_player) {
             card_model.updateInfo('*');
         }
@@ -352,6 +352,6 @@ export class Blind extends Action {
     public act(data: ActionDataInfo) {
         const { targetUserId, game } = data;
         const target = game.getPlayerById(targetUserId);
-        target.setBlindStatus(true);
+        target.setBlindStatus(true, true);
     }
 }

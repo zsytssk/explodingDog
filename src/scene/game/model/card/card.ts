@@ -13,6 +13,9 @@ export const cmd = {
     update_info: 'update_info',
 };
 
+/** 出牌的两种状态 给|打出 */
+export type DrawType = 'discard' | 'give';
+
 export type AnnoyStatus = { be_annoyed: boolean };
 export type BlindStatus = { is_blind: boolean };
 export class CardModel extends BaseEvent {
@@ -64,10 +67,10 @@ export class CardModel extends BaseEvent {
         }
         return pre_drawed;
     }
-    public draw() {
+    public draw(type: DrawType) {
         this.pre_drawed = false;
+        this.trigger(cmd.draw, { type });
         this.setBlindStatus(false);
-        this.trigger(cmd.draw);
     }
     /** 取消出牌， 服务器返回数据错误 */
     public unDraw() {

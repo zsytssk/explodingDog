@@ -64,6 +64,8 @@ export const RES = {
         { type: Laya.Loader.BUFFER, url: 'animation/exploding.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/card_light.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/card_get_star.sk' },
+        { type: Laya.Loader.IMAGE, url: 'animation/blind.png' },
+        { type: Laya.Loader.BUFFER, url: 'animation/blind.sk' },
     ],
     LOADING: [
         { url: 'res/atlas/images/loading.atlas', type: Laya.Loader.ATLAS },

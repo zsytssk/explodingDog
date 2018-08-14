@@ -21,6 +21,7 @@ import {
     ObserverActionInfo,
     PlayerModel,
     PlayerStatus,
+    BlindStatus,
 } from '../model/player';
 import { GiveCardCtrl } from '../widget/giveCard';
 import { SlapCtrl, SlapType } from '../widget/slap';
@@ -139,6 +140,13 @@ export class SeatCtrl extends BaseCtrl {
         this.link.card_box_ctrl.addCards(card_list);
 
         this.onModel(base_cmd.destroy, this.clearPlayer.bind(this));
+
+        this.onModel(player_cmd.blind_status, (data: BlindStatus) => {
+            if (data.is_blind && data.play_ani) {
+                this.shuffle();
+            }
+        });
+
         this.onModel(player_cmd.remove_cards, () => {
             this.link.card_box_ctrl.clearCards();
         });
@@ -225,6 +233,7 @@ export class SeatCtrl extends BaseCtrl {
                 stopAni(highlight);
         }
     }
+    protected shuffle() {}
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
         const { status, action } = data;

@@ -15,7 +15,11 @@ type CardView = ui.game.seat.cardBox.cardUI;
 export interface Link {
     view: CardView;
     wrap: Laya.Sprite;
+    /** 牌堆牌光圈动画 */
     light_ani: Laya.Skeleton;
+    /** annoy 泥土动画 */
+    mud_ani: Laya.Skeleton;
+    /** 拿到牌星星动画 */
     star_ani: Laya.Skeleton;
 }
 
@@ -43,13 +47,15 @@ export class CardBaseCtrl extends BaseCtrl {
     protected initLink() {
         this.initUI();
         const { view } = this.link;
-        const { light_ani, star_ani } = view;
+        const { light_ani, star_ani, mud_ani } = view;
 
         stopSkeleton(light_ani);
         stopSkeleton(star_ani);
+        stopSkeleton(mud_ani);
         this.link = {
             ...this.link,
             light_ani,
+            mud_ani,
             star_ani,
         };
         this.drawCard();
@@ -117,6 +123,16 @@ export class CardBaseCtrl extends BaseCtrl {
             star_ani.visible = false;
         });
         playSkeleton(star_ani, name || 0, false);
+    }
+    /** 播放星星动画 */
+    public playMudAni() {
+        const { mud_ani } = this.link;
+
+        mud_ani.visible = true;
+        mud_ani.once(Laya.Event.COMPLETE, mud_ani, () => {
+            mud_ani.visible = false;
+        });
+        playSkeleton(mud_ani, 0, false);
     }
     /** 通过CardHeap中牌的位置大小 设置牌的属性 计算放的位置 再放到牌堆 */
     public setFace(props: FaceProps) {
