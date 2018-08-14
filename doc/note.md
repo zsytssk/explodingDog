@@ -1,6 +1,20 @@
+## 2018-08-14 10:20:35
+* @ques card 默认 设置 index 设置他的位置
+    * 这样不需要在tweenMove设置x, 不需要copyed_face
+
+
+* 每一个部分只关注自己的代码 再由一个地方将所有的逻辑组织起来
+    * 功能 + 联系
+
+* prettier semicolon
+
+
+* @note tweenMove card_light 停止动画 这个动画在什么地方显示的呢???
+    * 一个逻辑放在了两个地方, 实在不好...
+
+
 ## 2018-08-09 10:27:18
 * @ques es5 chrome 26 报错...
-
 
 * @note 低版本chrome 黑屏
 

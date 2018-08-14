@@ -134,17 +134,17 @@ export class HeapCardCtrl extends CardBaseCtrl {
         view.visible = true;
     }
     public setStatus(status: Status) {
-        const { card_light } = this.link;
+        const { light_ani } = this.link;
         if (this.status === status) {
             return;
         }
         if (status === 'actived') {
             /** 直接播放会报错 */
-            card_light.visible = true;
-            playSkeleton(card_light, 0, true);
+            light_ani.visible = true;
+            playSkeleton(light_ani, 0, true);
         } else {
-            card_light.visible = false;
-            stopSkeleton(card_light);
+            light_ani.visible = false;
+            stopSkeleton(light_ani);
         }
         this.status = status;
     }
