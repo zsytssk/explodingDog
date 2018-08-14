@@ -63,8 +63,10 @@ export class AlarmCtrl extends BaseCtrl {
     }
     public countDown(count_num: number) {
         count_num = count_num || 10;
-        const { arrow, count } = this.link;
-
+        const { view, arrow, count } = this.link;
+        if (count_num > 10 && view.visible) {
+            this.hide();
+        }
         stopAni(this.count_ani);
         /** 初始设置，防止show的时候才慢慢变过去  */
         arrow.rotation = start_angle - (360 * count_num) / count_num;
