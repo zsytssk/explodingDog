@@ -5,7 +5,8 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
     name = 'popup_take_explode';
     group = 'exploding';
     CONFIG = {
-        closeByGroup: true
+        closeByGroup: true,
+        autoClose: 5000
     }
     constructor() {
         super();
@@ -21,9 +22,8 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
             });
         });
         this.ani.visible = true;
-        this.ani.once(Laya.Event.STOPPED, this, () => {
+        this.ani.player.once(Laya.Event.COMPLETE, this, () => {
             this.ani.play('wait', true);
         });
-        this.ani.play('show', false);
     }
 }

@@ -88,11 +88,11 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     });
     public onClosed() {
         Laya.stage.off(Laya.Event.CLICK, this, this.onClickAction);
-        if (
-            !this.defuseSeccess &&
-            !Sail.director.getDialogByName('popup_take_explode')
-        ) {
-            Sail.director.popScene(new PopupTakeExplode());
-        }
+        // if (
+        //     !this.defuseSeccess &&
+        //     !Sail.director.getDialogByName('popup_take_explode')
+        // ) {
+        //     Sail.director.popScene(new PopupTakeExplode());
+        // }
     }
 }

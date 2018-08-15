@@ -554,17 +554,17 @@ export class GameCtrl extends BaseCtrl {
      */
     public onServerUserExploding(data: UserExplodingData) {
         const { explodeUserId, bombProb } = data;
-        const popupUserExploded = new PopupUserExploded();
-        popupUserExploded.updateData(data);
         this.model.playerExploding(data);
         Laya.SoundManager.playSound(getSoundPath('exploding'));
         if (isCurPlayer(explodeUserId)) {
             const takeExplode = new PopupTakeExplode();
-            takeExplode.onClosed = () => {
-                Sail.director.popScene(popupUserExploded);
-            };
+            // takeExplode.onClosed = () => {
+            //     Sail.director.popScene(popupUserExploded);
+            // };
             Sail.director.popScene(takeExplode);
         } else {
+            const popupUserExploded = new PopupUserExploded();
+            popupUserExploded.updateData(data);
             Sail.director.popScene(popupUserExploded);
             this.link.docker_ctrl.setRate(bombProb);
         }
@@ -573,18 +573,20 @@ export class GameCtrl extends BaseCtrl {
         this.link.chat_ctrl.loadMsg(data.list);
     }
     public onServerGameOver(data) {
-        const pop = new PopupGameOver(this);
-        pop.updateView(data);
-        let delay = 0;
+        const popGameOver = new PopupGameOver(this);
+        popGameOver.updateView(data);
         const popup_defuse = Sail.director.getDialogByName('popup_defuse');
         if (popup_defuse) {
+            //爆炸的玩家
             Sail.director.closeByName('popup_defuse');
-            delay = 3000;
+            let takeExplode = new PopupTakeExplode();
+            takeExplode.onClosed = () => {
+                Sail.director.popScene(popGameOver);
+            }
+            Sail.director.popScene(takeExplode);
+        } else {
+            Sail.director.popScene(popGameOver);
         }
-        // 当前玩家爆炸延迟弹出结束
-        Laya.timer.once(delay, this, () => {
-            Sail.director.popScene(pop);
-        });
     }
     public onServerAlarm(data: AlarmData) {
         if (!data) {

@@ -113,7 +113,7 @@ export class PopupRank extends ui.popup.rank.popUI {
         list.dataSource = data;
         this.renderItem(my_rank, {
             avatar: getAvatar(myRankInfo.avatar),
-            nickname: ellipsisStr(myRankInfo.nickname, 18, '..'),
+            nickname: ellipsisStr(myRankInfo.nickname, 14, '..'),
             rank: myRankInfo.rank,
             rate: myRankInfo.winRate,
             score: myRankInfo.score,

@@ -26,9 +26,6 @@ export class Hall extends Sail.Scene {
             [CMD.JOIN_ROOM]: this.joinRoom,
             [CMD.CREATE_ROOM]: this.createRoom,
             [CMD.GET_HALL_USER_STATUS]: this.setUserStatus,
-            [CMD.GET_DAILY_AWARDS]: () => {
-                Sail.io.emit(CMD.GET_USER_AMOUNT);
-            },
         };
         Sail.io.register(this.ACTIONS, this);
 
@@ -63,7 +60,7 @@ export class Hall extends Sail.Scene {
         }
     }
 
-    initEvent() {}
+    initEvent() { }
 
     onExit() {
         Laya.SoundManager.stopMusic();

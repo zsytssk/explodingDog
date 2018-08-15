@@ -51,6 +51,9 @@ export class GuideStep extends ui.guide.stepUI {
     initEvent() {
         const { btnSkip, discardZone, cardBox } = this;
         btnSkip.on(Laya.Event.CLICK, this, () => {
+            this.cards.forEach(card => {
+                card.destroy();
+            });
             Sail.io.emit(CMD.FINISH_GUIDE);
             loadAssets('hall').then(() => {
                 Sail.director.runScene(new Hall());
@@ -236,6 +239,7 @@ export class GuideStep extends ui.guide.stepUI {
                     drawCard.destroy();
                     this.event(this.FINISH);
                 });
+                this.cards.push(drawCard);
             } else {
                 Laya.Tween.to(drawCard, { x: drawCard.originPoint.x, y: drawCard.originPoint.y }, 100, null, new Laya.Handler(this, () => {
                     let point = cardbacks.globalToLocal(new Laya.Point(drawCard.x, drawCard.y));
