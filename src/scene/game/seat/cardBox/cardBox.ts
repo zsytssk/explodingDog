@@ -16,7 +16,7 @@ export interface Link {
 }
 
 const blind_ani_pos = {
-    x: 110,
+    x: 65,
     y: 21,
 };
 export class CardBoxCtrl extends BaseCtrl {
@@ -130,9 +130,10 @@ export class CardBoxCtrl extends BaseCtrl {
     /** 致盲时洗牌 */
     public shuffle() {
         const { view } = this.link;
+        const wrap = view.parent;
         /** 致盲烟雾动画 */
         const blind_ani = createSkeleton('blind');
-        view.addChild(blind_ani);
+        wrap.addChild(blind_ani);
 
         setStyle(blind_ani, blind_ani_pos);
 
