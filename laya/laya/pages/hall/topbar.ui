@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":11,
+    "selecteID":5,
     "props":{"width":1334,"sceneColor":"#000000","height":80},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":40,"visible":false,"var":"btnBack","top":0,"skin":"images/hall/btn_back.png","pivotY":40,"pivotX":45,"left":20,"appendProps":"laya/pages/effect/scaleImg.prop"},
+            "props":{"y":40,"x":65,"visible":false,"var":"btnBack","top":0,"skin":"images/hall/btn_back.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btnBack)",
             "isDirectory":false,
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":40,"x":175,"var":"btn_rank","skin":"images/hall/btn_rank.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
+            "props":{"y":40,"x":65,"var":"btn_rank","skin":"images/hall/btn_rank.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_rank)",
             "isDirectory":false,
@@ -69,7 +69,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":40,"x":1050,"var":"btn_get_food","skin":"images/hall/btn_food.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
+            "props":{"y":40,"x":1160,"var":"btn_get_food","skin":"images/hall/btn_food.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_get_food)",
             "isOpen":true,
@@ -95,7 +95,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"visible":false,"var":"btn_home","top":0,"skin":"images/hall/btn_home.png","right":130,"pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
+            "props":{"y":40,"x":1050,"visible":false,"var":"btn_home","skin":"images/hall/btn_home.png","pivotY":40,"pivotX":45,"appendProps":"laya/pages/effect/scaleImg.prop"},
             "nodeParent":1,
             "label":"Image(btn_home)",
             "isDirectory":false,

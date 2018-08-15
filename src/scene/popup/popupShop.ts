@@ -28,7 +28,7 @@ type AvatarData = PartialAll<
     {
         item_list: number[];
     }
->;
+    >;
 
 export class PopupShop extends ui.popup.popupShopUI {
     public name = 'shop';
@@ -165,6 +165,7 @@ export class PopupShop extends ui.popup.popupShopUI {
                     box,
                     'btn_success',
                 )[0] as Laya.Image;
+                avatar_img.skin = `images/pop/component/avatar_${id}.png`;
                 if (is_buy) {
                     btn_buy.visible = false;
                     btn_success.visible = true;
@@ -172,7 +173,6 @@ export class PopupShop extends ui.popup.popupShopUI {
                 }
                 const cost = getElementsByName(box, 'cost')[0] as Laya.Text;
                 cost.text = data_item.cost;
-                avatar_img.skin = `images/pop/component/avatar_${id}.png`;
                 btn_buy.offAll();
                 btn_buy.on(Laya.Event.CLICK, this, () => {
                     Sail.director.popScene(

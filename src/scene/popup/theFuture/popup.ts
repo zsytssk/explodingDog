@@ -10,6 +10,9 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
     public name = 'the_future';
     public observer: Subscriber<string[]>;
     private link = {} as Link;
+    CONFIG = {
+        autoClose: 12000
+    }
     constructor() {
         super();
 

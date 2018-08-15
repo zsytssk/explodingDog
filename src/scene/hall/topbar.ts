@@ -54,6 +54,7 @@ export class TopBar extends ui.hall.topbarUI {
             GM.isShowBtnBack_out &&
             GM.btnBackCall_out
         ) {
+            this.btn_rank.x = 175;
             this.btnBack.visible = true; // 显示返回按钮
             this.btnBack.on(Laya.Event.CLICK, this, () => {
                 GM.btnBackCall_out();
