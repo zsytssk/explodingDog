@@ -317,21 +317,28 @@ export function browserSupportCopy() {
 }
 
 let textArea;
+let promise_data = {} as any;
 export function copy(txt) {
-    textArea = document.createElement('textarea');
-    textArea.style.position = 'fixed';
-    textArea.style.top = '-100px';
-    textArea.style.left = '-100px';
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = '0px';
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-    textArea.value = txt;
-    document.body.appendChild(textArea);
-    textArea.select();
+    return new Promise((resolve, reject) => {
+        textArea = document.createElement('textarea');
+        textArea.style.position = 'fixed';
+        textArea.style.top = '-100px';
+        textArea.style.left = '-100px';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0px';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = txt;
+        document.body.appendChild(textArea);
+        textArea.select();
+        promise_data = {
+            resolve,
+            reject
+        }
+    })
 }
 document.querySelector('body').addEventListener('touchend', () => {
     setTimeout(() => {
@@ -342,7 +349,13 @@ document.querySelector('body').addEventListener('touchend', () => {
             const successful = document.execCommand('copy');
             const msg = successful ? 'successful' : 'unsuccessful';
             log('Copying text command was ' + msg);
+            if (promise_data.resolve) {
+                promise_data.resolve();
+            }
         } catch (err) {
+            if (promise_data.reject) {
+                promise_data.reject();
+            }
             log('Oops, unable to copy');
         }
         document.body.removeChild(textArea);

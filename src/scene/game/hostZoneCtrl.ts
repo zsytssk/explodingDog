@@ -10,6 +10,7 @@ import {
 } from '../../utils/tool';
 import { CONFIG } from '../../data/config';
 import { scale_in, slide_left_in } from '../../mcTree/utils/animate';
+import { PopupTip } from '../popup/popupTip';
 interface Link {
     view: ui.game.hostZone.mainUI;
     card_type: Laya.ViewStack;
@@ -98,7 +99,10 @@ export class HostZoneCtrl extends BaseCtrl {
             );
         });
         btn_copy.on(Laya.Event.CLICK, this, () => {
-            copy(`${link_url}#room_id=${room_id_text.text}`);
+            // copy(`${link_url}#room_id=${room_id_text.text}`).then(() => {
+            copy(room_id_text.text).then(() => {
+                Sail.director.popScene(new PopupTip('已复制房间号，请粘贴给好友。'));
+            });
         });
     }
     public async show(room_id: string, is_cur_create: boolean) {
