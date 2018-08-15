@@ -20,7 +20,6 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
                 this.close();
             });
         });
-        Laya.SoundManager.playSound(getSoundPath('exploding'));
         this.ani.visible = true;
         this.ani.once(Laya.Event.STOPPED, this, () => {
             this.ani.play('wait', true);

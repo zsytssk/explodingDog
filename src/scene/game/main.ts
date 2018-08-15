@@ -325,6 +325,7 @@ export class GameCtrl extends BaseCtrl {
         this.link.quick_start_ctrl.countDown(data.roomInfo.remainTime);
         this.calcCurSeatId(data.userList);
         this.model.updatePlayers(data.userList);
+        this.link.quick_start_ctrl.setTxt();
     }
     private calcCurSeatId(user_list: UserData[]) {
         if (this.cur_seat_id) {
@@ -408,6 +409,7 @@ export class GameCtrl extends BaseCtrl {
             this.outRoom();
         } else {
             this.model.removePlayer(data.userId);
+            this.link.quick_start_ctrl.setTxt();
         }
     }
     /** 添加用户 */
@@ -555,6 +557,7 @@ export class GameCtrl extends BaseCtrl {
         const popupUserExploded = new PopupUserExploded();
         popupUserExploded.updateData(data);
         this.model.playerExploding(data);
+        Laya.SoundManager.playSound(getSoundPath('exploding'));
         if (isCurPlayer(explodeUserId)) {
             const takeExplode = new PopupTakeExplode();
             takeExplode.onClosed = () => {
@@ -701,5 +704,8 @@ export class GameCtrl extends BaseCtrl {
     /** 剩余张数 */
     public getRemainCardNum() {
         return this.model.remain_card;
+    }
+    public getPlayerNum() {
+        return this.model.getPlayerNum();
     }
 }
