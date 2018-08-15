@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":45,
-    "selecteID":47,
+    "selectedBox":47,
+    "selecteID":34,
     "referenceLines":null,
     "props":{"width":884,"sceneColor":"#ffffff","height":636,"appendProps":"laya/pages/effect/scaleBtn.prop"},
     "nodeParent":-1,
@@ -108,13 +108,14 @@
                                     "props":{"y":0,"x":0,"var":"intro_box"},
                                     "nodeParent":45,
                                     "label":"Box(intro_box)",
-                                    "isOpen":null,
+                                    "isOpen":true,
                                     "isDirectory":true,
                                     "isAniNode":true,
                                     "hasChild":true,
                                     "compId":47,
                                     "child":[
                                         {
+                                            "x":75,
                                             "type":"Image",
                                             "props":{"y":0,"x":0,"width":663,"var":"content","skin":"images/pop/buy/dance.png"},
                                             "nodeParent":47,
@@ -124,7 +125,8 @@
                                             "hasChild":false,
                                             "compId":34,
                                             "child":[
-                                                ]
+                                                ],
+                                            "$HIDDEN":false
                                         }]
                                 }]
                         }]

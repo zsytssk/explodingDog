@@ -13,6 +13,7 @@ export const cmd = {
     status_change: 'status_change',
     update_bill_board: 'update_bill_board',
     update_turn_arrows: 'update_turn_arrows',
+    show_game_over: 'show_game_over'
 };
 
 /** 牌的类型  */
@@ -29,6 +30,7 @@ export const GAME_STATUS = {
     INIT: 0,
     STARTING: 2,
     PLAYING: 3, // tslint:disable-line:object-literal-sort-keys
+    GAME_OVER: 4
 };
 export type GameType = ValOfObj<typeof GAME_TYPE>;
 /** 游戏类型: 快速匹配 房主创建 */
@@ -116,6 +118,9 @@ export class GameModel extends BaseEvent {
         this.game_type = game_type as GameType;
         this.setCardType(card_no);
         this.setGameStatus(status_no);
+        if (status_no == GAME_STATUS.GAME_OVER) {
+            this.trigger(cmd.show_game_over, data.gameOverData);
+        }
     }
     /**  设置游戏状态 */
     public setGameStatus(status: GameStatus) {
