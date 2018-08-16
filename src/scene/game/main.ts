@@ -266,6 +266,13 @@ export class GameCtrl extends BaseCtrl {
                 this.link.card_heap_ctrl.setRemainCard(data.remain_card);
             },
         );
+        this.onModel(
+            game_cmd.show_game_over, (data) => {
+                const gameOver = new PopupGameOver(this);
+                gameOver.updateView(data);
+                Sail.director.popScene(gameOver);
+            }
+        )
     }
     private resize() {
         const { width, height } = Laya.stage;
