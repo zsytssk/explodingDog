@@ -1,5 +1,5 @@
 import { CMD } from '../../../data/cmd';
-import { getChildrenByName, queryClosest } from '../../../mcTree/utils/zutil';
+import { getChildrenByName, queryClosest, log } from '../../../mcTree/utils/zutil';
 import { Type } from '../../popup/theFuture/popup';
 import { theFuture } from '../../popup/theFuture/theFuture';
 import { GameCtrl } from '../main';
@@ -122,7 +122,7 @@ export class CurSeatCtrl extends SeatCtrl {
     private theFuture(action_data: ObserverActionInfo) {
         const { action, data, observer } = action_data;
         const card_list = data.topCards;
-        theFuture(action as Type, card_list).subscribe(rdata => {
+        theFuture(action as Type, card_list, data.remainTime).subscribe(rdata => {
             if (action === 'alter_future') {
                 observer.next(rdata);
             }

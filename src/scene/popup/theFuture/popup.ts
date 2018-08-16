@@ -10,9 +10,6 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
     public name = 'the_future';
     public observer: Subscriber<string[]>;
     private link = {} as Link;
-    CONFIG = {
-        autoClose: 12000
-    }
     constructor() {
         super();
 
@@ -37,18 +34,24 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
          * alter_future需要在服务器收到命令再关闭
          */
         btn_confirm.on(Laya.Event.CLICK, this, () => {
-            if (this.type === 'see_future') {
-                Sail.director.closeByName('the_future');
-            } else {
-                this.replay();
-            }
+            Sail.director.closeByName('the_future');
+            // if (this.type === 'see_future') {
+            // } else {
+            //     this.replay();
+            // }
         });
     }
+    public closeEffect = new Laya.Handler(this, () => {
+        if (this.type === 'alter_future') {
+            this.replay();
+        }
+        Sail.director.dialog.closeEffect.runWith(this);
+    });
     public replay() {
         const { observer } = this;
         const { card_box_ctrl } = this.link;
         observer.next(card_box_ctrl.getCardsId());
-        Sail.director.closeByName(this.name);
+        // Sail.director.closeByName(this.name);
     }
     public updateView(
         type: Type,
