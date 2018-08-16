@@ -21,9 +21,13 @@ export class PopupTakeExplode extends ui.popup.popupTakeExplodeUI {
                 this.close();
             });
         });
-        this.ani.visible = true;
-        this.ani.player.once(Laya.Event.COMPLETE, this, () => {
-            this.ani.play('wait', true);
-        });
+        let ani = new Laya.Skeleton();
+        this.aniBox.addChild(ani);
+        ani.load('animation/exploding.sk', new Laya.Handler(this, () => {
+            ani.once(Laya.Event.STOPPED, this, () => {
+                ani.play('wait', true);
+            });
+            ani.play('show', false);
+        }));
     }
 }

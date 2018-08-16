@@ -92,7 +92,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             }
             const item = data.maxInfo[key];
             if (item && Object.keys(item).length !== 0) {
-                const maxInfo = new MaxInfo(key, item.nickname);
+                const maxInfo = new MaxInfo(key, ellipsisStr(item.nickname, 10));
                 maxInfo.top = 65 * index++;
                 this.maxInfoBox.addChild(maxInfo);
             }

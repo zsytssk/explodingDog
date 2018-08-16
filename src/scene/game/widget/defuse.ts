@@ -5,6 +5,9 @@ import { CurSeatCtrl } from '../seat/curSeat';
 import { getSoundPath } from '../../../utils/tool';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
+    CONFIG = {
+        shadowAlpha: 0.8
+    }
     public name = 'popup_defuse';
     public group = 'exploding';
     public remainTime: number; // 倒计时 s

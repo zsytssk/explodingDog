@@ -21,6 +21,7 @@ export interface Link extends BaseLink {
     btn_chat: Laya.Button;
     card_box_ctrl: CurCardBoxCtrl;
     card_box_wrap: Laya.Sprite;
+    card_box: Laya.Sprite;
 }
 
 export const cmd = {
@@ -41,7 +42,7 @@ export class CurSeatCtrl extends SeatCtrl {
     protected initLink() {
         super.initLink();
         const view = this.link.view;
-        const { player_box, btn_chat, card_box_wrap } = view;
+        const { player_box, btn_chat, card_box_wrap, card_box } = view;
         this.link.player_box = player_box;
         this.link.btn_chat = btn_chat;
 
@@ -50,6 +51,7 @@ export class CurSeatCtrl extends SeatCtrl {
             btn_chat,
             card_box_wrap,
             player_box,
+            card_box
         };
     }
     protected initEvent() {
@@ -207,5 +209,8 @@ export class CurSeatCtrl extends SeatCtrl {
     }
     protected shuffle() {
         this.link.card_box_ctrl.shuffle();
+    }
+    public resetCardBoxPos() {
+        this.link.card_box.x = 0;
     }
 }

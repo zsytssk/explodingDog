@@ -22,8 +22,8 @@ interface Link {
 }
 
 const share_title =
-    '捕鱼经典玩法，多人同场竞技，话费油卡万件商品轻松兑换等你来！';
-const share_msg = '1768游戏，捕鱼全新玩法，玩游戏赢话费油卡';
+    '炸弹狗';
+const share_msg = '我创建了房间【******】等你加入';
 // const share_icon = CONFIG.site_url + 'files/images/game/explodingdog/icon.png';
 const share_icon =
     'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png';
@@ -91,9 +91,10 @@ export class HostZoneCtrl extends BaseCtrl {
             Sail.io.emit(CMD.GAME_START);
         });
         btn_share.on(Laya.Event.CLICK, this, () => {
+            let msg = share_msg.replace('******', room_id_text.text);
             shareToWx(
                 share_title,
-                share_msg,
+                msg,
                 share_icon,
                 `${link_url}#room_id=${room_id_text.text}`,
             );
