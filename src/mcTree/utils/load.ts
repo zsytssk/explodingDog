@@ -68,8 +68,7 @@ class LoadUtil {
         }
 
         this.loading_item = load_queue.shift();
-        const { res, loading_fun, status } = this.loading_item;
-        const resolve = this.loading_item.resolve;
+        const { res, loading_fun, status, resolve } = this.loading_item;
 
         const loading_item = this.loading_item;
         const new_resolve = () => {
@@ -95,33 +94,27 @@ class LoadUtil {
             return;
         }
 
-        /** 加载完成执行函数 */
-        const loaded_callback = new_resolve;
-
-        this.loadItem(res, loaded_callback, loading_fun);
+        this.loadItem(res, loading_fun).then(new_resolve);
     }
     /**
      * 加载单个item资源
      * @param res 加载的资源
      * @param callback 加载的完成之后便执行的返回函数
      */
-    private loadItem(
-        res: any[],
-        loaded_callback: FuncVoid,
-        loading_callback: FunLoading,
-    ) {
+    private async loadItem(res: any[], loading_fun: FunLoading) {
         /** 空的资源列表 直接执行返回函数  */
         if (!res.length) {
-            loaded_callback();
             return;
         }
         /** 如果是单个资源对象, 直接执行返回函数  */
         if (res[0] && res[0].url) {
-            Laya.loader.load(
-                res,
-                new Laya.Handler(this, loaded_callback),
-                new Laya.Handler(this, loading_callback),
-            );
+            await new Promise((resolve, reject) => {
+                Laya.loader.load(
+                    res,
+                    new Laya.Handler(this, resolve),
+                    new Laya.Handler(this, loading_fun),
+                );
+            });
             return;
         }
         /** 传入的资源不是res[]格式  */
@@ -131,30 +124,21 @@ class LoadUtil {
         }
 
         const len = res.length;
-        let loaded_item_num = 0;
-        let loading_progress_callback = null;
-
-        if (loading_callback) {
-            loading_progress_callback = progress => {
-                loading_callback((loaded_item_num + progress) / len);
+        let loading_progress_fun;
+        if (loading_fun) {
+            loading_progress_fun = progress => {
+                loading_fun((loaded_num + progress) / len);
             };
         }
 
-        for (let i = len - 1; i >= 0; i--) {
-            this.loadItem(
-                res[i],
-                () => {
-                    loaded_item_num++;
-                    if (loading_callback) {
-                        loading_callback(loaded_item_num / len);
-                    }
-
-                    if (loaded_item_num === len) {
-                        loaded_callback();
-                    }
-                },
-                loading_progress_callback,
-            );
+        let loaded_num = 0;
+        for (const item of res.reverse()) {
+            await this.loadItem(item, loading_progress_fun).then(() => {
+                loaded_num++;
+                if (loading_fun) {
+                    loading_fun(loaded_num / len);
+                }
+            });
         }
     }
     /**  停止正在队列加载  */
