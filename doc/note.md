@@ -6,7 +6,6 @@
 * @ques card 默认 设置 index 设置他的位置
     * 这样不需要在tweenMove设置x, 不需要copyed_face
 
-
 * @note release 只需要 release all libs 了
 
 
