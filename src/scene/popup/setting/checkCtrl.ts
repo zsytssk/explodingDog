@@ -12,7 +12,7 @@ type Link = {
 };
 type Status = 'checked' | 'uncheck';
 const sign_pos = {
-    end: 135,
+    end: 90,
     start: 0,
 };
 export const cmd = {
@@ -63,7 +63,7 @@ export class CheckCtrl extends BaseCtrl {
         this.status = status;
         const sign_x = status === 'checked' ? sign_pos.end : sign_pos.start;
         const progress_value = status === 'checked' ? 1 : 0;
-        const time = isInit ? 0 : null;
+        const time = isInit ? 0 : 200;
         tween({
             end_props: { x: sign_x },
             sprite: sign_node,
