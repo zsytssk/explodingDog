@@ -16,8 +16,12 @@ type Link = {
 };
 export class PopupCharge extends ui.popup.popupChargeUI {
     public name = 'charge';
+    public group = 'charge';
     private link = {} as Link;
     private actions: SailIoAction;
+    public CONFIG = {
+        closeByGroup: true,
+    };
     constructor() {
         super();
         this.init();

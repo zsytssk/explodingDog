@@ -210,7 +210,7 @@ export class CardCtrl extends CardBaseCtrl {
             if (!copyed_face) {
                 view.x = x;
             } else {
-                time = 700;
+                time = 300;
             }
             end_props = {
                 ...end_props,

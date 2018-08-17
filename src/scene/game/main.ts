@@ -221,7 +221,7 @@ export class GameCtrl extends BaseCtrl {
 
         btn_back.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(
-                new PopupPrompt('是否要退出游戏？', () => {
+                new PopupPrompt('是否要退出桌子？', () => {
                     Sail.io.emit(CMD.OUT_ROOM);
                 }),
             );

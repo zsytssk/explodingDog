@@ -32,10 +32,12 @@ type AvatarData = PartialAll<
 
 export class PopupShop extends ui.popup.popupShopUI {
     public name = 'shop';
+    public group = 'shop';
     private link = {} as Link;
     private actions: SailIoAction;
     public CONFIG = {
         closeOnSide: true,
+        closeByGroup: true
     };
     constructor() {
         super();
