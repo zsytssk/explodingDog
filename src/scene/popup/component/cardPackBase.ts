@@ -9,6 +9,7 @@ export type CardTypeData = {
     card_id: string;
     price: number;
     is_buy: boolean;
+    unLockLevel: number;
 };
 export class CardPackCtrl {
     protected type: string;

@@ -253,12 +253,14 @@ export class PopupShop extends ui.popup.popupShopUI {
                 itemList: type,
                 itemId: card_id,
                 purchased: is_buy,
+                unLockLevel
             } = card_data;
             card_type_data.push({
                 card_id,
                 is_buy,
                 price,
                 type,
+                unLockLevel
             });
         }
         card_type_list.dataSource = card_type_data;

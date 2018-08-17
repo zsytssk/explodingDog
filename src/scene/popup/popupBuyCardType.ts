@@ -6,6 +6,7 @@ type Data = {
     card_id: string;
     price: number;
     is_buy: boolean;
+    unLockLevel: number;
 };
 const type_map = {
     2003: {
@@ -62,13 +63,19 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
             btn_buy,
             buy_sucess,
             intro_box,
+            levelLabel,
+            levelPanel
         } = this;
-        const { card_id, price, is_buy } = data;
+        const { card_id, price, is_buy, unLockLevel } = data;
         const type_str = type_map[card_id].en;
         title.skin = `images/pop/buy/${type_str}_title.png`;
         content.skin = `images/pop/buy/${type_str}.png`;
         cost.text = price + '';
-
+        if (unLockLevel != 0) {
+            levelLabel.text = unLockLevel.toString();
+        } else {
+            levelPanel.visible = false;
+        }
         if (is_buy) {
             btn_buy.visible = false;
             buy_sucess.visible = true;

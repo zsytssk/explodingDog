@@ -9,13 +9,15 @@ export class CardPack extends ui.popup.component.cardPackUI {
     }
 
     protected init(data) {
-        const { isLock, buyInfo, cardType, staminaCost } = data;
+        const { isLock, buyInfo, cardType, staminaCost, unLockLevel } = data;
         const { pack_base } = this;
 
-        // (this.chooseBtn as Laya.Image).mouseEnabled = !isLock;
         this.chooseBtn.visible = !isLock;
         this.btnLock.visible = isLock;
-        if (staminaCost) {
+        if (isLock) {
+            this.costIcon.skin = 'images/component/icon_diamond.png';
+            this.staminaLabel.text = buyInfo.price;
+        } else if (staminaCost) {
             this.staminaLabel.text = `${Math.abs(staminaCost)}`;
         }
 
@@ -24,6 +26,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
             is_buy: !data.isLock,
             price: buyInfo.price,
             type: cardType,
+            unLockLevel: unLockLevel
         };
         const card_pack_ctrl = new CardPackCtrl(pack_base, pack_data, () => {
             this.chooseBtn.visible = true;

@@ -40,6 +40,7 @@ export const RES = {
             url: 'images/component/cardType/icon_card3.png',
             type: Laya.Loader.IMAGE,
         },
+        { url: 'font/buy_card.fnt', type: Laya.Loader.FONT },
     ],
     HALL: [
         { url: 'images/component/bg.jpg', type: Laya.Loader.IMAGE },

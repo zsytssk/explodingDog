@@ -176,6 +176,7 @@ type GetMAllData = {
             itemList: number;
             perPrice: 50;
             purchased: 1;
+            unLockLevel: number
         }[];
         stamina: {
             itemId: number;
