@@ -69,9 +69,11 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
                 if (user.updateInfo.level.isChange) {
                     this.onOpenFuns.push(avatar.levelUp.bind(avatar));
                 }
-                if (user.updateInfo.danGrading.isChange) {
+                const danGradingData = user.updateInfo.danGrading;
+                if (danGradingData.isChange) {
+                    let isAdvance = danGradingData.new > danGradingData.old;
                     this.onOpenFuns.push(() => {
-                        Sail.director.popScene(new popupRankChange(user.danGrading));
+                        Sail.director.popScene(new popupRankChange(user.danGrading, isAdvance));
                     });
                 }
                 this.levLabel.text = `Lv:${user.level}`;

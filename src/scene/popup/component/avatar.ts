@@ -9,14 +9,16 @@ export class Avatar extends ui.popup.component.avatarUI {
         super();
         this.init(data);
     }
-    init({ avatar, nickname, isDead, isWinUser, getScore, userId, danGrading }) {
+    init({ avatar, nickname, isDead, isWinUser, getScore, userId, danGrading,score }) {
         this.userId = userId;
         this.avatar.skin = isDead ? 'images/game/avatar_die.png' : getAvatar(avatar);
         this.username.changeText(nickname);
         if (getScore) {
             this.score.visible = true;
             this.score.zOrder = 5;
-            this.score.text = getScore > 0 ? `积分+${getScore}` : `积分${getScore}`;
+            let text  = '积分'+score;
+            text+= getScore > 0 ? `(+${getScore})` : `(${getScore})`;
+            this.score.text =text
         }
         if (danGrading) {
             let rank = new rankIcon(danGrading);

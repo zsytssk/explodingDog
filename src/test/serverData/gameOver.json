@@ -4,20 +4,22 @@
     "res": {
         "list": [
             {
-                "userId": "3003",
-                "nickname": "3003",
-                "avatar": "101",
-                "isWinUser": 0,
-                "getExp": 25,
-                "getScore": -1,
-                "score": 995,
+                "userId": "3002",
+                "nickname": "3002",
+                "avatar": "104",
+                "isWinUser": 1,
+                "getExp": 10,
+                "getScore": 1,
+                "score": 975,
                 "danGrading": 9,
-                "level": 2,
-                "currentExp": 290,
-                "nextLvlExp": 420,
+                "level": 6,
+                "currentExp": 725,
+                "nextLvlExp": 2400,
                 "updateInfo": {
                     "danGrading": {
-                        "isChange": 1
+                        "isChange": 1,
+                        "new": 3,
+                        "old": 4
                     },
                     "level": {
                         "isChange": 0
@@ -25,17 +27,80 @@
                 }
             },
             {
-                "userId": "3004",
-                "nickname": "blue",
+                "userId": "3003",
+                "nickname": "3003",
                 "avatar": "101",
                 "isWinUser": 0,
-                "getExp": 25,
+                "getExp": 15,
                 "getScore": -1,
-                "score": 1076,
-                "danGrading": 10,
-                "level": 3,
-                "currentExp": 30,
-                "nextLvlExp": 750,
+                "score": 996,
+                "danGrading": 9,
+                "level": 5,
+                "currentExp": 380,
+                "nextLvlExp": 1740,
+                "updateInfo": {
+                    "danGrading": {
+                        "isChange": 0
+                    },
+                    "level": {
+                        "isChange": 0
+                    }
+                }
+            },
+            {
+                "userId": "3003",
+                "nickname": "3003",
+                "avatar": "101",
+                "isWinUser": 0,
+                "getExp": 15,
+                "getScore": -1,
+                "score": 996,
+                "danGrading": 9,
+                "level": 5,
+                "currentExp": 380,
+                "nextLvlExp": 1740,
+                "updateInfo": {
+                    "danGrading": {
+                        "isChange": 0
+                    },
+                    "level": {
+                        "isChange": 0
+                    }
+                }
+            },
+            {
+                "userId": "3003",
+                "nickname": "3003",
+                "avatar": "101",
+                "isWinUser": 0,
+                "getExp": 15,
+                "getScore": -1,
+                "score": 996,
+                "danGrading": 9,
+                "level": 5,
+                "currentExp": 380,
+                "nextLvlExp": 1740,
+                "updateInfo": {
+                    "danGrading": {
+                        "isChange": 0
+                    },
+                    "level": {
+                        "isChange": 0
+                    }
+                }
+            },
+            {
+                "userId": "3003",
+                "nickname": "3003",
+                "avatar": "101",
+                "isWinUser": 0,
+                "getExp": 15,
+                "getScore": -1,
+                "score": 996,
+                "danGrading": 9,
+                "level": 5,
+                "currentExp": 380,
+                "nextLvlExp": 1740,
                 "updateInfo": {
                     "danGrading": {
                         "isChange": 0
@@ -51,25 +116,16 @@
                 "userId": "3003",
                 "nickname": "3003",
                 "avatar": "101",
-                "count": 3
+                "count": 14
             },
             "attack": {
-                "userId": "3003",
-                "nickname": "3003",
-                "avatar": "101",
-                "count": 3
+                "userId": "3002",
+                "nickname": "3002",
+                "avatar": "104",
+                "count": 1
             },
-            "defuse": {
-                "userId": "3003",
-                "nickname": "3003",
-                "avatar": "101",
-                "count": 3
-            }
+            "defuse": {}
         },
-        "isUserCreate": 0,
-        "__explodedUserIds": [
-            "3003",
-            "3004"
-        ]
+        "isUserCreate": 0
     }
 }

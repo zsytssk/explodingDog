@@ -193,12 +193,7 @@ export class GuideStep extends ui.guide.stepUI {
                         });
                     });
                 } else {
-                    this.moveCard(card.index, 1);
-                    Laya.Tween.to(card, { x: card.originPoint.x, y: card.originPoint.y }, 100, null, new Laya.Handler(this, () => {
-                        let point = cardBox.globalToLocal(new Laya.Point(card.x, card.y));
-                        card.pos(point.x, point.y);
-                        cardBox.addChild(card);
-                    }));
+                    this.drawAndSortCard(card);
                 }
             });
             card.on(Laya.Event.DRAG_START, this, () => {
@@ -225,13 +220,9 @@ export class GuideStep extends ui.guide.stepUI {
             //成功抓牌
             let cardBoxPoint = cardBox.localToGlobal(new Laya.Point(0, 0));
             if (drawCard.x > cardBoxPoint.x - 100 && drawCard.y > cardBoxPoint.y - 100) {
-                let index = Math.floor((Math.abs(drawCard.x - cardBoxPoint.x)) / 270);
+                // let index = Math.floor((Math.abs(drawCard.x - cardBoxPoint.x)) / 270);
                 drawCard.skin = 'images/component/card/defuse.png';
-                Laya.Tween.to(drawCard, {
-                    x: cardBoxPoint.x + 140 + index * 160,
-                    y: cardBoxPoint.y + 135
-                }, 100);
-                this.moveCard(index, 1);
+                this.drawAndSortCard(drawCard);
                 this.successAni.visible = true;
                 this.successAni.play(0, false);
                 this.setIndex(3);
@@ -240,6 +231,7 @@ export class GuideStep extends ui.guide.stepUI {
                     this.event(this.FINISH);
                 });
                 this.cards.push(drawCard);
+                this.resetZorder();
             } else {
                 Laya.Tween.to(drawCard, { x: drawCard.originPoint.x, y: drawCard.originPoint.y }, 100, null, new Laya.Handler(this, () => {
                     let point = cardbacks.globalToLocal(new Laya.Point(drawCard.x, drawCard.y));
@@ -256,7 +248,7 @@ export class GuideStep extends ui.guide.stepUI {
      * @param type 0:删除.1:增加
      */
     moveCard(index, type) {
-        getChildren(this.cardBox).forEach(card => {
+        this.cards.forEach(card => {
             if (type == 0 && card.index > index) {
                 card.index -= 1;
                 Laya.Tween.to(card, { x: 140 + 160 * card.index }, 300);
@@ -264,12 +256,45 @@ export class GuideStep extends ui.guide.stepUI {
                 card.index += 1;
                 Laya.Tween.to(card, { x: 140 + 160 * card.index }, 300);
             }
-        })
+        });
     }
+
+    /**插到手牌 */
+    private drawAndSortCard(card) {
+        const cardBox = this.cardBox;
+        let point = cardBox.globalToLocal(new Laya.Point(card.x, card.y));
+        card.pos(point.x, point.y);
+        cardBox.addChild(card);
+        let index = Math.floor((point.x - 140) / 160) + 1;
+        if (index < 0) {
+            index = 0;
+        } else if (index > 3) {
+            index = 3
+        }
+        card.index = index;
+        if (this.cards.indexOf(card) != -1) {
+            this.cards.splice(this.cards.indexOf(card), 1);
+        }
+        this.moveCard(card.index, 1);
+        Laya.Tween.to(card, { x: 140 + 160 * card.index, y: 142 }, 100, null, new Laya.Handler(this, () => {
+            this.cards.push(card);
+            this.resetZorder();
+        }));
+    }
+
+
     destroy() {
         this.cards.forEach(card => {
             card.destroy();
         });
         super.destroy();
     }
+
+    private resetZorder() {
+        this.cards.forEach(item => {
+            item.zOrder = item.index;
+        }
+        )
+    }
+
 }

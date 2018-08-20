@@ -73,12 +73,11 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         cost.text = price + '';
         if (unLockLevel != 0) {
             levelLabel.text = unLockLevel.toString();
-        } else {
-            levelPanel.visible = false;
         }
         if (is_buy) {
             btn_buy.visible = false;
             buy_sucess.visible = true;
+            levelPanel.visible = false;
         }
         Laya.timer.frameOnce(30, this, () => {
             intro_box.height = content.height;

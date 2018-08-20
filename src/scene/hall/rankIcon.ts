@@ -18,6 +18,7 @@ export class rankIcon extends Laya.Box {
         let icon = 0;//段位
         let level = 0;//级别
         let levelCount;
+        rank = rank > 22 ? 22 : rank;//段位最高22
         if (rank < 16) {//青铜、白银、黄金各有5级
             icon = Math.ceil(rank / 5) - 1;
             level = (rank - 1) % 5;
