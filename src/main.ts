@@ -56,7 +56,9 @@ Sail.onStart = () => {
         Sail.director.runScene(new scene_class());
         Sail.io.unregister(CMD.GET_USER_INFO);
     });
-    Sail.io.emit(CMD.GET_USER_INFO);
+    Laya.timer.once(500, this, () => {
+        Sail.io.emit(CMD.GET_USER_INFO);
+    })
 };
 
 Sail.run({
