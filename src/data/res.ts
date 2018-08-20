@@ -102,6 +102,7 @@ export const RES = {
         { url: 'images/component/bg_tip.png', type: Laya.Loader.IMAGE },
         { url: 'font/join_room.fnt', type: Laya.Loader.FONT },
         { url: 'font/getFood.fnt', type: Laya.Loader.FONT },
+        { url: 'images/pop/setting/bg.png', type: Laya.Loader.IMAGE },
     ],
     GUIDE: [
         { url: 'res/atlas/images/guide.atlas', type: Laya.Loader.ATLAS },
