@@ -27,6 +27,7 @@ type UserData = {
     newAnnoyCards?: string[];
     annoyCardsIdx?: number[];
     hasBlindEffect?: string;
+    buyInfo?: any;
 };
 
 type UpdateUserData = {

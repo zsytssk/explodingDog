@@ -50,6 +50,9 @@ Sail.onStart = () => {
         } else {
             scene_class = GameWrap;
         }
+        if (data.buyInfo && data.buyInfo.succ == 1) {
+            CONFIG.is_buy = true;
+        }
         Sail.director.runScene(new scene_class());
         Sail.io.unregister(CMD.GET_USER_INFO);
     });

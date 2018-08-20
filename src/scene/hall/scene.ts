@@ -52,6 +52,11 @@ export class Hall extends Sail.Scene {
         }
 
         this.initSound();
+
+        if (CONFIG.is_buy) {
+            Sail.director.popScene(new PopupTip('充值成功'));
+            CONFIG.is_buy = false;
+        }
     }
 
     initSound() {
