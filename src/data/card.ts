@@ -275,7 +275,7 @@ export const CARD_MAP = {
         color: 10,
         count: 1,
         icon: 'shuffle',
-        intro: `卡牌打出后,所有人在出牌区看到的都是使用了【洗牌】,实际上没有洗牌.打出【假装洗牌】玩家本回合摸牌,获得卡堆里随机的一`,
+        intro: `卡牌打出后,其他玩家在出牌区看到的都是使用了【洗牌】,实际上没有洗牌.打出【假装洗牌】玩家本回合摸牌,获得卡堆里随机的一`,
         name: CARD_NAME.FAKE_SHUFFLE,
         name_zh: '假装洗牌',
         show_count: false,

@@ -52,9 +52,6 @@ export class CurCardCtrl extends CardCtrl {
         if (this.is_selected) {
             return false;
         }
-        if (this.show_tip) {
-            return false;
-        }
         const { card_box } = this.link;
         if (card_box.isMove()) {
             return false;
@@ -158,6 +155,11 @@ export class CurCardCtrl extends CardCtrl {
         this.is_touched = false;
         this.start_pos = {} as Point;
         if (!this.is_move) {
+            if (this.show_tip) {//提示状态直接出牌
+                this.hideTip();
+                this.calcDiscard();
+                return;
+            }
             this.toggleTip();
             return;
         }
@@ -172,21 +174,16 @@ export class CurCardCtrl extends CardCtrl {
         this.is_touched = false;
         this.is_move = false;
 
-        const center_y = (sprite.height * scale) / 2;
-        const y1 = 0 + center_y;
-        const y2 = -100 + center_y;
-        const start_props = { y: y1 };
-        const end_props = { y: y2 };
 
-        card_box.sortCard();
-        tween({
-            end_props,
-            sprite,
-            start_props,
-            time: 100,
-        }).then(() => {
-            this.handleSelectedEvent();
-        });
+        this.handleSelectedEvent();
+    }
+    /**
+     * 出牌时隐藏提示
+     */
+    private hideTip() {
+        this.show_tip = false;
+        this.getCardIntro().hide();
+        clearTimeout(this.tip_time_out);
     }
     /** 处理选中之后的事件 */
     private handleSelectedEvent() {
@@ -203,7 +200,9 @@ export class CurCardCtrl extends CardCtrl {
         view.pos(pos.x, pos.y);
         view.startDrag();
         card_box.has_card_drag = true;
-
+        if (this.show_tip) {
+            this.hideTip();
+        }
         this.onNode(Laya.stage, Laya.Event.MOUSE_UP, this.unSelect);
         this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
     }

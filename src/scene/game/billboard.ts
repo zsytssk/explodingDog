@@ -63,11 +63,11 @@ export class BillBoardCtrl {
         cardId,
         step = 1,
     }: {
-        fromUser: PlayerModel;
-        toUser?: PlayerModel;
-        cardId: string;
-        step?: number;
-    }) {
+            fromUser: PlayerModel;
+            toUser?: PlayerModel;
+            cardId: string;
+            step?: number;
+        }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = fromUser.nickname;
@@ -122,5 +122,12 @@ export class BillBoardCtrl {
     public hide() {
         const { view } = this.link;
         view.visible = false;
+    }
+    public reset() {
+        const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
+        avatarTo.graphics.clear();
+        avatarFrom.graphics.clear();
+        cardIcon.graphics.clear();
+        operationTip.text = '';
     }
 }

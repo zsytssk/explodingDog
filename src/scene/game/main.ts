@@ -617,7 +617,8 @@ export class GameCtrl extends BaseCtrl {
             docker_ctrl,
             turn_arrow_ctrl,
             quick_start_ctrl,
-            seat_ctrl_list
+            seat_ctrl_list,
+            bill_board_ctrl
         } = this.link;
 
         alarm_ctrl.reset();
@@ -627,6 +628,7 @@ export class GameCtrl extends BaseCtrl {
         docker_ctrl.reset();
         discard_zone_ctrl.reset();
         turn_arrow_ctrl.reset();
+        bill_board_ctrl.reset();
         quick_start_ctrl.hideCountDown();
         (seat_ctrl_list[0] as CurSeatCtrl).resetCardBoxPos();
         this.cur_seat_id = undefined;
