@@ -76,14 +76,19 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
                         Sail.director.popScene(new popupRankChange(user.danGrading, isAdvance));
                     });
                 }
-                this.levLabel.text = `Lv:${user.level}`;
-                tween({
-                    sprite: this.progressBar,
-                    start_props: { value: 0 },
-                    end_props: { value: user.currentExp / user.nextLvlExp },
-                    time: 1000,
-                    ease_fn: Laya.Ease.cubicInOut,
-                });
+                if (data.isUserCreate) {
+                    this.levLabel.visible = false;
+                    this.progressBar.visible = false;
+                } else {
+                    this.levLabel.text = `Lv:${user.level}`;
+                    tween({
+                        sprite: this.progressBar,
+                        start_props: { value: 0 },
+                        end_props: { value: user.currentExp / user.nextLvlExp },
+                        time: 1000,
+                        ease_fn: Laya.Ease.cubicInOut,
+                    });
+                }
             }
         });
         // maxinfo
