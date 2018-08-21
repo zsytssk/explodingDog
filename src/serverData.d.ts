@@ -226,10 +226,12 @@ type GetRankListData = {
 
 type DogConfigData = {
     userId: string;
-    time: [string, string][];
-    getCount: number;
-    totalCount: number;
     stamina: number;
+    list: {
+        time: string[];
+        hasGot: number;
+        canGet: number;
+    }[];
 };
 
 type GetDogFoodData = {

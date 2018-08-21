@@ -5,26 +5,17 @@ import { PopupTip } from './popupTip';
 export class PopupGetFood extends ui.popup.popupGetFoodUI {
     name = 'popup_get_food';
     actions = {};
+    private clickBtn;//点击后的领取按钮
+    CONFIG = {
+        closeOnSide: true
+    }
     constructor() {
         super();
         this.init();
     }
 
     init() {
-        this.initLink();
         this.initEvent();
-    }
-
-    private initLink() {
-        const { txt_stamina, txt_time, txt_count, btn_get } = this;
-
-        this.link = {
-            ...this.link,
-            txt_stamina,
-            txt_time,
-            txt_count,
-            btn_get,
-        };
     }
 
     private initEvent() {
@@ -34,27 +25,27 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.DOG_FOOD_CONFIG);
-
-        const { btn_get } = this.link;
-        btn_get.on(Laya.Event.CLICK, this, () => {
-            Sail.io.emit(CMD.GET_DOG_FOOD);
-        });
     }
 
     private renderData(data: DogConfigData) {
-        const { txt_time, txt_stamina, txt_count } = this.link;
-        const { time, stamina, getCount, totalCount } = data;
-        let timeStr = '';
-        for (let arr of time) {
-            let [t1, t2] = arr;
-            if (timeStr.length) {
-                timeStr += '、';
+        data.list.forEach((item, index) => {
+            let panel = new ui.popup.component.getFoodUI();
+            panel.time.text = item.time[0] + '-' + item.time[1];
+            panel.stamina.text = data.stamina.toString();
+            if (item.hasGot) {
+                panel.btnGet.skin = 'images/pop/getFood/btn_got.png';
+                panel.btnGet.mouseEnabled = false;
+            } else if (item.canGet) {
+                panel.btnGet.on(Laya.Event.CLICK, this, () => {
+                    this.clickBtn = panel.btnGet;
+                    Sail.io.emit(CMD.GET_DOG_FOOD);
+                });
+            } else {
+                panel.btnGet.disabled = true;
             }
-            timeStr += `${t1}-${t2}`;
-        }
-        txt_time.text = timeStr;
-        txt_stamina.text = stamina;
-        this.updateCountStatus({ getCount, totalCount });
+            panel.pos(index * 280, 0);
+            this.panelBox.addChild(panel);
+        });
     }
 
     private getDogFood(data: GetDogFoodData, code, msg) {
@@ -64,17 +55,8 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
             );
             return;
         }
-        // TODO: 领取后更新大厅的体力值数据
-        const { newStamina, getCount, totalCount } = data;
-        this.updateCountStatus({ getCount, totalCount });
-    }
-
-    private updateCountStatus({ getCount, totalCount }) {
-        const { txt_count, btn_get } = this.link;
-        txt_count.text = `(${getCount}/${totalCount})`;
-        if (!totalCount || getCount >= totalCount) {
-            btn_get.disabled = true;
-        }
+        this.clickBtn.skin = 'images/pop/getFood/btn_got.png';
+        this.clickBtn.mouseEnabled = false;
     }
 
     public destroy() {

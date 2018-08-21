@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":13,
-    "selecteID":18,
+    "selectedBox":1,
+    "selecteID":22,
     "referenceLines":null,
     "props":{"width":636,"sceneColor":"#f1e1e1","height":489},
     "nodeParent":-1,
@@ -66,133 +66,29 @@
         },
         {
             "x":15,
-            "type":"Button",
-            "props":{"y":373,"x":173,"width":278,"var":"btn_get","stateNum":1,"skin":"images/pop/component/btn_green.png","sizeGrid":"21,30,48,31","height":88},
+            "type":"Label",
+            "props":{"y":99,"width":339,"text":"每个时间段只可领取1次","height":44,"fontSize":32,"font":"Microsoft YaHei","color":"#ffffff","centerX":0,"align":"center"},
             "nodeParent":1,
-            "label":"Button(btn_get)",
-            "isOpen":true,
-            "isDirectory":true,
+            "label":"Label",
+            "isDirectory":false,
             "isAniNode":true,
-            "hasChild":true,
-            "compId":7,
+            "hasChild":false,
+            "compId":21,
             "child":[
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":15,"x":28,"skin":"images/pop/getFood/get.png"},
-                    "nodeParent":7,
-                    "label":"Image",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":19,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Label",
-                    "props":{"y":25,"x":119,"width":131,"var":"txt_count","text":"(0/2)","height":34,"fontSize":36,"font":"getFood"},
-                    "nodeParent":7,
-                    "label":"Label(txt_count)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":20,
-                    "child":[
-                        ]
-                }]
+                ]
         },
         {
             "x":15,
             "type":"Box",
-            "props":{"y":252,"x":142},
+            "props":{"y":155,"width":510,"var":"panelBox","height":231,"centerX":-24},
             "nodeParent":1,
-            "label":"Box",
-            "isOpen":true,
-            "isDirectory":true,
+            "label":"Box(panelBox)",
+            "isDirectory":false,
             "isAniNode":true,
-            "hasChild":true,
-            "compId":13,
+            "hasChild":false,
+            "compId":22,
             "child":[
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":26,"x":55,"skin":"images/pop/getFood/radius.png"},
-                    "nodeParent":13,
-                    "label":"Image",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":11,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"skin":"images/pop/getFood/icon_strength.png"},
-                    "nodeParent":13,
-                    "label":"Image",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":12,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Label",
-                    "props":{"y":39,"x":97,"width":191,"var":"txt_stamina","text":"0000","height":37,"fontSize":40,"color":"#ffffff","align":"center"},
-                    "nodeParent":13,
-                    "label":"Label(txt_stamina)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":18,
-                    "child":[
-                        ]
-                }]
-        },
-        {
-            "x":15,
-            "type":"Box",
-            "props":{"y":107,"x":69,"width":506,"pivotX":-1,"name":"intro","height":157},
-            "nodeParent":1,
-            "label":"Box(intro)",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":15,
-            "child":[
-                {
-                    "x":30,
-                    "type":"Label",
-                    "props":{"y":2,"x":35,"width":435,"var":"txt_time","text":"12:00-14:00、18:00-20:00","height":42,"fontSize":36,"font":"SimHei","color":"#ffde00"},
-                    "nodeParent":15,
-                    "label":"Label(txt_time)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":16,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"TextArea",
-                    "props":{"y":59,"x":35,"width":435,"text":"才可以领取,每个时间段只可以领取一次","leading":5,"height":102,"fontSize":36,"color":"#ffffff","align":"center"},
-                    "nodeParent":15,
-                    "label":"TextArea",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":17,
-                    "child":[
-                        ]
-                }]
+                ]
         }],
     "animations":[
         {

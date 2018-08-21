@@ -7,19 +7,40 @@
             "avatar": [
                 {
                     "itemId": 1003,
-                    "itemList": [109, 110, 111, 112, 113, 114],
+                    "itemList": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
                     "perPrice": 60,
                     "purchased": 0
                 },
                 {
                     "itemId": 1004,
-                    "itemList": [115, 116, 117, 118, 119, 120, 121],
+                    "itemList": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
                     "perPrice": 80,
                     "purchased": 0
                 },
                 {
                     "itemId": 1005,
-                    "itemList": [122, 123, 124, 125, 126],
+                    "itemList": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126
+                    ],
                     "perPrice": 100,
                     "purchased": 0
                 }
@@ -97,5 +118,49 @@
                 }
             ]
         }
+    }
+}
+
+{
+    "cmd": "dogFoodConfig",
+    "code": 200,
+    "res": {
+        "__newData": {
+            "userId": 3002,
+            "stamina": 10,
+            "list": [
+                {
+                    "time": [
+                        "08:30",
+                        "09:00"
+                    ],
+                    "hasGot": 0,
+                    "canGet": 0
+                },
+                {
+                    "time": [
+                        "17:30",
+                        "23:30"
+                    ],
+                    "hasGot": 0,
+                    "canGet": 1
+                }
+            ],
+            "getCount": 0
+        },
+        "userId": 3002,
+        "time": [
+            [
+                "08:30",
+                "09:00"
+            ],
+            [
+                "17:30",
+                "23:30"
+            ]
+        ],
+        "stamina": 10,
+        "getCount": 0,
+        "totalCount": 2
     }
 }
