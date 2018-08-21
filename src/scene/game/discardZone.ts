@@ -91,7 +91,7 @@ export class DiscardZoneCtrl extends BaseCtrl {
         const len = card_list.length;
         for (let i = len - 1; i >= 0; i--) {
             card_list[i].destroy();
-            card_list.splice(i, 0);
+            card_list.splice(i, 1);
         }
     }
 }
