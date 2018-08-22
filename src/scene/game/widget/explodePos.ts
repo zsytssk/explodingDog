@@ -6,6 +6,7 @@ import { GameCtrl } from "../main";
 export class ExplodePosCtrl extends BaseCtrl {
     private view: ui.game.widget.setExplordeUI;
     private lastSelection: Laya.Button;
+    private timeout;
     public name = 'explode_pos_ctrl';
     private array1 = [
         { label: '第一张', value: 1 },
@@ -43,21 +44,24 @@ export class ExplodePosCtrl extends BaseCtrl {
             }
             let selection = btnList.selection as Laya.Button;
             selection.selected = true;
-            log(this.lastSelection)
             this.lastSelection = selection;
         });
         //选择按钮事件
-        btnSelect.on(Laya.Event.CLICK, this, () => {
-            if (btnList.selectedItem) {
-                let explodingPos = btnList.selectedItem.value;
-                Sail.io.emit(CMD.HIT, {
-                    hitCard: 3101,
-                    hitParams: { explodingPos }
-                })
-            }
-        });
+        btnSelect.on(Laya.Event.CLICK, this, this.emitData);
     }
-    public showView() {
+
+    private emitData() {
+        const btnList = this.view.btnList;
+        if (btnList.selectedItem) {
+            let explodingPos = btnList.selectedItem.value;
+            Sail.io.emit(CMD.HIT, {
+                hitCard: 3101,
+                hitParams: { explodingPos }
+            })
+        }
+    }
+
+    public showView(remainTime) {
         const game_ctrl = this.parent as GameCtrl;
         let remain = game_ctrl.getRemainCardNum();
         this.view.btnList.array = this.array1.slice(0, remain + 1).concat(this.array2);
@@ -66,8 +70,13 @@ export class ExplodePosCtrl extends BaseCtrl {
             this.lastSelection = null;
         }
         this.view.visible = true;
+        this.timeout = setTimeout(this.emitData.bind(this), remainTime - 3000);
     }
     public hideView() {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = null;
+        }
         this.view.btnList.selectedIndex = -1;
         this.view.visible = false;
     }

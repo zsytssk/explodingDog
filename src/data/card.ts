@@ -22,7 +22,7 @@ export const CARD_MAP = {
         belong: [1, 2, 3],
         count: 1,
         intro: '摸到炸弹后, 6秒后爆炸, 使一名玩家淘汰.',
-        intro_billbard: ['获得了炸弹', '解除了炸弹, 正在将此卡放入卡堆'],
+        intro_billbard: ['获得了炸弹狗', '解除了危机, 正在将此卡放入卡堆'],
         name: CARD_NAME.BOMB,
         name_zh: '炸弹',
         show_count: false,
@@ -34,8 +34,8 @@ export const CARD_MAP = {
         color: 1,
         count: 1,
         intro:
-            '玩家抽到【炸弹】卡牌后,才可使用剪断引线.使用后,可决定【炸弹】卡牌放置的位置.',
-        intro_billbard: ['使用了剪断引线\n正在布置炸弹', '布置了炸弹'],
+            '玩家抽到【炸弹狗】卡牌后,才可使用剪断引线. \n使用后,可决定【炸弹狗】卡牌放置的位置.',
+        intro_billbard: ['使用了剪断引线\n正在布置炸弹狗', '炸弹狗布置完成'],
         name: CARD_NAME.DEFUSE,
         name_zh: '剪断引线',
         show_count: false,
@@ -58,7 +58,7 @@ export const CARD_MAP = {
         color: 3,
         count: 1,
         intro:
-            '指定1名玩家,使该玩家立即进行1回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+            '指定1名玩家,使该玩家立即进行1回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 1,
         name_zh: '立即攻击',
         show_count: false,
@@ -70,7 +70,7 @@ export const CARD_MAP = {
         color: 3,
         count: 2,
         intro:
-            '指定1名玩家,使该玩家立即进行2回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+            '指定1名玩家,使该玩家立即进行2回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 2,
         name_zh: '立即攻击X2',
         show_count: false,
@@ -82,7 +82,7 @@ export const CARD_MAP = {
         color: 3,
         count: 3,
         intro:
-            '指定1名玩家,使该玩家立即进行3回合操作.附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+            '指定1名玩家,使该玩家立即进行3回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 3,
         name_zh: '立即攻击X3',
         show_count: false,
@@ -93,7 +93,7 @@ export const CARD_MAP = {
         belong: [1, 2, 3],
         color: 4,
         count: 1,
-        intro: '选择1名玩家,被选中的玩家需要选1张手牌给到使用【要牌】的玩家.',
+        intro: '选择1名玩家,被选中的玩家需要选择1张手牌给到使用【要牌】的玩家.',
         intro_billbard: ['使用要牌\n正在选择', '正在选择', '一张手牌'],
         name: CARD_NAME.STEAL,
         name_zh: '出千X2',
@@ -171,7 +171,7 @@ export const CARD_MAP = {
         color: 9,
         count: 1,
         intro:
-            '将指定对手的手牌中随机1张暂时失效,对方只有在卡堆里抽一张卡才能解除干扰效果.',
+            '将指定对手的手牌中随机1张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
         name: CARD_NAME.ANNOY + 1,
         name_zh: '干扰',
         show_count: true,
@@ -183,7 +183,7 @@ export const CARD_MAP = {
         color: 9,
         count: 2,
         intro:
-            '将指定对手的手牌中随机2张暂时失效,对方只有在卡堆里抽一张卡才能解除干扰效果.',
+            '将指定对手的手牌中随机2张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
         name: CARD_NAME.ANNOY + 2,
         name_zh: '干扰X2',
         show_count: true,
@@ -195,7 +195,7 @@ export const CARD_MAP = {
         color: 7,
         count: 1,
         intro:
-            '先将指定对手的手牌顺序全部遮蔽,让对方看不到卡面,再全部打乱,对方只能在卡堆里抽1卡才能解除干扰效果.',
+            '将指定对手的手牌顺序全部遮蔽,并全部打乱。\n对方只能在卡堆里抽1卡才能解除干扰效果.',
         name: CARD_NAME.BLIND,
         name_zh: '致盲',
         show_count: false,
@@ -240,7 +240,7 @@ export const CARD_MAP = {
         color: 3,
         count: 2,
         intro:
-            '让自己本回合可以操作2回合.附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
+            '让自己本回合可以操作2回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
         name: CARD_NAME.SELF_SLAP + 2,
         name_zh: '再来一次X2',
         show_count: true,
@@ -252,7 +252,7 @@ export const CARD_MAP = {
         color: 3,
         count: 3,
         intro:
-            '让自己本回合可以操作3回合.附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
+            '让自己本回合可以操作3回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
         name: CARD_NAME.SELF_SLAP + 3,
         name_zh: '再来一次X3',
         show_count: true,
@@ -263,7 +263,7 @@ export const CARD_MAP = {
         belong: [3],
         color: 10,
         count: 1,
-        intro: '将牌堆里的所有炸弹全部置顶.',
+        intro: '将牌堆里的所有【炸弹狗】全部置顶.',
         name: CARD_NAME.ROLL_CALL,
         name_zh: '布置炸弹',
         show_count: false,
@@ -275,7 +275,7 @@ export const CARD_MAP = {
         color: 10,
         count: 1,
         icon: 'shuffle',
-        intro: `卡牌打出后,其他玩家在出牌区看到的都是使用了【洗牌】,实际上没有洗牌.打出【假装洗牌】玩家本回合摸牌,获得卡堆里随机的一`,
+        intro: `卡牌打出后, 获得卡堆里随机的一张卡牌.\n其他玩家在出牌区看到的都是使用了【洗牌】,实际上没有洗牌. `,
         name: CARD_NAME.FAKE_SHUFFLE,
         name_zh: '假装洗牌',
         show_count: false,
@@ -289,10 +289,10 @@ export const CARD_TYPE = {
         name: '普通卡组',
     },
     2: {
-        name: '疯狂扩展包',
+        name: '疯狂卡组',
     },
     3: {
-        name: '乱舞扩展包',
+        name: '乱舞卡组',
     },
 };
 
@@ -300,3 +300,5 @@ export const CARD_TYPE = {
 export const CARD_SOUND_LIST = ['alter_future1', 'alter_future2', 'annoy2', 'blind1', 'blind2',
     'defuse1', 'draw_bottom1', 'roll_call1', 'see_future1', 'bomb1',
     'shuffle1', 'skip1', 'steal1', 'steal2', 'steal3'];
+
+

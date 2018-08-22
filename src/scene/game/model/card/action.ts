@@ -291,6 +291,7 @@ export class ShowSetExplode extends Action {
             .beActioned({
                 action: this.name,
                 status: 'act',
+                data
             })
             .subscribe();
     }

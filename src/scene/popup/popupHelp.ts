@@ -98,7 +98,8 @@ export class PopupHelp extends ui.popup.popupHelpUI {
         const { sider_intro, sider_card, sider_title, belong } = this;
         sider_card.skin = data.card.skin;
         sider_title.skin = `images/component/card/title/${data.name}.png`;
-        sider_intro.text = splitStr(data.intro, 30);
+        // sider_intro.text = splitStr(data.intro, 28);
+        sider_intro.text =data.intro;
         belong.text = getBlongStr(data.belong);
     }
 }

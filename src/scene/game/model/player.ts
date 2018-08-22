@@ -29,7 +29,7 @@ export type ObserverActionInfo = PartialAll<
         /** 动作执行的resolve */
         observer?: Subscriber<string | string[]>;
     }
->;
+    >;
 
 /* 牌的来源 抓 | 别人给的 | 牌堆里的 */
 export type CardFrom = 'take' | 'give' | 'cards';
@@ -148,10 +148,10 @@ export class PlayerModel extends BaseEvent {
         this.trigger(cmd.pre_draw_card, { card });
         return can_draw;
     }
-    private findPreDrawCard() {
+    private findPreDrawCard(card_id) {
         const { card_list } = this;
         for (const card of card_list) {
-            if (card.pre_drawed) {
+            if (card.pre_drawed && card.card_id == card_id) {
                 return card;
             }
         }
@@ -159,7 +159,7 @@ export class PlayerModel extends BaseEvent {
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public drawCard(card_id: string, type: DrawType) {
         const card_list = this.card_list;
-        let pre_draw_card = this.findPreDrawCard();
+        let pre_draw_card = this.findPreDrawCard(card_id);
         if (!pre_draw_card) {
             for (const card of card_list) {
                 if (card.be_annoyed) {

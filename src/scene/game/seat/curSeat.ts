@@ -100,7 +100,7 @@ export class CurSeatCtrl extends SeatCtrl {
             this.showDefuse(data);
         }
         if (action === 'show_set_explode') {
-            this.showSetExplode();
+            this.showSetExplode(data);
         }
         if (action === 'finish_set_explode') {
             const popup = Sail.director.getDialogByName('popup_defuse');
@@ -150,7 +150,7 @@ export class CurSeatCtrl extends SeatCtrl {
         const widget_box = game_ctrl.getWidgetBox();
         return card_box_ctrl.putCardBoxInWrap(card_box_wrap, widget_box);
     }
-    private showSetExplode() {
+    private showSetExplode(action_data: ObserverActionInfo) {
         const game_ctrl = queryClosest(this, 'name:game');
         const popup_defuse = Sail.director.getDialogByName('popup_defuse');
         if (!popup_defuse) {
@@ -163,7 +163,7 @@ export class CurSeatCtrl extends SeatCtrl {
                 game_ctrl,
                 'explode_pos_ctrl',
             )[0];
-            explode_pos_ctrl.showView();
+            explode_pos_ctrl.showView(action_data.data.remainTime);
         });
     }
     private hideSetExplode() {
