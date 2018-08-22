@@ -66,5 +66,6 @@ export const CMD = {
     GET_DAILY_AWARDS: 'getDailyLoginAwards',
     /** 更换房主 */
     CHANGE_CREATOR: 'changeCreator',
-
+    /**游戏前后台切换 */
+    STAGE_VISIBLE_CHANGED: 'stage.visible'
 };

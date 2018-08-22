@@ -213,6 +213,7 @@ export class GameCtrl extends BaseCtrl {
             [CMD.GET_CHAT_LIST]: this.onServerGetChatList,
             [CMD.SEND_CHAT]: this.onServerSendChat,
             [CMD.CHANGE_CREATOR]: this.onServerChangeCreator,
+            [CMD.STAGE_VISIBLE_CHANGED]: this.stageVisibleChanged
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -273,6 +274,21 @@ export class GameCtrl extends BaseCtrl {
                 Sail.director.popScene(gameOver);
             }
         )
+    }
+    private stageVisibleChanged(visilbe) {
+        if (visilbe) {
+            if (Sail.director.getDialogByName('visible_changed')) {
+                return;
+            }
+            let popup = new PopupTip('连接已断开，请刷新游戏。');
+            popup.name = 'visible_changed';
+            popup.onClosed = () => {
+                window.location.reload(true);
+            }
+            Sail.director.popScene(popup);
+        } else {
+            Sail.io.socket.end();
+        }
     }
     private resize() {
         const { width, height } = Laya.stage;

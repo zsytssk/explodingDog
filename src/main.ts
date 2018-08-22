@@ -58,7 +58,7 @@ Sail.onStart = () => {
     });
     Laya.timer.once(500, this, () => {
         Sail.io.emit(CMD.GET_USER_INFO);
-    })
+    });
 };
 
 Sail.run({
