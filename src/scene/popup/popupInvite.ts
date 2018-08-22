@@ -2,6 +2,7 @@ import { countDown } from "../../mcTree/utils/animate";
 import { CMD } from "../../data/cmd";
 
 export class PopUpInvite extends ui.popup.popupPromptUI {
+    zOrder = 5;
     countDown: Laya.Label;
     richText: Laya.HTMLDivElement;
 

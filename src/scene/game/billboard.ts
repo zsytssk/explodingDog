@@ -128,6 +128,6 @@ export class BillBoardCtrl {
         avatarTo.graphics.clear();
         avatarFrom.graphics.clear();
         cardIcon.graphics.clear();
-        operationTip.text = '操\n作';
+        operationTip.text = '游戏开始';
     }
 }

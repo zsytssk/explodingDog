@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":6,
+    "selecteID":5,
     "props":{"width":287,"sceneColor":"#000000","height":360},
     "nodeParent":-1,
     "label":"View",
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":46,"x":145,"width":74,"var":"cardIcon","skin":"images/game/billboard_topsign.png","height":74,"anchorY":0.5,"anchorX":0.5},
+            "props":{"y":46,"x":145,"width":74,"var":"cardIcon","height":74,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(cardIcon)",
             "isDirectory":false,
@@ -55,7 +55,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":160,"x":36,"wordWrap":true,"width":215,"var":"operationTip","valign":"middle","text":"操\\n作","leading":15,"height":159,"fontSize":28,"font":"Microsoft YaHei","color":"#58271b","align":"center"},
+            "props":{"y":160,"x":36,"wordWrap":true,"width":215,"var":"operationTip","valign":"middle","text":"游戏开始","leading":15,"height":159,"fontSize":28,"font":"Microsoft YaHei","color":"#58271b","align":"center"},
             "nodeParent":1,
             "label":"Label(operationTip)",
             "isDirectory":false,

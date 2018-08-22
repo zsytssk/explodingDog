@@ -1,6 +1,6 @@
 import { Avatar } from './component/avatar';
 import { isCurPlayer } from '../../utils/tool';
-import { tween } from '../../mcTree/utils/animate';
+import { tween, fade_in } from '../../mcTree/utils/animate';
 import { log, getChildren, ellipsisStr } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
 import { Hall } from '../hall/scene';
@@ -101,11 +101,19 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             if (item && Object.keys(item).length !== 0) {
                 const maxInfo = new MaxInfo(key, ellipsisStr(item.nickname, 10));
                 maxInfo.top = 65 * index++;
+                maxInfo.visible = false;
                 this.maxInfoBox.addChild(maxInfo);
             }
         }
         this.isUserCreate = data.isUserCreate;
         this.timerOnce(3000, this, () => {
+            getChildren(this.maxInfoBox).forEach((item, index) => {
+                this.timerOnce(700 * index, this, () => {
+                    fade_in(item);
+                })
+            })
+        });
+        this.timerOnce(5000, this, () => {
             Laya.Tween.to(this.btnAgain, { alpha: 1 }, 1000);
             Laya.Tween.to(this.btnBack, { alpha: 1 }, 1000);
         });
