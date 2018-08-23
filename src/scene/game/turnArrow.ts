@@ -1,5 +1,5 @@
 import { BaseCtrl } from '../../mcTree/ctrl/base';
-import { getChildren } from '../../mcTree/utils/zutil';
+import { getChildren, log } from '../../mcTree/utils/zutil';
 import { tween } from '../../mcTree/utils/animate';
 
 export interface Link {
@@ -109,8 +109,14 @@ export class TurnArrowCtrl extends BaseCtrl {
     public reset() {
         if (this.currentArrowBox) {
             this.currentArrowBox.visible = false;
+            if (this.currentTurn = '1') {
+                getChildren(this.currentArrowBox).forEach(item => {
+                    item.getChildAt(0).rotation -= 180;
+                });
+            }
             this.currentArrowBox = null;
         }
+        this.currentTurn = '0';
         Laya.timer.clear(this, this.arrowBlink);
         this.timer.destroy();
         this.timer = new Laya.Node();

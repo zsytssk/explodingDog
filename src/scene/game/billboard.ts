@@ -114,8 +114,12 @@ export class BillBoardCtrl {
             cardIcon.visible = false;
         }
     }
-    public async show() {
+    public async show(isPlaying) {
         const { view } = this.link;
+        if (isPlaying) {
+            view.visible = true;
+            return;
+        }
         view.visible = false;
         return slide_left_in(view, 500);
     }

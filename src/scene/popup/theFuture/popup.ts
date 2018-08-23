@@ -45,6 +45,8 @@ export class PopupTheFutureUI extends ui.popup.popupTheFutureUI {
         if (this.type === 'alter_future') {
             this.replay();
         }
+        const { card_box_ctrl } = this.link;
+        card_box_ctrl.unSelectAllCards();
         Sail.director.dialog.closeEffect.runWith(this);
     });
     public replay() {

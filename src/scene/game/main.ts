@@ -317,7 +317,8 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl.countDown(roomInfo.remainTime);
             this.onServerAlarm(roomInfo.alarm);
         }
-
+        
+        this.model.gameReplay(data);
         if (roundInfo) {
             docker_ctrl.setRate(roundInfo.bombProb);
             const turnDirection = roundInfo.turnDirection;
@@ -336,7 +337,6 @@ export class GameCtrl extends BaseCtrl {
                 discard_zone_ctrl.discardCard(last_card);
             }
         }
-        this.model.gameReplay(data);
     }
     /** 更新用户的个数 */
     public onServerUpdateUser(data: UpdateUserData) {
@@ -511,9 +511,10 @@ export class GameCtrl extends BaseCtrl {
         } else {
             quick_start_ctrl.hide();
         }
-        this.showGameZone();
+        const isPlaying = status===GAME_STATUS.PLAYING;
+        this.showGameZone(isPlaying);
     }
-    private async showGameZone() {
+    private async showGameZone(isPlaying:boolean) {
         const {
             game_zone,
             card_heap_ctrl,
@@ -526,7 +527,7 @@ export class GameCtrl extends BaseCtrl {
         game_zone.visible = true;
         await card_heap_ctrl.show();
         await discard_zone_ctrl.show();
-        await bill_board_ctrl.show();
+        await bill_board_ctrl.show(isPlaying);
     }
     private hideGameZone() {
         const { game_zone } = this.link;

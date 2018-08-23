@@ -45,7 +45,7 @@ export class CardCtrl extends CardBaseCtrl {
         this.onNode(Laya.stage, Laya.Event.MOUSE_OVER, this.unSelect);
     }
     /** 取消选中 */
-    private unSelect() {
+    public unSelect() {
         if (!this.is_touched) {
             return;
         }

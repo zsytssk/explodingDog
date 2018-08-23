@@ -102,4 +102,9 @@ export class CardBoxCtrl extends BaseCtrl {
 
         return index;
     }
+    public unSelectAllCards() {
+        this.link.card_list.forEach(item => {
+            item.unSelect();
+        });
+    }
 }
