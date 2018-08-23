@@ -27,7 +27,7 @@ export class CurCardCtrl extends CardCtrl {
     private start_pos = {} as Point;
     private tip_time_out: number;
     private index: number;
-    protected space_scale = 2 / 3;
+    protected space_scale = 0.67;
     constructor(model: CardModel, wrap: Laya.Sprite, from?: CardFrom) {
         super(model, wrap, from);
     }
@@ -190,7 +190,7 @@ export class CurCardCtrl extends CardCtrl {
         const { scale } = this;
         const { view, card_box } = this.link;
         const card_move_box = card_box.getCardMoveBox();
-
+        card_box.unToggleExcept(this);
         const pos = new Laya.Point(
             (view.width * scale) / 2,
             (view.height * scale) / 2,

@@ -49,6 +49,7 @@ export class PlayerModel extends BaseEvent {
     /** 正在出牌 */
     public status: PlayerStatus;
     public card_list: CardModel[] = [];
+    protected is_blind: boolean = false;
     constructor(player_data: UserData) {
         super();
         this.updateInfo(player_data);
@@ -120,6 +121,9 @@ export class PlayerModel extends BaseEvent {
             card = new CardModel(card);
         }
         card.setOwner(this);
+        if (this.is_blind) {
+            card.setBlindStatus(true, true);
+        }
         this.card_list.push(card);
         this.trigger(cmd.add_card, { card, from } as AddInfo);
     }
@@ -241,6 +245,7 @@ export class PlayerModel extends BaseEvent {
      */
     public setBlindStatus(status: boolean, play_ani = false) {
         const { card_list } = this;
+        this.is_blind = status;
         for (const card of card_list) {
             card.setBlindStatus(status);
         }
