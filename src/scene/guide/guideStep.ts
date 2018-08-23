@@ -9,6 +9,7 @@ export class GuideStep extends ui.guide.stepUI {
     public FINISH = 'finish';
     private handAni = new Laya.Skeleton();
     private successAni = new Laya.Skeleton();
+    private step: number;
     constructor() {
         super();
         this.init();
@@ -22,11 +23,18 @@ export class GuideStep extends ui.guide.stepUI {
         this.successAni.pos(667, 335);
         this.addChildren(this.handAni, this.successAni);
         this.initEvent();
+        this.initCardId();
     }
-
+    initCardId() {
+        const cardId = ['4201', '3321', '3601', '3201'];
+        getChildren(this.cardBox).forEach((card, index) => {
+            card.cardId = cardId[index];
+        })
+    }
     setStep(step) {
         const { tip, tipImg, discardZone } = this;
         tip.skin = `images/guide/text_help${step}.png`;
+        this.step = step;
         switch (step) {
             case 1:
                 tipImg.visible = false;
@@ -37,11 +45,13 @@ export class GuideStep extends ui.guide.stepUI {
             case 2:
                 discardZone.visible = true;
                 this.timerLoop(3000, this, this.showHandDiscard);
+                this.enableCardClick();
                 this.enableCardMove();
                 break;
             case 3:
                 tipImg.visible = true;
                 this.timerLoop(3000, this, this.showDrawCard);
+                this.enableCardClick();
                 this.enableDrawCard();
             default:
                 break;
@@ -137,25 +147,38 @@ export class GuideStep extends ui.guide.stepUI {
 
     enableCardClick() {
         const { cardBox, successAni, handAni } = this;
-        const cardId = ['4201', '3321', '3601', '3201'];
         getChildren(cardBox).forEach((card, index) => {
             card.on(Laya.Event.CLICK, this, () => {
+                if (card.isMoving) {
+                    return;
+                }
+                if (card.haveIntro) {
+                    this.hideCardsIntro();
+                    return;
+                }
+                this.hideCardsIntro();
+                card.haveIntro = true;
+                card.isMoving = true;
                 Laya.Tween.to(card, { y: card.y - 100 }, 200, null, new Laya.Handler(this, () => {
-                    let intro = new CardIntroCtrl(cardId[index], card);
+                    card.isMoving = false;
+                    let intro = new CardIntroCtrl(card.cardId, card);
+                    card.intro = intro;
                     intro.init();
                     intro.setStyle({ y: -260 });
                     intro.show();
+                    handAni.visible = false;
+                    if (this.step != 1) {
+                        return;
+                    }
+                    getChildren(cardBox).forEach(card => {
+                        card.offAll();
+                    });
                     successAni.visible = true;
                     successAni.play(0, false);
                     this.setIndex(1);
                     this.clearTimer(this, this.showHandClick);
-                    handAni.visible = false;
-                    getChildren(cardBox).forEach(card => {
-                        card.offAll();
-                    });
                     this.timerOnce(2000, this, () => {
-                        card.y += 100;
-                        intro.destroy();
+                        this.hideCardsIntro();
                         fade_out(this).then(() => {
                             this.setStep(2);
                             fade_in(this);
@@ -163,6 +186,22 @@ export class GuideStep extends ui.guide.stepUI {
                     });
                 }));
             });
+        });
+    }
+    //隐藏所有牌提示
+    hideCardsIntro() {
+        getChildren(this.cardBox).forEach((card, index) => {
+            if (card.haveIntro && card.intro) {
+                card.haveIntro = false;
+                card.isMoving = true;
+                card.intro.hide();
+                if (card.discarded) {
+                    return;
+                }
+                Laya.Tween.to(card, { y: card.y + 100 }, 200, null, new Laya.Handler(this, () => {
+                    card.isMoving = false;
+                }));
+            }
         });
     }
 
@@ -174,36 +213,53 @@ export class GuideStep extends ui.guide.stepUI {
                 let disCardPoint = discardZone.localToGlobal(new Laya.Point(0.5 * discardZone.width, 0.5 * discardZone.height));
                 if (Math.abs(card.x - disCardPoint.x) < 0.8 * discardZone.width
                     && Math.abs(card.y - disCardPoint.y) < 0.8 * discardZone.height) {
-                    //出牌成功
-                    Laya.Tween.to(card, { x: disCardPoint.x, y: disCardPoint.y }, 100);
-                    this.cards.forEach(card => {
-                        card.offAll();
-                    });
-                    this.successAni.visible = true;
-                    this.successAni.play(0, false);
-                    this.setIndex(2);
-                    this.clearTimer(this, this.showHandDiscard);
-                    this.handAni.visible = false;
-                    // stopAni(this.handAni);
-                    this.timerOnce(2000, this, () => {
-                        fade_out(this).then(() => {
-                            card.destroy();
-                            this.setStep(3);
-                            fade_in(this);
-                        });
-                    });
+                    this.discard(card);
                 } else {
                     this.drawAndSortCard(card);
                 }
             });
             card.on(Laya.Event.DRAG_START, this, () => {
-                let point = card.originPoint = card.localToGlobal(new Laya.Point(0.5 * card.width, 0.5 * card.height));
-                card.pos(point.x, point.y);
-                Laya.stage.addChild(card);
-                this.moveCard(card.index, 0);
+                this.onDragStart(card);
             });
             card.on(Laya.Event.MOUSE_DOWN, this, () => {
+                if (card.haveIntro) {
+                    card.discarded = true;
+                    this.onDragStart(card);
+                    this.discard(card);
+                    return;
+                }
                 card.startDrag();
+            });
+        });
+    }
+    onDragStart(card) {
+        card.isMoving = true;
+        this.hideCardsIntro();
+        let point = card.originPoint = card.localToGlobal(new Laya.Point(0.5 * card.width, 0.5 * card.height));
+        card.pos(point.x, point.y);
+        Laya.stage.addChild(card);
+        this.moveCard(card.index, 0);
+    }
+
+    //出牌成功
+    discard(card) {
+        const { discardZone } = this;
+        let disCardPoint = discardZone.localToGlobal(new Laya.Point(0.5 * discardZone.width, 0.5 * discardZone.height));
+        Laya.Tween.to(card, { x: disCardPoint.x, y: disCardPoint.y }, 100);
+        this.cards.forEach(card => {
+            card.offAll();
+        });
+        this.successAni.visible = true;
+        this.successAni.play(0, false);
+        this.setIndex(2);
+        this.clearTimer(this, this.showHandDiscard);
+        this.handAni.visible = false;
+        // stopAni(this.handAni);
+        this.timerOnce(2000, this, () => {
+            fade_out(this).then(() => {
+                card.destroy();
+                this.setStep(3);
+                fade_in(this);
             });
         });
     }
@@ -279,6 +335,7 @@ export class GuideStep extends ui.guide.stepUI {
         Laya.Tween.to(card, { x: 140 + 160 * card.index, y: 142 }, 100, null, new Laya.Handler(this, () => {
             this.cards.push(card);
             this.resetZorder();
+            card.isMoving = false;
         }));
     }
 
