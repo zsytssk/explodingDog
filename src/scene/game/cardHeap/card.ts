@@ -159,6 +159,8 @@ export class HeapCardCtrl extends CardBaseCtrl {
 
         wrap.addChild(view);
         view.pos(x, y);
+        view.stopDrag();
+        this.is_touched = false;
         this.is_move = false;
     }
     public reset() {
