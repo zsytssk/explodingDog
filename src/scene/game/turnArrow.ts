@@ -109,7 +109,7 @@ export class TurnArrowCtrl extends BaseCtrl {
     public reset() {
         if (this.currentArrowBox) {
             this.currentArrowBox.visible = false;
-            if (this.currentTurn = '1') {
+            if (this.currentTurn == '1') {
                 getChildren(this.currentArrowBox).forEach(item => {
                     item.getChildAt(0).rotation -= 180;
                 });

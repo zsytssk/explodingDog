@@ -67,5 +67,7 @@ export const CMD = {
     /** 更换房主 */
     CHANGE_CREATOR: 'changeCreator',
     /**游戏前后台切换 */
-    STAGE_VISIBLE_CHANGED: 'stage.visible'
+    STAGE_VISIBLE_CHANGED: 'stage.visible',
+    /**出牌提示 */
+    GET_HIT_TIPS: 'getHitTips'
 };

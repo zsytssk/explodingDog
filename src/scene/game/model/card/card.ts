@@ -11,6 +11,7 @@ export const cmd = {
     draw: 'draw',
     un_draw: 'un_discard',
     update_info: 'update_info',
+    show_tip: 'show_tip'
 };
 
 /** 出牌的两种状态 给|打出 */
@@ -102,6 +103,10 @@ export class CardModel extends BaseEvent {
                 be_annoyed: status,
             } as AnnoyStatus);
         }
+    }
+
+    public showTip() {
+        this.trigger(cmd.show_tip);
     }
 
     public destroy() {

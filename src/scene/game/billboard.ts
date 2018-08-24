@@ -1,23 +1,33 @@
 import { PlayerModel } from './model/player';
 import { getAvatar, getCardInfo, getSoundPath } from '../../utils/tool';
 import { TURN_CHANGE_ID, TURN_CHANGE_INFO } from '../../data/card';
-import { log } from '../../mcTree/utils/zutil';
+import { log, ellipsisStr } from '../../mcTree/utils/zutil';
 import { slide_left_in } from '../../mcTree/utils/animate';
+import { CMD } from '../../data/cmd';
 
 export class BillBoardCtrl {
     private link;
     private msgList = [];
-    constructor(view: ui.game.billboardUI) {
+    private gameCtrl;
+    constructor(view: ui.game.billboardUI, gameCtrl) {
+        this.gameCtrl = gameCtrl;
         this.init(view);
     }
     init(view) {
         this.initLink(view);
+        this.initEvent();
     }
     initLink(view) {
         this.link = {
             view,
             ...view,
         };
+    }
+
+    private initEvent() {
+        this.link.btn_guide.on(Laya.Event.CLICK, this, () => {
+            Sail.io.emit(CMD.GET_HIT_TIPS);
+        });
     }
 
     public addMsg(data) {
@@ -31,6 +41,7 @@ export class BillBoardCtrl {
         if (!this.msgList[0]) {
             return;
         }
+        this.gameCtrl.hideDrawCardAni();
         const { view } = this.link;
         const period = 200;
         let originX = view.x;
@@ -68,9 +79,9 @@ export class BillBoardCtrl {
             cardId: string;
             step?: number;
         }) {
-        const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
+        const { operationTip, cardIcon, avatarFrom, avatarTo, btn_guide } = this.link;
         avatarFrom.skin = getAvatar(fromUser.avatar);
-        let text = fromUser.nickname;
+        let text = ellipsisStr(fromUser.nickname, 14);
 
         let icon;
         let name_zh;
@@ -85,10 +96,11 @@ export class BillBoardCtrl {
         }
 
         if (toUser) {
+            let toUserName = ellipsisStr(toUser.nickname, 12);
             if (cardId == '3401' && step == 3) {
-                text += `获得${toUser.nickname}`;
+                text += `获得${toUserName}`;
             } else {
-                text += `对${toUser.nickname}`;
+                text += `对${toUserName}`;
             }
             avatarTo.skin = getAvatar(toUser.avatar);
         } else if (cardId == TURN_CHANGE_ID) {
@@ -113,6 +125,8 @@ export class BillBoardCtrl {
         } else {
             cardIcon.visible = false;
         }
+
+        btn_guide.visible = fromUser.is_cur_player;
     }
     public async show(isPlaying) {
         const { view } = this.link;

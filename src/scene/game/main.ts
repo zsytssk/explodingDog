@@ -1,7 +1,7 @@
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
-import { getChildren, log, logErr, nameMap } from '../../mcTree/utils/zutil';
+import { getChildren, log, logErr, nameMap, calcStrLen, ellipsisStr } from '../../mcTree/utils/zutil';
 import {
     formatGameReplayData,
     formatUpdatePlayersData,
@@ -42,6 +42,7 @@ import { GiveCardCtrl } from './widget/giveCard';
 import { SlapCtrl } from './widget/slap';
 import { PopupSetting } from '../popup/setting/pop';
 import { CARD_MAP, CARD_SOUND_LIST } from '../../data/card';
+import { fade_in, fade_out, tween } from '../../mcTree/utils/animate';
 
 interface Link {
     view: ui.game.mainUI;
@@ -62,6 +63,8 @@ interface Link {
     explode_pos_ctrl: ExplodePosCtrl;
     chat_ctrl: ChatCtrl;
     turn_animation: Laya.Skeleton;
+    outroom_msg: Laya.Sprite;
+    handAni: Laya.Skeleton
 }
 
 const max_user_count: number = 5;
@@ -110,6 +113,8 @@ export class GameCtrl extends BaseCtrl {
             explode_pos,
             chatview,
             turn_animation,
+            outroom_msg,
+            handAni
         } = view;
         const quick_start_ctrl = new QuickStartCtrl(
             view.banner_match,
@@ -142,7 +147,7 @@ export class GameCtrl extends BaseCtrl {
         this.addChild(turn_arrow_ctrl);
         turn_arrow_ctrl.init();
 
-        const bill_board_ctrl = new BillBoardCtrl(billboard);
+        const bill_board_ctrl = new BillBoardCtrl(billboard, this);
 
         const alarm_ctrl = new AlarmCtrl(alarm);
         this.addChild(alarm_ctrl);
@@ -191,6 +196,8 @@ export class GameCtrl extends BaseCtrl {
             slap_ctrl,
             turn_animation,
             turn_arrow_ctrl,
+            outroom_msg,
+            handAni
         };
     }
     protected initEvnet() {
@@ -213,7 +220,8 @@ export class GameCtrl extends BaseCtrl {
             [CMD.GET_CHAT_LIST]: this.onServerGetChatList,
             [CMD.SEND_CHAT]: this.onServerSendChat,
             [CMD.CHANGE_CREATOR]: this.onServerChangeCreator,
-            [CMD.STAGE_VISIBLE_CHANGED]: this.stageVisibleChanged
+            [CMD.STAGE_VISIBLE_CHANGED]: this.stageVisibleChanged,
+            [CMD.GET_HIT_TIPS]: this.onServerGetHitTips
         };
         Sail.io.register(this.actions, this);
         Sail.io.emit(CMD.GAME_REPLAY);
@@ -317,7 +325,7 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl.countDown(roomInfo.remainTime);
             this.onServerAlarm(roomInfo.alarm);
         }
-        
+
         this.model.gameReplay(data);
         if (roundInfo) {
             docker_ctrl.setRate(roundInfo.bombProb);
@@ -400,6 +408,50 @@ export class GameCtrl extends BaseCtrl {
                 this.getCardSoundPath(data.hitCard, data.hitInfo.step),
             );
         });
+    }
+
+    private onServerGetHitTips(data) {
+        const cardId = data.hitCard;
+        const { handAni } = this.link;
+        if ('4999' == cardId) {
+            if (handAni.visible) {
+                return;
+            }
+            this.showDrawCardAni();
+            handAni.timerLoop(3000, this, this.showDrawCardAni);
+        } else {
+            this.model.showCardTip(cardId);
+        }
+    }
+    private showDrawCardAni() {
+        const { handAni } = this.link;
+        handAni.pos(540, 395);
+        handAni.visible = true;
+        handAni.alpha = 1;
+        handAni.once(Laya.Event.STOPPED, this, () => {
+            handAni.play('wait', false);
+            tween({
+                sprite: handAni,
+                start_props: { x: 540, y: 395, alpha: 1 },
+                end_props: { x: 600, y: 650 },
+                time: 800
+            }).then(() => {
+                handAni.play('pop', false);
+                tween({
+                    sprite: handAni,
+                    end_props: { alpha: 0 },
+                    time: 800
+                })
+            });
+        });
+        handAni.play('push', false);
+    }
+    public hideDrawCardAni() {
+        const { handAni } = this.link;
+        if (handAni.visible) {
+            handAni.clearTimer(this, this.showDrawCardAni);
+            handAni.visible = false;
+        }
     }
 
     private getCardSoundPath(cardId, step) {
@@ -511,10 +563,10 @@ export class GameCtrl extends BaseCtrl {
         } else {
             quick_start_ctrl.hide();
         }
-        const isPlaying = status===GAME_STATUS.PLAYING;
+        const isPlaying = status === GAME_STATUS.PLAYING;
         this.showGameZone(isPlaying);
     }
-    private async showGameZone(isPlaying:boolean) {
+    private async showGameZone(isPlaying: boolean) {
         const {
             game_zone,
             card_heap_ctrl,
@@ -577,9 +629,20 @@ export class GameCtrl extends BaseCtrl {
      * 用户淘汰
      */
     public onServerUserExploding(data: UserExplodingData) {
-        const { explodeUserId, bombProb } = data;
+        const { explodeUserId, bombProb, explodeUserName } = data;
+        const { outroom_msg } = this.link;
         this.model.playerExploding(data);
         Laya.SoundManager.playSound(getSoundPath('exploding'));
+        if (data.isLeaveExplode) {
+            //玩家退出爆炸，不显示淘汰弹层
+            let userName = ellipsisStr(explodeUserName, 14);
+            (outroom_msg.getChildAt(0) as Laya.Label).text = `${userName}\n不堪重负，离开桌子！`;
+            fade_in(outroom_msg, 100);
+            outroom_msg.timerOnce(5000, this, () => {
+                fade_out(outroom_msg, 100);
+            });
+            return;
+        }
         if (isCurPlayer(explodeUserId)) {
             const takeExplode = new PopupTakeExplode();
             // takeExplode.onClosed = () => {

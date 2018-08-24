@@ -310,6 +310,10 @@ export class GameModel extends BaseEvent {
         });
         return result;
     }
+    public showCardTip(cardId: string) {
+        const player = this.player_list[0];
+        player.showCardTip(cardId);
+    }
     public reset() {
         const { discard_cards } = this;
         for (let len = discard_cards.length, i = len - 1; i >= 0; i--) {

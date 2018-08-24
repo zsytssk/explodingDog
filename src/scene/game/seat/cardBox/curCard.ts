@@ -38,6 +38,11 @@ export class CurCardCtrl extends CardCtrl {
         this.onModel(card_cmd.un_draw, () => {
             this.unDraw();
         });
+        this.onModel(card_cmd.show_tip, () => {
+            if (!this.show_tip) {
+                this.toggleTip();
+            }
+        })
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
         this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseMove);

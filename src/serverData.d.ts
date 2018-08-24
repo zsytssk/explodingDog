@@ -150,6 +150,7 @@ type UserExplodingData = {
     remainCard: number;
     remainBomb: number;
     bombProb: number;
+    isLeaveExplode: nuber;
 };
 type AlarmData = {
     speakerId: string;

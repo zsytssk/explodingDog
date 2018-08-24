@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":8,
     "props":{"width":287,"sceneColor":"#000000","height":360},
     "nodeParent":-1,
     "label":"View",
@@ -88,6 +88,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":277,"visible":false,"var":"btn_guide","stateNum":"1","skin":"images/game/btn_prompt.png","centerX":0,"appendProps":"laya/pages/effect/scaleBtn.prop"},
+            "nodeParent":1,
+            "label":"Button(btn_guide)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
             "child":[
                 ]
         }],

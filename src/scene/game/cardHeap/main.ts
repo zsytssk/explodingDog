@@ -8,7 +8,7 @@ import { HeapCardCtrl } from './card';
 import { calcCreate } from './cardBackPool';
 import { CardCtrl } from '../seat/cardBox/card';
 import { CardBaseCtrl } from '../seat/cardBox/cardBase';
-import { slide_left_in } from '../../../mcTree/utils/animate';
+import { slide_left_in, tween } from '../../../mcTree/utils/animate';
 
 export interface Link {
     view: ui.game.cardHeapUI;
@@ -45,7 +45,7 @@ export class CardHeapCtrl extends BaseCtrl {
             card_ctrl,
             cur_seat,
             heap,
-            remain_num,
+            remain_num
         };
     }
     /** 激活拿牌 */

@@ -160,6 +160,18 @@ export class PlayerModel extends BaseEvent {
             }
         }
     }
+    /**弹出指定id的卡牌 */
+    public showCardTip(cardId: string) {
+        for (const card of this.card_list) {
+            if (card.be_annoyed) {
+                continue;
+            }
+            if (card.card_id === cardId) {
+                card.showTip()
+                break;
+            }
+        }
+    }
     /** 从牌堆找出牌在调用discard， 返回cardModel给game用来展示在去拍区域 */
     public drawCard(card_id: string, type: DrawType) {
         const card_list = this.card_list;
