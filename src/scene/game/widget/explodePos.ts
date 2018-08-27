@@ -50,6 +50,16 @@ export class ExplodePosCtrl extends BaseCtrl {
         btnSelect.on(Laya.Event.CLICK, this, this.emitData);
     }
 
+    /**通过索引选中 */
+    public selectByIndex(selectIndex:number){
+        const { btnList } = this.view;
+        btnList.cells.forEach((cell,index)=>{
+            if(btnList.array[index].value == selectIndex){
+                btnList.selection = cell;
+            }
+        })
+    }
+
     private emitData() {
         const btnList = this.view.btnList;
         if (btnList.selectedItem) {

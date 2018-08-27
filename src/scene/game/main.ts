@@ -411,7 +411,14 @@ export class GameCtrl extends BaseCtrl {
     }
 
     private onServerGetHitTips(data) {
-        const cardId = data.hitCard;
+        if(data.hitInfo && data.hitInfo.explodingPos){//提示布置炸弹位置
+            this.link.explode_pos_ctrl.selectByIndex(data.hitInfo.explodingPos);
+            return;
+        }
+        let cardId = data.hitCard;
+        if(data.hitInfo &&  data.hitInfo.card){
+            cardId = data.hitInfo.card;
+        }
         const { handAni } = this.link;
         if ('4999' == cardId) {
             if (handAni.visible) {

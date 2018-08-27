@@ -92,7 +92,8 @@
                     "compId":10,
                     "child":[
                         ]
-                }]
+                }],
+            "$HIDDEN":false
         }],
     "animations":[
         {
