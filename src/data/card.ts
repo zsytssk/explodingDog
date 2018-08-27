@@ -285,13 +285,13 @@ export const CARD_MAP = {
 
 export const CARD_TYPE = {
     1: {
-        name: '普通卡组',
+        name: '普通模式',
     },
     2: {
-        name: '疯狂卡组',
+        name: '疯狂模式',
     },
     3: {
-        name: '乱舞卡组',
+        name: '乱舞模式',
     },
 };
 

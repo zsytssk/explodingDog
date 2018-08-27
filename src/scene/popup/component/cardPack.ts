@@ -74,6 +74,9 @@ export class CardPack extends ui.popup.component.cardPackUI {
         this.type = type;
         if (type !== 'play') {
             this.staminaBox.visible = false;
+        }else{
+            this.chooseBtn.skin = 'images/component/cardType/btn_start.png'
         }
+        
     }
 }

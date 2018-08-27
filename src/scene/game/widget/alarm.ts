@@ -12,7 +12,7 @@ export interface Link {
 /** 显示的位置 */
 const show_pos = {
     x: 1146,
-    y: 432,
+    y: 260,
 };
 /** 隐藏的位置的位置 */
 const hide_pos = {
