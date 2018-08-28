@@ -55,10 +55,12 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             });
             return;
         }
-        this.ani.playbackRate(
-            (this.ani.player.playbackRate * this.remainTime) /
-            (this.remainTime - 2),
-        );
+        if (this.remainTime > 2) {
+            this.ani.playbackRate(
+                (this.ani.player.playbackRate * this.remainTime) /
+                (this.remainTime - 2),
+            );
+        }
         this.remainTime -= 2;
     }
     public countdown() {

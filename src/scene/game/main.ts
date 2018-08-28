@@ -425,7 +425,7 @@ export class GameCtrl extends BaseCtrl {
                 return;
             }
             this.showDrawCardAni();
-            handAni.timerLoop(3000, this, this.showDrawCardAni);
+            handAni.timerOnce(3000, this, this.showDrawCardAni);
         } else {
             this.model.showCardTip(cardId);
         }
@@ -458,10 +458,7 @@ export class GameCtrl extends BaseCtrl {
             return;
         }
         const { handAni } = this.link;
-        if (handAni.visible) {
-            handAni.clearTimer(this, this.showDrawCardAni);
-            handAni.visible = false;
-        }
+        handAni.visible = false;
     }
 
     private getCardSoundPath(cardId, step) {

@@ -218,4 +218,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
         this.link.card_move_box = card_move_box;
         return this;
     }
+
+    public sortCard() {
+        super.sortCard();
+        this.unToggleExcept();
+    }
 }
