@@ -458,8 +458,10 @@ export class GameCtrl extends BaseCtrl {
             return;
         }
         const { handAni } = this.link;
-        handAni.visible = false;
-        handAni.clearTimer(this, this.showDrawCardAni);
+        if (handAni.visible) {
+            handAni.visible = false;
+            handAni.clearTimer(this, this.showDrawCardAni);
+        }
     }
 
     private getCardSoundPath(cardId, step) {

@@ -24,7 +24,7 @@ export class PopupBuyAvatar extends ui.popup.buy.buyAvatarUI {
         Sail.io.register(this.actions, this);
 
         const { btn_buy } = this;
-        btn_buy.offAll();
+        btn_buy.offAll(Laya.Event.CLICK);
         btn_buy.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(
                 new PopupPrompt('是否要购买头像礼包？', () => {
