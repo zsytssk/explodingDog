@@ -42,7 +42,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
             this.timerLoop(1000, this, this.countdown);
             Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
         } else {
-            this.curSeatCtrl.showCardTip('3101');
+            this.curSeatCtrl.showCardTip('3101', false);
         }
     }
     public onClickAction() {

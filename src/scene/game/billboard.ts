@@ -93,6 +93,7 @@ export class BillBoardCtrl {
             step?: number;
         }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo, btn_guide } = this.link;
+        this.gameCtrl.hideDrawCardAni();
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = ellipsisStr(fromUser.nickname, 14);
 

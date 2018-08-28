@@ -43,7 +43,7 @@ export class PopupBuyCardType extends ui.popup.buy.buyCardTypeUI {
         const { btn_buy, data } = this;
         btn_buy.offAll();
         btn_buy.on(Laya.Event.CLICK, this, () => {
-            const str = `是否要购买${type_map[data.card_id].zh}扩展包？`;
+            const str = `是否解锁${type_map[data.card_id].zh}模式？`;
             Sail.director.popScene(
                 new PopupPrompt(str, () => {
                     Sail.io.emit(CMD.EXCHANGE_GOODS, {

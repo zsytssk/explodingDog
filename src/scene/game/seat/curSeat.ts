@@ -194,8 +194,8 @@ export class CurSeatCtrl extends SeatCtrl {
         });
         return result;
     }
-    public showCardTip(card_id: string) {
-        this.model.showCardTip(card_id);
+    public showCardTip(card_id: string, showBind: boolean = true) {
+        this.model.showCardTip(card_id, showBind);
     }
     private preDrawCard(card: CardModel) {
         const card_id = card.card_id;

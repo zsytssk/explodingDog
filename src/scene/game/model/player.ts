@@ -161,9 +161,12 @@ export class PlayerModel extends BaseEvent {
         }
     }
     /**弹出指定id的卡牌 */
-    public showCardTip(cardId: string) {
+    public showCardTip(cardId: string, showBlind: boolean = true) {
         for (const card of this.card_list) {
             if (card.be_annoyed) {
+                continue;
+            }
+            if (!showBlind && card.is_blind) {
                 continue;
             }
             if (card.card_id === cardId) {
