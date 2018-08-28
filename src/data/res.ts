@@ -67,6 +67,7 @@ export const RES = {
         { type: Laya.Loader.BUFFER, url: 'animation/card_get_star.sk' },
         { type: Laya.Loader.IMAGE, url: 'animation/blind.png' },
         { type: Laya.Loader.BUFFER, url: 'animation/blind.sk' },
+        { type: Laya.Loader.BUFFER, url: 'animation/turn.sk' },
         { url: 'font/docker_rate.fnt', type: Laya.Loader.FONT },
     ],
     LOADING: [
@@ -91,10 +92,6 @@ export const RES = {
         },
         { url: 'res/atlas/images/pop/rank.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/help.atlas', type: Laya.Loader.ATLAS },
-        {
-            url: 'res/atlas/images/pop/help/cardTitle.atlas',
-            type: Laya.Loader.ATLAS,
-        },
         { url: 'res/atlas/images/pop/setting.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/pop/shop.atlas', type: Laya.Loader.ATLAS },
         { url: 'res/atlas/images/hall/pop.png', type: Laya.Loader.IMAGE },

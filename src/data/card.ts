@@ -34,7 +34,7 @@ export const CARD_MAP = {
         color: 1,
         count: 1,
         intro:
-            '玩家抽到【炸弹狗】卡牌后,才可使用剪断引线. \n使用后,可决定【炸弹狗】卡牌放置的位置.',
+        '玩家抽到【炸弹狗】卡牌后,才可使用剪断引线. \n使用后,可决定【炸弹狗】卡牌放置的位置.',
         intro_billbard: ['使用了剪断引线\n正在布置炸弹狗', '炸弹狗布置完成'],
         name: CARD_NAME.DEFUSE,
         name_zh: '剪断引线',
@@ -58,7 +58,7 @@ export const CARD_MAP = {
         color: 3,
         count: 1,
         intro:
-            '指定1名玩家,使该玩家立即进行1回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+        '指定1名玩家,使该玩家立即进行1回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 1,
         name_zh: '立即攻击',
         show_count: false,
@@ -70,7 +70,7 @@ export const CARD_MAP = {
         color: 3,
         count: 2,
         intro:
-            '指定1名玩家,使该玩家立即进行2回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+        '指定1名玩家,使该玩家立即进行2回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 2,
         name_zh: '立即攻击*2',
         show_count: false,
@@ -82,7 +82,7 @@ export const CARD_MAP = {
         color: 3,
         count: 3,
         intro:
-            '指定1名玩家,使该玩家立即进行3回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
+        '指定1名玩家,使该玩家立即进行3回合操作. \n附加属性:将自己当前剩余操作回合转嫁给该玩家.',
         name: CARD_NAME.SLAP + 3,
         name_zh: '立即攻击*3',
         show_count: false,
@@ -170,7 +170,7 @@ export const CARD_MAP = {
         color: 9,
         count: 1,
         intro:
-            '将指定对手的手牌中随机1张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
+        '将指定对手的手牌中随机1张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
         name: CARD_NAME.ANNOY + 1,
         name_zh: '干扰',
         show_count: true,
@@ -182,7 +182,7 @@ export const CARD_MAP = {
         color: 9,
         count: 2,
         intro:
-            '将指定对手的手牌中随机2张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
+        '将指定对手的手牌中随机2张暂时失效。\n对方只有在卡堆里抽一张卡才能解除干扰效果.',
         name: CARD_NAME.ANNOY + 2,
         name_zh: '干扰*2',
         show_count: true,
@@ -194,7 +194,7 @@ export const CARD_MAP = {
         color: 7,
         count: 1,
         intro:
-            '将指定对手的手牌顺序全部遮蔽,并全部打乱。\n对方只能在卡堆里抽1卡才能解除干扰效果.',
+        '将指定对手的手牌顺序全部遮蔽,并全部打乱。\n对方只能在卡堆里抽1卡才能解除干扰效果.',
         name: CARD_NAME.BLIND,
         name_zh: '致盲',
         show_count: false,
@@ -239,7 +239,7 @@ export const CARD_MAP = {
         color: 3,
         count: 2,
         intro:
-            '让自己本回合可以操作2回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
+        '让自己本回合可以操作2回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
         name: CARD_NAME.SELF_SLAP + 2,
         name_zh: '再来一次*2',
         show_count: true,
@@ -251,7 +251,7 @@ export const CARD_MAP = {
         color: 3,
         count: 3,
         intro:
-            '让自己本回合可以操作3回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
+        '让自己本回合可以操作3回合. \n附加属性:可以与【立即攻击】【双倍攻击】【三倍攻击】效果叠加.',
         name: CARD_NAME.SELF_SLAP + 3,
         name_zh: '再来一次*3',
         show_count: true,
@@ -299,5 +299,10 @@ export const CARD_TYPE = {
 export const CARD_SOUND_LIST = ['alter_future1', 'alter_future2', 'annoy2', 'blind1', 'blind2',
     'defuse1', 'draw_bottom1', 'roll_call1', 'see_future1', 'bomb1',
     'shuffle1', 'skip1', 'steal1', 'steal2', 'steal3'];
+
+//不需要提示的卡牌步骤
+export const GUIDE_EXCLUDE = [
+    '3101_2', '3301_1', '3321_1', '3321_2', '3331_1', '3331_2', '3401_1', '3901_1', '3921_1', '4001_1'
+];
 
 

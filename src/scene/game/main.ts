@@ -411,12 +411,12 @@ export class GameCtrl extends BaseCtrl {
     }
 
     private onServerGetHitTips(data) {
-        if(data.hitInfo && data.hitInfo.explodingPos){//提示布置炸弹位置
+        if (data.hitInfo && data.hitInfo.explodingPos) {//提示布置炸弹位置
             this.link.explode_pos_ctrl.selectByIndex(data.hitInfo.explodingPos);
             return;
         }
         let cardId = data.hitCard;
-        if(data.hitInfo &&  data.hitInfo.card){
+        if (data.hitInfo && data.hitInfo.card) {
             cardId = data.hitInfo.card;
         }
         const { handAni } = this.link;
@@ -454,6 +454,9 @@ export class GameCtrl extends BaseCtrl {
         handAni.play('push', false);
     }
     public hideDrawCardAni() {
+        if (!this.link) {
+            return;
+        }
         const { handAni } = this.link;
         if (handAni.visible) {
             handAni.clearTimer(this, this.showDrawCardAni);

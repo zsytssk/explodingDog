@@ -1,3 +1,4 @@
+import { GUIDE_EXCLUDE } from './../../data/card';
 import { PlayerModel } from './model/player';
 import { getAvatar, getCardInfo, getSoundPath } from '../../utils/tool';
 import { TURN_CHANGE_ID, TURN_CHANGE_INFO } from '../../data/card';
@@ -9,6 +10,7 @@ export class BillBoardCtrl {
     private link;
     private msgList = [];
     private gameCtrl;
+    private guideLock = false;
     constructor(view: ui.game.billboardUI, gameCtrl) {
         this.gameCtrl = gameCtrl;
         this.init(view);
@@ -26,11 +28,22 @@ export class BillBoardCtrl {
 
     private initEvent() {
         this.link.btn_guide.on(Laya.Event.CLICK, this, () => {
+            if (this.guideLock) {
+                return;
+            }
+            this.guideLock = true;
+            setTimeout(() => {
+                this.guideLock = false;
+            }, 2000);
             Sail.io.emit(CMD.GET_HIT_TIPS);
         });
     }
 
     public addMsg(data) {
+        const { fromUser, cardId } = data;
+        if (!fromUser || !cardId) {
+            return;
+        }
         this.msgList.push(data);
         if (this.msgList.length == 1) {
             this.updateMsg();
@@ -125,8 +138,11 @@ export class BillBoardCtrl {
         } else {
             cardIcon.visible = false;
         }
-
-        btn_guide.visible = fromUser.is_cur_player;
+        if (fromUser.is_cur_player && GUIDE_EXCLUDE.indexOf(cardId + '_' + step) == -1) {
+            btn_guide.visible = true;
+        } else {
+            btn_guide.visible = false;
+        }
     }
     public async show(isPlaying) {
         const { view } = this.link;
