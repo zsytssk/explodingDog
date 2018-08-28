@@ -421,7 +421,7 @@ export class GameCtrl extends BaseCtrl {
         }
         const { handAni } = this.link;
         if ('4999' == cardId) {
-            if (handAni.visible) {
+            if (handAni.visible && handAni.alpha != 0) {
                 return;
             }
             this.showDrawCardAni();
@@ -459,6 +459,7 @@ export class GameCtrl extends BaseCtrl {
         }
         const { handAni } = this.link;
         handAni.visible = false;
+        handAni.clearTimer(this, this.showDrawCardAni);
     }
 
     private getCardSoundPath(cardId, step) {

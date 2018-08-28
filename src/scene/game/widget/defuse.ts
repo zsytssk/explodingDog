@@ -1,7 +1,7 @@
+import { CurSeatCtrl } from './../seat/curSeat';
 import { CMD } from '../../../data/cmd';
 import { PopupTakeExplode } from '../../popup/popupTakeExplode';
 import { CardModel } from '../model/card/card';
-import { CurSeatCtrl } from '../seat/curSeat';
 import { getSoundPath } from '../../../utils/tool';
 
 export class PopupDefuse extends ui.popup.popupDefuseUI {
@@ -14,7 +14,7 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
     public ani: Laya.Skeleton;
     public defuseSeccess = false; // 弹出popup_take_explode弹层
     private clickTimes = 0; // 点击3次爆炸
-    public curSeatCtrl;
+    public curSeatCtrl: CurSeatCtrl;
     constructor(remainTime) {
         super();
         this.init(remainTime);
@@ -41,6 +41,8 @@ export class PopupDefuse extends ui.popup.popupDefuseUI {
         if (!this.curSeatCtrl.haveCard('3101')) {
             this.timerLoop(1000, this, this.countdown);
             Laya.stage.on(Laya.Event.CLICK, this, this.onClickAction);
+        } else {
+            this.curSeatCtrl.showCardTip('3101');
         }
     }
     public onClickAction() {

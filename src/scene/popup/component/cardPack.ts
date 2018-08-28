@@ -16,6 +16,7 @@ export class CardPack extends ui.popup.component.cardPackUI {
         this.btnLock.visible = isLock;
         if (isLock) {
             this.costIcon.skin = 'images/component/icon_diamond.png';
+            this.costIcon.size(27, 27);
             this.staminaLabel.text = buyInfo.price;
         } else if (staminaCost) {
             this.staminaLabel.text = `${Math.abs(staminaCost)}`;

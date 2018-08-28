@@ -158,10 +158,11 @@ export class BillBoardCtrl {
         view.visible = false;
     }
     public reset() {
-        const { operationTip, cardIcon, avatarFrom, avatarTo } = this.link;
+        const { operationTip, cardIcon, avatarFrom, avatarTo, btn_guide } = this.link;
         avatarTo.graphics.clear();
         avatarFrom.graphics.clear();
         cardIcon.graphics.clear();
+        btn_guide.visible = false;
         operationTip.text = '游戏开始';
     }
 }
