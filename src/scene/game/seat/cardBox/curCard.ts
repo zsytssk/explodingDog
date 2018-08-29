@@ -271,8 +271,11 @@ export class CurCardCtrl extends CardCtrl {
         const { wrap, view, card_box } = this.link;
         const space = view.width * scale * space_scale;
         const center_x = (view.width * scale) / 2;
-        let index = Math.ceil((pos.x - center_x) / space);
+        let index = Math.floor((pos.x - center_x) / space);
         index = card_box.withDrawCardIndex(this, index);
+        if (index > wrap.numChildren) {
+            index = wrap.numChildren;
+        }
         wrap.addChildAt(view, index);
         view.pos(pos.x, pos.y);
     }
