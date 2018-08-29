@@ -21,6 +21,6 @@ export class GameWrap extends Sail.Scene {
     }
 
     public onExit() {
-        this.game_ctrl.destroy();
+        this.game_ctrl && this.game_ctrl.destroy();
     }
 }
