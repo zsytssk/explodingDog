@@ -4,6 +4,8 @@ import { RES } from '../../data/res';
 import { GameCtrl } from './main';
 import { loadAssets } from '../loading/main';
 export class GameWrap extends Sail.Scene {
+    public name = 'scene_game';
+    private game_ctrl;
     constructor() {
         super();
         loadAssets('game').then(() => {
@@ -13,8 +15,12 @@ export class GameWrap extends Sail.Scene {
 
     public init() {
         const game_ui = new ui.game.mainUI();
-        const game_ctrl = new GameCtrl(game_ui);
-        game_ctrl.init();
+        this.game_ctrl = new GameCtrl(game_ui);
+        this.game_ctrl.init();
         this.addChild(game_ui);
+    }
+
+    public onExit() {
+        this.game_ctrl.destroy();
     }
 }

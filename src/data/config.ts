@@ -10,5 +10,6 @@ export const CONFIG = {
     websocket_url: (window as CusWindow).websocketurl || '',
     music_switch_key: 'exploding_dog_music',
     sound_switch_key: 'exploding_dog_sound',
-    is_buy: false//是否充值回跳
+    is_buy: false,//是否充值回跳
+    need_pop_shop: false//返回大厅是否弹出商城
 };

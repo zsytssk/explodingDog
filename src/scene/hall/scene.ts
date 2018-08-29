@@ -1,3 +1,5 @@
+import { PopupShop } from './../popup/popupShop';
+import { CONFIG } from './../../data/config';
 import { CMD } from '../../data/cmd';
 import { CONFIG } from '../../data/config';
 import { getRoomId, getSoundPath, resetRoomId } from '../../utils/tool';
@@ -56,6 +58,10 @@ export class Hall extends Sail.Scene {
         if (CONFIG.is_buy) {
             Sail.director.popScene(new PopupTip('充值成功'));
             CONFIG.is_buy = false;
+        }
+        if (CONFIG.need_pop_shop) {
+            Sail.director.popScene(new PopupShop());
+            CONFIG.need_pop_shop = false;
         }
     }
 

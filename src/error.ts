@@ -1,3 +1,5 @@
+import { CONFIG } from './data/config';
+import { Hall } from './scene/hall/scene';
 import { PopupPrompt } from './scene/popup/popupPrompt';
 import { PopupCharge } from './scene/popup/popupCharge';
 import { PopupShop } from './scene/popup/popupShop';
@@ -14,11 +16,20 @@ export class ErrorManager {
                 );
                 return true;
             case 10001:
-                Sail.director.popScene(
-                    new PopupPrompt(errormsg, () => {
-                        Sail.director.popScene(new PopupShop());
-                    }),
-                );
+                const inGame = Sail.director.getRunningScene().name == 'scene_game';
+                let pop = new PopupPrompt(errormsg, () => {
+                    if (inGame) {
+                        CONFIG.need_pop_shop = true;
+                        return;
+                    }
+                    Sail.director.popScene(new PopupShop());
+                })
+                if (inGame) {
+                    pop.onClosed = () => {
+                        Sail.director.runScene(new Hall());
+                    }
+                }
+                Sail.director.popScene(pop);
                 return true;
         }
         /** 买完东西需要更新余额 */
