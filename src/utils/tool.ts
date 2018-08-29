@@ -292,20 +292,30 @@ export function hasShareToWx() {
     }
     return false;
 }
+/**
+ *微信分享
+ * 
+ * @param type 1微信2朋友圈
+ * @param title 标题
+ * @param desc 文字信息
+ * @param img_url 图片地址
+ * @param link 链接
+ */
 export function shareToWx(
+    type: number,
     title: string,
     desc: string,
     img_url: string,
     link: string,
 ) {
-    alert(link);
+    // alert(link);
     const share_fun =
         (window as any).Client &&
         ((window as any).Client.shareDocToWX as FuncVoid);
     if (!share_fun) {
         return;
     }
-    share_fun(1, title, desc, img_url, link);
+    share_fun(type, title, desc, img_url, link);
 }
 /** 复制文本 */
 

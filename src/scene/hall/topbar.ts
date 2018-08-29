@@ -5,6 +5,8 @@ import { PopupGetFood } from '../popup/popupGetFood';
 import { PopupAvatar } from '../popup/popupAvatar';
 import { PopupCharge } from '../popup/popupCharge';
 import { PopupShop } from '../popup/popupShop';
+import { hasShareToWx } from '../../utils/tool';
+import { popupShare } from '../popup/popupShare';
 export class TopBar extends ui.hall.topbarUI {
     public stamina: ValueBar;
     public diamond: ValueBar;
@@ -15,7 +17,7 @@ export class TopBar extends ui.hall.topbarUI {
     private init() {
         this.stamina.setType('stamina');
         this.diamond.setType('diamond');
-
+        this.btn_share.visible = hasShareToWx();
         this.initEvent();
     }
     private initEvent() {
@@ -26,6 +28,7 @@ export class TopBar extends ui.hall.topbarUI {
             btn_home,
             diamond,
             stamina,
+            btn_share
         } = this;
         btn_setting.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupSetting());
@@ -42,6 +45,9 @@ export class TopBar extends ui.hall.topbarUI {
         diamond.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(new PopupCharge());
         });
+        btn_share.on(Laya.Event.CLICK, this, () => {
+            Sail.director.popScene(new popupShare());
+        });
         if (GM.backHomeUrl) {
             this.btn_home.visible = true; // 显示home按钮
             this.btn_home.on(Laya.Event.CLICK, this, () => {
@@ -55,6 +61,7 @@ export class TopBar extends ui.hall.topbarUI {
             GM.btnBackCall_out
         ) {
             this.btn_rank.x = 175;
+            this.btn_share.x = 285;
             this.btnBack.visible = true; // 显示返回按钮
             this.btnBack.on(Laya.Event.CLICK, this, () => {
                 GM.btnBackCall_out();

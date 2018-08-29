@@ -22,8 +22,8 @@ interface Link {
 }
 
 const share_title =
-    '炸弹狗';
-const share_msg = '我创建了房间【******】等你加入';
+    '房间我已经开好，就看你敢不敢进！';
+const share_msg = '房间号：******，快来！摸一摸，输的人汪汪汪！';
 // const share_icon = CONFIG.site_url + 'files/images/game/explodingdog/icon.png';
 const share_icon =
     'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png';
@@ -93,6 +93,7 @@ export class HostZoneCtrl extends BaseCtrl {
         btn_share.on(Laya.Event.CLICK, this, () => {
             let msg = share_msg.replace('******', room_id_text.text);
             shareToWx(
+                1,
                 share_title,
                 msg,
                 share_icon,
