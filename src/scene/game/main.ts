@@ -740,7 +740,7 @@ export class GameCtrl extends BaseCtrl {
     public outRoom() {
         Sail.director.closeAll();
         Sail.director.runScene(new Hall());
-        this.destroy();
+        // this.destroy();
     }
     public getCardType() {
         return this.model.card_type;
