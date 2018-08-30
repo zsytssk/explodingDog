@@ -135,7 +135,7 @@ export class CurSeatCtrl extends SeatCtrl {
         Sail.director.popScene(popupDefuse);
 
         const game_ctrl = queryClosest(this, 'name:game');
-        game_ctrl.link.alarm_ctrl.hide();
+        game_ctrl.link.alarm_ctrl.reset();
     }
     /**
      * 将将牌池放置到特定的节点上， 炸弹出现时 弹出层需要借用这ctrl

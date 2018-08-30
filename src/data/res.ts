@@ -75,6 +75,7 @@ export const RES = {
         { url: 'res/atlas/images/loading.png', type: Laya.Loader.IMAGE },
         { url: 'animation/loading.png', type: Laya.Loader.IMAGE },
         { url: 'animation/loading.sk', type: Laya.Loader.BUFFER },
+        { url: 'images/component/bg.jpg', type: Laya.Loader.IMAGE },
     ],
     POP: [
         { url: 'res/atlas/images/hall/pop.atlas', type: Laya.Loader.ATLAS },

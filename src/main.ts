@@ -54,9 +54,13 @@ Sail.onStart = () => {
             CONFIG.is_buy = true;
         }
         if (window.bigRender) {
-            window.bigRender.clear();
+            load_util.load('loading').then(() => {
+                Sail.director.runScene(new scene_class());
+                window.bigRender.clear();
+            });
+        } else {
+            Sail.director.runScene(new scene_class());
         }
-        Sail.director.runScene(new scene_class());
         Sail.io.unregister(CMD.GET_USER_INFO);
     });
     Laya.timer.once(500, this, () => {
