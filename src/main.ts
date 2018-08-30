@@ -59,7 +59,9 @@ Sail.onStart = () => {
                 window.bigRender.clear();
             });
         } else {
-            Sail.director.runScene(new scene_class());
+            load_util.load('loading').then(() => {
+                Sail.director.runScene(new scene_class());
+            });
         }
         Sail.io.unregister(CMD.GET_USER_INFO);
     });

@@ -314,6 +314,9 @@ export class GameModel extends BaseEvent {
         const player = this.player_list[0];
         player.showCardTip(cardId);
     }
+    public getCurPlayerStatus() {
+        return this.player_list[0].status;
+    }
     public reset() {
         const { discard_cards } = this;
         for (let len = discard_cards.length, i = len - 1; i >= 0; i--) {

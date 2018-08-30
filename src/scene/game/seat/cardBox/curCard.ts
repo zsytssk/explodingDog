@@ -273,6 +273,9 @@ export class CurCardCtrl extends CardCtrl {
         const center_x = (view.width * scale) / 2;
         let index = Math.floor((pos.x - center_x) / space);
         index = card_box.withDrawCardIndex(this, index);
+        log('index', index)
+        log('wrap', wrap)
+        log('children', wrap.numChildren)
         if (index > wrap.numChildren) {
             index = wrap.numChildren;
         }

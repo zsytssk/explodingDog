@@ -3,7 +3,7 @@ import { BgCtrl } from '../component/bgCtrl';
 import { log } from '../../mcTree/utils/zutil';
 
 export async function loadAssets(name) {
-    await load_util.load('loading');
+    // await load_util.load('loading');
     return await load(name);
 }
 

@@ -431,6 +431,9 @@ export class GameCtrl extends BaseCtrl {
         }
     }
     private showDrawCardAni() {
+        if ('speak' != this.model.getCurPlayerStatus()) {
+            return;
+        }
         const { handAni } = this.link;
         handAni.pos(540, 395);
         handAni.visible = true;
@@ -693,8 +696,10 @@ export class GameCtrl extends BaseCtrl {
         const { alarm_ctrl } = this.link;
         if (isCurPlayer(user_id)) {
             alarm_ctrl.countDown(remainTime);
+            this.link.bill_board_ctrl.stopCountdown();
         } else {
             alarm_ctrl.reset();
+            this.link.bill_board_ctrl.countdown(remainTime);
         }
     }
     public reset() {

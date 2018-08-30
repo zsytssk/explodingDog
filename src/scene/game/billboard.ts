@@ -11,6 +11,7 @@ export class BillBoardCtrl {
     private msgList = [];
     private gameCtrl;
     private guideLock = false;
+    private countdownTimer;
     constructor(view: ui.game.billboardUI, gameCtrl) {
         this.gameCtrl = gameCtrl;
         this.init(view);
@@ -39,6 +40,30 @@ export class BillBoardCtrl {
         });
     }
 
+    public countdown(remainTime) {
+        const { view } = this.link;
+        const graphics = view.pieSprite.graphics;
+        if (this.countdownTimer) {
+            this.stopCountdown();
+        }
+        let delay = 10;
+        let endAngel = 270;
+        this.countdownTimer = setInterval(() => {
+            endAngel -= 360 / (remainTime * 1000 / delay);
+            if (endAngel < -90) {
+                this.stopCountdown();
+                return;
+            }
+            graphics.clear()
+            graphics.drawPie(14, 17, 42, -90, endAngel, '#ffffff');
+        }, delay);
+    }
+    public stopCountdown() {
+        this.link.view.pieSprite.graphics.clear();
+        if (this.countdownTimer) {
+            clearInterval(this.countdownTimer);
+        }
+    }
     public addMsg(data) {
         const { fromUser, cardId } = data;
         if (!fromUser || !cardId) {
@@ -93,7 +118,6 @@ export class BillBoardCtrl {
             step?: number;
         }) {
         const { operationTip, cardIcon, avatarFrom, avatarTo, btn_guide } = this.link;
-        this.gameCtrl.hideDrawCardAni();
         avatarFrom.skin = getAvatar(fromUser.avatar);
         let text = ellipsisStr(fromUser.nickname, 14);
 
@@ -132,12 +156,9 @@ export class BillBoardCtrl {
         operationTip.text = text;
 
         if (icon) {
-            if (!cardIcon.visible) {
-                cardIcon.visible = true;
-            }
             cardIcon.skin = `images/component/card/icon/${icon}.png`;
         } else {
-            cardIcon.visible = false;
+            cardIcon.skin = `images/game/icon_billboard.png`;
         }
         if (fromUser.is_cur_player && GUIDE_EXCLUDE.indexOf(cardId + '_' + step) == -1) {
             btn_guide.visible = true;
@@ -162,7 +183,7 @@ export class BillBoardCtrl {
         const { operationTip, cardIcon, avatarFrom, avatarTo, btn_guide } = this.link;
         avatarTo.graphics.clear();
         avatarFrom.graphics.clear();
-        cardIcon.graphics.clear();
+        cardIcon.skin = `images/game/icon_billboard.png`;
         btn_guide.visible = false;
         operationTip.text = '游戏开始';
     }
