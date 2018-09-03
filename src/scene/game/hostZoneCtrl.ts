@@ -1,3 +1,4 @@
+import { CONFIG } from './../../data/config';
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { PopupCards } from '../popup/popupCards';
@@ -7,8 +8,8 @@ import {
     hasShareToWx,
     browserSupportCopy,
     copy,
+    getShareUrl,
 } from '../../utils/tool';
-import { CONFIG } from '../../data/config';
 import { scale_in, slide_left_in } from '../../mcTree/utils/animate';
 import { PopupTip } from '../popup/popupTip';
 interface Link {
@@ -24,10 +25,6 @@ interface Link {
 const share_title =
     '房间我已经开好，就看你敢不敢进！';
 const share_msg = '房间号：******，快来！摸一摸，输的人汪汪汪！';
-// const share_icon = CONFIG.site_url + 'files/images/game/explodingdog/icon.png';
-const share_icon =
-    'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png';
-const link_url = CONFIG.site_url + CONFIG.redirect_uri;
 
 export class HostZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
@@ -93,12 +90,12 @@ export class HostZoneCtrl extends BaseCtrl {
                 1,
                 share_title,
                 msg,
-                share_icon,
-                `${link_url}#room_id=${room_id_text.text}`,
+                CONFIG.share_icon,
+                `${getShareUrl()}#room_id=${room_id_text.text}`,
             );
         });
         btn_copy.on(Laya.Event.CLICK, this, () => {
-            copy(`${link_url}#room_id=${room_id_text.text}`).then(() => {
+            copy(`${getShareUrl()}#room_id=${room_id_text.text}`).then(() => {
                 Sail.director.popScene(new PopupTip('已复制房间号，\n请粘贴给好友。'));
             });
         });

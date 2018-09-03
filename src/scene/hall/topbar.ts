@@ -1,3 +1,6 @@
+import { log } from './../../mcTree/utils/zutil';
+import { CONFIG } from './../../data/config';
+import { popupQRUI } from './../../../laya/src/ui/layaUI.max.all';
 import { ValueBar } from './valuebar';
 import { PopupSetting } from '../popup/setting/pop';
 import { PopupRank } from '../popup/popupRank';
@@ -17,7 +20,6 @@ export class TopBar extends ui.hall.topbarUI {
     private init() {
         this.stamina.setType('stamina');
         this.diamond.setType('diamond');
-        this.btn_share.visible = hasShareToWx();
         this.initEvent();
     }
     private initEvent() {
@@ -46,7 +48,16 @@ export class TopBar extends ui.hall.topbarUI {
             Sail.director.popScene(new PopupCharge());
         });
         btn_share.on(Laya.Event.CLICK, this, () => {
-            Sail.director.popScene(new popupShare());
+            let pop;
+            if (hasShareToWx()) {
+                pop = new popupShare();
+            } else {
+                pop = new ui.popup.popupQRUI();
+                pop.CONFIG = { closeOnSide: true };
+                pop.shareText.text = CONFIG.site_url + CONFIG.redirect_uri
+            }
+            Sail.director.popScene(pop);
+
         });
         if (GM.backHomeUrl) {
             this.btn_home.visible = true; // 显示home按钮

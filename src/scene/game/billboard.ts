@@ -83,12 +83,12 @@ export class BillBoardCtrl {
         const { view } = this.link;
         const period = 200;
         let originX = view.x;
-        let localPoint = view.parent.globalToLocal(
-            new Laya.Point(Laya.stage.width, 0),
-        );
+        // let localPoint = view.parent.globalToLocal(
+        //     new Laya.Point(Laya.stage.width, 0),
+        // );
         Laya.Tween.to(
             view,
-            { x: localPoint.x },
+            { right: -400 },
             period,
             null,
             new Laya.Handler(this, () => {
@@ -98,7 +98,7 @@ export class BillBoardCtrl {
                 this.updateInfo(this.msgList[0]);
             }),
         );
-        Laya.Tween.to(view, { x: originX }, period, null, null, period);
+        Laya.Tween.to(view, { right: 0 }, period, null, null, period);
 
         this.link.view.timerOnce(1000, this, () => {
             this.msgList.shift();

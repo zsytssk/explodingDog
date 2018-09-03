@@ -1,6 +1,7 @@
+import { CONFIG } from './../../../data/config';
 import { CheckCtrl, cmd, StatusData } from './checkCtrl';
 import { log } from '../../../mcTree/utils/zutil';
-import { CONFIG } from '../../../data/config';
+import { splitStr, isWeixin } from '../../../utils/tool';
 
 type Link = {
     music_check_ctrl: CheckCtrl;
@@ -20,6 +21,14 @@ export class PopupSetting extends ui.popup.setting.popUI {
         this.initLink();
         this.initEvent();
         this.initSatus();
+        this.initUserData();
+    }
+    private initUserData() {
+        if (GM && GM.userSourceDescription) {
+            this.platform.text = GM.userSourceDescription;
+        }
+        this.userInfo.text = `当前账号：${splitStr(CONFIG.user_name, 14)}（ID:${CONFIG.user_id}）`;
+
     }
     private initSatus() {
         const { bg_music_check_ctrl, music_check_ctrl } = this.link;
@@ -65,6 +74,19 @@ export class PopupSetting extends ui.popup.setting.popUI {
             } else {
                 Laya.SoundManager.soundMuted = true;
                 localStorage.setItem(CONFIG.sound_switch_key, '0');
+            }
+        });
+        this.btnLogout.on(Laya.Event.CLICK, this, () => {
+            if (isWeixin()) {
+                location.href = CONFIG.redirect_uri + '&st=logout';
+            } else {
+                Sail.io.ajax(null, 'GET', CONFIG.site_url, {
+                    act: 'user',
+                    st: 'logout'
+                });
+                if (GM && GM.userLoginUrl) {
+                    location.href = GM.userLoginUrl;
+                }
             }
         });
     }

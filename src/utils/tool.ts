@@ -326,6 +326,17 @@ export function browserSupportCopy() {
     return false;
 }
 
+let shareUrl = '';
+export function getShareUrl() {
+    if (shareUrl != '') {
+        return shareUrl;
+    }
+    if (GM && GM.shareUrl) {
+        shareUrl = GM.shareUrl;
+    }
+    return shareUrl;
+}
+
 let textArea;
 let promise_data = {} as any;
 export function copy(txt) {
@@ -416,3 +427,18 @@ export function createSkeleton(name: string): laya.ani.bone.Skeleton {
 
     return templet.buildArmature(0);
 }
+
+/**
+ * 判断是否在微信浏览器内打开
+ */
+export function isWeixin() {
+    var ua = navigator.userAgent.toLowerCase();
+    var isWeixin = ua.indexOf('micromessenger') != -1;
+    if (isWeixin) {
+        //weixin
+        return true;
+    } else {
+        return false;
+    }
+}
+

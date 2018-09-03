@@ -7,6 +7,7 @@ export const CONFIG = {
     site_url: (window as CusWindow).siteUrl || '',
     token: (window as CusWindow).token || '',
     user_id: (window as CusWindow).userId || '',
+    user_name: '',
     websocket_url: (window as CusWindow).websocketurl || '',
     music_switch_key: 'exploding_dog_music',
     sound_switch_key: 'exploding_dog_sound',
@@ -15,6 +16,5 @@ export const CONFIG = {
 
     friend_title: '就算你是王者，也会是我的手下败将！',
     frend_msg: '要和我比运气？比智商？来啊，来这里比一比啊！',
-    share_icon: 'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png',
-
+    share_icon: (window as CusWindow).siteUrl + 'files/static/game/explodingdog/images/component/icon_share.png',
 };

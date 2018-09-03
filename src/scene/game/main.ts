@@ -1,3 +1,4 @@
+import { GameWrap } from './sceneWrap';
 import { CMD } from '../../data/cmd';
 import { BaseCtrl } from '../../mcTree/ctrl/base';
 import { cmd as base_cmd } from '../../mcTree/event';
@@ -113,7 +114,6 @@ export class GameCtrl extends BaseCtrl {
             turn_arrow,
             explode_pos,
             chatview,
-            turn_animation,
             outroom_msg,
             handAni
         } = view;
@@ -195,7 +195,6 @@ export class GameCtrl extends BaseCtrl {
             quick_start_ctrl,
             seat_ctrl_list,
             slap_ctrl,
-            turn_animation,
             turn_arrow_ctrl,
             outroom_msg,
             handAni
@@ -329,13 +328,8 @@ export class GameCtrl extends BaseCtrl {
             this.onServerAlarm(roomInfo.alarm);
         }
 
-        this.model.gameReplay(data);
         if (roundInfo) {
             docker_ctrl.setRate(roundInfo.bombProb);
-            const turnDirection = roundInfo.turnDirection;
-            if (turnDirection) {
-                this.link.turn_arrow_ctrl.rotate(turnDirection);
-            }
             const hit_num = Number(roundInfo.discardNum) || 0;
             const last_card = roundInfo.lastHitCard;
             for (let i = 0; i < hit_num; i++) {
@@ -348,9 +342,16 @@ export class GameCtrl extends BaseCtrl {
                 discard_zone_ctrl.discardCard(last_card);
             }
         }
+        this.model.gameReplay(data);
         if (roomInfo) {
-            if (roomInfo.isUserCreate) {
+            if (roomInfo.isUserCreate && Number(roomInfo.roomStatus) < 3) {//开始后不显示房主
                 this.setCreateUser(roomInfo.createUser);
+            }
+        }
+        if (roundInfo) {//箭头初始化需要在model处理完之后
+            const turnDirection = roundInfo.turnDirection;
+            if (turnDirection) {
+                this.link.turn_arrow_ctrl.rotate(turnDirection);
             }
         }
     }
@@ -389,6 +390,7 @@ export class GameCtrl extends BaseCtrl {
         this.model.setGameStatus(GAME_STATUS[2] as GameStatus);
         this.model.setRemainCard(data.remainCard);
         this.model.updatePlayersCards(data);
+        this.model.setCreator('');
         Laya.SoundManager.playSound(getSoundPath('game_start'));
     }
     /** 拿牌 */
@@ -490,8 +492,18 @@ export class GameCtrl extends BaseCtrl {
     }
     public onServerTurn(data: TurnsData) {
         if (isCurPlayer(data.speakerId)) {
-            this.link.turn_animation.visible = true;
-            this.link.turn_animation.play(0, false);
+            if (this.link.turn_animation) {
+                this.link.turn_animation.play(0, false);
+            } else {
+                const animation = this.link.turn_animation = new Laya.Skeleton();
+                this.getWidgetBox().addChild(animation);
+                animation.pos(707, 323);
+                animation.load('animation/turn.sk', new Laya.Handler(this, () => {
+                    animation.play(0, false);
+                }));
+            }
+
+
             Laya.SoundManager.playSound(
                 getSoundPath(`turn${Math.ceil(Math.random() * 2)}`),
             );

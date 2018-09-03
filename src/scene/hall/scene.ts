@@ -1,7 +1,6 @@
 import { PopupShop } from './../popup/popupShop';
 import { CONFIG } from './../../data/config';
 import { CMD } from '../../data/cmd';
-import { CONFIG } from '../../data/config';
 import { getRoomId, getSoundPath, resetRoomId } from '../../utils/tool';
 import { GameWrap } from '../game/sceneWrap';
 import { GuideView } from '../guide/guideView';
@@ -90,6 +89,7 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_HALL_USER_STATUS, { type: 'dogFood' });
     }
     setUserInfo(data) {
+        CONFIG.user_name = data.nickname;
         this.content.updateView(data);
     }
 

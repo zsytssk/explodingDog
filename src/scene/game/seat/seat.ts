@@ -170,10 +170,12 @@ export class SeatCtrl extends BaseCtrl {
             this.drawCard(data.card);
         });
         this.onModel(player_cmd.creator_change, (data: { isCreator: boolean }) => {
-            this.link.icon_creator.visible = data.isCreator;
+            this.setCreator(data.isCreator);
         })
     }
-
+    public setCreator(isCreator: boolean) {
+        this.link.icon_creator.visible = isCreator;
+    }
     protected setStatus(status: SeatStatus) {
         const {
             empty_box,

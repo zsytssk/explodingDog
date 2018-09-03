@@ -51,10 +51,13 @@ export class ExplodePosCtrl extends BaseCtrl {
     }
 
     /**通过索引选中 */
-    public selectByIndex(selectIndex:number){
+    public selectByIndex(selectIndex: number) {
         const { btnList } = this.view;
-        btnList.cells.forEach((cell,index)=>{
-            if(btnList.array[index].value == selectIndex){
+        btnList.cells.forEach((cell, index) => {
+            if (!btnList.array[index]) {
+                return;
+            }
+            if (btnList.array[index].value == selectIndex) {
                 btnList.selection = cell;
             }
         })

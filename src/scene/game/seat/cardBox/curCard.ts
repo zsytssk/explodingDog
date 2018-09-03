@@ -276,7 +276,7 @@ export class CurCardCtrl extends CardCtrl {
         log('index', index)
         log('wrap', wrap)
         log('children', wrap.numChildren)
-        if (index > wrap.numChildren) {
+        if (isNaN(index) || index > wrap.numChildren) {
             index = wrap.numChildren;
         }
         wrap.addChildAt(view, index);

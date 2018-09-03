@@ -1,6 +1,6 @@
 import { CONFIG } from './../../data/config';
 import { Avatar } from './component/avatar';
-import { isCurPlayer, shareToWx } from '../../utils/tool';
+import { isCurPlayer, shareToWx, hasShareToWx, getShareUrl } from '../../utils/tool';
 import { tween, fade_in } from '../../mcTree/utils/animate';
 import { log, getChildren, ellipsisStr } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
@@ -50,13 +50,20 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             }
         });
         this.btnShare.on(Laya.Event.CLICK, this, () => {
-            shareToWx(
-                1,
-                CONFIG.friend_title,
-                CONFIG.frend_msg,
-                CONFIG.share_icon,
-                CONFIG.site_url + CONFIG.redirect_uri,
-            );
+            if (hasShareToWx()) {
+                shareToWx(
+                    1,
+                    CONFIG.friend_title,
+                    CONFIG.frend_msg,
+                    CONFIG.share_icon,
+                    getShareUrl()
+                );
+            } else {
+                const pop = new ui.popup.popupQRUI();
+                pop.CONFIG = { closeOnSide: true };
+                pop.shareText.text = CONFIG.site_url + CONFIG.redirect_uri;
+                Sail.director.popScene(pop);
+            }
         });
     }
     onOpened() {
