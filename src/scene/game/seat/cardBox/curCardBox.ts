@@ -212,11 +212,13 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     /** 将本身放到另外的上面去， 炸弹弹出层里面 */
     public putCardBoxInWrap(wrap: Laya.Sprite, card_move_box: Laya.Sprite) {
         const { view } = this.link;
-
         view.pos(0, 0);
-        wrap.addChild(view);
-        this.link.card_move_box = card_move_box;
-        return this;
+
+        setTimeout(() => {
+            wrap.addChild(view);
+            this.link.card_move_box = card_move_box;
+            return this;
+        }, 100);
     }
 
     public sortCard() {
