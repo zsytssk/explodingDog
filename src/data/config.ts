@@ -11,5 +11,10 @@ export const CONFIG = {
     music_switch_key: 'exploding_dog_music',
     sound_switch_key: 'exploding_dog_sound',
     is_buy: false,//是否充值回跳
-    need_pop_shop: false//返回大厅是否弹出商城
+    need_pop_shop: false,//返回大厅是否弹出商城
+
+    friend_title: '就算你是王者，也会是我的手下败将！',
+    frend_msg: '要和我比运气？比智商？来啊，来这里比一比啊！',
+    share_icon: 'https://h3.jkimg.net/gameapp_24caipiao/images/game/common/share_logo_gm.png',
+
 };

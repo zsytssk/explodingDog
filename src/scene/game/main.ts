@@ -84,6 +84,7 @@ export class GameCtrl extends BaseCtrl {
     protected model = new GameModel();
     public cur_seat_id: number;
     public cur_user_id: string;
+    private destroyed = false;
     constructor(view: ui.game.mainUI) {
         super();
         this.link.view = view;
@@ -741,6 +742,10 @@ export class GameCtrl extends BaseCtrl {
         this.model.reset();
     }
     public destroy() {
+        if (this.destroyed) {
+            return;
+        }
+        this.destroyed = true;
         this.offModel();
         this.model.destroy();
         Laya.stage.off(Laya.Event.RESIZE, this, this.resize);
@@ -750,7 +755,7 @@ export class GameCtrl extends BaseCtrl {
     public outRoom() {
         Sail.director.closeAll();
         Sail.director.runScene(new Hall());
-        // this.destroy();
+        this.destroy();
     }
     public getCardType() {
         return this.model.card_type;

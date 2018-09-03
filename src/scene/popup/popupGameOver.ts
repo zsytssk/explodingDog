@@ -1,5 +1,6 @@
+import { CONFIG } from './../../data/config';
 import { Avatar } from './component/avatar';
-import { isCurPlayer } from '../../utils/tool';
+import { isCurPlayer, shareToWx } from '../../utils/tool';
 import { tween, fade_in } from '../../mcTree/utils/animate';
 import { log, getChildren, ellipsisStr } from '../../mcTree/utils/zutil';
 import { CMD } from '../../data/cmd';
@@ -47,6 +48,15 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
             } else {
                 Sail.io.emit(CMD.PLAY_INVITE);
             }
+        });
+        this.btnShare.on(Laya.Event.CLICK, this, () => {
+            shareToWx(
+                1,
+                CONFIG.friend_title,
+                CONFIG.frend_msg,
+                CONFIG.share_icon,
+                CONFIG.site_url + CONFIG.redirect_uri,
+            );
         });
     }
     onOpened() {
@@ -116,6 +126,7 @@ export class PopupGameOver extends ui.popup.popupGameOverUI {
         this.timerOnce(5000, this, () => {
             Laya.Tween.to(this.btnAgain, { alpha: 1 }, 1000);
             Laya.Tween.to(this.btnBack, { alpha: 1 }, 1000);
+            Laya.Tween.to(this.btnShare, { alpha: 1 }, 1000);
         });
     }
 
