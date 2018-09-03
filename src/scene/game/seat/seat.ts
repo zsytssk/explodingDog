@@ -45,6 +45,7 @@ export interface Link {
     chat_label: Laya.Label;
     give_card_ctrl: GiveCardCtrl;
     card_heap_ctrl: CardHeapCtrl;
+    icon_creator: Laya.Image;
 }
 
 export class SeatCtrl extends BaseCtrl {
@@ -74,6 +75,7 @@ export class SeatCtrl extends BaseCtrl {
         const card_box = view.card_box;
         const chat_box = view.chatBox;
         const chat_label = view.chatLabel;
+        const icon_creator = player_box.icon_creator;
         const card_box_ctrl = this.createCardBox(card_box);
 
         const game_ctrl = queryClosest(this, 'name:game');
@@ -94,6 +96,7 @@ export class SeatCtrl extends BaseCtrl {
             highlight,
             nickname,
             player_box,
+            icon_creator,
             view,
         };
     }
@@ -166,6 +169,9 @@ export class SeatCtrl extends BaseCtrl {
         this.onModel(player_cmd.draw_card, (data: { card: CardModel }) => {
             this.drawCard(data.card);
         });
+        this.onModel(player_cmd.creator_change, (data: { isCreator: boolean }) => {
+            this.link.icon_creator.visible = data.isCreator;
+        })
     }
 
     protected setStatus(status: SeatStatus) {
@@ -189,21 +195,16 @@ export class SeatCtrl extends BaseCtrl {
                 break;
             case 'speak':
                 const start_props = {
-                    alpha: 0.6,
-                    scaleX: 0.8,
-                    scaleY: 0.8,
+                    alpha: 0.2,
+                    scaleX: 0.67,
+                    scaleY: 0.67,
                 };
                 const end_props = {
-                    alpha: 0.5,
-                    scaleX: 0.9,
-                    scaleY: 0.9,
+                    alpha: 0.7,
+                    scaleX: 1,
+                    scaleY: 1,
                 };
                 highlight.visible = true;
-                tweenLoop({
-                    props_arr: [end_props, start_props],
-                    sprite: highlight,
-                    time: 1000,
-                });
                 this.hideExplode();
                 break;
             case 'die':
@@ -211,7 +212,6 @@ export class SeatCtrl extends BaseCtrl {
                 active_box.visible = true;
                 die_avatar.visible = true;
                 highlight.visible = false;
-                stopAni(highlight);
                 avatar.visible = false;
                 this.hideExplode();
                 break;
@@ -219,7 +219,6 @@ export class SeatCtrl extends BaseCtrl {
                 empty_box.visible = true;
                 active_box.visible = true;
                 highlight.visible = false;
-                stopAni(highlight);
                 avatar.skin = '';
                 nickname.text = '';
                 die_avatar.visible = false;
@@ -230,10 +229,9 @@ export class SeatCtrl extends BaseCtrl {
                 break;
             default:
                 highlight.visible = false;
-                stopAni(highlight);
         }
     }
-    protected shuffle() {}
+    protected shuffle() { }
     /** 处理被action作用 */
     protected beActioned(data: ObserverActionInfo) {
         const { status, action } = data;

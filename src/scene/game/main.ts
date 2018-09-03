@@ -227,7 +227,7 @@ export class GameCtrl extends BaseCtrl {
         Sail.io.emit(CMD.GAME_REPLAY);
 
         const { btn_back, btn_setting } = this.link;
-
+        btn_back.hitArea = new Laya.Rectangle(0, 0, 150, 80);
         btn_back.on(Laya.Event.CLICK, this, () => {
             Sail.director.popScene(
                 new PopupPrompt('是否要退出桌子？', () => {
@@ -291,7 +291,9 @@ export class GameCtrl extends BaseCtrl {
             let popup = new PopupTip('连接已断开，请刷新游戏。');
             popup.name = 'visible_changed';
             popup.onClosed = () => {
-                window.location.reload(true);
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 100);
             }
             Sail.director.popScene(popup);
         } else {
@@ -345,6 +347,11 @@ export class GameCtrl extends BaseCtrl {
                 discard_zone_ctrl.discardCard(last_card);
             }
         }
+        if (roomInfo) {
+            if (roomInfo.isUserCreate) {
+                this.setCreateUser(roomInfo.createUser);
+            }
+        }
     }
     /** 更新用户的个数 */
     public onServerUpdateUser(data: UpdateUserData) {
@@ -357,6 +364,9 @@ export class GameCtrl extends BaseCtrl {
         this.calcCurSeatId(data.userList);
         this.model.updatePlayers(data.userList);
         this.link.quick_start_ctrl.setTxt();
+    }
+    private setCreateUser(userId) {
+        this.model.setCreator(userId);
     }
     private calcCurSeatId(user_list: UserData[]) {
         if (this.cur_seat_id) {
@@ -804,10 +814,10 @@ export class GameCtrl extends BaseCtrl {
     }
     private onServerChangeCreator(data) {
         const { newCreateUser } = data;
-        if (!isCurPlayer(newCreateUser)) {
-            return;
+        this.setCreateUser(newCreateUser);
+        if (isCurPlayer(newCreateUser)) {
+            this.link.host_zone_ctrl.enable();
         }
-        this.link.host_zone_ctrl.enable();
     }
     /** 剩余张数 */
     public getRemainCardNum() {

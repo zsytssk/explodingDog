@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":16,
+    "selectedBox":13,
+    "selecteID":15,
     "props":{"width":411,"sceneColor":"#000000","height":602},
     "nodeParent":-1,
     "label":"View",
@@ -95,7 +95,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":45,"x":128,"width":257,"skin":"images/component/cardType/btn_buy.png","height":90,"appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":45,"x":128,"width":257,"skin":"images/component/cardType/btn_unlock.png","height":90,"appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":13,
                     "label":"Image",
                     "isDirectory":false,
@@ -110,7 +110,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":524,"x":198,"width":257,"visible":false,"var":"btn_success","skin":"images/pop/component/buy_sucess.png","height":92,"anchorY":0.5,"anchorX":0.5},
+            "props":{"y":524,"x":198,"width":257,"visible":false,"var":"btn_success","skin":"images/component/cardType/btn_unlocked.png","height":92,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(btn_success)",
             "isDirectory":false,
@@ -119,7 +119,7 @@
             "compId":16,
             "child":[
                 ],
-            "$HIDDEN":true
+            "$HIDDEN":false
         }],
     "animations":[
         {

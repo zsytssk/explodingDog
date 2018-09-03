@@ -17,6 +17,7 @@ export const cmd = {
     remove_cards: 'remove_cards',
     status_change: 'status_change',
     wait_choose: 'wait_choose',
+    creator_change: 'creator_change'
 };
 export type BlindStatus = {
     is_blind: boolean;
@@ -42,6 +43,7 @@ export type AddInfo = {
 
 export class PlayerModel extends BaseEvent {
     public is_cur_player: boolean;
+    public is_creator: boolean;
     public seat_id: number;
     public user_id: string;
     public nickname: string;
@@ -95,6 +97,11 @@ export class PlayerModel extends BaseEvent {
         }
         if (hasBlindEffect) {
             this.setBlindStatus(true);
+        }
+    }
+    public setCreator(isCreator: boolean) {
+        if (this.is_creator != isCreator) {
+            this.trigger(cmd.creator_change, { isCreator });
         }
     }
     public setStatus(status: PlayerStatus) {

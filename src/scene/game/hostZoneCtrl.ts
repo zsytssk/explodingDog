@@ -44,7 +44,7 @@ export class HostZoneCtrl extends BaseCtrl {
         const { view } = this.link;
         const choose_card_btn = view.card_type.choose_card_btn;
         const card_type = view.card_type.card_type;
-        const start_btn = view.start.start_btn;
+        const start_btn = view.start_btn;
         const btn_share = view.billboard.btn_share;
         const btn_copy = view.billboard.btn_copy;
         const room_id_text = view.billboard.room_id;
@@ -85,9 +85,6 @@ export class HostZoneCtrl extends BaseCtrl {
         });
 
         start_btn.on(Laya.Event.CLICK, this, () => {
-            if (this.is_disabled) {
-                return;
-            }
             Sail.io.emit(CMD.GAME_START);
         });
         btn_share.on(Laya.Event.CLICK, this, () => {
@@ -108,7 +105,7 @@ export class HostZoneCtrl extends BaseCtrl {
     }
     public async show(room_id: string, is_cur_create: boolean) {
         const { view, room_id_text } = this.link;
-        const { card_type, start, billboard } = view;
+        const { card_type, start_btn, billboard } = view;
         view.visible = true;
         /** 设置roomId */
         room_id_text.text = room_id;
@@ -116,9 +113,8 @@ export class HostZoneCtrl extends BaseCtrl {
         if (!is_cur_create) {
             this.disable();
         }
-        card_type.visible = start.visible = billboard.visible = false;
+        card_type.visible = billboard.visible = false;
         await slide_left_in(card_type);
-        await slide_left_in(start);
         await slide_left_in(billboard);
     }
     public hide() {
@@ -129,19 +125,13 @@ export class HostZoneCtrl extends BaseCtrl {
         const { choose_card_btn, start_btn } = this.link;
 
         choose_card_btn.disabled = true;
-        start_btn.disabled = true;
-        [choose_card_btn, start_btn].forEach(item => {
-            (item.getChildAt(0) as Laya.Clip).index = 1;
-        });
+        start_btn.visible = false;
     }
     public enable() {
         const { choose_card_btn, start_btn } = this.link;
 
         choose_card_btn.disabled = false;
-        start_btn.disabled = false;
-        [choose_card_btn, start_btn].forEach(item => {
-            (item.getChildAt(0) as Laya.Clip).index = 0;
-        });
+        start_btn.visible = true;
     }
     /** 设置牌类型ui */
     public setCardType(type: CardType) {

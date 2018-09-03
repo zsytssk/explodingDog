@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":9,
-    "props":{"width":313,"sceneColor":"#000000","height":331},
+    "selecteID":11,
+    "props":{"width":340,"sceneColor":"#000000","height":390},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -69,31 +69,16 @@
         },
         {
             "x":15,
-            "type":"Box",
-            "props":{"y":261,"x":156,"var":"choose_card_btn","appendProps":"laya/pages/effect/scaleBox.prop","anchorY":0.5,"anchorX":0.5},
+            "type":"Button",
+            "props":{"y":322,"x":170,"var":"choose_card_btn","stateNum":"1","skin":"images/game/btn_choose_type.png","centerX":0.5,"appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Box(choose_card_btn)",
-            "isOpen":true,
-            "isDirectory":true,
+            "label":"Button(choose_card_btn)",
+            "isDirectory":false,
             "isAniNode":true,
-            "hasChild":true,
-            "compId":9,
+            "hasChild":false,
+            "compId":11,
             "child":[
-                {
-                    "x":30,
-                    "type":"Clip",
-                    "props":{"skin":"images/game/btn_choose_card_type.png","index":0,"clipY":2},
-                    "nodeParent":9,
-                    "label":"Clip",
-                    "isOpen":true,
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":10,
-                    "child":[
-                        ]
-                }],
-            "$HIDDEN":false
+                ]
         }],
     "animations":[
         {

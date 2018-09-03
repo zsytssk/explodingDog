@@ -132,8 +132,7 @@ export class PopupShop extends ui.popup.popupShopUI {
                 const cost = getElementsByName(box, 'cost')[0] as Laya.Text;
                 buy_num.text = data_item.buy_num + '体力';
                 cost.text = data_item.cost;
-                btn_buy.offAll();
-                btn_buy.on(Laya.Event.CLICK, this, () => {
+                box.on(Laya.Event.CLICK, this, () => {
                     Sail.director.popScene(
                         new PopupPrompt(
                             `是否要购买${data_item.buy_num}体力值？`,
@@ -167,16 +166,21 @@ export class PopupShop extends ui.popup.popupShopUI {
                     box,
                     'btn_success',
                 )[0] as Laya.Image;
+                const avatar_name = getElementsByName(
+                    box,
+                    'name',
+                )[0] as Laya.Label;
+                avatar_name.text = '头像盒' + (index + 1);
                 avatar_img.skin = `images/pop/component/avatar_${id}.png`;
                 if (is_buy) {
                     btn_buy.visible = false;
                     btn_success.visible = true;
+                    box.offAll();
                     return;
                 }
                 const cost = getElementsByName(box, 'cost')[0] as Laya.Text;
                 cost.text = data_item.cost;
-                btn_buy.offAll();
-                btn_buy.on(Laya.Event.CLICK, this, () => {
+                box.on(Laya.Event.CLICK, this, () => {
                     Sail.director.popScene(
                         new PopupPrompt('是否要购买头像礼包？', () => {
                             Sail.io.emit(CMD.EXCHANGE_GOODS, {

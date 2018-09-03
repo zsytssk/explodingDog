@@ -1,3 +1,4 @@
+import { log } from './../../../mcTree/utils/zutil';
 import { BaseEvent } from '../../../mcTree/event';
 import { PlayerModel } from './player';
 import { CardModel } from './card/card';
@@ -106,6 +107,7 @@ export class GameModel extends BaseEvent {
             return;
         }
         this.player_list.splice(index, 1);
+        player.setCreator(false);
         player.destroy();
     }
     /** 设置房间信息 */
@@ -291,6 +293,11 @@ export class GameModel extends BaseEvent {
             fromUser,
             step: hit_info.step,
             toUser: targetPlayer,
+        });
+    }
+    public setCreator(userId) {
+        this.player_list.forEach((player) => {
+            player.setCreator(userId == player.user_id);
         });
     }
     public unDrawCard(data: HitData) {

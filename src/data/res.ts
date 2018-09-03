@@ -68,6 +68,7 @@ export const RES = {
         { type: Laya.Loader.IMAGE, url: 'animation/blind.png' },
         { type: Laya.Loader.BUFFER, url: 'animation/blind.sk' },
         { type: Laya.Loader.BUFFER, url: 'animation/turn.sk' },
+        { type: Laya.Loader.BUFFER, url: 'animation/user_highlight.sk' },
         { url: 'font/docker_rate.fnt', type: Laya.Loader.FONT },
     ],
     LOADING: [

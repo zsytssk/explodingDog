@@ -123,8 +123,7 @@ export class PopupCharge extends ui.popup.popupChargeUI {
             cost_node.text = `￥${cost}`;
             shadow.width = 130 + (index - 1) * 20;
 
-            btn_cost.offAll();
-            btn_cost.on(Laya.Event.CLICK, this, () => {
+            box.on(Laya.Event.CLICK, this, () => {
                 log('------', data_item);
                 Sail.io.emit(CMD.GET_PAY_URL_PARAMS, { count: cost });
             });

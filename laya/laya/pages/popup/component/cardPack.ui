@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":13,
     "props":{"width":411,"sceneColor":"#000000","height":602},
     "nodeParent":-1,
     "label":"View",
@@ -98,7 +98,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":521,"x":199,"visible":false,"var":"btnLock","stateNum":"1","skin":"images/component/cardType/btn_buy.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
+            "props":{"y":521,"x":199,"visible":false,"var":"btnLock","stateNum":"1","skin":"images/component/cardType/btn_unlock.png","appendProps":"laya/pages/effect/scaleBtn.prop","anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(btnLock)",
             "isDirectory":false,

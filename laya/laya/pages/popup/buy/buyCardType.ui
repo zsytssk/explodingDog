@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":1,
-    "selecteID":40,
+    "selectedBox":53,
+    "selecteID":11,
     "referenceLines":null,
     "props":{"width":884,"sceneColor":"#ffffff","height":636,"appendProps":"laya/pages/effect/scaleBtn.prop"},
     "nodeParent":-1,
@@ -71,13 +71,14 @@
             "props":{"y":83,"x":58,"name":"content"},
             "nodeParent":1,
             "label":"Box(content)",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":27,
             "child":[
                 {
+                    "x":30,
                     "type":"Box",
                     "props":{"y":0,"x":0,"width":788,"height":425},
                     "nodeParent":27,
@@ -89,6 +90,7 @@
                     "compId":36,
                     "child":[
                         {
+                            "x":45,
                             "type":"Image",
                             "props":{"y":0,"x":0,"skin":"images/pop/buy/inner_bg.png","name":"bg"},
                             "nodeParent":36,
@@ -99,11 +101,13 @@
                             "hasChild":false,
                             "compId":5,
                             "child":[
-                                ]
+                                ],
+                            "$HIDDEN":false
                         },
                         {
+                            "x":45,
                             "type":"Panel",
-                            "props":{"y":41,"x":26,"width":722,"vScrollBarSkin":"\"\"","height":353},
+                            "props":{"y":41,"x":26,"width":722,"vScrollBarSkin":"''","height":353},
                             "nodeParent":36,
                             "label":"Panel",
                             "isOpen":true,
@@ -113,6 +117,7 @@
                             "compId":45,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Box",
                                     "props":{"y":0,"x":0,"var":"intro_box"},
                                     "nodeParent":45,
@@ -124,6 +129,7 @@
                                     "compId":47,
                                     "child":[
                                         {
+                                            "x":75,
                                             "type":"Image",
                                             "props":{"y":0,"x":0,"width":663,"var":"content","skin":"images/pop/buy/dance.png"},
                                             "nodeParent":47,
@@ -135,10 +141,14 @@
                                             "child":[
                                                 ],
                                             "$HIDDEN":false
-                                        }]
-                                }]
-                        }]
-                }]
+                                        }],
+                                    "$HIDDEN":false
+                                }],
+                            "$HIDDEN":false
+                        }],
+                    "$HIDDEN":false
+                }],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -175,7 +185,8 @@
                     "compId":8,
                     "child":[
                         ]
-                }]
+                }],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -205,7 +216,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":6.5,"width":293,"visible":false,"var":"buy_sucess","skin":"images/pop/component/buy_sucess.png","height":99},
+                    "props":{"y":6.5,"width":293,"visible":false,"var":"buy_sucess","skin":"images/pop/buy/btn_unlocked.png","height":99},
                     "nodeParent":40,
                     "label":"Image(buy_sucess)",
                     "isDirectory":false,
@@ -214,7 +225,7 @@
                     "compId":38,
                     "child":[
                         ],
-                    "$HIDDEN":true
+                    "$HIDDEN":false
                 },
                 {
                     "x":30,
@@ -285,7 +296,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":50,"x":147,"skin":"images/pop/buy/btn_buy_l.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":50,"x":147,"skin":"images/pop/buy/btn_unlock.png","appendProps":"laya/pages/effect/scaleImg.prop","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":53,
                             "label":"Image",
                             "isDirectory":false,
@@ -293,7 +304,8 @@
                             "hasChild":false,
                             "compId":11,
                             "child":[
-                                ]
+                                ],
+                            "$HIDDEN":false
                         }]
                 }]
         }],
