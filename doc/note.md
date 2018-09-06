@@ -1,97 +1,107 @@
 ## 2018-08-14 10:20:35
-* @note 致盲的动画太不明显了
 
-* @ques light mud ..动画要不要做成动态的去加载
+-   @opt 其他人打出炸弹 没有动画
 
-* @ques card 默认 设置 index 设置他的位置
-    * 这样不需要在tweenMove设置x, 不需要copyed_face
+-   @note 致盲的动画太不明显了
 
-* @note release 只需要 release all libs 了
+-   @ques light mud ..动画要不要做成动态的去加载
 
+-   @ques card 默认 设置 index 设置他的位置
 
-* 每一个部分只关注自己的代码 再由一个地方将所有的逻辑组织起来
-    * 功能 + 联系
+    -   这样不需要在 tweenMove 设置 x, 不需要 copyed_face
 
-* prettier semicolon
+-   @note release 只需要 release all libs 了
 
+*   每一个部分只关注自己的代码 再由一个地方将所有的逻辑组织起来
 
-* @note tweenMove card_light 停止动画 这个动画在什么地方显示的呢???
-    * 一个逻辑放在了两个地方, 实在不好...
+    -   功能 + 联系
 
-* @note 更新mctree
+*   prettier semicolon
 
-* @note 致盲的处理 自己看不到给的牌
+-   @note tweenMove card_light 停止动画 这个动画在什么地方显示的呢???
 
-* @bug loading 上去再下来 再上去 ...
+    -   一个逻辑放在了两个地方, 实在不好...
 
-* @note toggleTip 居中...
+-   @note 更新 mctree
 
-* @note  干扰致盲的bug
+-   @note 致盲的处理 自己看不到给的牌
 
+-   @bug loading 上去再下来 再上去 ...
+
+-   @note toggleTip 居中...
+
+-   @note 干扰致盲的 bug
 
 ## 2018-08-09 10:27:18
-* @ques es5 chrome 26 报错...
 
-* @note 低版本chrome 黑屏
+-   @ques es5 chrome 26 报错...
 
-* getCardSoundPath 这能放到tool里面去吗
+-   @note 低版本 chrome 黑屏
 
-* @note slow_move visible
-* @ques card_heap card 能不能继承 cardBase..
+-   getCardSoundPath 这能放到 tool 里面去吗
 
-* @note tweenMove card curCard 有大部分是相同的 只是
-    * card rotation
-    * curCard y...
+-   @note slow_move visible
+-   @ques card_heap card 能不能继承 cardBase..
 
-* @note 按钮点击统计
+-   @note tweenMove card curCard 有大部分是相同的 只是
 
-* @player CardFrom --> CardCtrl is_insert
-    * is_insert 只在第一次有用 后面就没有用了
-    * CardFrom 只是为了做不同的样式展示, 没有其他的作用..
+    -   card rotation
+    -   curCard y...
 
-* @ques curCard 参数太多了
-    * is_touched
-    * is_move
+-   @note 按钮点击统计
 
-* @ques draw_bottom 的速度太快了
-    * 先收到take 然后才收到hit
-    * 能不能反过来 @zengxiaoping
+-   @player CardFrom --> CardCtrl is_insert
 
-* touchend -- leave
+    -   is_insert 只在第一次有用 后面就没有用了
+    -   CardFrom 只是为了做不同的样式展示, 没有其他的作用..
 
-*   @note 如何使牌 每个地方都可以拖动
-    * 屏幕点击监听 位置 是否在自己身上
-    * @小马哥
+-   @ques curCard 参数太多了
 
-*   @bug 其他人牌被偷 飞掉了
+    -   is_touched
+    -   is_move
+
+-   @ques draw_bottom 的速度太快了
+
+    -   先收到 take 然后才收到 hit
+    -   能不能反过来 @zengxiaoping
+
+-   touchend -- leave
+
+-   @note 如何使牌 每个地方都可以拖动
+
+    -   屏幕点击监听 位置 是否在自己身上
+    -   @小马哥
+
+-   @bug 其他人牌被偷 飞掉了
     -   可能是飞到猫手上面..
-*   @bug 偷牌时 牌非得太快了
+-   @bug 偷牌时 牌非得太快了
 
-* @ques 这个项目给章旸 有许多地方要说的
-    * 还是让他来问我吧..
+-   @ques 这个项目给章旸 有许多地方要说的
+    -   还是让他来问我吧..
 
+*   致盲 + 干扰 动画.. 卡牌获得 动画
 
-* 致盲 + 干扰 动画.. 卡牌获得 动画
+---
 
---------------
-* @todo 弹出层管理器
+-   @todo 弹出层管理器
 
-* @bug 打出非干扰牌 其他玩家 显示干扰的牌
+-   @bug 打出非干扰牌 其他玩家 显示干扰的牌
 
-* @ques 开发人员工具 连续调用同一方法 两次
+-   @ques 开发人员工具 连续调用同一方法 两次
 
-* @bug 拖动牌到屏幕之外...
+-   @bug 拖动牌到屏幕之外...
 
-* @ques 分享链接带房间号 进入有没有问题 @蒙哥
+-   @ques 分享链接带房间号 进入有没有问题 @蒙哥
 
-* @bug 服务器某个数组就会导致前端就会卡死
-    * 好像是在房间中但是 用户的信息有问题..
+-   @bug 服务器某个数组就会导致前端就会卡死
 
-* @bug 炸弹 出现 屏幕太大 牌无法拖动
+    -   好像是在房间中但是 用户的信息有问题..
 
+-   @bug 炸弹 出现 屏幕太大 牌无法拖动
 
 ## 2018-08-08
-* 待添加动画
+
+-   待添加动画
     拆弹笑脸
     桌面头像爆炸
     商城购买卡包
@@ -99,119 +109,128 @@
     卡牌获得 动画
     干扰泥巴
 
-* @ques 牌的名称做成常量...
+-   @ques 牌的名称做成常量...
 
 ## 2018-08-06 10:10:36
-* @note 牌的 (view.width * scale) / 2 在很多地方都用到了..
-    * 通用..
 
-* @note 牌可以用发光滤镜...
+-   @note 牌的 (view.width \* scale) / 2 在很多地方都用到了..
 
-* @ques 复制链接地址..
+    -   通用..
 
+-   @note 牌可以用发光滤镜...
 
-* @bug curCard tweenMove 有问题...
-    * 自适应的问题 animate_box 的位置没有自适应
+-   @ques 复制链接地址..
 
-* @bug curCard toggle 牌的位置有问题
-    * slide_up_in
-    * slide_down_out 会让牌的位置有问题..
+*   @bug curCard tweenMove 有问题...
 
+    -   自适应的问题 animate_box 的位置没有自适应
 
-* @ques 缺失的icon
-    * 出千 + 同归于尽
-    * CARD_DISCRIBE_MAP
-    * see_the_future see_future
-    * alter_the_future
+*   @bug curCard toggle 牌的位置有问题
+    -   slide_up_in
+    -   slide_down_out 会让牌的位置有问题..
 
-* @socket 连接成功之后再发送
+-   @ques 缺失的 icon
 
-* @todo 背景自适应
+    -   出千 + 同归于尽
+    -   CARD_DISCRIBE_MAP
+    -   see_the_future see_future
+    -   alter_the_future
 
-* @优化 gameStart 牌的动画
+-   @socket 连接成功之后再发送
 
-* @ques 洗牌动画 应该只有声音吧
-    * 有一大堆动画我没有用 有没有问题
+-   @todo 背景自适应
 
-* @产品 最好在整体提测之后马上uat
+-   @优化 gameStart 牌的动画
 
-* @ques CARD_DISCRIBE_MAP CARD_MAP 能不能合并
+-   @ques 洗牌动画 应该只有声音吧
 
-* @ques 牌的说明 颜色 + 大小...
+    -   有一大堆动画我没有用 有没有问题
 
-* @ques @优化 偷牌能不能 牌从给牌用户身上飞到 偷牌用户身上
-    * 现在只是在牌的最后添加一张牌 牌多的时候都看不到...
-    * 添加的动作 牌的插入位置都可以保证
+-   @产品 最好在整体提测之后马上 uat
 
-* @todo 背景自适应
-    * 音效
-    * 卡牌气泡描述
-    *  购买卡组 弹出层
+-   @ques CARD_DISCRIBE_MAP CARD_MAP 能不能合并
 
-* @bug theFuture
-    * 顶部动画
-    * 牌的顺序
+-   @ques 牌的说明 颜色 + 大小...
 
-* @优化 list 默认清空
+-   @ques @优化 偷牌能不能 牌从给牌用户身上飞到 偷牌用户身上
 
-* @ques 全屏背景的弹出层能不能都继承一个基类 + topBar一样的公共类
+    -   现在只是在牌的最后添加一张牌 牌多的时候都看不到...
+    -   添加的动作 牌的插入位置都可以保证
 
-* @bug curCard unselect
+-   @todo 背景自适应
 
-* @todo
-    * 牌堆 当前数目 + 打出牌的展示...
-    * 剪断引线 的牌飞行动画
+    -   音效
+    -   卡牌气泡描述
+    -   购买卡组 弹出层
 
-* @bug 张牌抓完之后 card_heap还显示一张牌
-    * card_ctrl 的样式
-    * withDrawCardNoTime
+-   @bug theFuture
 
-* @ques 牌堆如何处理性能问题
+    -   顶部动画
+    -   牌的顺序
 
-* @note loading 内测
+-   @优化 list 默认清空
 
-* @ques 牌需不需要缓存 回收
+-   @ques 全屏背景的弹出层能不能都继承一个基类 + topBar 一样的公共类
 
-* @bug 其他人打出的牌是背面...
+-   @bug curCard unselect
 
-* @ques 我有很多card_ctrl类 里面有很多相似的地方怎么处理
-    * new CardCtrl(card_id, wrap)
-    * card_heap theFuture cardBox
+-   @todo
+
+    -   牌堆 当前数目 + 打出牌的展示...
+    -   剪断引线 的牌飞行动画
+
+-   @bug 张牌抓完之后 card_heap 还显示一张牌
+
+    -   card_ctrl 的样式
+    -   withDrawCardNoTime
+
+-   @ques 牌堆如何处理性能问题
+
+-   @note loading 内测
+
+-   @ques 牌需不需要缓存 回收
+
+-   @bug 其他人打出的牌是背面...
+
+-   @ques 我有很多 card_ctrl 类 里面有很多相似的地方怎么处理
+    -   new CardCtrl(card_id, wrap)
+    -   card_heap theFuture cardBox
 
 ## 2018-07-27 10:34:22
-* @bug 再来一局 当前用户cardBox 的位置没有重置
 
-* discard 找不到打出那张牌
+-   @bug 再来一局 当前用户 cardBox 的位置没有重置
 
-* @ques 我必须要复盘 最近打出那张牌 这必须要在 game里面处理
-    * 而我正常打牌的处理却在seat里面处理
-    * @ques 我能把打牌全部放在player身上吗
-    * 或者我可以把给牌放到game里面...
+-   discard 找不到打出那张牌
+
+-   @ques 我必须要复盘 最近打出那张牌 这必须要在 game 里面处理
+    -   而我正常打牌的处理却在 seat 里面处理
+    -   @ques 我能把打牌全部放在 player 身上吗
+    -   或者我可以把给牌放到 game 里面...
 
 ```js
- Sail.io.emit(CMD.HIT, {
+Sail.io.emit(CMD.HIT, {
     hitCard: this.model.card_id,
 });
-
 ```
-* findCardByStatus 可能不能用了
-* CardStatus 还有用吗
 
-* player status wait_give 会不会和其他的冲突
+-   findCardByStatus 可能不能用了
+-   CardStatus 还有用吗
 
-* card give
+-   player status wait_give 会不会和其他的冲突
 
-* draw的牌如何销毁
-    * discard 是飞行到discardZone
-    * give 最好飞到其他人手上
-    * ... 不再销毁...
+-   card give
 
+-   draw 的牌如何销毁
+    -   discard 是飞行到 discardZone
+    -   give 最好飞到其他人手上
+    -   ... 不再销毁...
 
-* @note 打牌的逻辑
-    * cardCtrl.selected --> cardModel --> player --> seat
-    * 这样无形增加游戏的复杂度
+*   @note 打牌的逻辑
 
-* @优化 gameStart 牌的动画
+    -   cardCtrl.selected --> cardModel --> player --> seat
+    -   这样无形增加游戏的复杂度
+
+*   @优化 gameStart 牌的动画
 
 -   ? component
     -   give_card
@@ -220,7 +239,7 @@
 
 *   ? 有哪些地方联系过于紧密
 
-* @todo router
+*   @todo router
 
 *   @ todo
 
@@ -978,7 +997,7 @@ _ 状态清除
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                                       @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                                         @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

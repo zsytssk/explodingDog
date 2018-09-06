@@ -98,10 +98,9 @@ export class GiveCardCtrl extends BaseCtrl {
             sprite,
             start_props,
         }).then(() => {
+            this.end_resolve = undefined;
             sprite.visible = false;
         });
-
-        this.end_resolve = undefined;
     }
     /** seat action complete之后， 如果有牌 需要展示牌飞行动画 */
     public reset() {
