@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":122,
-    "selecteID":117,
+    "selectedBox":115,
+    "selecteID":122,
     "referenceLines":null,
     "props":{"width":1334,"sceneColor":"#000000","height":750},
     "nodeParent":-1,
@@ -172,27 +172,13 @@
                                     "props":{"y":169,"x":186,"width":352,"renderType":"render","name":"item","height":318,"appendProps":"laya/pages/effect/scaleBox.prop","anchorY":0.5,"anchorX":0.5},
                                     "nodeParent":67,
                                     "label":"Box(item)",
-                                    "isOpen":true,
+                                    "isOpen":false,
                                     "isDirectory":true,
                                     "isAniNode":false,
                                     "hasChild":true,
                                     "compId":68,
                                     "child":[
                                         {
-                                            "x":75,
-                                            "type":"Box",
-                                            "props":{"y":0,"x":0,"width":352,"name":"area_buy","height":325},
-                                            "nodeParent":68,
-                                            "label":"Box(area_buy)",
-                                            "isDirectory":false,
-                                            "isAniNode":false,
-                                            "hasChild":false,
-                                            "compId":145,
-                                            "child":[
-                                                ]
-                                        },
-                                        {
-                                            "x":75,
                                             "type":"Image",
                                             "props":{"skin":"images/pop/shop/item_bg.png"},
                                             "nodeParent":68,
@@ -206,7 +192,6 @@
                                             "$HIDDEN":false
                                         },
                                         {
-                                            "x":75,
                                             "type":"Text",
                                             "props":{"y":15,"x":26,"width":162,"text":"text","name":"buy_num","height":42,"fontSize":35,"font":"SimHei","color":"#ffffff","align":"center"},
                                             "nodeParent":68,
@@ -219,7 +204,6 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
                                             "props":{"y":79,"x":90,"skin":"images/pop/shop/icon_stren1.png"},
                                             "nodeParent":68,
@@ -232,7 +216,6 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Box",
                                             "props":{"y":277,"x":167,"anchorY":0.5,"anchorX":0.5},
                                             "nodeParent":68,
@@ -244,7 +227,6 @@
                                             "compId":127,
                                             "child":[
                                                 {
-                                                    "x":90,
                                                     "type":"Box",
                                                     "props":{"y":0,"x":0,"width":214,"name":"btn_buy","height":62},
                                                     "nodeParent":127,
@@ -256,7 +238,6 @@
                                                     "compId":139,
                                                     "child":[
                                                         {
-                                                            "x":105,
                                                             "type":"Box",
                                                             "props":{"y":-47,"x":0,"width":213,"height":62},
                                                             "nodeParent":139,
@@ -268,7 +249,6 @@
                                                             "compId":140,
                                                             "child":[
                                                                 {
-                                                                    "x":120,
                                                                     "type":"Image",
                                                                     "props":{"y":11,"width":123,"skin":"images/component/cardType/bg_stamina.png","height":43,"centerX":0},
                                                                     "nodeParent":140,
@@ -281,7 +261,6 @@
                                                                         ]
                                                                 },
                                                                 {
-                                                                    "x":120,
                                                                     "type":"Image",
                                                                     "props":{"y":13,"x":69,"width":33,"skin":"images/component/icon_diamond.png","height":33},
                                                                     "nodeParent":140,
@@ -295,7 +274,6 @@
                                                                     "$HIDDEN":false
                                                                 },
                                                                 {
-                                                                    "x":120,
                                                                     "type":"Label",
                                                                     "props":{"y":16,"x":111,"width":43,"text":"10","name":"cost","height":32,"fontSize":24,"color":"#ffffff"},
                                                                     "nodeParent":140,
@@ -310,7 +288,6 @@
                                                             "$HIDDEN":false
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "props":{"y":35,"x":108,"skin":"images/pop/buy/btn_buy_s.png","anchorY":0.5,"anchorX":0.5},
                                                             "nodeParent":139,
@@ -380,19 +357,6 @@
                                     "hasChild":true,
                                     "compId":122,
                                     "child":[
-                                        {
-                                            "x":75,
-                                            "type":"Box",
-                                            "props":{"y":1,"x":0,"width":352,"name":"area_buy","height":325},
-                                            "nodeParent":122,
-                                            "label":"Box(area_buy)",
-                                            "isDirectory":false,
-                                            "isAniNode":false,
-                                            "hasChild":false,
-                                            "compId":146,
-                                            "child":[
-                                                ]
-                                        },
                                         {
                                             "x":75,
                                             "type":"Image",

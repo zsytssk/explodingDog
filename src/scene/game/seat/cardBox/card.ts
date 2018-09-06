@@ -228,6 +228,9 @@ export class CardCtrl extends CardBaseCtrl {
             sprite: view,
             time,
         }).then(() => {
+            if (!this.model) {
+                return;
+            }
             if (play_star) {
                 this.playStarAni();
             }

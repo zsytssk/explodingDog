@@ -46,6 +46,10 @@ export class DiscardZoneCtrl extends BaseCtrl {
                 card_ctrl = new CardBaseCtrl(card, card_box);
             }
         }
+        if (card_ctrl.card_id === '3001') {
+            card_ctrl.destroy();
+            return;
+        }
         card_list.push(card_ctrl);
         this.addChild(card_ctrl);
         if (has_borrow_card) {

@@ -14,7 +14,10 @@ export const CONFIG = {
     is_buy: false,//是否充值回跳
     need_pop_shop: false,//返回大厅是否弹出商城
 
+    //分享文案
     friend_title: '就算你是王者，也会是我的手下败将！',
     frend_msg: '要和我比运气？比智商？来啊，来这里比一比啊！',
     share_icon: (window as CusWindow).siteUrl + 'files/static/game/explodingdog/images/component/icon_share.png',
+    room_title: '房间我已经开好，就看你敢不敢进！',
+    room_msg: '房间号：******，快来！摸一摸，输的人汪汪汪！'
 };

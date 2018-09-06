@@ -9,6 +9,7 @@ import {
     isCurPlayer,
     randomCardId,
     getSoundPath,
+    resetWxShare,
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { PopupGameOver } from '../popup/popupGameOver';
@@ -326,6 +327,9 @@ export class GameCtrl extends BaseCtrl {
         if (roomInfo) {
             quick_start_ctrl.countDown(roomInfo.remainTime);
             this.onServerAlarm(roomInfo.alarm);
+            if (roomInfo.isUserCreate) {
+                resetWxShare(roomInfo.roomId);
+            }
         }
 
         if (roundInfo) {

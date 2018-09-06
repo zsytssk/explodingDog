@@ -122,7 +122,7 @@ export class PopupCharge extends ui.popup.popupChargeUI {
             img_bone.skin = `images/pop/charge/bone${index + 1}.png`;
             cost_node.text = `￥${cost}`;
             shadow.width = 130 + (index - 1) * 20;
-            box.on(Laya.Event.CLICK, this, () => {
+            box.on(Laya.Event.MOUSE_DOWN, this, () => {
                 log('------', data_item);
                 Sail.io.emit(CMD.GET_PAY_URL_PARAMS, { count: cost });
             });
