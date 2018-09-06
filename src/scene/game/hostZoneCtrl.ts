@@ -91,11 +91,11 @@ export class HostZoneCtrl extends BaseCtrl {
                 share_title,
                 msg,
                 CONFIG.share_icon,
-                `${getShareUrl()}#room_id=${room_id_text.text}`,
+                `${getShareUrl()}&room_id=${room_id_text.text}`,
             );
         });
         btn_copy.on(Laya.Event.CLICK, this, () => {
-            copy(`${getShareUrl()}#room_id=${room_id_text.text}`).then(() => {
+            copy(`${getShareUrl()}&room_id=${room_id_text.text}`).then(() => {
                 Sail.director.popScene(new PopupTip('已复制房间号，\n请粘贴给好友。'));
             });
         });

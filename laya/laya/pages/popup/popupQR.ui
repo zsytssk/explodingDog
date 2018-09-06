@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":88,"skin":"images/pop/component/qrcode.png","centerX":0},
+            "props":{"y":69,"skin":"images/pop/component/qrcode.png","centerX":0},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -54,7 +54,7 @@
         {
             "x":15,
             "type":"TextInput",
-            "props":{"y":386,"x":84,"wordWrap":true,"width":405,"var":"shareText","type":"url","text":"TextInput111","height":51,"fontSize":18,"font":"Microsoft YaHei","editable":true,"color":"#69b0ff","align":"center"},
+            "props":{"y":375,"x":84,"wordWrap":true,"width":405,"var":"shareText","valign":"middle","type":"url","text":"http://m.1768.com/?act=game_explodingdog","height":51,"fontSize":18,"font":"Microsoft YaHei","editable":true,"color":"#69b0ff","align":"center"},
             "nodeParent":1,
             "label":"TextInput(shareText)",
             "isDirectory":false,

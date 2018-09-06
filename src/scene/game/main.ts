@@ -285,17 +285,17 @@ export class GameCtrl extends BaseCtrl {
     }
     private stageVisibleChanged(visilbe) {
         if (visilbe) {
-            if (Sail.director.getDialogByName('visible_changed')) {
-                return;
-            }
-            let popup = new PopupTip('连接已断开，请刷新游戏。');
-            popup.name = 'visible_changed';
-            popup.onClosed = () => {
-                setTimeout(() => {
-                    window.location.reload(true);
-                }, 100);
-            }
-            Sail.director.popScene(popup);
+            // if (Sail.director.getDialogByName('visible_changed')) {
+            //     return;
+            // }
+            // let popup = new PopupTip('连接已断开，请刷新游戏。');
+            // popup.name = 'visible_changed';
+            // popup.onClosed = () => {
+            //     setTimeout(() => {
+            //         window.location.reload(true);
+            //     }, 100);
+            // }
+            // Sail.director.popScene(popup);
         } else {
             Sail.io.socket.end();
         }

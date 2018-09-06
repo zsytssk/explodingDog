@@ -27,7 +27,7 @@ export class PopupSetting extends ui.popup.setting.popUI {
         if (GM && GM.userSourceDescription) {
             this.platform.text = GM.userSourceDescription;
         }
-        this.userInfo.text = `当前账号：${splitStr(CONFIG.user_name, 14)}（ID:${CONFIG.user_id}）`;
+        this.userInfo.text = `当前账号：${CONFIG.user_name}（ID:${CONFIG.user_id}）`;
 
     }
     private initSatus() {
