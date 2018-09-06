@@ -161,7 +161,7 @@ export class CurCardCtrl extends CardCtrl {
         this.start_pos = {} as Point;
         if (!this.is_move) {
             if (this.show_tip) {
-                //提示状态直接出牌
+                // 提示状态直接出牌
                 this.hideTip();
                 this.calcDiscard();
                 return;
@@ -174,8 +174,6 @@ export class CurCardCtrl extends CardCtrl {
     }
     /** 选中某张牌吧 */
     public select() {
-        const { scale } = this;
-        const { view: sprite, card_box } = this.link;
         this.is_selected = true;
         this.is_touched = false;
         this.is_move = false;

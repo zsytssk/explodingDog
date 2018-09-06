@@ -4,6 +4,12 @@
 
 -   @opt 其他人被打 显示却是 自己被打动画
 
+-   @ques 所有影响牌位置的因素
+    -   putInBoxByPos
+    -   putCardInWrap
+    -   toggleTip 最可能
+        - 在toggleTip:>showTip的时候拖动出牌牌会错位..
+
 ## 2018-08-14 10:20:35
 
 -   @note 致盲的动画太不明显了
@@ -1001,7 +1007,7 @@ _ 状态清除
 
 -   郑铭 保卫萝卜的源码再发给我。。
 
--                                                                                                                                                                                                                                                                                                                                                                             @note hit 服务器返回错误 要将牌再放到牌堆里面
+-                                                                                                                                                                                                                                                                                                                                                                                         @note hit 服务器返回错误 要将牌再放到牌堆里面
 
 *   @ques ts 测试 private
 

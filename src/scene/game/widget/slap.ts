@@ -91,7 +91,6 @@ export class SlapCtrl extends BaseCtrl {
             if (i >= time) {
                 this.reset();
             }
-            log(i);
         });
         tweenLoop({
             props_arr: slap_self_pros_arr,
