@@ -42,7 +42,7 @@ export class CurCardCtrl extends CardCtrl {
             if (!this.show_tip) {
                 this.toggleTip();
             }
-        })
+        });
 
         this.onNode(view, Laya.Event.MOUSE_DOWN, this.mouseDown);
         this.onNode(view, Laya.Event.MOUSE_MOVE, this.mouseMove);
@@ -160,7 +160,8 @@ export class CurCardCtrl extends CardCtrl {
         this.is_touched = false;
         this.start_pos = {} as Point;
         if (!this.is_move) {
-            if (this.show_tip) {//提示状态直接出牌
+            if (this.show_tip) {
+                //提示状态直接出牌
                 this.hideTip();
                 this.calcDiscard();
                 return;
@@ -178,7 +179,6 @@ export class CurCardCtrl extends CardCtrl {
         this.is_selected = true;
         this.is_touched = false;
         this.is_move = false;
-
 
         this.handleSelectedEvent();
     }
@@ -259,10 +259,17 @@ export class CurCardCtrl extends CardCtrl {
         super.setFace(props);
         this.putInBoxByPos(pos);
     }
-    public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
+    public putCardInWrap(wrap: Laya.Sprite) {
         this.is_selected = false;
+
         const { view } = this.link;
         this.offNode(view);
+
+        /** 当前用户剪断引线不需要移动动画 */
+        let no_time = false;
+        if (this.card_id === '3101') {
+            no_time = true;
+        }
         return super.putCardInWrap(wrap, no_time);
     }
     /** 通过牌的x位置设置 */

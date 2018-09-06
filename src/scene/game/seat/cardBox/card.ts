@@ -136,7 +136,9 @@ export class CardCtrl extends CardBaseCtrl {
         const { view } = this.link;
         view.zOrder = 0;
     }
-    /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中 */
+    /** 将牌放到game中的animate_box中飞行到特定的位置， 在放到牌堆中\
+     * @param no_time 当前用户剪断引线不需要移动动画
+     */
     public putCardInWrap(wrap: Laya.Sprite, no_time?: boolean) {
         this.is_selected = false;
         const { view, card_box } = this.link;

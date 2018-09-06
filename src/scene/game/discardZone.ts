@@ -68,12 +68,8 @@ export class DiscardZoneCtrl extends BaseCtrl {
             return;
         }
         const { card_box, card_list, view } = this.link;
-        let no_time = false;
-        if (card_ctrl.card_id === '3101') {
-            no_time = true;
-        }
 
-        card_ctrl.putCardInWrap(card_box, no_time).then(() => {
+        card_ctrl.putCardInWrap(card_box).then(() => {
             card_ctrl.setStyle({
                 rotation: random(-2, 2),
                 y: view.height / 2 - card_list.length,
