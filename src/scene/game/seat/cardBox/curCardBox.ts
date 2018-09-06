@@ -213,7 +213,9 @@ export class CurCardBoxCtrl extends CardBoxCtrl {
     public putCardBoxInWrap(wrap: Laya.Sprite, card_move_box: Laya.Sprite) {
         const { view } = this.link;
         view.pos(0, 0);
-
+        this.link.card_list.forEach(card => {
+            card.unDraw();
+        })
         setTimeout(() => {
             wrap.addChild(view);
             this.link.card_move_box = card_move_box;

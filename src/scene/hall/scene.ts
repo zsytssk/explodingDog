@@ -1,7 +1,7 @@
 import { PopupShop } from './../popup/popupShop';
 import { CONFIG } from './../../data/config';
 import { CMD } from '../../data/cmd';
-import { getRoomId, getSoundPath, resetRoomId } from '../../utils/tool';
+import { getRoomId, getSoundPath, resetRoomId, resetWxShare } from '../../utils/tool';
 import { GameWrap } from '../game/sceneWrap';
 import { GuideView } from '../guide/guideView';
 import { loadAssets } from '../loading/main';
@@ -42,16 +42,6 @@ export class Hall extends Sail.Scene {
         Sail.io.emit(CMD.GET_USER_AMOUNT);
         Sail.io.emit(CMD.GET_HALL_USER_STATUS);
         Laya.timer.loop(60 * 1000, this, this.updateUserAmount);
-
-        const room_id = getRoomId();
-        if (room_id) {
-            resetRoomId();
-            Sail.io.emit(CMD.JOIN_ROOM, {
-                roomId: room_id,
-                type: 'fixed',
-            });
-        }
-
         this.initSound();
 
         if (CONFIG.is_buy) {
@@ -62,6 +52,7 @@ export class Hall extends Sail.Scene {
             Sail.director.popScene(new PopupShop());
             CONFIG.need_pop_shop = false;
         }
+        resetWxShare();
     }
 
     initSound() {
@@ -126,5 +117,14 @@ export class Hall extends Sail.Scene {
             Sail.director.popScene(new PopupDaily(data.firstLoginAward));
         }
         this.topbar.setRedPoint(data.hasDogFood);
+
+        const room_id = getRoomId();
+        if (room_id) {
+            resetRoomId();
+            Sail.io.emit(CMD.JOIN_ROOM, {
+                roomId: room_id,
+                type: 'fixed',
+            });
+        }
     }
 }

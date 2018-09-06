@@ -242,7 +242,7 @@ export class CurCardCtrl extends CardCtrl {
     /** @ques 这个方法现在用到 card + cardBox， 这很恶心
      * 而且到后面 牌堆里面的牌也要用这个方法， 这个方法最好放在 cardBox中...
      */
-    private unDraw() {
+    public unDraw() {
         this.is_selected = false;
         const { scale } = this;
         const { wrap, view, card_box } = this.link;
@@ -273,9 +273,6 @@ export class CurCardCtrl extends CardCtrl {
         const center_x = (view.width * scale) / 2;
         let index = Math.floor((pos.x - center_x) / space);
         index = card_box.withDrawCardIndex(this, index);
-        log('index', index)
-        log('wrap', wrap)
-        log('children', wrap.numChildren)
         if (isNaN(index) || index > wrap.numChildren) {
             index = wrap.numChildren;
         }

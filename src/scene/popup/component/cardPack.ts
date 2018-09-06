@@ -3,6 +3,7 @@ import { CardPackCtrl } from './cardPackBase';
 export class CardPack extends ui.popup.component.cardPackUI {
     /** choose,play,create */
     private type: 'choose' | 'play' | 'create';
+    private staminaCost: number;
     constructor(data) {
         super();
         this.init(data);
@@ -14,12 +15,13 @@ export class CardPack extends ui.popup.component.cardPackUI {
 
         this.chooseBtn.visible = !isLock;
         this.btnLock.visible = isLock;
+        this.staminaCost = Math.abs(staminaCost);
         if (isLock) {
             this.costIcon.skin = 'images/component/icon_diamond.png';
             this.costIcon.size(27, 27);
             this.staminaLabel.text = buyInfo.price;
         } else if (staminaCost) {
-            this.staminaLabel.text = `${Math.abs(staminaCost)}`;
+            this.staminaLabel.text = `${this.staminaCost}`;
         }
 
         const pack_data = {
@@ -32,6 +34,9 @@ export class CardPack extends ui.popup.component.cardPackUI {
         const card_pack_ctrl = new CardPackCtrl(pack_base, pack_data, () => {
             this.chooseBtn.visible = true;
             this.btnLock.visible = false;
+            this.costIcon.skin = 'images/component/icon_stamina.png';
+            this.costIcon.size(19, 27);
+            this.staminaLabel.text = `${this.staminaCost}`;
         });
         card_pack_ctrl.init();
 

@@ -57,6 +57,7 @@ export class PopupGetFood extends ui.popup.popupGetFoodUI {
         }
         this.clickBtn.skin = 'images/pop/getFood/btn_got.png';
         this.clickBtn.mouseEnabled = false;
+        Sail.io.emit(CMD.GET_HALL_USER_STATUS, { type: 'dogFood' });
     }
 
     public destroy() {

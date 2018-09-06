@@ -9,6 +9,7 @@ import {
     isCurPlayer,
     randomCardId,
     getSoundPath,
+    resetWxShare,
 } from '../../utils/tool';
 import { Hall } from '../hall/scene';
 import { PopupGameOver } from '../popup/popupGameOver';
@@ -285,17 +286,17 @@ export class GameCtrl extends BaseCtrl {
     }
     private stageVisibleChanged(visilbe) {
         if (visilbe) {
-            if (Sail.director.getDialogByName('visible_changed')) {
-                return;
-            }
-            let popup = new PopupTip('连接已断开，请刷新游戏。');
-            popup.name = 'visible_changed';
-            popup.onClosed = () => {
-                setTimeout(() => {
-                    window.location.reload(true);
-                }, 100);
-            }
-            Sail.director.popScene(popup);
+            // if (Sail.director.getDialogByName('visible_changed')) {
+            //     return;
+            // }
+            // let popup = new PopupTip('连接已断开，请刷新游戏。');
+            // popup.name = 'visible_changed';
+            // popup.onClosed = () => {
+            //     setTimeout(() => {
+            //         window.location.reload(true);
+            //     }, 100);
+            // }
+            // Sail.director.popScene(popup);
         } else {
             Sail.io.socket.end();
         }
@@ -326,6 +327,9 @@ export class GameCtrl extends BaseCtrl {
         if (roomInfo) {
             quick_start_ctrl.countDown(roomInfo.remainTime);
             this.onServerAlarm(roomInfo.alarm);
+            if (roomInfo.isUserCreate) {
+                resetWxShare(roomInfo.roomId);
+            }
         }
 
         if (roundInfo) {

@@ -1,12 +1,32 @@
+import { log } from './mcTree/utils/zutil';
 import { CONFIG } from './data/config';
 import { Hall } from './scene/hall/scene';
 import { PopupPrompt } from './scene/popup/popupPrompt';
 import { PopupCharge } from './scene/popup/popupCharge';
 import { PopupShop } from './scene/popup/popupShop';
 import { CMD } from './data/cmd';
+import { PopupTip } from './scene/popup/popupTip';
 
 export class ErrorManager {
     public checkError(cmd, data, code, errormsg, type) {
+        if (cmd == 'io.close' || cmd == 'io.error') {
+            let popup = new PopupTip('连接已断开，请刷新游戏。');
+            popup.name = 'visible_changed';
+            popup.onClosed = () => {
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 100);
+            }
+            Sail.director.popScene(popup);
+            return false;
+        }
+        if (cmd == 'conn::init') {
+            let popup = Sail.director.getDialogByName('visible_changed');
+            if (popup) {
+                Sail.director.closeByName('visible_changed');
+            }
+            return false;
+        }
         switch (code) {
             case 10027:
                 Sail.director.popScene(

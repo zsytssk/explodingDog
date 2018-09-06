@@ -1,3 +1,4 @@
+import { CONFIG } from './../data/config';
 import { random } from 'lodash';
 import { CARD_MAP, CARD_TYPE } from '../data/card';
 import { CONFIG } from '../data/config';
@@ -440,5 +441,20 @@ export function isWeixin() {
     } else {
         return false;
     }
+}
+
+export function resetWxShare(roomId?: string) {
+    if (!isWeixin || !GM || !GM.wxResetShare) {
+        return;
+    }
+    let param = null;
+    if (roomId) {
+        param = {
+            shareUrlExtString: `&room_id=${roomId}`,
+            shareTitle: CONFIG.room_title,
+            shareDesc: CONFIG.room_msg.replace('******', roomId)
+        }
+    }
+    GM.wxResetShare(param);
 }
 

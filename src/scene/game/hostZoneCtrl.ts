@@ -9,6 +9,7 @@ import {
     browserSupportCopy,
     copy,
     getShareUrl,
+    isWeixin,
 } from '../../utils/tool';
 import { scale_in, slide_left_in } from '../../mcTree/utils/animate';
 import { PopupTip } from '../popup/popupTip';
@@ -21,10 +22,6 @@ interface Link {
     start_btn: Laya.Box;
     room_id_text: Laya.Text;
 }
-
-const share_title =
-    '房间我已经开好，就看你敢不敢进！';
-const share_msg = '房间号：******，快来！摸一摸，输的人汪汪汪！';
 
 export class HostZoneCtrl extends BaseCtrl {
     protected link = {} as Link;
@@ -56,7 +53,7 @@ export class HostZoneCtrl extends BaseCtrl {
             start_btn,
         };
 
-        if (hasShareToWx()) {
+        if (hasShareToWx() || isWeixin()) {
             btn_share.visible = true;
         } else if (browserSupportCopy()) {
             btn_copy.visible = true;
@@ -85,17 +82,28 @@ export class HostZoneCtrl extends BaseCtrl {
             Sail.io.emit(CMD.GAME_START);
         });
         btn_share.on(Laya.Event.CLICK, this, () => {
-            let msg = share_msg.replace('******', room_id_text.text);
+            if (isWeixin()) {
+                //弹出微信分享提示
+                let popup = new ui.popup.popupWxShareUI();
+                popup.right = 100;
+                popup.once(Laya.Event.CLICK, this, () => {
+                    popup.close();
+                });
+                Sail.director.popScene(popup, { closeOnSide: true });
+                return;
+            }
+            //1768调微信分享
+            let msg = CONFIG.room_msg.replace('******', room_id_text.text);
             shareToWx(
                 1,
-                share_title,
+                CONFIG.room_title,
                 msg,
                 CONFIG.share_icon,
-                `${getShareUrl()}#room_id=${room_id_text.text}`,
+                `${getShareUrl()}&room_id=${room_id_text.text}`,
             );
         });
         btn_copy.on(Laya.Event.CLICK, this, () => {
-            copy(`${getShareUrl()}#room_id=${room_id_text.text}`).then(() => {
+            copy(`${getShareUrl()}&room_id=${room_id_text.text}`).then(() => {
                 Sail.director.popScene(new PopupTip('已复制房间号，\n请粘贴给好友。'));
             });
         });
