@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "rxjs": "^6.2.1",
-        "lodash": "^4.17.10",
+        "lodash": "^4.17.21",
         "art-template": "^4.12.2",
         "axios": "^0.18.0",
         "es6-promise": "^4.2.4",
